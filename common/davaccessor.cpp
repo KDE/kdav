@@ -58,29 +58,6 @@ QDataStream& operator>>( QDataStream &in, davItem &item)
 
 davAccessor::davAccessor()
 {
-  kDebug() << "Loading cache from disk";
-  
-  QString tmp = KStandardDirs::locateLocal( "cache", "akonadi-dav/etags" );
-  if( QFile::exists( tmp ) ) {
-    QFile etagsCacheFile( tmp );
-    if( etagsCacheFile.open( QIODevice::ReadOnly ) ) {
-      QDataStream in( &etagsCacheFile );
-      in >> etagsCache;
-      etagsCacheFile.close();
-    }
-  }
-  
-  tmp = KStandardDirs::locateLocal( "cache", "akonadi-dav/items" );
-  if( QFile::exists( tmp ) ) {
-    QFile itemsCacheFile( tmp );
-    if( itemsCacheFile.open( QIODevice::ReadOnly ) ) {
-      QDataStream in( &itemsCacheFile );
-      in >> itemsCache;
-      itemsCacheFile.close();
-    }
-  }
-  
-  kDebug() << "Done loading cache from disk";
 }
 
 davAccessor::~davAccessor()
@@ -165,6 +142,35 @@ void davAccessor::validateCache()
   emit backendItemsRemoved( removed );
   
   kDebug() << "Finished cache validation";
+}
+
+void davAccessor::loadCache( const QString &suffix )
+{
+  kDebug() << "Loading cache from disk";
+  
+  KUrl suffixPath( suffix );
+  suffixPath.cleanPath();
+  QString tmp = KStandardDirs::locateLocal( "cache", "akonadi-dav/etags-" + suffixPath.url() );
+  if( QFile::exists( tmp ) ) {
+    QFile etagsCacheFile( tmp );
+    if( etagsCacheFile.open( QIODevice::ReadOnly ) ) {
+      QDataStream in( &etagsCacheFile );
+      in >> etagsCache;
+      etagsCacheFile.close();
+    }
+  }
+  
+  tmp = KStandardDirs::locateLocal( "cache", "akonadi-dav/items-" + suffixPath.url() );
+  if( QFile::exists( tmp ) ) {
+    QFile itemsCacheFile( tmp );
+    if( itemsCacheFile.open( QIODevice::ReadOnly ) ) {
+      QDataStream in( &itemsCacheFile );
+      in >> itemsCache;
+      itemsCacheFile.close();
+    }
+  }
+  
+  kDebug() << "Done loading cache from disk";
 }
 
 void davAccessor::saveCache( const QString &suffix )

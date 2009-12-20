@@ -21,14 +21,16 @@
 
 #include <kconfigdialogmanager.h>
 
-ConfigDialog::ConfigDialog( QWidget* parent )
-  : KDialog( parent )
+ConfigDialog::ConfigDialog( QWidget* p )
+  : KDialog( p )
 {
   ui.setupUi( mainWidget() );
   mManager = new KConfigDialogManager( this, Settings::self() );
   mManager->updateWidgets();
   
-  connect( this, SIGNAL( okClicked() ), this, SLOT( save() ) );
+  connect( this, SIGNAL( okClicked() ), this, SLOT( onOkClicked() ) );
+  connect( this, SIGNAL( cancelClicked() ), this, SLOT( onCancelClicked() ) );
+  connect( ui.kcfg_remoteUrls, SIGNAL( removed( const QString& ) ), this, SLOT( urlRemoved( const QString& ) ) );
 }
 
 ConfigDialog::~ConfigDialog()
@@ -36,10 +38,30 @@ ConfigDialog::~ConfigDialog()
   delete mManager;
 }
 
-void ConfigDialog::save()
+QStringList ConfigDialog::removedUrls() const
+{
+  return rmdUrls;
+}
+
+void ConfigDialog::setRemovedUrls( const QStringList &l )
+{
+  rmdUrls = l;
+}
+
+void ConfigDialog::onOkClicked()
 {
   mManager->updateSettings();
-  Settings::self()->writeConfig();
+  Settings::self()->setPassword( ui.kcfg_password->text() );
+}
+
+void ConfigDialog::onCancelClicked()
+{
+  rmdUrls.clear();
+}
+
+void ConfigDialog::urlRemoved( const QString &url )
+{
+  rmdUrls << url;
 }
 
 #include "configdialog.moc"

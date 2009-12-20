@@ -25,8 +25,8 @@
 
 #include "../common/davaccessor.h"
 
-namespace Akonadi {
-  class KCalMimeTypeVisitor;
+namespace KCal {
+  class MimeTypeVisitor;
 }
 
 class davCalendarResource : public Akonadi::ResourceBase,
@@ -56,7 +56,8 @@ class davCalendarResource : public Akonadi::ResourceBase,
     void accessorRemovedItem( const KUrl &url );
     void accessorPutItem( const KUrl &oldUrl, const KUrl &newUrl );
     
-    void backendItemsRemoved( const QList<davItem> &items);
+    void backendItemsRemoved( const QList<davItem> &items );
+//     void backendItemChanged( const davItem &item );
 
   protected:
     virtual void aboutToQuit();
@@ -70,16 +71,17 @@ class davCalendarResource : public Akonadi::ResourceBase,
     bool configurationIsValid();
     Akonadi::Item createItem( const QByteArray &data );
     
-    Akonadi::KCalMimeTypeVisitor *mMimeVisitor;
+    KCal::MimeTypeVisitor *mMimeVisitor;
     davAccessor *accessor;
-//     Akonadi::Collection davCollectionRoot;
+    Akonadi::Collection davCollectionRoot;
+    int nCollectionsRetrieval;
+    QSet<QString> seenCollections;
     Akonadi::Item::List retrievedItems;
     QMutex retrievedItemsMtx;
     QMap<QString, Akonadi::Item> putItems;
     QMutex putItemsMtx;
     QMap<QString, Akonadi::Item> delItems;
     QMutex delItemsMtx;
-    QString password;
 };
 
 #endif

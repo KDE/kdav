@@ -6,11 +6,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>393</height>
+    <width>624</width>
+    <height>601</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <widget class="KButtonGroup" name="kcfg_remoteProtocol">
      <property name="locale">
@@ -48,31 +48,21 @@
      <property name="title">
       <string>Server configuration</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QLabel" name="label">
           <property name="locale">
            <locale language="English" country="UnitedStates"/>
           </property>
           <property name="text">
-           <string>Remote URL</string>
+           <string>Remote URLs</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="kcfg_remoteUrl">
-          <property name="minimumSize">
-           <size>
-            <width>350</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="locale">
-           <locale language="English" country="UnitedStates"/>
-          </property>
-         </widget>
+         <widget class="KEditListBox" name="kcfg_remoteUrls"/>
         </item>
        </layout>
       </item>
@@ -206,6 +196,16 @@
         </item>
        </layout>
       </item>
+      <item>
+       <widget class="QCheckBox" name="kcfg_useKWallet">
+        <property name="text">
+         <string>Store the password in KWallet</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -223,24 +223,6 @@
     </spacer>
    </item>
   </layout>
-  <zorder>kcfg_remoteProtocol</zorder>
-  <zorder>groupBox</zorder>
-  <zorder>groupBox_2</zorder>
-  <zorder>label_4</zorder>
-  <zorder>label_5</zorder>
-  <zorder>kcfg_username</zorder>
-  <zorder>kcfg_password</zorder>
-  <zorder>horizontalSpacer_2</zorder>
-  <zorder>horizontalSpacer_3</zorder>
-  <zorder>horizontalSpacer_2</zorder>
-  <zorder>kcfg_password</zorder>
-  <zorder>label_4</zorder>
-  <zorder>kcfg_username</zorder>
-  <zorder>label_5</zorder>
-  <zorder>kcfg_password</zorder>
-  <zorder>label_4</zorder>
-  <zorder>kcfg_username</zorder>
-  <zorder>label_5</zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -248,6 +230,11 @@
    <extends>QGroupBox</extends>
    <header>kbuttongroup.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>KEditListBox</class>
+   <extends>QGroupBox</extends>
+   <header>keditlistbox.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
@@ -259,12 +246,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>24</x>
-     <y>243</y>
+     <x>37</x>
+     <y>434</y>
     </hint>
     <hint type="destinationlabel">
-     <x>166</x>
-     <y>277</y>
+     <x>196</x>
+     <y>466</y>
     </hint>
    </hints>
   </connection>
@@ -275,12 +262,28 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>66</x>
-     <y>246</y>
+     <x>79</x>
+     <y>434</y>
     </hint>
     <hint type="destinationlabel">
-     <x>93</x>
-     <y>307</y>
+     <x>176</x>
+     <y>496</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>kcfg_authenticationRequired</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>kcfg_useKWallet</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>151</x>
+     <y>422</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>26</x>
+     <y>522</y>
     </hint>
    </hints>
   </connection>

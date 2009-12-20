@@ -108,6 +108,7 @@ void groupdavCalendarAccessor::collectionsPropfindFinished( KJob *j )
     QDomElement propstat;
     QString href, status, displayname;
     KUrl url = job->url();
+    url.setUser( QString() );
     
     tmp = r.elementsByTagNameNS( "DAV:", "href" );
     if( tmp.length() == 0 )
@@ -219,7 +220,6 @@ void groupdavCalendarAccessor::itemsPropfindFinished( KJob *j )
       
       davItemCacheStatus itemStatus = itemCacheStatus( href, etag );
       if( itemStatus == CACHED ) {
-        emit itemRetrieved( getItemFromCache( href ) );
         continue;
       }
     }
@@ -248,11 +248,12 @@ void groupdavCalendarAccessor::itemGetFinished( KJob *j )
     return;
   }
   
-  kDebug() << "Got Item at URL " << url;
-  davItem i( url, mimeType, d );
-  addItemToCache( i, etag );
-  
-  emit itemRetrieved( i );
+  if( itemCacheStatus( url, etag ) != CACHED ) {
+    kDebug() << "Got Item at URL " << url;
+    davItem i( url, mimeType, d );
+    addItemToCache( i, etag );
+    emit itemRetrieved( i );
+  }
   
   runItemsFetch();
 }

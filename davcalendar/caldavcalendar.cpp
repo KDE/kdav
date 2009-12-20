@@ -91,6 +91,7 @@ void caldavCalendarAccessor::collectionsPropfindFinished( KJob *j )
     QDomElement propstat, supportedCalendarComponentSet;
     QString href, status, displayname;
     KUrl url = job->url();
+    url.setUser( QString() );
     
     tmp = r.elementsByTagNameNS( "DAV:", "href" );
     if( tmp.length() == 0 )
@@ -259,7 +260,6 @@ void caldavCalendarAccessor::itemsReportFinished( KJob *j )
     // NOTE: nothing below should invalidate the item (return an error
     // and exit the function)
     seenUrl( collectionUrl, href );
-//     kDebug() << "Seen item at " << href << " in collection " << job->url().prettyUrl();
     
     tmp = r.elementsByTagNameNS( "DAV:", "getetag" );
     if( tmp.length() != 0 ) {
@@ -267,7 +267,6 @@ void caldavCalendarAccessor::itemsReportFinished( KJob *j )
       
       davItemCacheStatus itemStatus = itemCacheStatus( href, etag );
       if( itemStatus == CACHED ) {
-        emit itemRetrieved( getItemFromCache( href ) );
         continue;
       }
     }
@@ -371,11 +370,8 @@ void caldavCalendarAccessor::multigetFinished( KJob *j )
     davItem i( href, "text/calendar", data );
     
     davItemCacheStatus itemStatus = itemCacheStatus( href, etag );
-    if( itemStatus == NOT_CACHED ) {
+    if( itemStatus != CACHED ) {
       emit itemRetrieved( i );
-    }
-    else {
-      emit backendItemChanged( i );
     }
     
     addItemToCache( i, etag );

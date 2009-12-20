@@ -51,11 +51,12 @@ set( davcalendarresource_SRCS
   configdialog.cpp
   groupdavcalendar.cpp
   caldavcalendar.cpp
+  settings.cpp
 )
 
 install( FILES davcalendarresource.desktop DESTINATION "${CMAKE_INSTALL_PREFIX}/share/akonadi/agents" )
 
-kde4_add_kcfg_files(davcalendarresource_SRCS settings.kcfgc)
+kde4_add_kcfg_files(davcalendarresource_SRCS settingsbase.kcfgc)
 kde4_add_ui_files(davcalendarresource_SRCS configdialog.ui)
 kcfg_generate_dbus_interface(${CMAKE_CURRENT_SOURCE_DIR}/davcalendarresource.kcfg org.kde.Akonadi.davCalendar.Settings)
 qt4_add_dbus_adaptor(davcalendarresource_SRCS

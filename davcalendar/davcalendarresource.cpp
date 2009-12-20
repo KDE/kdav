@@ -27,7 +27,7 @@
 #include <QtDBus/QDBusConnection>
 #include <QMutexLocker>
 #include <kcal/incidence.h>
-#include <kcal/kcalmimetypevisitor.h>
+#include <kcal/mimetypevisitor.h>
 #include <kcal/icalformat.h>
 #include <boost/shared_ptr.hpp>
 #include <KWindowSystem>
@@ -35,25 +35,25 @@
 #include <akonadi/itemfetchscope.h>
 #include <akonadi/changerecorder.h>
 #include <akonadi/cachepolicy.h>
+#include <akonadi/collectiondeletejob.h>
 #include <akonadi/itemdeletejob.h>
-#include <kwallet.h>
 
-using namespace KWallet;
 using namespace KCal;
 using namespace Akonadi;
 
 typedef boost::shared_ptr<KCal::Incidence> IncidencePtr;
 
 davCalendarResource::davCalendarResource( const QString &id )
-  : ResourceBase( id ), mMimeVisitor( new KCalMimeTypeVisitor ), accessor( NULL )
+  : ResourceBase( id ), mMimeVisitor( new KCal::MimeTypeVisitor ), accessor( NULL ),
+    nCollectionsRetrieval( 0 )
 {
   new SettingsAdaptor( Settings::self() );
   QDBusConnection::sessionBus().registerObject( QLatin1String( "/Settings" ),
                             Settings::self(), QDBusConnection::ExportAdaptors );
 
-//   davCollectionRoot.setParentCollection( Akonadi::Collection::root() );
-//   davCollectionRoot.setName( name() );
-//   davCollectionRoot.setRemoteId( "davcalendar_resource" );
+  davCollectionRoot.setParentCollection( Akonadi::Collection::root() );
+  davCollectionRoot.setName( name() );
+  davCollectionRoot.setRemoteId( name() );
   
   int refreshInterval = Settings::self()->refreshInterval();
   if( refreshInterval == 0 )
@@ -61,15 +61,16 @@ davCalendarResource::davCalendarResource( const QString &id )
   
   Akonadi::CachePolicy cachePolicy;
   cachePolicy.setInheritFromParent( false );
-  cachePolicy.setSyncOnDemand( true );
+  cachePolicy.setSyncOnDemand( false );
   cachePolicy.setCacheTimeout( -1 );
   cachePolicy.setIntervalCheckTime( refreshInterval );
-//   davCollectionRoot.setCachePolicy( cachePolicy );
+  davCollectionRoot.setCachePolicy( cachePolicy );
   
   QStringList mimeTypes;
   mimeTypes << Collection::mimeType();
-  mimeTypes << "text/calendar";
-//   davCollectionRoot.setContentMimeTypes( mimeTypes );
+//   mimeTypes << "text/calendar";
+  davCollectionRoot.setContentMimeTypes( mimeTypes );
+//   davCollectionRoot.setRights( Collection::ReadOnly );
   
   changeRecorder()->fetchCollection( true );
   changeRecorder()->collectionFetchScope().setAncestorRetrieval( Akonadi::CollectionFetchScope::All );
@@ -90,6 +91,8 @@ void davCalendarResource::cleanup()
   
   if( accessor )
     accessor->removeCache( name() );
+  
+  // TODO: remove kwallet folder
 }
 
 void davCalendarResource::retrieveCollections()
@@ -106,14 +109,17 @@ void davCalendarResource::retrieveCollections()
   
   emit status( Running, i18n( "Fetching collections" ) );
   
-//   Akonadi::Collection::List tmp;
-//   tmp << davCollectionRoot;
-//   collectionsRetrievedIncremental( tmp, Akonadi::Collection::List() );
+  Akonadi::Collection::List tmp;
+  tmp << davCollectionRoot;
+  collectionsRetrievedIncremental( tmp, Akonadi::Collection::List() );
   
-  KUrl url = Settings::self()->remoteUrl();
-  url.setUser( Settings::self()->username() );
-  url.setPass( password );
-  accessor->retrieveCollections( url );
+  foreach( QString urlStr, Settings::self()->remoteUrls() ) {
+    KUrl url( urlStr );
+    url.setUser( Settings::self()->username() );
+    url.setPass( Settings::self()->password() );
+    ++nCollectionsRetrieval;
+    accessor->retrieveCollections( url );
+  }
 }
 
 void davCalendarResource::retrieveItems( const Akonadi::Collection &collection )
@@ -129,7 +135,7 @@ void davCalendarResource::retrieveItems( const Akonadi::Collection &collection )
   setItemStreamingEnabled( true );
   KUrl url = collection.remoteId();
   url.setUser( Settings::self()->username() );
-  url.setPass( password );
+  url.setPass( Settings::self()->password() );
   accessor->retrieveItems( url );
 }
 
@@ -157,41 +163,53 @@ void davCalendarResource::aboutToQuit()
 void davCalendarResource::configure( WId windowId )
 {
   ConfigDialog dialog;
+  Settings::self()->setWinId( windowId );
+  
   if( windowId )
     KWindowSystem::setMainWindow( &dialog, windowId );
   dialog.exec();
   
-  if( !Settings::self()->remoteUrl().endsWith( "/" ) )
-    Settings::self()->setRemoteUrl( Settings::self()->remoteUrl() + "/" );
-  
-  int newICT = Settings::self()->refreshInterval();
-  if( newICT == 0 )
-    newICT = -1;
-//   if( newICT != davCollectionRoot.cachePolicy().intervalCheckTime() ) {
-//     Akonadi::CachePolicy cachePolicy = davCollectionRoot.cachePolicy();
-//     cachePolicy.setIntervalCheckTime( newICT );
-//     davCollectionRoot.setCachePolicy( cachePolicy );
-//   }
-  
-  if( Settings::self()->authenticationRequired() &&
-      !Settings::self()->username().isEmpty() &&
-      !Settings::self()->password().isEmpty() ) {
-    password = Settings::self()->password();
-    Settings::self()->setPassword( "" );
+  if( dialog.result() == QDialog::Accepted ) {
+    QStringList rmCollections = dialog.removedUrls();
+    dialog.setRemovedUrls( QStringList() );
     
-    QString folder = "dav-akonadi-resource_"+Settings::self()->remoteUrl();
-    Wallet *wallet = Wallet::openWallet( Wallet::NetworkWallet(), windowId );
-    if( wallet && wallet->isOpen() ) {
-      if( !wallet->hasFolder( folder ) )
-        wallet->createFolder( folder );
-      wallet->setFolder( folder );
-      wallet->writePassword( Settings::self()->username(), password );
-      delete wallet;
+    if( Settings::self()->authenticationRequired() &&
+        Settings::self()->useKWallet() &&
+        !Settings::self()->username().isEmpty() &&
+        !Settings::self()->password().isEmpty() )
+      Settings::self()->storePassword();
+      
+    
+    foreach( QString declaredUrl, rmCollections ) {
+      if( seenCollections.contains( declaredUrl ) ) {
+        seenCollections.remove( declaredUrl );
+        Akonadi::Collection c;
+        c.setRemoteId( declaredUrl );
+        Akonadi::CollectionDeleteJob *j =
+            new Akonadi::CollectionDeleteJob( c );
+      }
+      else {
+        bool gotMatch = false;
+        foreach( QString realUrl, seenCollections ) {
+          if( realUrl.startsWith( declaredUrl ) ) {
+            gotMatch = true;
+            Akonadi::Collection c;
+            c.setRemoteId( realUrl );
+            Akonadi::CollectionDeleteJob *j =
+                new Akonadi::CollectionDeleteJob( c, this );
+          }
+        }
+        if( gotMatch )
+          seenCollections.remove( declaredUrl );
+      }
     }
+    
+    doResourceInitialization();
+    emit configurationDialogAccepted();
   }
-  
-  delete accessor;
-  doResourceInitialization();
+  else {
+    emit configurationDialogRejected();
+  }
 }
 
 void davCalendarResource::itemAdded( const Akonadi::Item &item, const Akonadi::Collection &collection )
@@ -237,7 +255,7 @@ void davCalendarResource::itemAdded( const Akonadi::Item &item, const Akonadi::C
   QString urlStr = url.prettyUrl(); //QUrl::fromPercentEncoding( url.url().toAscii() );
   putItems[urlStr] = item;
   url.setUser( Settings::self()->username() );
-  url.setPass( password );
+  url.setPass( Settings::self()->password() );
   accessor->putItem( url, "text/calendar", rawData );
 }
 
@@ -270,7 +288,7 @@ void davCalendarResource::itemChanged( const Akonadi::Item &item, const QSet<QBy
   QString urlStr = url.prettyUrl(); //QUrl::fromPercentEncoding( url.url().toAscii() );
   putItems[urlStr] = item;
   url.setUser( Settings::self()->username() );
-  url.setPass( password );
+  url.setPass( Settings::self()->password() );
   accessor->putItem( url, "text/calendar", rawData, true );
 }
 
@@ -288,7 +306,7 @@ void davCalendarResource::itemRemoved( const Akonadi::Item &item )
 
   kDebug() << "Requesting deletion of item at " << urlStr;
   url.setUser( Settings::self()->username() );
-  url.setPass( password );
+  url.setPass( Settings::self()->password() );
   accessor->removeItem( url );
 }
 
@@ -297,38 +315,34 @@ void davCalendarResource::accessorRetrievedCollection( const QString &url, const
   kDebug() << "Accessor retrieved a collection named " << name << " at " << url;
   
   Akonadi::Collection c;
-  c.setParentCollection( Collection::root() );
+  c.setParentCollection( davCollectionRoot );
   c.setRemoteId( url );
   if( name.isEmpty() )
-    c.setName( this->name() );
+    c.setName( this->name() + " (" + url + ")" );
   else
-    c.setName( name );
+    c.setName( name + " (" + url + ")" );
   
   QStringList mimeTypes;
   mimeTypes << "text/calendar";
   mimeTypes += mMimeVisitor->allMimeTypes();
   c.setContentMimeTypes( mimeTypes );
   
-  int refreshInterval = Settings::self()->refreshInterval();
-  if( refreshInterval == 0 )
-    refreshInterval = -1;
-  
   Akonadi::CachePolicy cachePolicy;
-  cachePolicy.setInheritFromParent( false );
-  cachePolicy.setSyncOnDemand( true );
-  cachePolicy.setCacheTimeout( -1 );
-  cachePolicy.setIntervalCheckTime( refreshInterval );
+  cachePolicy.setInheritFromParent( true );
   c.setCachePolicy( cachePolicy );
   
   Akonadi::Collection::List tmp;
   tmp << c;
   collectionsRetrievedIncremental( tmp, Akonadi::Collection::List() );
+  seenCollections << url;
 }
 
 void davCalendarResource::accessorRetrievedCollections()
 {
-  kDebug() << "All collections retrieved";
-  collectionsRetrievalDone();
+  if( --nCollectionsRetrieval == 0 ) {
+    kDebug() << "All collections retrieved";
+    collectionsRetrievalDone();
+  }
 }
 
 void davCalendarResource::accessorRetrievedItem( const davItem &item )
@@ -360,6 +374,7 @@ void davCalendarResource::accessorRetrievedItems()
   retrievedItems.clear();
   locker.unlock();
   itemsRetrievedIncremental( tmp, Akonadi::Item::List() );
+  itemsRetrievalDone();
   accessor->validateCache();
 }
 
@@ -437,8 +452,7 @@ void davCalendarResource::backendItemsRemoved( const QList<davItem> &items )
     removed << i;
   }
   
-  itemsRetrievedIncremental( Akonadi::Item::List(), removed );
-  itemsRetrievalDone();
+  Akonadi::ItemDeleteJob *job = new Akonadi::ItemDeleteJob( removed, this );
   accessor->saveCache( name() );
 }
 
@@ -456,8 +470,12 @@ void davCalendarResource::accessorError( const QString &err, bool cancelRequest 
 
 void davCalendarResource::doResourceInitialization()
 {
-  if( !configurationIsValid() )
+  if( !configurationIsValid() ) {
+    emit status( Broken, i18n( "Resource not configured" ) );
     return;
+  }
+  
+  delete accessor;
   
   switch( Settings::self()->remoteProtocol() ) {
     case Settings::groupdav:
@@ -496,7 +514,10 @@ void davCalendarResource::doResourceInitialization()
   
   connect( accessor, SIGNAL( backendItemsRemoved( const QList<davItem>& ) ),
            this, SLOT( backendItemsRemoved( const QList<davItem>& ) ) );
+  connect( accessor, SIGNAL( backendItemChanged( const davItem& ) ),
+           this, SLOT( backendItemChanged( const davItem& ) ) );
   
+  accessor->loadCache( name() );
   synchronizeCollectionTree();
 }
 
@@ -506,27 +527,35 @@ bool davCalendarResource::configurationIsValid()
       Settings::self()->remoteProtocol() == Settings::caldav ) )
     return false;
   
-  if( Settings::self()->remoteUrl().isEmpty() )
+  if( Settings::self()->remoteUrls().empty() )
     return false;
+  
+  QStringList urls;
+  foreach( QString url, Settings::self()->remoteUrls() ) {
+    if( !url.endsWith( "/" ) )
+      url.append( "/" );
+    urls << url;
+  }
+  Settings::self()->setRemoteUrls( urls );
   
   if( Settings::self()->authenticationRequired() ) {
     if( Settings::self()->username().isEmpty() )
       return false;
     
-    if( password.isEmpty() ) {
-      QString folder = "dav-akonadi-resource_"+Settings::self()->remoteUrl();
-      Wallet *wallet = Wallet::openWallet( Wallet::NetworkWallet(), winIdForDialogs() );
-      if( wallet && wallet->isOpen() ) {
-        if( wallet->hasFolder( folder ) ) {
-          wallet->setFolder( folder );
-          wallet->readPassword( Settings::self()->username(), password );
-        }
-        delete wallet;
-      }
-    }
+    if( Settings::self()->password().isEmpty() )
+      Settings::self()->getPassword();
     
-    if( password.isEmpty() )
+    if( Settings::self()->password().isEmpty() )
       return false;
+  }
+  
+  int newICT = Settings::self()->refreshInterval();
+  if( newICT == 0 )
+    newICT = -1;
+  if( newICT != davCollectionRoot.cachePolicy().intervalCheckTime() ) {
+    Akonadi::CachePolicy cachePolicy = davCollectionRoot.cachePolicy();
+    cachePolicy.setIntervalCheckTime( newICT );
+    davCollectionRoot.setCachePolicy( cachePolicy );
   }
   
   return true;

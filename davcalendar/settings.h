@@ -1,5 +1,8 @@
 /*
     Copyright (c) 2009 Grégory Oestreicher <greg@kamago.net>
+      Based on an original work for the IMAP resource which is :
+    Copyright (c) 2008 Volker Krause <vkrause@kde.org>
+    Copyright (c) 2008 Omat Holding B.V. <info@omat.nl>
     
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -16,39 +19,30 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef CONFIGDIALOG_H
-#define CONFIGDIALOG_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
-#include "ui_configdialog.h"
+#include "settingsbase.h"
 
-#include <QStringList>
-#include <KDialog>
-
-class KConfigDialogManager;
-
-namespace KWallet {
-  class Wallet;
-}
-
-class ConfigDialog : public KDialog
+class Settings : public SettingsBase
 {
   Q_OBJECT
-  public:
-    ConfigDialog( QWidget *parent = 0 );
-    ~ConfigDialog();
-    
-    QStringList removedUrls() const;
-    void setRemovedUrls( const QStringList &l );
-    
-  private slots:
-    void onOkClicked();
-    void onCancelClicked();
-    void urlRemoved( const QString &url );
-    
-  private:
-    Ui::ConfigDialog ui;
-    KConfigDialogManager* mManager;
-    QStringList rmdUrls;
+  Q_CLASSINFO( "D-Bus Interface", "org.kde.Akonadi.davCalendar.Wallet" )
+public:
+  Settings();
+  static Settings* self();
+  void setWinId( WId wid );
+  void storePassword();
+  void getPassword();
+  QString requestPassword( const QString &username );
+  
+public slots:
+  Q_SCRIPTABLE QString password() const;
+  Q_SCRIPTABLE void setPassword( const QString &password );
+  
+private:
+  WId winId;
+  QString pwd;
 };
 
 #endif

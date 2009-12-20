@@ -62,6 +62,7 @@ class davAccessor : public QObject
     virtual void retrieveItem( const KUrl &url ) = 0;
     virtual void putItem( const KUrl &url, const QString &contentType, const QByteArray &data, bool useCachedEtag = false );
     virtual void removeItem( const KUrl &url );
+    void loadCache( const QString &suffix );
     void saveCache( const QString &suffix );
     void removeCache( const QString &suffix );
     
@@ -99,7 +100,7 @@ class davAccessor : public QObject
     void itemsRetrieved();
     void itemPut( const KUrl &oldUrl, const KUrl &newUrl );
     void itemRemoved( const KUrl &url );
-    void backendItemChanged( const davItem &item );
+//     void backendItemChanged( const davItem &item );
     void backendItemsRemoved( const QList<davItem> &items );
 };
 

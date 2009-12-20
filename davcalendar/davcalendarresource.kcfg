@@ -17,8 +17,8 @@
       </choices>
       <default></default>
     </entry>
-    <entry name="remoteUrl" type="String">
-      <label>Remote URL</label>
+    <entry name="remoteUrls" type="StringList">
+      <label>Remote URLs</label>
       <default></default>
     </entry>
     <entry name="refreshInterval" type="Int">
@@ -36,6 +36,9 @@
     <entry name="password" type="Password">
       <label>Password</label>
       <default></default>
+    </entry>
+    <entry name="useKWallet" type="Bool">
+      <default>true</default>
     </entry>
     <entry name="readOnly" type="Bool">
       <label>Do not change the actual backend data.</label>
