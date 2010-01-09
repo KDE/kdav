@@ -23,32 +23,22 @@
 #include <QStringList>
 #include <QMutex>
 
-#include "../common/davaccessor.h"
+#include "../common/davimplementation.h"
 
 class KJob;
 
-class caldavCalendarAccessor : public davAccessor
+class caldavCalendar : public davImplementation
 {
-  Q_OBJECT
-  
   public:
-    caldavCalendarAccessor();
-    virtual void retrieveCollections( const KUrl &url );
-    virtual void retrieveItems( const KUrl &url );
-    virtual void retrieveItem( const KUrl &url );
-    
-  protected:
-    void runItemsFetch( const QString &collectionUrl );
-    
-  private slots:
-    void collectionsPropfindFinished( KJob *j );
-    void itemsReportFinished( KJob *j );
-    void multigetFinished( KJob *j );
-    
+    caldavCalendar();
+    virtual bool useReport() const;
+    virtual bool useMultiget() const;
+    virtual QDomDocument collectionsQuery() const;
+    virtual QString collectionsXQuery() const;
+    virtual const QList<QDomDocument>& itemsQueries() const;
+    virtual QDomDocument itemsReportQuery( const QStringList &urls ) const;
   private:
-    QMap<QString, QStringList> fetchItemsQueue; // collection url, items urls
-    QMutex fetchItemsQueueMtx;
-    int runningQueries;
+    QList<QDomDocument> itemsQueries_;
 };
 
 #endif

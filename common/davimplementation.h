@@ -16,26 +16,23 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef GROUPDAVCALENDAR_H
-#define GROUPDAVCALENDAR_H
+#ifndef DAV_IMPLEMENTATION_H
+#define DAV_IMPLEMENTATION_H
 
-#include <QMutex>
+#include <QDomDocument>
+#include <QString>
+#include <QList>
 
-#include "../common/davimplementation.h"
-
-class KJob;
-
-class groupdavCalendar : public davImplementation
+class davImplementation
 {
   public:
-    groupdavCalendar();
-    virtual bool useReport() const;
-    virtual bool useMultiget() const;
-    virtual QDomDocument collectionsQuery() const;
-    virtual QString collectionsXQuery() const;
-    virtual const QList<QDomDocument>& itemsQueries() const;
-  private:
-    QList<QDomDocument> itemsQueries_;
+    virtual bool useReport() const = 0;
+    virtual bool useMultiget() const = 0;
+    virtual QDomDocument collectionsQuery() const = 0;
+    virtual QString collectionsXQuery() const = 0;
+    virtual const QList<QDomDocument>& itemsQueries() const = 0;
+    virtual QDomDocument itemsReportQuery( const QStringList &urls ) const
+      { return QDomDocument(); }
 };
 
 #endif
