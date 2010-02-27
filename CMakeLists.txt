@@ -1,1 +1,1 @@
-add_subdirectory( davcalendar )
+add_subdirectory( resource )
