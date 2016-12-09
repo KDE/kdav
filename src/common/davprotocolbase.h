@@ -24,6 +24,7 @@
 #include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtXml/QDomDocument>
+#include <QSharedPointer>
 
 /**
  * @short Base class for XML query builders

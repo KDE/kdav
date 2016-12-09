@@ -18,6 +18,8 @@
 
 #include "davprotocolbase.h"
 
+#include <QVariant>
+
 XMLQueryBuilder::~XMLQueryBuilder()
 {
 }

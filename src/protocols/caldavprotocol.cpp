@@ -17,15 +17,16 @@
 */
 
 #include "caldavprotocol.h"
-#include "davutils.h"
+#include "common/davutils.h"
 
-#include <KCalCore/Event>
-#include <KCalCore/Journal>
-#include <KCalCore/Todo>
+//#include <KCalCore/Event>
+//#include <KCalCore/Journal>
+//#include <KCalCore/Todo>
 
 #include <QtCore/QDateTime>
 #include <QtCore/QStringList>
 #include <QtCore/QUrl>
+#include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
 
 class CaldavCollectionQueryBuilder : public XMLQueryBuilder
@@ -118,7 +119,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return KCalCore::Event::eventMimeType();
+        return QStringLiteral("KCalCore::Event::eventMimeType()");
     }
 };
 
@@ -183,7 +184,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return KCalCore::Todo::todoMimeType();
+        return QStringLiteral("KCalCore::Todo::todoMimeType()");
     }
 };
 
@@ -248,7 +249,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return KCalCore::Journal::journalMimeType();
+        return QStringLiteral("KCalCore::Journal::journalMimeType()");
     }
 };
 
@@ -275,13 +276,7 @@ public:
         for (const QString &url : urls) {
             QDomElement hrefElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("href"));
             const QUrl pathUrl = QUrl::fromUserInput(url);
-            QString encodedUrl = QString::fromAscii(pathUrl.encodedPath());
-            if (pathUrl.hasQuery()) {
-                encodedUrl.append(QStringLiteral("?"));
-                encodedUrl.append(QString::fromAscii(pathUrl.encodedQuery()));
-            }
-
-            const QDomText textNode = document.createTextNode(encodedUrl);
+            const QDomText textNode = document.createTextNode(pathUrl.toString());
             hrefElement.appendChild(textNode);
 
             multigetElement.appendChild(hrefElement);

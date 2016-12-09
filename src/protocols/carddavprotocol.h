@@ -19,7 +19,7 @@
 #ifndef CARDDAVPROTOCOL_H
 #define CARDDAVPROTOCOL_H
 
-#include "davmultigetprotocol.h"
+#include "common/davmultigetprotocol.h"
 
 class CarddavProtocol : public DavMultigetProtocol
 {

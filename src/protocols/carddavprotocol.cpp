@@ -18,9 +18,10 @@
 
 #include "carddavprotocol.h"
 
-#include <kcontacts/addressee.h>
+//#include <KContacts/Addressee>
 
 #include <QtCore/QStringList>
+#include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
 
 class CarddavCollectionQueryBuilder : public XMLQueryBuilder
@@ -71,7 +72,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return KContacts::Addressee::mimeType();
+        return QStringLiteral("KContacts::Addressee::mimeType()");
     }
 };
 
@@ -100,13 +101,7 @@ public:
         for (const QString &url : urls) {
             QDomElement hrefElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("href"));
             const QUrl pathUrl = QUrl::fromUserInput(url);
-            QString encodedUrl = QString::fromAscii(pathUrl.encodedPath());
-            if (pathUrl.hasQuery()) {
-                encodedUrl.append(QStringLiteral("?"));
-                encodedUrl.append(QString::fromAscii(pathUrl.encodedQuery()));
-            }
-
-            const QDomText textNode = document.createTextNode(encodedUrl);
+            const QDomText textNode = document.createTextNode(pathUrl.toString());
             hrefElement.appendChild(textNode);
 
             multigetElement.appendChild(hrefElement);

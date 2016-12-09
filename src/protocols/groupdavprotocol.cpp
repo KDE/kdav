@@ -18,8 +18,9 @@
 
 #include "groupdavprotocol.h"
 
-#include "davutils.h"
+#include "common/davutils.h"
 
+#include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
 
 class GroupdavCollectionQueryBuilder : public XMLQueryBuilder

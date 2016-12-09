@@ -22,15 +22,7 @@
 #include <QtCore/QList>
 #include <QtCore/QUrl>
 #include <QtXml/QDomElement>
-
-#include <AkonadiCore/Item>
-
-class DavItem;
-namespace Akonadi
-{
-class Collection;
-class Item;
-}
+#include <QVector>
 
 /**
  * @short A namespace that contains helper methods for DAV functionality.
@@ -72,21 +64,10 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(Privileges)
 QLatin1String protocolName(Protocol protocol);
 
 /**
- * Returns the i18n'ed name of the given DAV @p protocol dialect.
- */
-QString translatedProtocolName(Protocol protocol);
-
-/**
  * Returns the protocol matching the given name. This is the opposite of
  * DavUtils::protocolName().
  */
 Protocol protocolByName(const QString &name);
-
-/**
- * Returns the protocol matching the given i18n'ed @p name. This is the opposite
- * of DavUtils::translatedProtocolName().
- */
-Protocol protocolByTranslatedName(const QString &name);
 
 /**
  * @short A helper class to combine url and protocol of a DAV url.
@@ -161,19 +142,6 @@ Privileges parsePrivilege(const QDomElement &element);
  * Creates a unique identifier that can be used as a file name to upload the dav item
  */
 QString createUniqueId();
-
-/**
- * Creates a new DavItem from the Akonadi::Item @p item.
- *
- * The returned item will have no payload (DavItem::data() will return an empty
- * QByteArray) if the @p item payload is not recognized.
- */
-DavItem createDavItem(const Akonadi::Item &item, const Akonadi::Collection &collection, const Akonadi::Item::List &dependentItems = Akonadi::Item::List());
-
-/**
- * Parses the DAV data contained in @p source and puts it in @p target and @extraItems.
- */
-bool parseDavData(const DavItem &source, Akonadi::Item &target, Akonadi::Item::List &extraItems);
 
 /**
  * Returns the mimetype that shall be used for contact DAV resources using @p protocol.

@@ -18,9 +18,9 @@
 
 #include "davmanager.h"
 
-#include "caldavprotocol.h"
-#include "carddavprotocol.h"
-#include "groupdavprotocol.h"
+#include "protocols/caldavprotocol.h"
+#include "protocols/carddavprotocol.h"
+#include "protocols/groupdavprotocol.h"
 
 #include <kio/davjob.h>
 #include <QDebug>

@@ -19,7 +19,7 @@
 #ifndef CALDAVPROTOCOL_H
 #define CALDAVPROTOCOL_H
 
-#include "davmultigetprotocol.h"
+#include "common/davmultigetprotocol.h"
 
 class CaldavProtocol : public DavMultigetProtocol
 {
