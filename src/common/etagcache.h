@@ -24,13 +24,6 @@
 #include <QtCore/QSet>
 #include <QtCore/QStringList>
 
-namespace Akonadi
-{
-class Collection;
-}
-
-class KJob;
-
 /**
  * @short A helper class to cache etags.
  *
@@ -48,7 +41,7 @@ public:
      * Creates a new etag cache and populates it with the ETags
      * of items found in @p collection.
      */
-    explicit EtagCache(const Akonadi::Collection &collection, QObject *parent = Q_NULLPTR);
+    explicit EtagCache(QObject *parent = Q_NULLPTR);
 
     /**
      * Sets the ETag for the remote ID. If the remote ID is marked as
@@ -94,8 +87,11 @@ public:
      */
     QStringList changedRemoteIds() const;
 
-private Q_SLOTS:
-    void onItemFetchJobFinished(KJob *job);
+protected:
+    /**
+     * Sets the ETag for the remote ID.
+     */
+    void setEtagInternal(const QString &remoteId, const QString &etag);
 
 private:
     QMap<QString, QString> mCache;

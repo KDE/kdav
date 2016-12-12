@@ -34,6 +34,7 @@ set( davgroupwareresource_SRCS
  common/davprincipalhomesetsfetchjob.cpp
  common/davprincipalsearchjob.cpp
  common/davutils.cpp
+ common/etagcache.cpp
 
  protocols/groupdavprotocol.cpp
 
@@ -44,7 +45,7 @@ set( davgroupwareresource_SRCS
  protocols/caldavprotocol.cpp
 
  #With Akonadi reference
- common/etagcache.cpp
+ #common/etagcache-akonadi.cpp
 
  #common/davutils-akonadi.cpp
  #resource/davprotocolattribute.cpp
@@ -69,7 +70,7 @@ target_link_libraries(libdav
        Qt5::XmlPatterns
        KF5::KIOCore
        KF5::I18n
-       KF5::AkonadiCore
+       #KF5::AkonadiCore
        #KF5::Contacts
        #KF5::CalendarCore
        )

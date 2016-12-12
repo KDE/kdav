@@ -18,28 +18,24 @@
 
 #include "etagcache.h"
 
-#include <collection.h>
-#include <item.h>
-#include <itemfetchjob.h>
-#include <itemfetchscope.h>
-#include <kjob.h>
-
-EtagCache::EtagCache(const Akonadi::Collection &collection, QObject *parent)
+EtagCache::EtagCache(QObject *parent)
     : QObject(parent)
 {
-    Akonadi::ItemFetchJob *job = new Akonadi::ItemFetchJob(collection);
-    job->fetchScope().fetchFullPayload(false);   // We only need the remote id and the revision
-    connect(job, &Akonadi::ItemFetchJob::result, this, &EtagCache::onItemFetchJobFinished);
-    job->start();
+
 }
 
 void EtagCache::setEtag(const QString &remoteId, const QString &etag)
 {
-    mCache[ remoteId ] = etag;
+    setEtagInternal(remoteId, etag);
 
     if (mChangedRemoteIds.contains(remoteId)) {
         mChangedRemoteIds.remove(remoteId);
     }
+}
+
+void EtagCache::setEtagInternal(const QString &remoteId, const QString &etag)
+{
+    mCache[ remoteId ] = etag;
 }
 
 bool EtagCache::contains(const QString &remoteId)
@@ -76,21 +72,5 @@ QStringList EtagCache::urls() const
 QStringList EtagCache::changedRemoteIds() const
 {
     return mChangedRemoteIds.toList();
-}
-
-void EtagCache::onItemFetchJobFinished(KJob *job)
-{
-    if (job->error()) {
-        return;
-    }
-
-    const Akonadi::ItemFetchJob *fetchJob = qobject_cast<Akonadi::ItemFetchJob *>(job);
-    const Akonadi::Item::List items = fetchJob->items();
-
-    for (const Akonadi::Item &item : items) {
-        if (!mCache.contains(item.remoteId())) {
-            mCache[item.remoteId()] = item.remoteRevision();
-        }
-    }
 }
 
