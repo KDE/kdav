@@ -36,7 +36,7 @@ set(LIBDAV_VERSION "5.4.0")
 
 configure_file(libdav-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/libdav-version.h @ONLY)
 
-set(KF5_VERSION "5.28.0")
+set(KF5_VERSION "5.27.0")
 find_package(ECM ${KF5_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${kdepim-runtime_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PATH})
 
