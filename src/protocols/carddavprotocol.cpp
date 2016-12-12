@@ -18,8 +18,6 @@
 
 #include "carddavprotocol.h"
 
-//#include <KContacts/Addressee>
-
 #include <QtCore/QStringList>
 #include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
@@ -72,7 +70,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return QStringLiteral("KContacts::Addressee::mimeType()");
+        return QStringLiteral("text/vcard");
     }
 };
 

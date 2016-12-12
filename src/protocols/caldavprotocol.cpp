@@ -19,10 +19,6 @@
 #include "caldavprotocol.h"
 #include "common/davutils.h"
 
-//#include <KCalCore/Event>
-//#include <KCalCore/Journal>
-//#include <KCalCore/Todo>
-
 #include <QtCore/QDateTime>
 #include <QtCore/QStringList>
 #include <QtCore/QUrl>
@@ -119,7 +115,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return QStringLiteral("KCalCore::Event::eventMimeType()");
+        return QStringLiteral("text/calendar");     //TODO: set correct mimetype
     }
 };
 
@@ -184,7 +180,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return QStringLiteral("KCalCore::Todo::todoMimeType()");
+        return QStringLiteral("KCalCore::Todo::todoMimeType()");    //TODO: set correct mimetype
     }
 };
 
@@ -249,7 +245,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return QStringLiteral("KCalCore::Journal::journalMimeType()");
+        return QStringLiteral("KCalCore::Journal::journalMimeType()"); //TODO: set correct mimetype
     }
 };
 
