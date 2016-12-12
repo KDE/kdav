@@ -32,7 +32,9 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    const QUrl mainUrl(QStringLiteral("DAVURL"));
+    QUrl mainUrl(QStringLiteral("http://kolab/iRony/addressbooks/john.doe%40example.org"));
+    mainUrl.setUserName(QStringLiteral("john.doe@example.org"));
+    mainUrl.setPassword(QStringLiteral("Welcome2KolabSystems"));
     DavUtils::DavUrl davUrl(mainUrl, DavUtils::CardDav);
 
     auto *job = new DavCollectionsFetchJob(davUrl);
