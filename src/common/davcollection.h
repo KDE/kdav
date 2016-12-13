@@ -19,8 +19,9 @@
 #ifndef DAVCOLLECTION_H
 #define DAVCOLLECTION_H
 
-#include "davutils.h"
 #include "libkdav_export.h"
+
+#include "davutils.h"
 
 #include <QColor>
 #include <QtCore/QVector>

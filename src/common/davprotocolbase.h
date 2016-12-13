@@ -19,6 +19,8 @@
 #ifndef DAVPROTOCOLBASE_H
 #define DAVPROTOCOLBASE_H
 
+#include "libkdav_export.h"
+
 #include "davcollection.h"
 
 #include <QtCore/QList>
@@ -29,7 +31,7 @@
 /**
  * @short Base class for XML query builders
  */
-class XMLQueryBuilder
+class LIBKDAV_EXPORT XMLQueryBuilder
 {
 public:
     typedef QSharedPointer<XMLQueryBuilder> Ptr;
@@ -57,7 +59,7 @@ private:
  *   @li CarddavProtocol
  *   @li GroupdavProtocol
  */
-class DavProtocolBase
+class LIBKDAV_EXPORT DavProtocolBase
 {
 public:
     /**

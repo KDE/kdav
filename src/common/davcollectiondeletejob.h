@@ -19,6 +19,8 @@
 #ifndef DAVCOLLECTIONDELETEJOB_H
 #define DAVCOLLECTIONDELETEJOB_H
 
+#include "libkdav_export.h"
+
 #include "davutils.h"
 
 #include <kjob.h>
@@ -28,7 +30,7 @@
  *
  * This job is used to delete a DAV collection at a certain URL.
  */
-class DavCollectionDeleteJob : public KJob
+class LIBKDAV_EXPORT DavCollectionDeleteJob : public KJob
 {
     Q_OBJECT
 

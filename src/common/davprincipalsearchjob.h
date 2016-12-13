@@ -19,6 +19,8 @@
 #ifndef DAVPRINCIPALSEARCHJOB_H
 #define DAVPRINCIPALSEARCHJOB_H
 
+#include "libkdav_export.h"
+
 #include "davutils.h"
 
 #include <QtCore/QList>
@@ -35,7 +37,7 @@
  *
  * The properties to fetch are set with @ref fetchProperty().
  */
-class DavPrincipalSearchJob : public KJob
+class LIBKDAV_EXPORT DavPrincipalSearchJob : public KJob
 {
     Q_OBJECT
 

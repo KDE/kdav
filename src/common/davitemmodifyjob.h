@@ -19,6 +19,8 @@
 #ifndef DAVITEMMODIFYJOB_H
 #define DAVITEMMODIFYJOB_H
 
+#include "libkdav_export.h"
+
 #include "davitem.h"
 #include "davjobbase.h"
 #include "davutils.h"
@@ -26,7 +28,7 @@
 /**
  * @short A job that modifies a DAV item on the DAV server.
  */
-class DavItemModifyJob : public DavJobBase
+class LIBKDAV_EXPORT DavItemModifyJob : public DavJobBase
 {
     Q_OBJECT
 

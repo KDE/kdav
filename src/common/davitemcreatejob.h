@@ -19,6 +19,8 @@
 #ifndef DAVITEMCREATEJOB_H
 #define DAVITEMCREATEJOB_H
 
+#include "libkdav_export.h"
+
 #include "davitem.h"
 #include "davjobbase.h"
 #include "davutils.h"
@@ -26,7 +28,7 @@
 /**
  * @short A job to create a DAV item on the DAV server.
  */
-class DavItemCreateJob : public DavJobBase
+class LIBKDAV_EXPORT DavItemCreateJob : public DavJobBase
 {
     Q_OBJECT
 

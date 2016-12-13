@@ -19,6 +19,8 @@
 #ifndef DAVMANAGER_H
 #define DAVMANAGER_H
 
+#include "libkdav_export.h"
+
 #include "davutils.h"
 
 #include <QtCore/QMap>
@@ -42,7 +44,7 @@ class QDomDocument;
  * low-level DAV jobs and has access to the global DAV protocol dialect
  * objects which abstract the access to the various DAV protocol dialects.
  */
-class DavManager
+class LIBKDAV_EXPORT DavManager
 {
 public:
     /**

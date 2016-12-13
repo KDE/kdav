@@ -19,6 +19,8 @@
 #ifndef DAVITEMDELETEJOB_H
 #define DAVITEMDELETEJOB_H
 
+#include "libkdav_export.h"
+
 #include "davitem.h"
 #include "davjobbase.h"
 #include "davutils.h"
@@ -26,7 +28,7 @@
 /**
  * @short A job to delete a DAV item on the DAV server.
  */
-class DavItemDeleteJob : public DavJobBase
+class LIBKDAV_EXPORT DavItemDeleteJob : public DavJobBase
 {
     Q_OBJECT
 

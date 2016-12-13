@@ -19,12 +19,14 @@
 #ifndef DAVMULTIGETPROTOCOL_H
 #define DAVMULTIGETPROTOCOL_H
 
+#include "libkdav_export.h"
+
 #include "davprotocolbase.h"
 
 /**
  * @short Base class for protocols that implement multiget capabilities
  */
-class DavMultigetProtocol : public DavProtocolBase
+class LIBKDAV_EXPORT DavMultigetProtocol : public DavProtocolBase
 {
 public:
     /**

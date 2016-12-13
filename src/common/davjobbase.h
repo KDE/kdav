@@ -19,12 +19,14 @@
 #ifndef DAVJOBBASE_H
 #define DAVJOBBASE_H
 
-#include <kjob.h>
+#include "libkdav_export.h"
+
+#include <KCoreAddons/KJob>
 
 /**
  * @short base class for the jobs used by the resource.
  */
-class DavJobBase : public KJob
+class LIBKDAV_EXPORT DavJobBase : public KJob
 {
     Q_OBJECT
 

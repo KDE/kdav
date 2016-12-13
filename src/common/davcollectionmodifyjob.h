@@ -19,6 +19,8 @@
 #ifndef DAVCOLLECTIONMODIFYJOB_H
 #define DAVCOLLECTIONMODIFYJOB_H
 
+#include "libkdav_export.h"
+
 #include "davutils.h"
 
 #include <QtCore/QList>
@@ -31,7 +33,7 @@
  * This job is used to modify a property of a DAV collection
  * on the DAV server.
  */
-class DavCollectionModifyJob : public KJob
+class LIBKDAV_EXPORT DavCollectionModifyJob : public KJob
 {
     Q_OBJECT
 
