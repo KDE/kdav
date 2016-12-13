@@ -16,12 +16,12 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include "common/davutils.h"
-#include "common/davcollectionsfetchjob.h"
-#include "common/davitemfetchjob.h"
-#include "common/davitemsfetchjob.h"
-#include "common/davitemslistjob.h"
-#include "common/etagcache.h"
+#include <KDAV/DavUtils>
+#include <KDAV/DavCollectionsFetchJob>
+#include <KDAV/DavItemFetchJob>
+#include <KDAV/DavItemsFetchJob>
+#include <KDAV/DavItemsListJob>
+#include <KDAV/EtagCache>
 
 #include <QtCore/QDebug>
 #include <QtCore/QStringList>

@@ -1,12 +1,3 @@
-add_definitions(-DTRANSLATION_DOMAIN=\"akonadi_davgroupware_resource\")
-
-if(WIN32)
-   set(LIB_INSTALL_DIR ${KDE_INSTALL_LIBDIR}
-                       RUNTIME DESTINATION ${KDE_INSTALL_BINDIR}
-                       LIBRARY DESTINATION ${KDE_INSTALL_LIBDIR}
-                       ARCHIVE DESTINATION ${KDE_INSTALL_LIBDIR} )
-endif()
-
 include_directories(
    common/
    protocols/
@@ -51,7 +42,57 @@ set(libkdav_SRCS
  #resource/davprotocolattribute.cpp
 )
 
-ecm_qt_declare_logging_category(libkdav_SRCS HEADER kdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav)
+
+ecm_generate_headers(KDAV_Camelcase_HEADERS
+    HEADER_NAMES
+    DavJobBase
+    DavCollection
+    DavCollectionDeleteJob
+    DavCollectionsFetchJob
+    DavCollectionModifyJob
+    DavCollectionsMultiFetchJob
+    DavProtocolBase
+    DavItem
+    DavItemCreateJob
+    DavItemDeleteJob
+    DavItemFetchJob
+    DavItemModifyJob
+    DavItemsFetchJob
+    DavItemsListJob
+    DavManager
+    DavUtils
+    EtagCache
+    REQUIRED_HEADERS KDAV_HEADERS
+    PREFIX KDAV
+    RELATIVE common
+    )
+
+install(FILES
+    ${KDAV_Camelcase_HEADERS}
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KDAV
+    COMPONENT Devel
+    )
+
+install(FILES
+    ${KDAV_HEADERS}
+    ${CMAKE_CURRENT_BINARY_DIR}/libkdav_export.h
+    ${CMAKE_CURRENT_BINARY_DIR}/libkdav_debug.h
+
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kdav
+    COMPONENT Devel
+    )
+
+ecm_generate_pri_file(BASE_NAME kdav
+    LIB_NAME libkdav
+    FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KDAV
+    )
+
+install(FILES
+    ${PRI_FILENAME}
+    DESTINATION ${ECM_MKSPECS_INSTALL_DIR}
+    )
+
+ecm_qt_declare_logging_category(libkdav_SRCS HEADER libkdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav)
 
 add_library(libkdav
    ${libkdav_SRCS}
@@ -60,25 +101,19 @@ add_library(libkdav
 generate_export_header(libkdav BASE_NAME libkdav)
 
 target_link_libraries(libkdav
+PUBLIC
+    KF5::CoreAddons
 PRIVATE
-       Qt5::Xml
-       Qt5::Gui
-       Qt5::XmlPatterns
-       KF5::KIOCore
-       KF5::I18n
-       #KF5::AkonadiCore
-       #KF5::Contacts
-       #KF5::CalendarCore
-       )
+    Qt5::Xml
+    Qt5::Gui
+    Qt5::XmlPatterns
+    KF5::KIOCore
+    KF5::I18n
+    #KF5::Akonadi
+    )
 
 
 install(TARGETS
     libkdav
     EXPORT KDAVTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} ${LIBRARY_NAMELINK}
     )
-
-#set_target_properties(libkdav PROPERTIES
-#    VERSION ${LIBDAV_VERSION_STRING}
-#    SOVERSION 5
-#    EXPORT_NAME libkdav
-#    )
