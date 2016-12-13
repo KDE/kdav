@@ -19,6 +19,8 @@
 #ifndef ETAGCACHE_H
 #define ETAGCACHE_H
 
+#include "libkdav_export.h"
+
 #include <QtCore/QMap>
 #include <QtCore/QObject>
 #include <QtCore/QSet>
@@ -32,7 +34,7 @@
  * out which items have been changed in the backend and have to
  * be refetched on the next call of ResourceBase::retrieveItems()
  */
-class EtagCache : public QObject
+class LIBKDAV_EXPORT EtagCache : public QObject
 {
     Q_OBJECT
 

@@ -19,6 +19,8 @@
 #ifndef DAVITEM_H
 #define DAVITEM_H
 
+#include "libkdav_export.h"
+
 #include <QtCore/QByteArray>
 #include <QtCore/QDataStream>
 #include <QtCore/QList>
@@ -33,7 +35,7 @@
  * @note While the DAV RFC names them DAV resource we call them items
  *       to comply to Akonadi terminology.
  */
-class DavItem
+class LIBKDAV_EXPORT DavItem
 {
 public:
     /**

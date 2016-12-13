@@ -19,6 +19,8 @@
 #ifndef DAVITEMFETCHJOB_H
 #define DAVITEMFETCHJOB_H
 
+#include "libkdav_export.h"
+
 #include "davitem.h"
 #include "davjobbase.h"
 #include "davutils.h"
@@ -26,7 +28,7 @@
 /**
  * @short A job that fetches a DAV item from the DAV server.
  */
-class DavItemFetchJob : public DavJobBase
+class LIBKDAV_EXPORT DavItemFetchJob : public DavJobBase
 {
     Q_OBJECT
 

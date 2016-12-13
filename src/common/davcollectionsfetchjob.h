@@ -19,6 +19,8 @@
 #ifndef DAVCOLLECTIONSFETCHJOB_H
 #define DAVCOLLECTIONSFETCHJOB_H
 
+#include "libkdav_export.h"
+
 #include "davcollection.h"
 #include "davutils.h"
 
@@ -30,7 +32,7 @@
  * This job is used to fetch all DAV collection that are available
  * under a certain DAV url.
  */
-class DavCollectionsFetchJob : public KJob
+class LIBKDAV_EXPORT DavCollectionsFetchJob : public KJob
 {
     Q_OBJECT
 

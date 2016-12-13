@@ -19,6 +19,8 @@
 #ifndef DAVITEMSLISTJOB_H
 #define DAVITEMSLISTJOB_H
 
+#include "libkdav_export.h"
+
 #include "davitem.h"
 #include "davutils.h"
 
@@ -32,7 +34,7 @@ class EtagCache;
 /**
  * @short A job that lists all DAV items inside a DAV collection.
  */
-class DavItemsListJob : public KJob
+class LIBKDAV_EXPORT DavItemsListJob : public KJob
 {
     Q_OBJECT
 

@@ -19,6 +19,8 @@
 #ifndef DAVUTILS_H
 #define DAVUTILS_H
 
+#include "libkdav_export.h"
+
 #include <QtCore/QList>
 #include <QtCore/QUrl>
 #include <QtXml/QDomElement>
@@ -72,7 +74,7 @@ Protocol protocolByName(const QString &name);
 /**
  * @short A helper class to combine url and protocol of a DAV url.
  */
-class DavUrl
+class LIBKDAV_EXPORT DavUrl
 {
 public:
     /**
@@ -121,32 +123,32 @@ private:
 /**
  * Returns the first child element of @p parent that has the given @p tagName and is part of the @p namespaceUri.
  */
-QDomElement firstChildElementNS(const QDomElement &parent, const QString &namespaceUri, const QString &tagName);
+QDomElement LIBKDAV_EXPORT firstChildElementNS(const QDomElement &parent, const QString &namespaceUri, const QString &tagName);
 
 /**
  * Returns the next sibling element of @p element that has the given @p tagName and is part of the @p namespaceUri.
  */
-QDomElement nextSiblingElementNS(const QDomElement &element, const QString &namespaceUri, const QString &tagName);
+QDomElement LIBKDAV_EXPORT nextSiblingElementNS(const QDomElement &element, const QString &namespaceUri, const QString &tagName);
 
 /**
  * Extracts privileges from @p element. The <privilege/> tags are expected to be first level children of @p element.
  */
-Privileges extractPrivileges(const QDomElement &element);
+Privileges LIBKDAV_EXPORT extractPrivileges(const QDomElement &element);
 
 /**
  * Parses a single <privilege/> tag and returns the final Privileges.
  */
-Privileges parsePrivilege(const QDomElement &element);
+Privileges LIBKDAV_EXPORT parsePrivilege(const QDomElement &element);
 
 /**
  * Creates a unique identifier that can be used as a file name to upload the dav item
  */
-QString createUniqueId();
+QString LIBKDAV_EXPORT createUniqueId();
 
 /**
  * Returns the mimetype that shall be used for contact DAV resources using @p protocol.
  */
-QString contactsMimeType(Protocol protocol);
+QString LIBKDAV_EXPORT contactsMimeType(Protocol protocol);
 }
 
 Q_DECLARE_TYPEINFO(DavUtils::DavUrl, Q_MOVABLE_TYPE);

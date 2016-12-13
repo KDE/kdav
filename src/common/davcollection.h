@@ -20,6 +20,7 @@
 #define DAVCOLLECTION_H
 
 #include "davutils.h"
+#include "libkdav_export.h"
 
 #include <QColor>
 #include <QtCore/QVector>
@@ -31,7 +32,7 @@
  * This class is used as container to transfer information about DAV
  * collections between the Akonadi resource and the DAV jobs.
  */
-class DavCollection
+class LIBKDAV_EXPORT DavCollection
 {
 public:
     /**

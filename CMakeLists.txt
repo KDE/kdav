@@ -42,6 +42,8 @@ set(CMAKE_MODULE_PATH ${kdepim-runtime_SOURCE_DIR}/cmake/modules ${ECM_MODULE_PA
 
 include(ECMPackageConfigHelpers)
 include(ECMSetupVersion)
+include(GenerateExportHeader)
+include(ECMGenerateHeaders)
 include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
@@ -65,6 +67,38 @@ find_package(KF5I18n ${KF5_VERSION} CONFIG REQUIRED)
 add_definitions( -DQT_NO_CAST_FROM_ASCII )
 add_definitions( -DQT_NO_CAST_TO_ASCII )
 add_definitions( -DQT_NO_URL_CAST_FROM_STRING )
+
+ecm_setup_version(${LIBKDAV_VERSION} VARIABLE_PREFIX KDAV
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/libkdav_version.h"
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KDAVConfigVersion.cmake"
+    SOVERSION 5
+    )
+
+
+########### Targets ###########
+
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KDAV")
+
+ecm_configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/KDAVConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/KDAVConfig.cmake"
+    INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
+    )
+
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/KDAVConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/KDAVConfigVersion.cmake"
+    DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+    COMPONENT Devel
+    )
+
+install(EXPORT KDAVTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KDAVTargets.cmake NAMESPACE KF5::)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/libkdav_version.h
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5} COMPONENT Devel
+    )
+
 
 add_subdirectory(src)
 add_subdirectory(test)

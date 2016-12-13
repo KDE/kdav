@@ -57,7 +57,10 @@ add_library(libkdav
    ${libkdav_SRCS}
    )
 
+generate_export_header(libkdav BASE_NAME libkdav)
+
 target_link_libraries(libkdav
+PRIVATE
        Qt5::Xml
        Qt5::Gui
        Qt5::XmlPatterns
@@ -68,9 +71,10 @@ target_link_libraries(libkdav
        #KF5::CalendarCore
        )
 
+
 install(TARGETS
     libkdav
-    EXPORT libkdavTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} ${LIBRARY_NAMELINK}
+    EXPORT KDAVTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} ${LIBRARY_NAMELINK}
     )
 
 #set_target_properties(libkdav PROPERTIES
