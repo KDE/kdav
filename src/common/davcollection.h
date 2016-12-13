@@ -16,17 +16,20 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef DAVCOLLECTION_H
-#define DAVCOLLECTION_H
+#pragma once
 
 #include "libkdav_export.h"
 
 #include "davutils.h"
 
-#include <QColor>
+#include <memory>
+
 #include <QtCore/QVector>
 #include <QtCore/QString>
 
+class QColor;
+
+class DavCollectionPrivate;
 /**
  * @short A helper class to store information about DAV collection.
  *
@@ -68,6 +71,11 @@ public:
      * @param contentTypes The possible content types of the collection.
      */
     DavCollection(DavUtils::Protocol protocol, const QString &url, const QString &displayName, ContentTypes contentTypes);
+
+    DavCollection(const DavCollection &other);
+    DavCollection &operator=(const DavCollection &other);
+
+    ~DavCollection();
 
     /**
      * Sets the DAV @p protocol dialect the collection comes from.
@@ -142,15 +150,8 @@ public:
     DavUtils::Privileges privileges() const;
 
 private:
-    DavUtils::Protocol mProtocol;
-    QString mCTag;
-    QString mUrl;
-    QString mDisplayName;
-    QColor mColor;
-    ContentTypes mContentTypes;
-    DavUtils::Privileges mPrivileges;
+    std::unique_ptr<DavCollectionPrivate> d;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(DavCollection::ContentTypes)
 Q_DECLARE_TYPEINFO(DavCollection, Q_MOVABLE_TYPE);
-#endif

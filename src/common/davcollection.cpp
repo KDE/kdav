@@ -18,82 +18,135 @@
 
 #include "davcollection.h"
 
+#include <QColor>
+
+class DavCollectionPrivate
+{
+public:
+    DavCollectionPrivate(DavCollection *qPtr) : q(qPtr) {}
+
+    void fillFrom(const DavCollectionPrivate &other);
+
+    DavCollection *q;
+    DavUtils::Protocol mProtocol;
+    QString mCTag;
+    QString mUrl;
+    QString mDisplayName;
+    QColor mColor;
+    DavCollection::ContentTypes mContentTypes;
+    DavUtils::Privileges mPrivileges;
+};
+
+void DavCollectionPrivate::fillFrom(const DavCollectionPrivate &other)
+{
+    mProtocol = other.mProtocol;
+    mCTag = other.mCTag;
+    mUrl = other.mUrl;
+    mDisplayName = other.mDisplayName;
+    mColor = other.mColor;
+    mContentTypes = other.mContentTypes;
+    mPrivileges = other.mPrivileges;
+}
+
+
 DavCollection::DavCollection()
+    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
 {
 }
 
 DavCollection::DavCollection(DavUtils::Protocol protocol, const QString &url, const QString &displayName, ContentTypes contentTypes)
-    : mProtocol(protocol), mUrl(url), mDisplayName(displayName), mContentTypes(contentTypes), mPrivileges(DavUtils::All)
+    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
+{
+    d->mProtocol = protocol;
+    d->mUrl = url;
+    d->mDisplayName = displayName;
+    d->mContentTypes = contentTypes;
+    d->mPrivileges = DavUtils::All;
+}
+
+DavCollection::DavCollection(const DavCollection &other)
+    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
+{
+    d->fillFrom(*other.d.get());
+}
+
+DavCollection &DavCollection::operator=(const DavCollection &other)
+{
+    d->fillFrom(*other.d.get());
+    return *this;
+}
+
+DavCollection::~DavCollection()
 {
 }
 
 void DavCollection::setProtocol(DavUtils::Protocol protocol)
 {
-    mProtocol = protocol;
+    d->mProtocol = protocol;
 }
 
 DavUtils::Protocol DavCollection::protocol() const
 {
-    return mProtocol;
+    return d->mProtocol;
 }
 
 void DavCollection::setCTag(const QString &ctag)
 {
-    mCTag = ctag;
+    d->mCTag = ctag;
 }
 
 QString DavCollection::CTag() const
 {
-    return mCTag;
+    return d->mCTag;
 }
 
 void DavCollection::setUrl(const QString &url)
 {
-    mUrl = url;
+    d->mUrl = url;
 }
 
 QString DavCollection::url() const
 {
-    return mUrl;
+    return d->mUrl;
 }
 
 void DavCollection::setDisplayName(const QString &displayName)
 {
-    mDisplayName = displayName;
+    d->mDisplayName = displayName;
 }
 
 QString DavCollection::displayName() const
 {
-    return mDisplayName;
+    return d->mDisplayName;
 }
 
 void DavCollection::setColor(const QColor &color)
 {
-    mColor = color;
+    d->mColor = color;
 }
 
 QColor DavCollection::color() const
 {
-    return mColor;
+    return d->mColor;
 }
 
 void DavCollection::setContentTypes(ContentTypes contentTypes)
 {
-    mContentTypes = contentTypes;
+    d->mContentTypes = contentTypes;
 }
 
 DavCollection::ContentTypes DavCollection::contentTypes() const
 {
-    return mContentTypes;
+    return d->mContentTypes;
 }
 
 void DavCollection::setPrivileges(DavUtils::Privileges privs)
 {
-    mPrivileges = privs;
+    d->mPrivileges = privs;
 }
 
 DavUtils::Privileges DavCollection::privileges() const
 {
-    return mPrivileges;
+    return d->mPrivileges;
 }
 

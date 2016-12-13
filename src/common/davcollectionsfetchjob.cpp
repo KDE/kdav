@@ -28,6 +28,7 @@
 #include <kio/job.h>
 #include <KLocalizedString>
 
+#include <QColor>
 #include <QtCore/QBuffer>
 #include <QtXmlPatterns/QXmlQuery>
 
