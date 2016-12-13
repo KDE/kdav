@@ -53,13 +53,6 @@ set( davgroupwareresource_SRCS
 
 ecm_qt_declare_logging_category(davgroupwareresource_SRCS HEADER davresource_debug.h IDENTIFIER DAVRESOURCE_LOG CATEGORY_NAME org.kde.pim.davresource)
 
-if(${AccountsQt_FOUND} AND ${SignOnQt_FOUND})
- include_directories(${ACCOUNTSQT_INCLUDE_DIRS} ${SIGNONQT_INCLUDE_DIRS})
- add_definitions(-DHAVE_ACCOUNTS)
- set(davgroupwareresource_SRCS getcredentialsjob.cpp ${davgroupwareresource_SRCS})
-endif()
-
-
 add_library(libdav
    ${davgroupwareresource_SRCS}
    )
@@ -74,12 +67,6 @@ target_link_libraries(libdav
        #KF5::Contacts
        #KF5::CalendarCore
        )
-
-if(${AccountsQt_FOUND} AND ${SignOnQt_FOUND})
- target_link_libraries(libdav
-                     ${ACCOUNTSQT_LIBRARIES}
-                     ${SIGNONQT_LIBRARIES})
-endif()
 
 install(TARGETS
     libdav
