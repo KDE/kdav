@@ -14,7 +14,7 @@ include_directories(
 
 ########### next target ###############
 
-set( davgroupwareresource_SRCS
+set(libkdav_SRCS
  common/davjobbase.cpp
  common/davcollection.cpp
  common/davcollectiondeletejob.cpp
@@ -51,13 +51,13 @@ set( davgroupwareresource_SRCS
  #resource/davprotocolattribute.cpp
 )
 
-ecm_qt_declare_logging_category(davgroupwareresource_SRCS HEADER davresource_debug.h IDENTIFIER DAVRESOURCE_LOG CATEGORY_NAME org.kde.pim.davresource)
+ecm_qt_declare_logging_category(libkdav_SRCS HEADER kdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav)
 
-add_library(libdav
-   ${davgroupwareresource_SRCS}
+add_library(libkdav
+   ${libkdav_SRCS}
    )
 
-target_link_libraries(libdav
+target_link_libraries(libkdav
        Qt5::Xml
        Qt5::Gui
        Qt5::XmlPatterns
@@ -69,12 +69,12 @@ target_link_libraries(libdav
        )
 
 install(TARGETS
-    libdav
-    EXPORT libdavTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} ${LIBRARY_NAMELINK}
+    libkdav
+    EXPORT libkdavTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} ${LIBRARY_NAMELINK}
     )
 
-#set_target_properties(libdav PROPERTIES
+#set_target_properties(libkdav PROPERTIES
 #    VERSION ${LIBDAV_VERSION_STRING}
 #    SOVERSION 5
-#    EXPORT_NAME libdav
+#    EXPORT_NAME libkdav
 #    )

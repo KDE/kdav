@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.12)
 
-project(libdav)
+project(libkdav)
 
 ############### KDEPIM-Runtime version ################
 # KDEPIM_RUNTIME_VERSION
@@ -31,10 +31,10 @@ project(libdav)
 #    3.2 pre
 #    3.2 alpha1
 
-set(LIBDAV_VERSION_NUMBER "5.4.0")
-set(LIBDAV_VERSION "5.4.0")
+set(LIBKDAV_VERSION_NUMBER "5.4.0")
+set(LIBKDAV_VERSION "5.4.0")
 
-configure_file(libdav-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/libdav-version.h @ONLY)
+configure_file(libkdav-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkdav-version.h @ONLY)
 
 set(KF5_VERSION "5.27.0")
 find_package(ECM ${KF5_VERSION} REQUIRED NO_MODULE)

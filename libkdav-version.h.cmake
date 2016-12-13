@@ -26,10 +26,10 @@
   build against older kdelibs releases.
 */
 
-#ifndef LIBDAV_VERSION_H
-#define LIBDAV_VERSION_H
+#ifndef LIBKDAV_VERSION_H
+#define LIBKDAV_VERSION_H
 
 
-#define LIBDAV_VERSION "@LIBDAV_VERSION@"
+#define LIBKDAV_VERSION "@LIBKDAV_VERSION@"
 
 #endif
