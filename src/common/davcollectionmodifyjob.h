@@ -25,7 +25,7 @@
 
 #include <QtCore/QList>
 
-#include <kjob.h>
+#include <KCoreAddons/KJob>
 
 /**
  * @short A job that modifies a DAV collection.

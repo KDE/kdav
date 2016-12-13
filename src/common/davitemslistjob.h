@@ -24,7 +24,7 @@
 #include "davitem.h"
 #include "davutils.h"
 
-#include <kjob.h>
+#include <KCoreAddons/KJob>
 
 #include <QtCore/QSet>
 #include <QtCore/QStringList>

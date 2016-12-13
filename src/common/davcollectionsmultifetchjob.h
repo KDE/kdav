@@ -24,7 +24,7 @@
 #include "davcollection.h"
 #include "davutils.h"
 
-#include <kjob.h>
+#include <KCoreAddons/KJob>
 
 /**
  * @short A job that fetches all DAV collection.

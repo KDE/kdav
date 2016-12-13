@@ -27,7 +27,7 @@
 #include <QtCore/QPair>
 #include <QtCore/QString>
 
-#include <kjob.h>
+#include <KCoreAddons/KJob>
 
 /**
  * @short A job that search a DAV principal on a server

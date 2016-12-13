@@ -22,7 +22,7 @@
 #include <item.h>
 #include <itemfetchjob.h>
 #include <itemfetchscope.h>
-#include <kjob.h>
+#include <KCoreAddons/KJob>
 
 EtagCacheAkonadi::EtagCacheAkonadi(const Akonadi::Collection &collection, QObject *parent)
     : EtagCache(parent)
