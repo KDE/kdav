@@ -18,6 +18,8 @@
 
 #include "davjobbase.h"
 
+using namespace KDAV;
+
 DavJobBase::DavJobBase(QObject *parent)
     : KJob(parent), mLatestResponseCode(0)
 {
@@ -78,4 +80,3 @@ void DavJobBase::setLatestResponseCode(unsigned int code)
 {
     mLatestResponseCode = code;
 }
-

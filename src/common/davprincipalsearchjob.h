@@ -29,6 +29,9 @@
 
 #include <KCoreAddons/KJob>
 
+namespace KDAV
+{
+
 /**
  * @short A job that search a DAV principal on a server
  *
@@ -111,4 +114,6 @@ private:
     QList<Result> mResults;
 };
 
-#endif // DAVPRINCIPALSEARCHJOB_H
+}
+
+#endif

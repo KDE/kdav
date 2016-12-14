@@ -20,6 +20,8 @@
 
 #include "davcollectionsfetchjob.h"
 
+using namespace KDAV;
+
 DavCollectionsMultiFetchJob::DavCollectionsMultiFetchJob(const DavUtils::DavUrl::List &urls, QObject *parent)
     : KJob(parent), mUrls(urls), mSubJobCount(urls.size())
 {

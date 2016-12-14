@@ -24,6 +24,8 @@
 #include <itemfetchscope.h>
 #include <KCoreAddons/KJob>
 
+using namespace KDAV;
+
 EtagCacheAkonadi::EtagCacheAkonadi(const Akonadi::Collection &collection, QObject *parent)
     : EtagCache(parent)
 {

@@ -18,6 +18,8 @@
 
 #include "etagcache.h"
 
+using namespace KDAV;
+
 EtagCache::EtagCache(QObject *parent)
     : QObject(parent)
 {

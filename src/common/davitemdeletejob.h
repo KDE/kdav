@@ -25,6 +25,9 @@
 #include "davjobbase.h"
 #include "davutils.h"
 
+namespace KDAV
+{
+
 /**
  * @short A job to delete a DAV item on the DAV server.
  */
@@ -67,5 +70,7 @@ private:
     DavItem mFreshItem;
     int mFreshResponseCode;
 };
+
+}
 
 #endif

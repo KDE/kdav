@@ -25,6 +25,8 @@
 #include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
 
+using namespace KDAV;
+
 class CaldavCollectionQueryBuilder : public XMLQueryBuilder
 {
 public:

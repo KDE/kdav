@@ -25,6 +25,8 @@
 #include <kio/job.h>
 #include <KLocalizedString>
 
+using namespace KDAV;
+
 DavItemDeleteJob::DavItemDeleteJob(const DavUtils::DavUrl &url, const DavItem &item, QObject *parent)
     : DavJobBase(parent), mUrl(url), mItem(item), mFreshResponseCode(-1)
 {

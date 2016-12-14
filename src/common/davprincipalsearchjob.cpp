@@ -26,6 +26,8 @@
 
 #include <QtCore/QUrl>
 
+using namespace KDAV;
+
 DavPrincipalSearchJob::DavPrincipalSearchJob(const DavUtils::DavUrl &url, DavPrincipalSearchJob::FilterType type,
         const QString &filter, QObject *parent)
     : KJob(parent), mUrl(url), mType(type), mFilter(filter), mPrincipalPropertySearchSubJobCount(0),

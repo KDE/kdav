@@ -20,6 +20,8 @@
 
 #include <QVariant>
 
+using namespace KDAV;
+
 XMLQueryBuilder::~XMLQueryBuilder()
 {
 }

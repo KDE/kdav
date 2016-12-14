@@ -22,6 +22,8 @@
 #include <kio/job.h>
 #include <KLocalizedString>
 
+using namespace KDAV;
+
 DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUtils::DavUrl &url, QObject *parent)
     : KJob(parent), mUrl(url)
 {

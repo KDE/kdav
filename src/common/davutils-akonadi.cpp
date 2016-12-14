@@ -33,6 +33,8 @@
 #include <QtCore/QByteArray>
 #include <QtCore/QString>
 
+using namespace KDAV;
+
 typedef QSharedPointer<KCalCore::Incidence> IncidencePtr;
 
 QString DavUtils::translatedProtocolName(DavUtils::Protocol protocol)

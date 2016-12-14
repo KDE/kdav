@@ -26,6 +26,9 @@
 #include <QtXml/QDomElement>
 #include <QVector>
 
+namespace KDAV
+{
+
 /**
  * @short A namespace that contains helper methods for DAV functionality.
  */
@@ -151,5 +154,8 @@ QString LIBKDAV_EXPORT createUniqueId();
 QString LIBKDAV_EXPORT contactsMimeType(Protocol protocol);
 }
 
-Q_DECLARE_TYPEINFO(DavUtils::DavUrl, Q_MOVABLE_TYPE);
+}
+
+Q_DECLARE_TYPEINFO(KDAV::DavUtils::DavUrl, Q_MOVABLE_TYPE);
+
 #endif

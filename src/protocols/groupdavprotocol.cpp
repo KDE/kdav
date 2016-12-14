@@ -23,6 +23,8 @@
 #include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
 
+using namespace KDAV;
+
 class GroupdavCollectionQueryBuilder : public XMLQueryBuilder
 {
 public:

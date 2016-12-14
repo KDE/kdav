@@ -25,6 +25,9 @@
 
 #include <KCoreAddons/KJob>
 
+namespace KDAV
+{
+
 /**
  * @short A job that deletes a DAV collection.
  *
@@ -54,6 +57,8 @@ private Q_SLOTS:
 private:
     DavUtils::DavUrl mUrl;
 };
+
+}
 
 #endif
 

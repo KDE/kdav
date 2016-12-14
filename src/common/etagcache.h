@@ -16,8 +16,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef ETAGCACHE_H
-#define ETAGCACHE_H
+#ifndef KDAV_ETAGCACHE_H
+#define KDAV_ETAGCACHE_H
 
 #include "libkdav_export.h"
 
@@ -25,6 +25,9 @@
 #include <QtCore/QObject>
 #include <QtCore/QSet>
 #include <QtCore/QStringList>
+
+namespace KDAV
+{
 
 /**
  * @short A helper class to cache etags.
@@ -99,5 +102,7 @@ private:
     QMap<QString, QString> mCache;
     QSet<QString> mChangedRemoteIds;
 };
+
+}
 
 #endif

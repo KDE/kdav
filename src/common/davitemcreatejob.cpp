@@ -27,6 +27,8 @@
 
 #include <QtCore/QDebug>
 
+using namespace KDAV;
+
 DavItemCreateJob::DavItemCreateJob(const DavUtils::DavUrl &url, const DavItem &item, QObject *parent)
     : DavJobBase(parent), mUrl(url), mItem(item), mRedirectCount(0)
 {

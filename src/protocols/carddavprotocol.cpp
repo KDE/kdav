@@ -22,6 +22,8 @@
 #include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
 
+using namespace KDAV;
+
 class CarddavCollectionQueryBuilder : public XMLQueryBuilder
 {
 public:

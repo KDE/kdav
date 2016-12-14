@@ -18,6 +18,8 @@
 
 #include "davitem.h"
 
+using namespace KDAV;
+
 DavItem::DavItem()
 {
 }

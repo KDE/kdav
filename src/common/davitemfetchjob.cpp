@@ -26,6 +26,8 @@
 
 #include <QtCore/QDebug>
 
+using namespace KDAV;
+
 static QString etagFromHeaders(const QString &headers)
 {
     const QStringList allHeaders = headers.split(QLatin1Char('\n'));

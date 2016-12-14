@@ -30,6 +30,9 @@
 #include <QtCore/QMap>
 #include <QtCore/QStringList>
 
+namespace KDAV
+{
+
 /**
  * @short A job that fetches a list of items from a DAV server using a multiget query.
  */
@@ -70,5 +73,7 @@ private:
     QStringList mUrls;
     QMap<QString, DavItem> mItems;
 };
+
+}
 
 #endif

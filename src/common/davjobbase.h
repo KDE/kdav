@@ -23,6 +23,9 @@
 
 #include <KCoreAddons/KJob>
 
+namespace KDAV
+{
+
 /**
  * @short base class for the jobs used by the resource.
  */
@@ -82,4 +85,6 @@ private:
     unsigned int mLatestResponseCode;
 };
 
-#endif // DAVJOBBASE_H
+}
+
+#endif

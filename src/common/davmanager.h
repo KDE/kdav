@@ -26,8 +26,6 @@
 #include <QtCore/QMap>
 #include <QtCore/QString>
 
-class DavProtocolBase;
-
 namespace KIO
 {
 class DavJob;
@@ -36,6 +34,11 @@ class DavJob;
 class QUrl;
 
 class QDomDocument;
+
+namespace KDAV
+{
+
+class DavProtocolBase;
 
 /**
  * @short A factory class for handling DAV jobs.
@@ -103,5 +106,7 @@ private:
     protocolsMap mProtocols;
     static DavManager *mSelf;
 };
+
+}
 
 #endif

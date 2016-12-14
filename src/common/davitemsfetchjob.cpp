@@ -25,6 +25,8 @@
 #include <kio/job.h>
 #include <KLocalizedString>
 
+using namespace KDAV;
+
 DavItemsFetchJob::DavItemsFetchJob(const DavUtils::DavUrl &collectionUrl, const QStringList &urls, QObject *parent)
     : KJob(parent), mCollectionUrl(collectionUrl), mUrls(urls)
 {

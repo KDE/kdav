@@ -25,6 +25,8 @@
 #include <kio/job.h>
 #include <KLocalizedString>
 
+using namespace KDAV;
+
 DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const DavUtils::DavUrl &url, QObject *parent)
     : DavJobBase(parent), mUrl(url)
 {

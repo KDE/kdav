@@ -34,9 +34,9 @@ int main(int argc, char **argv)
     QUrl mainUrl(QStringLiteral("http://kolab/iRony/addressbooks/john.doe%40example.org"));
     mainUrl.setUserName(QStringLiteral("john.doe@example.org"));
     mainUrl.setPassword(QStringLiteral("Welcome2KolabSystems"));
-    DavUtils::DavUrl davUrl(mainUrl, DavUtils::CardDav);
+    KDAV::DavUtils::DavUrl davUrl(mainUrl, KDAV::DavUtils::CardDav);
 
-    auto *job = new DavCollectionsFetchJob(davUrl);
+    auto *job = new KDAV::DavCollectionsFetchJob(davUrl);
     job->exec();
 
     foreach(const auto collection, job->collections()) {
@@ -44,11 +44,11 @@ int main(int argc, char **argv)
         QUrl collectionUrl(collection.url());
         collectionUrl.setUserName(mainUrl.userName());
         collectionUrl.setPassword(mainUrl.password());
-        EtagCache cache;
+        KDAV::EtagCache cache;
         int anz = -1;
         //Get all items in a collection add them to cache and make sure, that afterward no item is changed
         {
-            auto *itemListJob = new DavItemsListJob(DavUtils::DavUrl(collectionUrl, DavUtils::CardDav), &cache);
+            auto itemListJob = new KDAV::DavItemsListJob(KDAV::DavUtils::DavUrl(collectionUrl, KDAV::DavUtils::CardDav), &cache);
             itemListJob->exec();
             anz = itemListJob->items().size();
             qDebug() << "items:" << itemListJob->items().size();
@@ -59,12 +59,12 @@ int main(int argc, char **argv)
                 QUrl itemUrl(item.url());
                 itemUrl.setUserName(mainUrl.userName());
                 itemUrl.setPassword(mainUrl.password());
-                DavItemFetchJob *itemFetchJob = new DavItemFetchJob(DavUtils::DavUrl(itemUrl, DavUtils::CardDav),item);
+                auto itemFetchJob = new KDAV::DavItemFetchJob(KDAV::DavUtils::DavUrl(itemUrl, KDAV::DavUtils::CardDav),item);
                 itemFetchJob->exec();
                 const auto fetchedItem = itemFetchJob->item();
                 qDebug() << fetchedItem.contentType() << fetchedItem.data();
 
-                DavItemsFetchJob *itemsFetchJob = new DavItemsFetchJob(DavUtils::DavUrl(collectionUrl, DavUtils::CardDav), QStringList() << item.url());
+                auto itemsFetchJob = new KDAV::DavItemsFetchJob(KDAV::DavUtils::DavUrl(collectionUrl, KDAV::DavUtils::CardDav), QStringList() << item.url());
                 itemsFetchJob->exec();
                 if (itemsFetchJob->item(item.url()).contentType() != fetchedItem.contentType()) {       //itemsfetchjob do not get contentType
                     qDebug() << "Fetched same item but got different contentType:" << itemsFetchJob->item(item.url()).contentType();
@@ -80,7 +80,7 @@ int main(int argc, char **argv)
         }
         {
             qDebug() << "second run: (should be empty).";
-            auto *itemListJob = new DavItemsListJob(DavUtils::DavUrl(collectionUrl, DavUtils::CardDav), &cache);
+            auto itemListJob = new KDAV::DavItemsListJob(KDAV::DavUtils::DavUrl(collectionUrl, KDAV::DavUtils::CardDav), &cache);
             itemListJob->exec();
             if (itemListJob->items().size() != anz) {
                 qDebug() << "Items have added/deleted on server.";

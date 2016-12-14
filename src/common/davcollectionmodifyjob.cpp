@@ -24,6 +24,8 @@
 #include <kio/job.h>
 #include <KLocalizedString>
 
+using namespace KDAV;
+
 DavCollectionModifyJob::DavCollectionModifyJob(const DavUtils::DavUrl &url, QObject *parent)
     : KJob(parent), mUrl(url)
 {

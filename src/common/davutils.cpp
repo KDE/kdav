@@ -26,6 +26,8 @@
 #include <QtCore/QDebug>
 #include <QtCore/QString>
 
+using namespace KDAV;
+
 QDomElement DavUtils::firstChildElementNS(const QDomElement &parent, const QString &namespaceUri, const QString &tagName)
 {
     for (QDomNode child = parent.firstChild(); !child.isNull(); child = child.nextSibling()) {

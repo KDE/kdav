@@ -32,6 +32,8 @@
 #include <QtCore/QBuffer>
 #include <QtXmlPatterns/QXmlQuery>
 
+using namespace KDAV;
+
 DavCollectionsFetchJob::DavCollectionsFetchJob(const DavUtils::DavUrl &url, QObject *parent)
     : KJob(parent), mUrl(url), mSubJobCount(0)
 {

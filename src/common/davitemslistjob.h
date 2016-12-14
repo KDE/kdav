@@ -29,6 +29,9 @@
 #include <QtCore/QSet>
 #include <QtCore/QStringList>
 
+namespace KDAV
+{
+
 class EtagCache;
 
 /**
@@ -100,5 +103,7 @@ private:
     QStringList mDeletedItems;
     uint mSubJobCount;
 };
+
+}
 
 #endif

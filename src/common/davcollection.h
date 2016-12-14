@@ -31,6 +31,10 @@
 class QColor;
 
 class DavCollectionPrivate;
+
+namespace KDAV
+{
+
 /**
  * @short A helper class to store information about DAV collection.
  *
@@ -154,7 +158,9 @@ private:
     std::unique_ptr<DavCollectionPrivate> d;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(DavCollection::ContentTypes)
-Q_DECLARE_TYPEINFO(DavCollection, Q_MOVABLE_TYPE);
+}
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(KDAV::DavCollection::ContentTypes)
+Q_DECLARE_TYPEINFO(KDAV::DavCollection, Q_MOVABLE_TYPE);
 
 #endif

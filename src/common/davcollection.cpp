@@ -20,6 +20,8 @@
 
 #include <QColor>
 
+using namespace KDAV;
+
 class DavCollectionPrivate
 {
 public:

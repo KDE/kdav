@@ -26,6 +26,9 @@
 
 #include <KCoreAddons/KJob>
 
+namespace KDAV
+{
+
 /**
  * @short A job that fetches all DAV collection.
  *
@@ -75,5 +78,7 @@ private:
     DavCollection::List mCollections;
     uint mSubJobCount;
 };
+
+}
 
 #endif

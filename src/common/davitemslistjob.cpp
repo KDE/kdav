@@ -29,6 +29,8 @@
 
 #include <QtCore/QBuffer>
 
+using namespace KDAV;
+
 DavItemsListJob::DavItemsListJob(const DavUtils::DavUrl &url, const EtagCache *cache, QObject *parent)
     : KJob(parent), mUrl(url), mEtagCache(cache), mSubJobCount(0)
 {

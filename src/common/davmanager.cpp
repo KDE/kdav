@@ -28,6 +28,8 @@
 #include <QtCore/QUrl>
 #include <QtXml/QDomDocument>
 
+using namespace KDAV;
+
 DavManager *DavManager::mSelf = Q_NULLPTR;
 
 DavManager::DavManager()
