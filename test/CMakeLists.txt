@@ -9,6 +9,6 @@ add_executable(testserver ${testserver_SRCS})
 
 target_link_libraries(testserver
     Qt5::Core
-    libkdav
+    kdav
     )
 

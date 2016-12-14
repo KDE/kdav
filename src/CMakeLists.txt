@@ -83,7 +83,7 @@ install(FILES
     )
 
 ecm_generate_pri_file(BASE_NAME kdav
-    LIB_NAME libkdav
+    LIB_NAME kdav
     FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KDAV
     )
 
@@ -94,13 +94,13 @@ install(FILES
 
 ecm_qt_declare_logging_category(libkdav_SRCS HEADER libkdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav)
 
-add_library(libkdav
+add_library(kdav
    ${libkdav_SRCS}
    )
 
-generate_export_header(libkdav BASE_NAME libkdav)
+generate_export_header(kdav BASE_NAME libkdav)
 
-target_link_libraries(libkdav
+target_link_libraries(kdav
 PUBLIC
     KF5::CoreAddons
 PRIVATE
@@ -114,6 +114,6 @@ PRIVATE
 
 
 install(TARGETS
-    libkdav
+    kdav
     EXPORT KDAVTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} ${LIBRARY_NAMELINK}
     )
