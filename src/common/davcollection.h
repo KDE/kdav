@@ -16,8 +16,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef DAVCOLLECTION_H
-#define DAVCOLLECTION_H
+#ifndef KDAV_DAVCOLLECTION_H
+#define KDAV_DAVCOLLECTION_H
 
 #include "libkdav_export.h"
 

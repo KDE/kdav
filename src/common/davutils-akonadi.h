@@ -16,8 +16,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef DAVUTILS_AKONADI_H
-#define DAVUTILS_AKONADI_H
+#ifndef KDAV_DAVUTILS_AKONADI_H
+#define KDAV_DAVUTILS_AKONADI_H
 
 #include "davutils.h"
 

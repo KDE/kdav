@@ -16,8 +16,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef DAVMULTIGETPROTOCOL_H
-#define DAVMULTIGETPROTOCOL_H
+#ifndef KDAV_DAVMULTIGETPROTOCOL_H
+#define KDAV_DAVMULTIGETPROTOCOL_H
 
 #include "libkdav_export.h"
 

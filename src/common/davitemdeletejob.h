@@ -16,8 +16,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef DAVITEMDELETEJOB_H
-#define DAVITEMDELETEJOB_H
+#ifndef KDAV_DAVITEMDELETEJOB_H
+#define KDAV_DAVITEMDELETEJOB_H
 
 #include "libkdav_export.h"
 
