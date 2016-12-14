@@ -20,8 +20,8 @@
 
 #include "davmanager.h"
 
-#include <kio/job.h>
-#include <kio/davjob.h>
+#include <KIO/Job>
+#include <KIO/DavJob>
 #include <KLocalizedString>
 
 #include <QtCore/QUrl>

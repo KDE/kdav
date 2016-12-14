@@ -22,7 +22,7 @@
 #include "protocols/carddavprotocol.h"
 #include "protocols/groupdavprotocol.h"
 
-#include <kio/davjob.h>
+#include <KIO/DavJob>
 
 #include "libkdav_debug.h"
 

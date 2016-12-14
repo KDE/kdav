@@ -23,8 +23,8 @@
 #include "utils.h"
 #include "etagcache.h"
 
-#include <kio/davjob.h>
-#include <kio/job.h>
+#include <KIO/DavJob>
+#include <KIO/Job>
 #include <KLocalizedString>
 
 #include <QtCore/QBuffer>

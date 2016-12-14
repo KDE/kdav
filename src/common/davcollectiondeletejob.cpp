@@ -18,8 +18,8 @@
 
 #include "davcollectiondeletejob.h"
 
-#include <kio/deletejob.h>
-#include <kio/job.h>
+#include <KIO/DeleteJob>
+#include <KIO/Job>
 #include <KLocalizedString>
 
 using namespace KDAV;

@@ -20,8 +20,8 @@
 
 #include "davmanager.h"
 
-#include <kio/davjob.h>
-#include <kio/job.h>
+#include <KIO/DavJob>
+#include <KIO/Job>
 #include <KLocalizedString>
 
 using namespace KDAV;

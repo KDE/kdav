@@ -21,7 +21,7 @@
 #include "davitemfetchjob.h"
 #include "davmanager.h"
 
-#include <kio/job.h>
+#include <KIO/Job>
 #include <KLocalizedString>
 
 using namespace KDAV;
