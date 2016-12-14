@@ -16,7 +16,8 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#pragma once
+#ifndef DAVCOLLECTION_H
+#define DAVCOLLECTION_H
 
 #include "libkdav_export.h"
 
@@ -155,3 +156,5 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(DavCollection::ContentTypes)
 Q_DECLARE_TYPEINFO(DavCollection, Q_MOVABLE_TYPE);
+
+#endif
