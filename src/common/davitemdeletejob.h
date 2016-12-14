@@ -23,7 +23,7 @@
 
 #include "davitem.h"
 #include "davjobbase.h"
-#include "davutils.h"
+#include "utils.h"
 
 namespace KDAV
 {
@@ -43,7 +43,7 @@ public:
      * @param item The item that shall be deleted.
      * @param parent The parent object.
      */
-    DavItemDeleteJob(const DavUtils::DavUrl &url, const DavItem &item, QObject *parent = Q_NULLPTR);
+    DavItemDeleteJob(const Utils::DavUrl &url, const DavItem &item, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
@@ -65,7 +65,7 @@ private Q_SLOTS:
     void conflictingItemFetched(KJob *);
 
 private:
-    DavUtils::DavUrl mUrl;
+    Utils::DavUrl mUrl;
     DavItem mItem;
     DavItem mFreshItem;
     int mFreshResponseCode;

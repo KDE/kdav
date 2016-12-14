@@ -38,7 +38,7 @@ DavManager::DavManager()
 
 DavManager::~DavManager()
 {
-    QMapIterator<DavUtils::Protocol, DavProtocolBase *> it(mProtocols);
+    QMapIterator<Utils::Protocol, DavProtocolBase *> it(mProtocols);
     while (it.hasNext()) {
         it.next();
         delete it.value();
@@ -92,7 +92,7 @@ KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QDomDocument 
     return job;
 }
 
-const DavProtocolBase *DavManager::davProtocol(DavUtils::Protocol protocol)
+const DavProtocolBase *DavManager::davProtocol(Utils::Protocol protocol)
 {
     if (createProtocol(protocol)) {
         return mProtocols[ protocol ];
@@ -101,21 +101,21 @@ const DavProtocolBase *DavManager::davProtocol(DavUtils::Protocol protocol)
     }
 }
 
-bool DavManager::createProtocol(DavUtils::Protocol protocol)
+bool DavManager::createProtocol(Utils::Protocol protocol)
 {
     if (mProtocols.contains(protocol)) {
         return true;
     }
 
     switch (protocol) {
-    case DavUtils::CalDav:
-        mProtocols.insert(DavUtils::CalDav, new CaldavProtocol());
+    case Utils::CalDav:
+        mProtocols.insert(Utils::CalDav, new CaldavProtocol());
         break;
-    case DavUtils::CardDav:
-        mProtocols.insert(DavUtils::CardDav, new CarddavProtocol());
+    case Utils::CardDav:
+        mProtocols.insert(Utils::CardDav, new CarddavProtocol());
         break;
-    case DavUtils::GroupDav:
-        mProtocols.insert(DavUtils::GroupDav, new GroupdavProtocol());
+    case Utils::GroupDav:
+        mProtocols.insert(Utils::GroupDav, new GroupdavProtocol());
         break;
     default:
         qCritical() << "Unknown protocol: " << static_cast<int>(protocol);

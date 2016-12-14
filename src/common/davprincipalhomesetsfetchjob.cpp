@@ -27,7 +27,7 @@
 
 using namespace KDAV;
 
-DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const DavUtils::DavUrl &url, QObject *parent)
+DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const Utils::DavUrl &url, QObject *parent)
     : DavJobBase(parent), mUrl(url)
 {
 }
@@ -141,7 +141,7 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
     const QDomDocument document = davJob->response();
     const QDomElement multistatusElement = document.documentElement();
 
-    QDomElement responseElement = DavUtils::firstChildElementNS(multistatusElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+    QDomElement responseElement = Utils::firstChildElementNS(multistatusElement, QStringLiteral("DAV:"), QStringLiteral("response"));
     while (!responseElement.isNull()) {
 
         QDomElement propstatElement;
@@ -151,7 +151,7 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
             const QDomNodeList propstats = responseElement.elementsByTagNameNS(QStringLiteral("DAV:"), QStringLiteral("propstat"));
             for (int i = 0; i < propstats.length(); ++i) {
                 const QDomElement propstatCandidate = propstats.item(i).toElement();
-                const QDomElement statusElement = DavUtils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
+                const QDomElement statusElement = Utils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
                 if (statusElement.text().contains(QLatin1String("200"))) {
                     propstatElement = propstatCandidate;
                 }
@@ -159,16 +159,16 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
         }
 
         if (propstatElement.isNull()) {
-            responseElement = DavUtils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+            responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
             continue;
         }
 
         // extract home sets
-        const QDomElement propElement = DavUtils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
-        const QDomElement homeSetElement = DavUtils::firstChildElementNS(propElement, homeSetNS, homeSet);
+        const QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
+        const QDomElement homeSetElement = Utils::firstChildElementNS(propElement, homeSetNS, homeSet);
 
         if (!homeSetElement.isNull()) {
-            QDomElement hrefElement = DavUtils::firstChildElementNS(homeSetElement, QStringLiteral("DAV:"), QStringLiteral("href"));
+            QDomElement hrefElement = Utils::firstChildElementNS(homeSetElement, QStringLiteral("DAV:"), QStringLiteral("href"));
 
             while (!hrefElement.isNull()) {
                 const QString href = hrefElement.text();
@@ -176,25 +176,25 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
                     mHomeSets << href;
                 }
 
-                hrefElement = DavUtils::nextSiblingElementNS(hrefElement, QStringLiteral("DAV:"), QStringLiteral("href"));
+                hrefElement = Utils::nextSiblingElementNS(hrefElement, QStringLiteral("DAV:"), QStringLiteral("href"));
             }
         } else {
             // Trying to get the principal url, given either by current-user-principal or principal-URL
-            QDomElement urlHolder = DavUtils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("current-user-principal"));
+            QDomElement urlHolder = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("current-user-principal"));
             if (urlHolder.isNull()) {
-                urlHolder = DavUtils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("principal-URL"));
+                urlHolder = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("principal-URL"));
             }
 
             if (!urlHolder.isNull()) {
                 // Getting the href that will be used for the next round
-                QDomElement hrefElement = DavUtils::firstChildElementNS(urlHolder, QStringLiteral("DAV:"), QStringLiteral("href"));
+                QDomElement hrefElement = Utils::firstChildElementNS(urlHolder, QStringLiteral("DAV:"), QStringLiteral("href"));
                 if (!hrefElement.isNull()) {
                     nextRoundHref = hrefElement.text();
                 }
             }
         }
 
-        responseElement = DavUtils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+        responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
     }
 
     /*

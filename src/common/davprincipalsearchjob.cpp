@@ -28,7 +28,7 @@
 
 using namespace KDAV;
 
-DavPrincipalSearchJob::DavPrincipalSearchJob(const DavUtils::DavUrl &url, DavPrincipalSearchJob::FilterType type,
+DavPrincipalSearchJob::DavPrincipalSearchJob(const Utils::DavUrl &url, DavPrincipalSearchJob::FilterType type,
         const QString &filter, QObject *parent)
     : KJob(parent), mUrl(url), mType(type), mFilter(filter), mPrincipalPropertySearchSubJobCount(0),
       mPrincipalPropertySearchSubJobSuccessful(false)
@@ -45,7 +45,7 @@ void DavPrincipalSearchJob::fetchProperty(const QString &name, const QString &ns
     mFetchProperties << QPair<QString, QString>(propNamespace, name);
 }
 
-DavUtils::DavUrl DavPrincipalSearchJob::davUrl() const
+Utils::DavUrl DavPrincipalSearchJob::davUrl() const
 {
     return mUrl;
 }
@@ -133,7 +133,7 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
     QDomDocument document = davJob->response();
     QDomElement documentElement = document.documentElement();
 
-    QDomElement responseElement = DavUtils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+    QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
     if (responseElement.isNull()) {
         emitResult();
         return;
@@ -145,7 +145,7 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
         const QDomNodeList propstats = responseElement.elementsByTagNameNS(QStringLiteral("DAV:"), QStringLiteral("propstat"));
         for (int i = 0; i < propstats.length(); ++i) {
             const QDomElement propstatCandidate = propstats.item(i).toElement();
-            const QDomElement statusElement = DavUtils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
+            const QDomElement statusElement = Utils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
             if (statusElement.text().contains(QStringLiteral("200"))) {
                 propstatElement = propstatCandidate;
             }
@@ -157,13 +157,13 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
         return;
     }
 
-    QDomElement propElement = DavUtils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
+    QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
     if (propElement.isNull()) {
         emitResult();
         return;
     }
 
-    QDomElement principalCollectionSetElement = DavUtils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("principal-collection-set"));
+    QDomElement principalCollectionSetElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("principal-collection-set"));
     if (principalCollectionSetElement.isNull()) {
         emitResult();
         return;
@@ -266,7 +266,7 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
     const QDomDocument document = davJob->response();
     const QDomElement documentElement = document.documentElement();
 
-    QDomElement responseElement = DavUtils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+    QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
     if (responseElement.isNull()) {
         if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
@@ -281,7 +281,7 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
         const int propStatsEnd(propstats.length());
         for (int i = 0; i < propStatsEnd; ++i) {
             const QDomElement propstatCandidate = propstats.item(i).toElement();
-            const QDomElement statusElement = DavUtils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
+            const QDomElement statusElement = Utils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
             if (statusElement.text().contains(QStringLiteral("200"))) {
                 propstatElement = propstatCandidate;
             }
@@ -295,7 +295,7 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
         return;
     }
 
-    QDomElement propElement = DavUtils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
+    QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
     if (propElement.isNull()) {
         if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();

@@ -21,7 +21,7 @@
 
 #include "libkdav_export.h"
 
-#include "davutils.h"
+#include "utils.h"
 
 #include <memory>
 
@@ -75,7 +75,7 @@ public:
      * @param displayName The display name of the collection.
      * @param contentTypes The possible content types of the collection.
      */
-    DavCollection(DavUtils::Protocol protocol, const QString &url, const QString &displayName, ContentTypes contentTypes);
+    DavCollection(Utils::Protocol protocol, const QString &url, const QString &displayName, ContentTypes contentTypes);
 
     DavCollection(const DavCollection &other);
     DavCollection &operator=(const DavCollection &other);
@@ -85,12 +85,12 @@ public:
     /**
      * Sets the DAV @p protocol dialect the collection comes from.
      */
-    void setProtocol(DavUtils::Protocol protocol);
+    void setProtocol(Utils::Protocol protocol);
 
     /**
      * Returns the DAV protocol dialect the collection comes from.
      */
-    DavUtils::Protocol protocol() const;
+    Utils::Protocol protocol() const;
 
     /**
      * Sets this collection CTag.
@@ -147,12 +147,12 @@ public:
     /**
      * Sets the privileges on this collection.
      */
-    void setPrivileges(DavUtils::Privileges privs);
+    void setPrivileges(Utils::Privileges privs);
 
     /**
      * Returns the privileges on this collection.
      */
-    DavUtils::Privileges privileges() const;
+    Utils::Privileges privileges() const;
 
 private:
     std::unique_ptr<DavCollectionPrivate> d;

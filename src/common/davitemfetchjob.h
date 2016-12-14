@@ -23,7 +23,7 @@
 
 #include "davitem.h"
 #include "davjobbase.h"
-#include "davutils.h"
+#include "utils.h"
 
 namespace KDAV
 {
@@ -43,7 +43,7 @@ public:
      * @param item The item that shall be fetched.
      * @param parent The parent object.
      */
-    DavItemFetchJob(const DavUtils::DavUrl &url, const DavItem &item, QObject *parent = Q_NULLPTR);
+    DavItemFetchJob(const Utils::DavUrl &url, const DavItem &item, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
@@ -59,7 +59,7 @@ private Q_SLOTS:
     void davJobFinished(KJob *);
 
 private:
-    DavUtils::DavUrl mUrl;
+    Utils::DavUrl mUrl;
     DavItem mItem;
 };
 

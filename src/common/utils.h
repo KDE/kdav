@@ -32,7 +32,7 @@ namespace KDAV
 /**
  * @short A namespace that contains helper methods for DAV functionality.
  */
-namespace DavUtils
+namespace Utils
 {
 /**
  * Describes the DAV protocol dialect.
@@ -70,7 +70,7 @@ QLatin1String protocolName(Protocol protocol);
 
 /**
  * Returns the protocol matching the given name. This is the opposite of
- * DavUtils::protocolName().
+ * Utils::protocolName().
  */
 Protocol protocolByName(const QString &name);
 
@@ -156,6 +156,6 @@ QString LIBKDAV_EXPORT contactsMimeType(Protocol protocol);
 
 }
 
-Q_DECLARE_TYPEINFO(KDAV::DavUtils::DavUrl, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(KDAV::Utils::DavUrl, Q_MOVABLE_TYPE);
 
 #endif

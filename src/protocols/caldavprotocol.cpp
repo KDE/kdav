@@ -17,7 +17,7 @@
 */
 
 #include "caldavprotocol.h"
-#include "common/davutils.h"
+#include "common/utils.h"
 
 #include <QtCore/QDateTime>
 #include <QtCore/QStringList>
@@ -381,11 +381,11 @@ DavCollection::ContentTypes CaldavProtocol::collectionContentTypes(const QDomEle
      *   </propstat>
      */
 
-    const QDomElement propElement = DavUtils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
-    const QDomElement supportedcomponentElement = DavUtils::firstChildElementNS(propElement, QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("supported-calendar-component-set"));
+    const QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
+    const QDomElement supportedcomponentElement = Utils::firstChildElementNS(propElement, QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("supported-calendar-component-set"));
 
     DavCollection::ContentTypes contentTypes;
-    QDomElement compElement = DavUtils::firstChildElementNS(supportedcomponentElement, QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("comp"));
+    QDomElement compElement = Utils::firstChildElementNS(supportedcomponentElement, QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("comp"));
 
     /*
      * Assign the content-type if the server didn't return anything.
@@ -416,7 +416,7 @@ DavCollection::ContentTypes CaldavProtocol::collectionContentTypes(const QDomEle
             contentTypes |= DavCollection::Journal;
         }
 
-        compElement = DavUtils::nextSiblingElementNS(compElement, QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("comp"));
+        compElement = Utils::nextSiblingElementNS(compElement, QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("comp"));
     }
 
     return contentTypes;

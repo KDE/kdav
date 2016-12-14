@@ -37,18 +37,18 @@ using namespace KDAV;
 
 typedef QSharedPointer<KCalCore::Incidence> IncidencePtr;
 
-QString DavUtils::translatedProtocolName(DavUtils::Protocol protocol)
+QString Utils::translatedProtocolName(Utils::Protocol protocol)
 {
     QString protocolName;
 
     switch (protocol) {
-    case DavUtils::CalDav:
+    case Utils::CalDav:
         protocolName = i18n("CalDav");
         break;
-    case DavUtils::CardDav:
+    case Utils::CardDav:
         protocolName = i18n("CardDav");
         break;
-    case DavUtils::GroupDav:
+    case Utils::GroupDav:
         protocolName = i18n("GroupDav");
         break;
     }
@@ -56,22 +56,22 @@ QString DavUtils::translatedProtocolName(DavUtils::Protocol protocol)
     return protocolName;
 }
 
-DavUtils::Protocol DavUtils::protocolByTranslatedName(const QString &name)
+Utils::Protocol Utils::protocolByTranslatedName(const QString &name)
 {
-    DavUtils::Protocol protocol = DavUtils::CalDav;
+    Utils::Protocol protocol = Utils::CalDav;
 
     if (name == i18n("CalDav")) {
-        protocol = DavUtils::CalDav;
+        protocol = Utils::CalDav;
     } else if (name == i18n("CardDav")) {
-        protocol = DavUtils::CardDav;
+        protocol = Utils::CardDav;
     } else if (name == i18n("GroupDav")) {
-        protocol = DavUtils::GroupDav;
+        protocol = Utils::GroupDav;
     }
 
     return protocol;
 }
 
-DavItem DavUtils::createDavItem(const Akonadi::Item &item, const Akonadi::Collection &collection, const Akonadi::Item::List &dependentItems)
+DavItem Utils::createDavItem(const Akonadi::Item &item, const Akonadi::Collection &collection, const Akonadi::Item::List &dependentItems)
 {
     QByteArray rawData;
     QString mimeType;
@@ -87,7 +87,7 @@ DavItem DavUtils::createDavItem(const Akonadi::Item &item, const Akonadi::Collec
 
         const DavProtocolAttribute *protoAttr = collection.attribute<DavProtocolAttribute>();
         if (protoAttr) {
-            mimeType = DavUtils::contactsMimeType(DavUtils::Protocol(protoAttr->davProtocol()));
+            mimeType = Utils::contactsMimeType(Utils::Protocol(protoAttr->davProtocol()));
         } else {
             mimeType = KContacts::Addressee::mimeType();
         }
@@ -119,7 +119,7 @@ DavItem DavUtils::createDavItem(const Akonadi::Item &item, const Akonadi::Collec
     return davItem;
 }
 
-bool DavUtils::parseDavData(const DavItem &source, Akonadi::Item &target, Akonadi::Item::List &extraItems)
+bool Utils::parseDavData(const DavItem &source, Akonadi::Item &target, Akonadi::Item::List &extraItems)
 {
     const QString data = QString::fromUtf8(source.data());
 

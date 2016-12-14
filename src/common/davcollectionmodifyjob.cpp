@@ -18,7 +18,7 @@
 
 #include "davcollectionmodifyjob.h"
 #include "davmanager.h"
-#include "davutils.h"
+#include "utils.h"
 
 #include <kio/davjob.h>
 #include <kio/job.h>
@@ -26,7 +26,7 @@
 
 using namespace KDAV;
 
-DavCollectionModifyJob::DavCollectionModifyJob(const DavUtils::DavUrl &url, QObject *parent)
+DavCollectionModifyJob::DavCollectionModifyJob(const Utils::DavUrl &url, QObject *parent)
     : KJob(parent), mUrl(url)
 {
 }
@@ -127,7 +127,7 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
     }
 
     const QDomDocument response = davJob->response();
-    QDomElement responseElement = DavUtils::firstChildElementNS(response.documentElement(), QStringLiteral("DAV:"), QStringLiteral("response"));
+    QDomElement responseElement = Utils::firstChildElementNS(response.documentElement(), QStringLiteral("DAV:"), QStringLiteral("response"));
 
     bool hasError = false;
     QString errorText;
@@ -136,7 +136,7 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
     const QDomNodeList propstats = responseElement.elementsByTagNameNS(QStringLiteral("DAV:"), QStringLiteral("propstat"));
     for (int i = 0; i < propstats.length(); ++i) {
         const QDomElement propstatElement = propstats.item(i).toElement();
-        const QDomElement statusElement = DavUtils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("status"));
+        const QDomElement statusElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("status"));
 
         const QString statusText = statusElement.text();
         if (statusText.contains(QStringLiteral("200"))) {
@@ -151,7 +151,7 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
 
     if (hasError) {
         // Trying to get more information about the error
-        const QDomElement responseDescriptionElement = DavUtils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("responsedescription"));
+        const QDomElement responseDescriptionElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("responsedescription"));
         if (!responseDescriptionElement.isNull()) {
             errorText.append(i18n("\nThe server returned more information:\n"));
             errorText.append(responseDescriptionElement.text());

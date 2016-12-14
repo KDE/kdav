@@ -22,7 +22,7 @@
 #include "libkdav_export.h"
 
 #include "davjobbase.h"
-#include "davutils.h"
+#include "utils.h"
 
 #include <KCoreAddons/KJob>
 
@@ -45,7 +45,7 @@ public:
      * @param url The DAV url of the DAV principal.
      * @param parent The parent object.
      */
-    explicit DavPrincipalHomeSetsFetchJob(const DavUtils::DavUrl &url, QObject *parent = Q_NULLPTR);
+    explicit DavPrincipalHomeSetsFetchJob(const Utils::DavUrl &url, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
@@ -75,7 +75,7 @@ private:
      */
     void fetchHomeSets(bool fetchHomeSetsOnly);
 
-    DavUtils::DavUrl mUrl;
+    Utils::DavUrl mUrl;
     QStringList mHomeSets;
 };
 

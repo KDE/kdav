@@ -18,7 +18,7 @@
 
 #include "groupdavprotocol.h"
 
-#include "common/davutils.h"
+#include "common/utils.h"
 
 #include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
@@ -132,20 +132,20 @@ DavCollection::ContentTypes GroupdavProtocol::collectionContentTypes(const QDomE
      *  </propstat>
      */
 
-    const QDomElement propElement = DavUtils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
-    const QDomElement resourcetypeElement = DavUtils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("resourcetype"));
+    const QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
+    const QDomElement resourcetypeElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("resourcetype"));
 
     DavCollection::ContentTypes contentTypes;
 
-    if (!DavUtils::firstChildElementNS(resourcetypeElement, QStringLiteral("http://groupdav.org/"), QStringLiteral("vevent-collection")).isNull()) {
+    if (!Utils::firstChildElementNS(resourcetypeElement, QStringLiteral("http://groupdav.org/"), QStringLiteral("vevent-collection")).isNull()) {
         contentTypes |= DavCollection::Events;
     }
 
-    if (!DavUtils::firstChildElementNS(resourcetypeElement, QStringLiteral("http://groupdav.org/"), QStringLiteral("vtodo-collection")).isNull()) {
+    if (!Utils::firstChildElementNS(resourcetypeElement, QStringLiteral("http://groupdav.org/"), QStringLiteral("vtodo-collection")).isNull()) {
         contentTypes |= DavCollection::Todos;
     }
 
-    if (!DavUtils::firstChildElementNS(resourcetypeElement, QStringLiteral("http://groupdav.org/"), QStringLiteral("vcard-collection")).isNull()) {
+    if (!Utils::firstChildElementNS(resourcetypeElement, QStringLiteral("http://groupdav.org/"), QStringLiteral("vcard-collection")).isNull()) {
         contentTypes |= DavCollection::Contacts;
     }
 

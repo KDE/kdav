@@ -21,7 +21,7 @@
 
 #include "libkdav_export.h"
 
-#include "davutils.h"
+#include "utils.h"
 
 #include <QtCore/QMap>
 #include <QtCore/QString>
@@ -89,7 +89,7 @@ public:
     /**
      * Returns the DAV protocol dialect object for the given DAV @p protocol.
      */
-    const DavProtocolBase *davProtocol(DavUtils::Protocol protocol);
+    const DavProtocolBase *davProtocol(Utils::Protocol protocol);
 
 private:
     /**
@@ -100,9 +100,9 @@ private:
     /**
      * Creates a new protocol.
      */
-    bool createProtocol(DavUtils::Protocol protocol);
+    bool createProtocol(Utils::Protocol protocol);
 
-    typedef QMap<DavUtils::Protocol, DavProtocolBase *> protocolsMap;
+    typedef QMap<Utils::Protocol, DavProtocolBase *> protocolsMap;
     protocolsMap mProtocols;
     static DavManager *mSelf;
 };

@@ -30,13 +30,13 @@ public:
     void fillFrom(const DavCollectionPrivate &other);
 
     DavCollection *q;
-    DavUtils::Protocol mProtocol;
+    Utils::Protocol mProtocol;
     QString mCTag;
     QString mUrl;
     QString mDisplayName;
     QColor mColor;
     DavCollection::ContentTypes mContentTypes;
-    DavUtils::Privileges mPrivileges;
+    Utils::Privileges mPrivileges;
 };
 
 void DavCollectionPrivate::fillFrom(const DavCollectionPrivate &other)
@@ -56,14 +56,14 @@ DavCollection::DavCollection()
 {
 }
 
-DavCollection::DavCollection(DavUtils::Protocol protocol, const QString &url, const QString &displayName, ContentTypes contentTypes)
+DavCollection::DavCollection(Utils::Protocol protocol, const QString &url, const QString &displayName, ContentTypes contentTypes)
     : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
 {
     d->mProtocol = protocol;
     d->mUrl = url;
     d->mDisplayName = displayName;
     d->mContentTypes = contentTypes;
-    d->mPrivileges = DavUtils::All;
+    d->mPrivileges = Utils::All;
 }
 
 DavCollection::DavCollection(const DavCollection &other)
@@ -82,12 +82,12 @@ DavCollection::~DavCollection()
 {
 }
 
-void DavCollection::setProtocol(DavUtils::Protocol protocol)
+void DavCollection::setProtocol(Utils::Protocol protocol)
 {
     d->mProtocol = protocol;
 }
 
-DavUtils::Protocol DavCollection::protocol() const
+Utils::Protocol DavCollection::protocol() const
 {
     return d->mProtocol;
 }
@@ -142,12 +142,12 @@ DavCollection::ContentTypes DavCollection::contentTypes() const
     return d->mContentTypes;
 }
 
-void DavCollection::setPrivileges(DavUtils::Privileges privs)
+void DavCollection::setPrivileges(Utils::Privileges privs)
 {
     d->mPrivileges = privs;
 }
 
-DavUtils::Privileges DavCollection::privileges() const
+Utils::Privileges DavCollection::privileges() const
 {
     return d->mPrivileges;
 }

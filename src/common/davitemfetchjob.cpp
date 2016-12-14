@@ -42,7 +42,7 @@ static QString etagFromHeaders(const QString &headers)
     return etag;
 }
 
-DavItemFetchJob::DavItemFetchJob(const DavUtils::DavUrl &url, const DavItem &item, QObject *parent)
+DavItemFetchJob::DavItemFetchJob(const Utils::DavUrl &url, const DavItem &item, QObject *parent)
     : DavJobBase(parent), mUrl(url), mItem(item)
 {
 }

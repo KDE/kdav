@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVUTILS_AKONADI_H
 #define KDAV_DAVUTILS_AKONADI_H
 
-#include "davutils.h"
+#include "utils.h"
 
 #include <QtCore/QList>
 #include <QtCore/QUrl>
@@ -37,7 +37,7 @@ class Item;
 /**
  * @short A namespace that contains helper methods for DAV functionality.
  */
-namespace DavUtils
+namespace Utils
 {
 /**
  * Returns the i18n'ed name of the given DAV @p protocol dialect.
@@ -46,7 +46,7 @@ QString translatedProtocolName(Protocol protocol);
 
 /**
  * Returns the protocol matching the given i18n'ed @p name. This is the opposite
- * of DavUtils::translatedProtocolName().
+ * of Utils::translatedProtocolName().
  */
 Protocol protocolByTranslatedName(const QString &name);
 

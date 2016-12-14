@@ -21,7 +21,7 @@
 #include "davmanager.h"
 #include "davprincipalhomesetsfetchjob.h"
 #include "davprotocolbase.h"
-#include "davutils.h"
+#include "utils.h"
 
 #include <qdebug.h>
 #include <kio/davjob.h>
@@ -34,7 +34,7 @@
 
 using namespace KDAV;
 
-DavCollectionsFetchJob::DavCollectionsFetchJob(const DavUtils::DavUrl &url, QObject *parent)
+DavCollectionsFetchJob::DavCollectionsFetchJob(const Utils::DavUrl &url, QObject *parent)
     : KJob(parent), mUrl(url), mSubJobCount(0)
 {
 }
@@ -55,7 +55,7 @@ DavCollection::List DavCollectionsFetchJob::collections() const
     return mCollections;
 }
 
-DavUtils::DavUrl DavCollectionsFetchJob::davUrl() const
+Utils::DavUrl DavCollectionsFetchJob::davUrl() const
 {
     return mUrl;
 }
@@ -232,7 +232,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
             const QDomElement responsesElement = document.documentElement();
 
-            QDomElement responseElement = DavUtils::firstChildElementNS(responsesElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+            QDomElement responseElement = Utils::firstChildElementNS(responsesElement, QStringLiteral("DAV:"), QStringLiteral("response"));
             while (!responseElement.isNull()) {
 
                 QDomElement propstatElement;
@@ -242,7 +242,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                     const QDomNodeList propstats = responseElement.elementsByTagNameNS(QStringLiteral("DAV:"), QStringLiteral("propstat"));
                     for (int i = 0; i < propstats.length(); ++i) {
                         const QDomElement propstatCandidate = propstats.item(i).toElement();
-                        const QDomElement statusElement = DavUtils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
+                        const QDomElement statusElement = Utils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
                         if (statusElement.text().contains(QStringLiteral("200"))) {
                             propstatElement = propstatCandidate;
                         }
@@ -250,14 +250,14 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 }
 
                 if (propstatElement.isNull()) {
-                    responseElement = DavUtils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+                    responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
                     continue;
                 }
 
                 // extract url
-                const QDomElement hrefElement = DavUtils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("href"));
+                const QDomElement hrefElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("href"));
                 if (hrefElement.isNull()) {
-                    responseElement = DavUtils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+                    responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
                     continue;
                 }
 
@@ -284,24 +284,24 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                     }
                 }
                 if (alreadySeen) {
-                    responseElement = DavUtils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+                    responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
                     continue;
                 }
 
                 // extract display name
-                const QDomElement propElement = DavUtils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
-                const QDomElement displaynameElement = DavUtils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("displayname"));
+                const QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
+                const QDomElement displaynameElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("displayname"));
                 const QString displayName = displaynameElement.text();
 
                 // Extract CTag
-                const QDomElement CTagElement = DavUtils::firstChildElementNS(propElement, QStringLiteral("http://calendarserver.org/ns/"), QStringLiteral("getctag"));
+                const QDomElement CTagElement = Utils::firstChildElementNS(propElement, QStringLiteral("http://calendarserver.org/ns/"), QStringLiteral("getctag"));
                 QString CTag;
                 if (!CTagElement.isNull()) {
                     CTag = CTagElement.text();
                 }
 
                 // extract calendar color if provided
-                const QDomElement colorElement = DavUtils::firstChildElementNS(propElement, QStringLiteral("http://apple.com/ns/ical/"), QStringLiteral("calendar-color"));
+                const QDomElement colorElement = Utils::firstChildElementNS(propElement, QStringLiteral("http://apple.com/ns/ical/"), QStringLiteral("calendar-color"));
                 QColor color;
                 if (!colorElement.isNull()) {
                     QString colorValue = colorElement.text();
@@ -320,12 +320,12 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 }
 
                 // extract privileges
-                const QDomElement currentPrivsElement = DavUtils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("current-user-privilege-set"));
+                const QDomElement currentPrivsElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("current-user-privilege-set"));
                 if (currentPrivsElement.isNull()) {
                     // Assume that we have all privileges
-                    collection.setPrivileges(DavUtils::All);
+                    collection.setPrivileges(Utils::All);
                 } else {
-                    DavUtils::Privileges privileges = DavUtils::extractPrivileges(currentPrivsElement);
+                    Utils::Privileges privileges = Utils::extractPrivileges(currentPrivsElement);
                     collection.setPrivileges(privileges);
                 }
 
@@ -333,7 +333,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 mCollections << collection;
                 Q_EMIT collectionDiscovered(mUrl.protocol(), url.toDisplayString(), jobUrl);
 
-                responseElement = DavUtils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+                responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
             }
         }
     }

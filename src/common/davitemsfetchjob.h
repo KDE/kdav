@@ -23,7 +23,7 @@
 #include "libkdav_export.h"
 
 #include "davitem.h"
-#include "davutils.h"
+#include "utils.h"
 
 #include <KCoreAddons/KJob>
 
@@ -48,7 +48,7 @@ public:
      * @param urls The list of urls to fetch
      * @param parent The parent object
      */
-    DavItemsFetchJob(const DavUtils::DavUrl &collectionUrl, const QStringList &urls, QObject *parent = Q_NULLPTR);
+    DavItemsFetchJob(const Utils::DavUrl &collectionUrl, const QStringList &urls, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
@@ -69,7 +69,7 @@ private Q_SLOTS:
     void davJobFinished(KJob *);
 
 private:
-    DavUtils::DavUrl mCollectionUrl;
+    Utils::DavUrl mCollectionUrl;
     QStringList mUrls;
     QMap<QString, DavItem> mItems;
 };

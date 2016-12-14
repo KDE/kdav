@@ -16,7 +16,7 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include "davutils.h"
+#include "utils.h"
 #include "davitem.h"
 #include "davmanager.h"
 #include "davprotocolbase.h"
@@ -28,7 +28,7 @@
 
 using namespace KDAV;
 
-QDomElement DavUtils::firstChildElementNS(const QDomElement &parent, const QString &namespaceUri, const QString &tagName)
+QDomElement Utils::firstChildElementNS(const QDomElement &parent, const QString &namespaceUri, const QString &tagName)
 {
     for (QDomNode child = parent.firstChild(); !child.isNull(); child = child.nextSibling()) {
         if (child.isElement()) {
@@ -42,7 +42,7 @@ QDomElement DavUtils::firstChildElementNS(const QDomElement &parent, const QStri
     return QDomElement();
 }
 
-QDomElement DavUtils::nextSiblingElementNS(const QDomElement &element, const QString &namespaceUri, const QString &tagName)
+QDomElement Utils::nextSiblingElementNS(const QDomElement &element, const QString &namespaceUri, const QString &tagName)
 {
     for (QDomNode sib = element.nextSibling(); !sib.isNull(); sib = sib.nextSibling()) {
         if (sib.isElement()) {
@@ -56,7 +56,7 @@ QDomElement DavUtils::nextSiblingElementNS(const QDomElement &element, const QSt
     return QDomElement();
 }
 
-DavUtils::Privileges DavUtils::extractPrivileges(const QDomElement &element)
+Utils::Privileges Utils::extractPrivileges(const QDomElement &element)
 {
     Privileges final = None;
     QDomElement privElement = firstChildElementNS(element, QStringLiteral("DAV:"), QStringLiteral("privilege"));
@@ -69,13 +69,13 @@ DavUtils::Privileges DavUtils::extractPrivileges(const QDomElement &element)
             child = child.nextSiblingElement();
         }
 
-        privElement = DavUtils::nextSiblingElementNS(privElement, QStringLiteral("DAV:"), QStringLiteral("privilege"));
+        privElement = Utils::nextSiblingElementNS(privElement, QStringLiteral("DAV:"), QStringLiteral("privilege"));
     }
 
     return final;
 }
 
-DavUtils::Privileges DavUtils::parsePrivilege(const QDomElement &element)
+Utils::Privileges Utils::parsePrivilege(const QDomElement &element)
 {
     Privileges final = None;
 
@@ -91,75 +91,75 @@ DavUtils::Privileges DavUtils::parsePrivilege(const QDomElement &element)
         const QString privname = element.localName();
 
         if (privname == QLatin1String("read")) {
-            final |= DavUtils::Read;
+            final |= Utils::Read;
         } else if (privname == QLatin1String("write")) {
-            final |= DavUtils::Write;
+            final |= Utils::Write;
         } else if (privname == QLatin1String("write-properties")) {
-            final |= DavUtils::WriteProperties;
+            final |= Utils::WriteProperties;
         } else if (privname == QLatin1String("write-content")) {
-            final |= DavUtils::WriteContent;
+            final |= Utils::WriteContent;
         } else if (privname == QLatin1String("unlock")) {
-            final |= DavUtils::Unlock;
+            final |= Utils::Unlock;
         } else if (privname == QLatin1String("read-acl")) {
-            final |= DavUtils::ReadAcl;
+            final |= Utils::ReadAcl;
         } else if (privname == QLatin1String("read-current-user-privilege-set")) {
-            final |= DavUtils::ReadCurrentUserPrivilegeSet;
+            final |= Utils::ReadCurrentUserPrivilegeSet;
         } else if (privname == QLatin1String("write-acl")) {
-            final |= DavUtils::WriteAcl;
+            final |= Utils::WriteAcl;
         } else if (privname == QLatin1String("bind")) {
-            final |= DavUtils::Bind;
+            final |= Utils::Bind;
         } else if (privname == QLatin1String("unbind")) {
-            final |= DavUtils::Unbind;
+            final |= Utils::Unbind;
         } else if (privname == QLatin1String("all")) {
-            final |= DavUtils::All;
+            final |= Utils::All;
         }
     }
 
     return final;
 }
 
-DavUtils::DavUrl::DavUrl()
+Utils::DavUrl::DavUrl()
     : mProtocol(CalDav)
 {
 }
 
-DavUtils::DavUrl::DavUrl(const QUrl &url, DavUtils::Protocol protocol)
+Utils::DavUrl::DavUrl(const QUrl &url, Utils::Protocol protocol)
     : mUrl(url), mProtocol(protocol)
 {
 }
 
-void DavUtils::DavUrl::setUrl(const QUrl &url)
+void Utils::DavUrl::setUrl(const QUrl &url)
 {
     mUrl = url;
 }
 
-QUrl DavUtils::DavUrl::url() const
+QUrl Utils::DavUrl::url() const
 {
     return mUrl;
 }
 
-void DavUtils::DavUrl::setProtocol(DavUtils::Protocol protocol)
+void Utils::DavUrl::setProtocol(Utils::Protocol protocol)
 {
     mProtocol = protocol;
 }
 
-DavUtils::Protocol DavUtils::DavUrl::protocol() const
+Utils::Protocol Utils::DavUrl::protocol() const
 {
     return mProtocol;
 }
 
-QLatin1String DavUtils::protocolName(DavUtils::Protocol protocol)
+QLatin1String Utils::protocolName(Utils::Protocol protocol)
 {
     QLatin1String protocolName("");
 
     switch (protocol) {
-    case DavUtils::CalDav:
+    case Utils::CalDav:
         protocolName = QLatin1String("CalDav");
         break;
-    case DavUtils::CardDav:
+    case Utils::CardDav:
         protocolName = QLatin1String("CardDav");
         break;
-    case DavUtils::GroupDav:
+    case Utils::GroupDav:
         protocolName = QLatin1String("GroupDav");
         break;
     }
@@ -167,16 +167,16 @@ QLatin1String DavUtils::protocolName(DavUtils::Protocol protocol)
     return protocolName;
 }
 
-DavUtils::Protocol DavUtils::protocolByName(const QString &name)
+Utils::Protocol Utils::protocolByName(const QString &name)
 {
-    DavUtils::Protocol protocol = DavUtils::CalDav;
+    Utils::Protocol protocol = Utils::CalDav;
 
     if (name == QLatin1String("CalDav")) {
-        protocol = DavUtils::CalDav;
+        protocol = Utils::CalDav;
     } else if (name == QLatin1String("CardDav")) {
-        protocol = DavUtils::CardDav;
+        protocol = Utils::CardDav;
     } else if (name == QLatin1String("GroupDav")) {
-        protocol = DavUtils::GroupDav;
+        protocol = Utils::GroupDav;
     } else {
         qCritical() << "Unexpected protocol name : " << name;
     }
@@ -184,7 +184,7 @@ DavUtils::Protocol DavUtils::protocolByName(const QString &name)
     return protocol;
 }
 
-QString DavUtils::createUniqueId()
+QString Utils::createUniqueId()
 {
     qint64 time = QDateTime::currentMSecsSinceEpoch() / 1000;
     int r = qrand() % 1000;
@@ -193,13 +193,13 @@ QString DavUtils::createUniqueId()
     return uid;
 }
 
-QString DavUtils::contactsMimeType(DavUtils::Protocol protocol)
+QString Utils::contactsMimeType(Utils::Protocol protocol)
 {
     QString ret;
 
-    if (protocol == DavUtils::CardDav) {
+    if (protocol == Utils::CardDav) {
         ret = QStringLiteral("text/vcard");
-    } else if (protocol == DavUtils::GroupDav) {
+    } else if (protocol == Utils::GroupDav) {
         ret = QStringLiteral("text/x-vcard");
     }
 

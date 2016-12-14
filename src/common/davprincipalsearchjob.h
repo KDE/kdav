@@ -21,7 +21,7 @@
 
 #include "libkdav_export.h"
 
-#include "davutils.h"
+#include "utils.h"
 
 #include <QtCore/QList>
 #include <QtCore/QPair>
@@ -72,7 +72,7 @@ public:
      * @param filter The filter that will be used to match the displayname attribute.
      * @param parent The parent object.
      */
-    explicit DavPrincipalSearchJob(const DavUtils::DavUrl &url, FilterType type, const QString &filter, QObject *parent = Q_NULLPTR);
+    explicit DavPrincipalSearchJob(const Utils::DavUrl &url, FilterType type, const QString &filter, QObject *parent = Q_NULLPTR);
 
     /**
      * Add a new property to fetch from the server.
@@ -90,7 +90,7 @@ public:
     /**
      * Return the DavUrl used by this job
      */
-    DavUtils::DavUrl davUrl() const;
+    Utils::DavUrl davUrl() const;
 
     /**
      * Get the job results.
@@ -105,7 +105,7 @@ private:
     void buildReportQuery(QDomDocument &query);
 
 private:
-    DavUtils::DavUrl mUrl;
+    Utils::DavUrl mUrl;
     FilterType mType;
     QString mFilter;
     int mPrincipalPropertySearchSubJobCount;

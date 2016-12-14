@@ -24,7 +24,7 @@
 
 using namespace KDAV;
 
-DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUtils::DavUrl &url, QObject *parent)
+DavCollectionDeleteJob::DavCollectionDeleteJob(const Utils::DavUrl &url, QObject *parent)
     : KJob(parent), mUrl(url)
 {
 }

@@ -21,7 +21,7 @@
 
 #include "libkdav_export.h"
 
-#include "davutils.h"
+#include "utils.h"
 
 #include <QtCore/QList>
 
@@ -47,7 +47,7 @@ public:
      * @param url The DAV url that identifies the collection.
      * @param parent The parent object.
      */
-    explicit DavCollectionModifyJob(const DavUtils::DavUrl &url, QObject *parent = Q_NULLPTR);
+    explicit DavCollectionModifyJob(const Utils::DavUrl &url, QObject *parent = Q_NULLPTR);
 
     /**
      * Sets the property that shall be modified by the job.
@@ -75,7 +75,7 @@ private Q_SLOTS:
     void davJobFinished(KJob *job);
 
 private:
-    DavUtils::DavUrl mUrl;
+    Utils::DavUrl mUrl;
     QDomDocument mQuery;
 
     QVector<QDomElement> mSetProperties;

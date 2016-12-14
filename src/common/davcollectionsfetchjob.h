@@ -22,7 +22,7 @@
 #include "libkdav_export.h"
 
 #include "davcollection.h"
-#include "davutils.h"
+#include "utils.h"
 
 #include <KCoreAddons/KJob>
 
@@ -46,7 +46,7 @@ public:
      * @param url The DAV url of the DAV collection whose sub collections shall be fetched.
      * @param parent The parent object.
      */
-    explicit DavCollectionsFetchJob(const DavUtils::DavUrl &url, QObject *parent = Q_NULLPTR);
+    explicit DavCollectionsFetchJob(const Utils::DavUrl &url, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
@@ -61,7 +61,7 @@ public:
     /**
      * Return the DavUrl used by this job
      */
-    DavUtils::DavUrl davUrl() const;
+    Utils::DavUrl davUrl() const;
 
 Q_SIGNALS:
     /**
@@ -80,7 +80,7 @@ private:
     void doCollectionsFetch(const QUrl &url);
     void subjobFinished();
 
-    DavUtils::DavUrl mUrl;
+    Utils::DavUrl mUrl;
     DavCollection::List mCollections;
     uint mSubJobCount;
 };
