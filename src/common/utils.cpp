@@ -23,8 +23,9 @@
 
 #include <QtCore/QByteArray>
 #include <QtCore/QDateTime>
-#include <QtCore/QDebug>
 #include <QtCore/QString>
+
+#include "libkdav_debug.h"
 
 using namespace KDAV;
 
@@ -178,7 +179,7 @@ Utils::Protocol Utils::protocolByName(const QString &name)
     } else if (name == QLatin1String("GroupDav")) {
         protocol = Utils::GroupDav;
     } else {
-        qCritical() << "Unexpected protocol name : " << name;
+        qCCritical(KDAV_LOG) << "Unexpected protocol name : " << name;
     }
 
     return protocol;

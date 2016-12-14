@@ -25,7 +25,7 @@
 #include <kio/job.h>
 #include <KLocalizedString>
 
-#include <QtCore/QDebug>
+#include "libkdav_debug.h"
 
 using namespace KDAV;
 

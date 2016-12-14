@@ -23,7 +23,7 @@
 #include "davprotocolbase.h"
 #include "utils.h"
 
-#include <qdebug.h>
+#include "libkdav_debug.h"
 #include <kio/davjob.h>
 #include <kio/job.h>
 #include <KLocalizedString>
@@ -79,7 +79,7 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
         if (davJob->latestResponseCode()) {
             // If we have a HTTP response code then this may mean that
             // the URL was not a principal URL. Retry as if it were a calendar URL.
-            qDebug() << job->errorText();
+            qCDebug(KDAV_LOG) << job->errorText();
             doCollectionsFetch(mUrl.url());
         } else {
             // Just give up here.
@@ -92,8 +92,8 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
     }
 
     const QStringList homeSets = davJob->homeSets();
-    qDebug() << "Found " << homeSets.size() << " homesets";
-    qDebug() << homeSets;
+    qCDebug(KDAV_LOG) << "Found " << homeSets.size() << " homesets";
+    qCDebug(KDAV_LOG) << homeSets;
 
     if (homeSets.isEmpty()) {
         // Same as above, retry as if it were a calendar URL.
@@ -329,7 +329,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                     collection.setPrivileges(privileges);
                 }
 
-                qDebug() << url.toDisplayString() << "PRIVS: " << collection.privileges();
+                qCDebug(KDAV_LOG) << url.toDisplayString() << "PRIVS: " << collection.privileges();
                 mCollections << collection;
                 Q_EMIT collectionDiscovered(mUrl.protocol(), url.toDisplayString(), jobUrl);
 

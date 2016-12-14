@@ -23,7 +23,8 @@
 #include "protocols/groupdavprotocol.h"
 
 #include <kio/davjob.h>
-#include <QDebug>
+
+#include "libkdav_debug.h"
 
 #include <QtCore/QUrl>
 #include <QtXml/QDomDocument>
@@ -118,7 +119,7 @@ bool DavManager::createProtocol(Utils::Protocol protocol)
         mProtocols.insert(Utils::GroupDav, new GroupdavProtocol());
         break;
     default:
-        qCritical() << "Unknown protocol: " << static_cast<int>(protocol);
+        qCCritical(KDAV_LOG) << "Unknown protocol: " << static_cast<int>(protocol);
         return false;
     }
 

@@ -24,8 +24,6 @@
 #include <kio/job.h>
 #include <KLocalizedString>
 
-#include <QtCore/QDebug>
-
 using namespace KDAV;
 
 static QString etagFromHeaders(const QString &headers)
