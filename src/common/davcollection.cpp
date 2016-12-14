@@ -30,9 +30,8 @@ public:
     void fillFrom(const DavCollectionPrivate &other);
 
     DavCollection *q;
-    Utils::Protocol mProtocol;
     QString mCTag;
-    QString mUrl;
+    Utils::DavUrl mUrl;
     QString mDisplayName;
     QColor mColor;
     DavCollection::ContentTypes mContentTypes;
@@ -41,7 +40,6 @@ public:
 
 void DavCollectionPrivate::fillFrom(const DavCollectionPrivate &other)
 {
-    mProtocol = other.mProtocol;
     mCTag = other.mCTag;
     mUrl = other.mUrl;
     mDisplayName = other.mDisplayName;
@@ -56,10 +54,9 @@ DavCollection::DavCollection()
 {
 }
 
-DavCollection::DavCollection(Utils::Protocol protocol, const QString &url, const QString &displayName, ContentTypes contentTypes)
+DavCollection::DavCollection(const Utils::DavUrl &url, const QString &displayName, ContentTypes contentTypes)
     : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
 {
-    d->mProtocol = protocol;
     d->mUrl = url;
     d->mDisplayName = displayName;
     d->mContentTypes = contentTypes;
@@ -82,16 +79,6 @@ DavCollection::~DavCollection()
 {
 }
 
-void DavCollection::setProtocol(Utils::Protocol protocol)
-{
-    d->mProtocol = protocol;
-}
-
-Utils::Protocol DavCollection::protocol() const
-{
-    return d->mProtocol;
-}
-
 void DavCollection::setCTag(const QString &ctag)
 {
     d->mCTag = ctag;
@@ -102,12 +89,12 @@ QString DavCollection::CTag() const
     return d->mCTag;
 }
 
-void DavCollection::setUrl(const QString &url)
+void DavCollection::setUrl(const Utils::DavUrl &url)
 {
     d->mUrl = url;
 }
 
-QString DavCollection::url() const
+Utils::DavUrl DavCollection::url() const
 {
     return d->mUrl;
 }

@@ -109,6 +109,11 @@ public:
     QUrl url() const;
 
     /**
+     * Returns the url in a userfriendly way without login informations.
+     */
+    QString toDisplayString() const;
+
+    /**
      * Sets the DAV @p protocol dialect that is used to retrieve the DAV object.
      */
     void setProtocol(Protocol protocol);

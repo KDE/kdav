@@ -149,6 +149,13 @@ Utils::Protocol Utils::DavUrl::protocol() const
     return mProtocol;
 }
 
+QString Utils::DavUrl::toDisplayString() const
+{
+    auto url = mUrl;
+    url.setUserInfo(QString());
+    return url.toDisplayString();
+}
+
 QLatin1String Utils::protocolName(Utils::Protocol protocol)
 {
     QLatin1String protocolName("");

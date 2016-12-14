@@ -40,15 +40,13 @@ int main(int argc, char **argv)
     job->exec();
 
     foreach(const auto collection, job->collections()) {
-        qDebug() << collection.url() << "PRIVS: " << collection.privileges();
-        QUrl collectionUrl(collection.url());
-        collectionUrl.setUserName(mainUrl.userName());
-        collectionUrl.setPassword(mainUrl.password());
+        qDebug() << collection.url().toDisplayString() << "PRIVS: " << collection.privileges();
+        auto collectionUrl = collection.url();
         KDAV::EtagCache cache;
         int anz = -1;
         //Get all items in a collection add them to cache and make sure, that afterward no item is changed
         {
-            auto itemListJob = new KDAV::DavItemsListJob(KDAV::Utils::DavUrl(collectionUrl, KDAV::Utils::CardDav), &cache);
+            auto itemListJob = new KDAV::DavItemsListJob(collectionUrl, &cache);
             itemListJob->exec();
             anz = itemListJob->items().size();
             qDebug() << "items:" << itemListJob->items().size();
@@ -64,7 +62,7 @@ int main(int argc, char **argv)
                 const auto fetchedItem = itemFetchJob->item();
                 qDebug() << fetchedItem.contentType() << fetchedItem.data();
 
-                auto itemsFetchJob = new KDAV::DavItemsFetchJob(KDAV::Utils::DavUrl(collectionUrl, KDAV::Utils::CardDav), QStringList() << item.url());
+                auto itemsFetchJob = new KDAV::DavItemsFetchJob(collectionUrl, QStringList() << item.url());
                 itemsFetchJob->exec();
                 if (itemsFetchJob->item(item.url()).contentType() != fetchedItem.contentType()) {       //itemsfetchjob do not get contentType
                     qDebug() << "Fetched same item but got different contentType:" << itemsFetchJob->item(item.url()).contentType();
@@ -80,7 +78,7 @@ int main(int argc, char **argv)
         }
         {
             qDebug() << "second run: (should be empty).";
-            auto itemListJob = new KDAV::DavItemsListJob(KDAV::Utils::DavUrl(collectionUrl, KDAV::Utils::CardDav), &cache);
+            auto itemListJob = new KDAV::DavItemsListJob(collectionUrl, &cache);
             itemListJob->exec();
             if (itemListJob->items().size() != anz) {
                 qDebug() << "Items have added/deleted on server.";

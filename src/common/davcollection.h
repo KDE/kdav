@@ -70,27 +70,16 @@ public:
     /**
      * Creates a new DAV collection.
      *
-     * @param protocol The DAV protocol dialect the collection comes from.
      * @param url The url that identifies the collection.
      * @param displayName The display name of the collection.
      * @param contentTypes The possible content types of the collection.
      */
-    DavCollection(Utils::Protocol protocol, const QString &url, const QString &displayName, ContentTypes contentTypes);
+    DavCollection(const Utils::DavUrl &url, const QString &displayName, ContentTypes contentTypes);
 
     DavCollection(const DavCollection &other);
     DavCollection &operator=(const DavCollection &other);
 
     ~DavCollection();
-
-    /**
-     * Sets the DAV @p protocol dialect the collection comes from.
-     */
-    void setProtocol(Utils::Protocol protocol);
-
-    /**
-     * Returns the DAV protocol dialect the collection comes from.
-     */
-    Utils::Protocol protocol() const;
 
     /**
      * Sets this collection CTag.
@@ -106,12 +95,12 @@ public:
     /**
      * Sets the @p url that identifies the collection.
      */
-    void setUrl(const QString &url);
+    void setUrl(const Utils::DavUrl &url);
 
     /**
      * Returns the url that identifies the collection.
      */
-    QString url() const;
+    Utils::DavUrl url() const;
 
     /**
      * Sets the display @p name of the collection.

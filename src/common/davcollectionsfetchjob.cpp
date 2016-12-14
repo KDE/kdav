@@ -279,7 +279,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 // don't add this resource if it has already been detected
                 bool alreadySeen = false;
                 foreach (const DavCollection &seen, mCollections) {
-                    if (seen.url() == url.toDisplayString()) {
+                    if (seen.url().toDisplayString() == url.toDisplayString()) {
                         alreadySeen = true;
                     }
                 }
@@ -313,7 +313,10 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 // extract allowed content types
                 const DavCollection::ContentTypes contentTypes = DavManager::self()->davProtocol(mUrl.protocol())->collectionContentTypes(propstatElement);
 
-                DavCollection collection(mUrl.protocol(), url.toDisplayString(), displayName, contentTypes);
+                auto _url = url;
+                _url.setUserInfo(mUrl.url().userInfo());
+                DavCollection collection(Utils::DavUrl(_url, mUrl.protocol()), displayName, contentTypes);
+
                 collection.setCTag(CTag);
                 if (color.isValid()) {
                     collection.setColor(color);
