@@ -20,6 +20,7 @@
 
 #include "davmanager.h"
 #include "davprotocolbase.h"
+#include "davurl.h"
 #include "utils.h"
 #include "etagcache.h"
 
@@ -31,50 +32,79 @@
 
 using namespace KDAV;
 
-DavItemsListJob::DavItemsListJob(const DavUrl &url, const EtagCache *cache, QObject *parent)
-    : KJob(parent), mUrl(url), mEtagCache(cache), mSubJobCount(0)
+class DavItemsListJobPrivate {
+public:
+    DavItemsListJobPrivate(const DavUrl &url, const std::shared_ptr<EtagCache> &cache);
+
+    DavUrl mUrl;
+    const std::shared_ptr<EtagCache> &mEtagCache;
+    QStringList mMimeTypes;
+    QString mRangeStart;
+    QString mRangeEnd;
+    DavItem::List mItems;
+    QSet<QString> mSeenUrls; // to prevent events duplication with some servers
+    DavItem::List mChangedItems;
+    QStringList mDeletedItems;
+    uint mSubJobCount;
+};
+
+DavItemsListJobPrivate::DavItemsListJobPrivate(const DavUrl &url, const std::shared_ptr<EtagCache> &cache)
+    : mUrl(url)
+    , mEtagCache(cache)
+    , mSubJobCount(0)
+{
+}
+
+
+DavItemsListJob::DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent)
+    : KJob(parent)
+    , d(std::unique_ptr<DavItemsListJobPrivate>(new DavItemsListJobPrivate(url, cache)))
+{
+}
+
+DavItemsListJob::~DavItemsListJob()
 {
 }
 
 void DavItemsListJob::setContentMimeTypes(const QStringList &types)
 {
-    mMimeTypes = types;
+    d->mMimeTypes = types;
 }
 
 void DavItemsListJob::setTimeRange(const QString &start, const QString &end)
 {
-    mRangeStart = start;
-    mRangeEnd = end;
+    d->mRangeStart = start;
+    d->mRangeEnd = end;
 }
 
 void DavItemsListJob::start()
 {
-    const DavProtocolBase *protocol = DavManager::self()->davProtocol(mUrl.protocol());
+    const DavProtocolBase *protocol = DavManager::self()->davProtocol(d->mUrl.protocol());
     Q_ASSERT(protocol);
     QVectorIterator<XMLQueryBuilder::Ptr> it(protocol->itemsQueries());
 
     while (it.hasNext()) {
         XMLQueryBuilder::Ptr builder = it.next();
-        if (!mRangeStart.isEmpty()) {
-            builder->setParameter(QStringLiteral("start"), mRangeStart);
+        if (!d->mRangeStart.isEmpty()) {
+            builder->setParameter(QStringLiteral("start"), d->mRangeStart);
         }
-        if (!mRangeEnd.isEmpty()) {
-            builder->setParameter(QStringLiteral("end"), mRangeEnd);
+        if (!d->mRangeEnd.isEmpty()) {
+            builder->setParameter(QStringLiteral("end"), d->mRangeEnd);
         }
 
         const QDomDocument props = builder->buildQuery();
         const QString mimeType = builder->mimeType();
 
-        if (mMimeTypes.isEmpty() || mMimeTypes.contains(mimeType)) {
-            ++mSubJobCount;
+        if (d->mMimeTypes.isEmpty() || d->mMimeTypes.contains(mimeType)) {
+            ++d->mSubJobCount;
             if (protocol->useReport()) {
-                KIO::DavJob *job = DavManager::self()->createReportJob(mUrl.url(), props);
+                KIO::DavJob *job = DavManager::self()->createReportJob(d->mUrl.url(), props);
                 job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
                 job->setProperty("davType", QStringLiteral("report"));
                 job->setProperty("itemsMimeType", mimeType);
                 connect(job, &KIO::DavJob::result, this, &DavItemsListJob::davJobFinished);
             } else {
-                KIO::DavJob *job = DavManager::self()->createPropFindJob(mUrl.url(), props);
+                KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), props);
                 job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
                 job->setProperty("davType", QStringLiteral("propFind"));
                 job->setProperty("itemsMimeType", mimeType);
@@ -86,17 +116,17 @@ void DavItemsListJob::start()
 
 DavItem::List DavItemsListJob::items() const
 {
-    return mItems;
+    return d->mItems;
 }
 
 DavItem::List DavItemsListJob::changedItems() const
 {
-    return mChangedItems;
+    return d->mChangedItems;
 }
 
 QStringList DavItemsListJob::deletedItems() const
 {
-    return mDeletedItems;
+    return d->mDeletedItems;
 }
 
 void DavItemsListJob::davJobFinished(KJob *job)
@@ -201,36 +231,36 @@ void DavItemsListJob::davJobFinished(KJob *job)
             }
 
             QString itemUrl = url.toDisplayString();
-            if (mSeenUrls.contains(itemUrl)) {
+            if (d->mSeenUrls.contains(itemUrl)) {
                 responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
                 continue;
             }
 
-            mSeenUrls << itemUrl;
+            d->mSeenUrls << itemUrl;
             auto _url = url;
-            _url.setUserInfo(mUrl.url().userInfo());
-            item.setUrl(DavUrl(_url, mUrl.protocol()));
+            _url.setUserInfo(d->mUrl.url().userInfo());
+            item.setUrl(DavUrl(_url, d->mUrl.protocol()));
 
             // extract etag
             const QDomElement getetagElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("getetag"));
 
             item.setEtag(getetagElement.text());
 
-            mItems << item;
+            d->mItems << item;
 
-            if (mEtagCache->etagChanged(itemUrl, item.etag())) {
-                mChangedItems << item;
+            if (d->mEtagCache->etagChanged(itemUrl, item.etag())) {
+                d->mChangedItems << item;
             }
 
             responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
         }
     }
 
-    QSet<QString> removed = mEtagCache->urls().toSet();
-    removed.subtract(mSeenUrls);
-    mDeletedItems = removed.toList();
+    QSet<QString> removed = d->mEtagCache->urls().toSet();
+    removed.subtract(d->mSeenUrls);
+    d->mDeletedItems = removed.toList();
 
-    if (--mSubJobCount == 0) {
+    if (--d->mSubJobCount == 0) {
         emitResult();
     }
 }

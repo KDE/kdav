@@ -22,17 +22,20 @@
 #include "libkdav_export.h"
 
 #include "davitem.h"
-#include "davurl.h"
+
+#include <memory>
 
 #include <KCoreAddons/KJob>
 
-#include <QtCore/QSet>
 #include <QtCore/QStringList>
+
+class DavItemsListJobPrivate;
 
 namespace KDAV
 {
 
 class EtagCache;
+class DavUrl;
 
 /**
  * @short A job that lists all DAV items inside a DAV collection.
@@ -48,7 +51,9 @@ public:
      * @param url The url of the DAV collection.
      * @param parent The parent object.
      */
-    DavItemsListJob(const DavUrl &url, const EtagCache *cache, QObject *parent = Q_NULLPTR);
+    DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent = Q_NULLPTR);
+
+    ~DavItemsListJob();
 
     /**
      * Limits the mime types of the items requested.
@@ -92,16 +97,7 @@ private Q_SLOTS:
     void davJobFinished(KJob *);
 
 private:
-    DavUrl mUrl;
-    const EtagCache *mEtagCache;
-    QStringList mMimeTypes;
-    QString mRangeStart;
-    QString mRangeEnd;
-    DavItem::List mItems;
-    QSet<QString> mSeenUrls; // to prevent events duplication with some servers
-    DavItem::List mChangedItems;
-    QStringList mDeletedItems;
-    uint mSubJobCount;
+    std::unique_ptr<DavItemsListJobPrivate> d;
 };
 
 }

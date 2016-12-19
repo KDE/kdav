@@ -42,11 +42,11 @@ int main(int argc, char **argv)
     foreach(const auto collection, job->collections()) {
         qDebug() << collection.url().toDisplayString() << "PRIVS: " << collection.privileges();
         auto collectionUrl = collection.url();
-        KDAV::EtagCache cache;
+        std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
         int anz = -1;
         //Get all items in a collection add them to cache and make sure, that afterward no item is changed
         {
-            auto itemListJob = new KDAV::DavItemsListJob(collectionUrl, &cache);
+            auto itemListJob = new KDAV::DavItemsListJob(collectionUrl, cache);
             itemListJob->exec();
             anz = itemListJob->items().size();
             qDebug() << "items:" << itemListJob->items().size();
@@ -70,13 +70,13 @@ int main(int argc, char **argv)
                     qDebug() << "Fetched same item but got different data:" << itemsFetchJob->item(item.url().toDisplayString()).data();
                 }
 
-                cache.setEtag(item.url().toDisplayString(), item.etag());
+                cache->setEtag(item.url().toDisplayString(), item.etag());
             }
-            cache.setEtag(QStringLiteral("invalid"),QStringLiteral("invalid"));
+            cache->setEtag(QStringLiteral("invalid"),QStringLiteral("invalid"));
         }
         {
             qDebug() << "second run: (should be empty).";
-            auto itemListJob = new KDAV::DavItemsListJob(collectionUrl, &cache);
+            auto itemListJob = new KDAV::DavItemsListJob(collectionUrl, cache);
             itemListJob->exec();
             if (itemListJob->items().size() != anz) {
                 qDebug() << "Items have added/deleted on server.";
