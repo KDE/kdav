@@ -21,7 +21,7 @@
 
 #include "libkdav_export.h"
 
-#include "utils.h"
+#include "davurl.h"
 
 #include <KCoreAddons/KJob>
 
@@ -44,7 +44,7 @@ public:
      * @param url The dav url of the collection to delete
      * @param parent The parent object.
      */
-    explicit DavCollectionDeleteJob(const Utils::DavUrl &url, QObject *parent = Q_NULLPTR);
+    explicit DavCollectionDeleteJob(const DavUrl &url, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
@@ -55,7 +55,7 @@ private Q_SLOTS:
     void davJobFinished(KJob *);
 
 private:
-    Utils::DavUrl mUrl;
+    DavUrl mUrl;
 };
 
 }

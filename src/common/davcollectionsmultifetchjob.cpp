@@ -22,7 +22,7 @@
 
 using namespace KDAV;
 
-DavCollectionsMultiFetchJob::DavCollectionsMultiFetchJob(const Utils::DavUrl::List &urls, QObject *parent)
+DavCollectionsMultiFetchJob::DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent)
     : KJob(parent), mUrls(urls), mSubJobCount(urls.size())
 {
 }
@@ -33,7 +33,7 @@ void DavCollectionsMultiFetchJob::start()
         emitResult();
     }
 
-    foreach (const Utils::DavUrl &url, mUrls) {
+    foreach (const DavUrl &url, mUrls) {
         DavCollectionsFetchJob *job = new DavCollectionsFetchJob(url, this);
         connect(job, &DavCollectionsFetchJob::result, this, &DavCollectionsMultiFetchJob::davJobFinished);
         connect(job, &DavCollectionsFetchJob::collectionDiscovered, this, &DavCollectionsMultiFetchJob::collectionDiscovered);

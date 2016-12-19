@@ -20,6 +20,7 @@
 
 #include "davmanager.h"
 #include "davprotocolbase.h"
+#include "utils.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
@@ -27,7 +28,7 @@
 
 using namespace KDAV;
 
-DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const Utils::DavUrl &url, QObject *parent)
+DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const DavUrl &url, QObject *parent)
     : DavJobBase(parent), mUrl(url)
 {
 }

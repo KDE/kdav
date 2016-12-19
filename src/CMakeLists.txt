@@ -24,6 +24,7 @@ set(libkdav_SRCS
  common/davmultigetprotocol.cpp
  common/davprincipalhomesetsfetchjob.cpp
  common/davprincipalsearchjob.cpp
+ common/davurl.cpp
  common/utils.cpp
  common/etagcache.cpp
 
@@ -60,7 +61,9 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavItemsFetchJob
     DavItemsListJob
     DavManager
+    DavUrl
     Utils
+    Enums
     EtagCache
     REQUIRED_HEADERS KDAV_HEADERS
     PREFIX KDAV

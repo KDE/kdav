@@ -20,6 +20,7 @@
 #include "davitemsfetchjob.h"
 #include "davmanager.h"
 #include "davmultigetprotocol.h"
+#include "utils.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
@@ -27,7 +28,7 @@
 
 using namespace KDAV;
 
-DavItemsFetchJob::DavItemsFetchJob(const Utils::DavUrl &collectionUrl, const QStringList &urls, QObject *parent)
+DavItemsFetchJob::DavItemsFetchJob(const DavUrl &collectionUrl, const QStringList &urls, QObject *parent)
     : KJob(parent), mCollectionUrl(collectionUrl), mUrls(urls)
 {
 }

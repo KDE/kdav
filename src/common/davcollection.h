@@ -21,7 +21,7 @@
 
 #include "libkdav_export.h"
 
-#include "utils.h"
+#include "enums.h"
 
 #include <memory>
 
@@ -31,6 +31,11 @@
 class QColor;
 
 class DavCollectionPrivate;
+
+namespace KDAV
+{
+    class DavUrl;
+}
 
 namespace KDAV
 {
@@ -74,7 +79,7 @@ public:
      * @param displayName The display name of the collection.
      * @param contentTypes The possible content types of the collection.
      */
-    DavCollection(const Utils::DavUrl &url, const QString &displayName, ContentTypes contentTypes);
+    DavCollection(const DavUrl &url, const QString &displayName, ContentTypes contentTypes);
 
     DavCollection(const DavCollection &other);
     DavCollection &operator=(const DavCollection &other);
@@ -95,12 +100,12 @@ public:
     /**
      * Sets the @p url that identifies the collection.
      */
-    void setUrl(const Utils::DavUrl &url);
+    void setUrl(const DavUrl &url);
 
     /**
      * Returns the url that identifies the collection.
      */
-    Utils::DavUrl url() const;
+    DavUrl url() const;
 
     /**
      * Sets the display @p name of the collection.

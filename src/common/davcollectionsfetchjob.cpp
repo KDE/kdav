@@ -34,7 +34,7 @@
 
 using namespace KDAV;
 
-DavCollectionsFetchJob::DavCollectionsFetchJob(const Utils::DavUrl &url, QObject *parent)
+DavCollectionsFetchJob::DavCollectionsFetchJob(const DavUrl &url, QObject *parent)
     : KJob(parent), mUrl(url), mSubJobCount(0)
 {
 }
@@ -55,7 +55,7 @@ DavCollection::List DavCollectionsFetchJob::collections() const
     return mCollections;
 }
 
-Utils::DavUrl DavCollectionsFetchJob::davUrl() const
+DavUrl DavCollectionsFetchJob::davUrl() const
 {
     return mUrl;
 }
@@ -315,7 +315,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
                 auto _url = url;
                 _url.setUserInfo(mUrl.url().userInfo());
-                DavCollection collection(Utils::DavUrl(_url, mUrl.protocol()), displayName, contentTypes);
+                DavCollection collection(DavUrl(_url, mUrl.protocol()), displayName, contentTypes);
 
                 collection.setCTag(CTag);
                 if (color.isValid()) {

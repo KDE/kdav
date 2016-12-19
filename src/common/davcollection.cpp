@@ -18,6 +18,8 @@
 
 #include "davcollection.h"
 
+#include "davurl.h"
+
 #include <QColor>
 
 using namespace KDAV;
@@ -31,7 +33,7 @@ public:
 
     DavCollection *q;
     QString mCTag;
-    Utils::DavUrl mUrl;
+    DavUrl mUrl;
     QString mDisplayName;
     QColor mColor;
     DavCollection::ContentTypes mContentTypes;
@@ -54,7 +56,7 @@ DavCollection::DavCollection()
 {
 }
 
-DavCollection::DavCollection(const Utils::DavUrl &url, const QString &displayName, ContentTypes contentTypes)
+DavCollection::DavCollection(const DavUrl &url, const QString &displayName, ContentTypes contentTypes)
     : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
 {
     d->mUrl = url;
@@ -89,12 +91,12 @@ QString DavCollection::CTag() const
     return d->mCTag;
 }
 
-void DavCollection::setUrl(const Utils::DavUrl &url)
+void DavCollection::setUrl(const DavUrl &url)
 {
     d->mUrl = url;
 }
 
-Utils::DavUrl DavCollection::url() const
+DavUrl DavCollection::url() const
 {
     return d->mUrl;
 }

@@ -21,7 +21,7 @@
 
 #include "libkdav_export.h"
 
-#include "utils.h"
+#include "enums.h"
 
 #include <QtCore/QMap>
 #include <QtCore/QString>

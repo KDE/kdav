@@ -19,6 +19,7 @@
 #include "carddavprotocol.h"
 
 #include <QtCore/QStringList>
+#include <QtCore/QUrl>
 #include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
 

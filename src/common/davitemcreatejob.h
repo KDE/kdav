@@ -23,7 +23,7 @@
 
 #include "davitem.h"
 #include "davjobbase.h"
-#include "utils.h"
+#include "davurl.h"
 
 namespace KDAV
 {
@@ -43,7 +43,7 @@ public:
      * @param item The item that shall be created.
      * @param parent The parent object.
      */
-    DavItemCreateJob(const Utils::DavUrl &url, const DavItem &item, QObject *parent = Q_NULLPTR);
+    DavItemCreateJob(const DavUrl &url, const DavItem &item, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
@@ -61,7 +61,7 @@ private Q_SLOTS:
     void itemRefreshed(KJob *);
 
 private:
-    Utils::DavUrl mUrl;
+    DavUrl mUrl;
     DavItem mItem;
     int mRedirectCount;
 };

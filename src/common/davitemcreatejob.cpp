@@ -29,7 +29,7 @@
 
 using namespace KDAV;
 
-DavItemCreateJob::DavItemCreateJob(const Utils::DavUrl &url, const DavItem &item, QObject *parent)
+DavItemCreateJob::DavItemCreateJob(const DavUrl &url, const DavItem &item, QObject *parent)
     : DavJobBase(parent), mUrl(url), mItem(item), mRedirectCount(0)
 {
 }

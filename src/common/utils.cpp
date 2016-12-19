@@ -17,6 +17,9 @@
 */
 
 #include "utils.h"
+
+#include "enums.h"
+
 #include "davitem.h"
 #include "davmanager.h"
 #include "davprotocolbase.h"
@@ -117,43 +120,6 @@ Utils::Privileges Utils::parsePrivilege(const QDomElement &element)
     }
 
     return final;
-}
-
-Utils::DavUrl::DavUrl()
-    : mProtocol(CalDav)
-{
-}
-
-Utils::DavUrl::DavUrl(const QUrl &url, Utils::Protocol protocol)
-    : mUrl(url), mProtocol(protocol)
-{
-}
-
-void Utils::DavUrl::setUrl(const QUrl &url)
-{
-    mUrl = url;
-}
-
-QUrl Utils::DavUrl::url() const
-{
-    return mUrl;
-}
-
-void Utils::DavUrl::setProtocol(Utils::Protocol protocol)
-{
-    mProtocol = protocol;
-}
-
-Utils::Protocol Utils::DavUrl::protocol() const
-{
-    return mProtocol;
-}
-
-QString Utils::DavUrl::toDisplayString() const
-{
-    auto url = mUrl;
-    url.setUserInfo(QString());
-    return url.toDisplayString();
 }
 
 QLatin1String Utils::protocolName(Utils::Protocol protocol)

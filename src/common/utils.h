@@ -21,10 +21,11 @@
 
 #include "libkdav_export.h"
 
-#include <QtCore/QList>
+#include "enums.h"
+
 #include <QtCore/QUrl>
 #include <QtXml/QDomElement>
-#include <QVector>
+#include <QtCore/QVector>
 
 namespace KDAV
 {
@@ -35,35 +36,6 @@ namespace KDAV
 namespace Utils
 {
 /**
- * Describes the DAV protocol dialect.
- */
-enum Protocol {
-    CalDav = 0,   ///< The CalDav protocol as defined in http://caldav.calconnect.org
-    CardDav,      ///< The CardDav protocol as defined in http://carddav.calconnect.org
-    GroupDav      ///< The GroupDav protocol as defined in http://www.groupdav.org
-};
-
-/**
- * Describes the DAV privileges on a resource (see RFC3744)
- */
-enum Privilege {
-    None = 0x0,
-    Read = 0x1,
-    Write = 0x2,
-    WriteProperties = 0x4,
-    WriteContent = 0x8,
-    Unlock = 0x10,
-    ReadAcl = 0x20,
-    ReadCurrentUserPrivilegeSet = 0x40,
-    WriteAcl = 0x80,
-    Bind = 0x100,
-    Unbind = 0x200,
-    All = 0x400
-};
-Q_DECLARE_FLAGS(Privileges, Privilege)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Privileges)
-
-/**
  * Returns the untranslated name of the given DAV @p protocol dialect.
  */
 QLatin1String protocolName(Protocol protocol);
@@ -73,60 +45,6 @@ QLatin1String protocolName(Protocol protocol);
  * Utils::protocolName().
  */
 Protocol protocolByName(const QString &name);
-
-/**
- * @short A helper class to combine url and protocol of a DAV url.
- */
-class LIBKDAV_EXPORT DavUrl
-{
-public:
-    /**
-     * Defines a list of DAV url objects.
-     */
-    typedef QVector<DavUrl> List;
-
-    /**
-     * Creates an empty DAV url.
-     */
-    DavUrl();
-
-    /**
-     * Creates a new DAV url.
-     *
-     * @param url The url that identifies the DAV object.
-     * @param protocol The DAV protocol dialect that is used to retrieve the DAV object.
-     */
-    DavUrl(const QUrl &url, Protocol protocol);
-
-    /**
-     * Sets the @p url that identifies the DAV object.
-     */
-    void setUrl(const QUrl &url);
-
-    /**
-     * Returns the url that identifies the DAV object.
-     */
-    QUrl url() const;
-
-    /**
-     * Returns the url in a userfriendly way without login informations.
-     */
-    QString toDisplayString() const;
-
-    /**
-     * Sets the DAV @p protocol dialect that is used to retrieve the DAV object.
-     */
-    void setProtocol(Protocol protocol);
-
-    /**
-     * Returns the DAV protocol dialect that is used to retrieve the DAV object.
-     */
-    Protocol protocol() const;
-
-private:
-    QUrl mUrl;
-    Protocol mProtocol;
-};
 
 /**
  * Returns the first child element of @p parent that has the given @p tagName and is part of the @p namespaceUri.
@@ -160,7 +78,5 @@ QString LIBKDAV_EXPORT contactsMimeType(Protocol protocol);
 }
 
 }
-
-Q_DECLARE_TYPEINFO(KDAV::Utils::DavUrl, Q_MOVABLE_TYPE);
 
 #endif

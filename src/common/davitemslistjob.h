@@ -22,7 +22,7 @@
 #include "libkdav_export.h"
 
 #include "davitem.h"
-#include "utils.h"
+#include "davurl.h"
 
 #include <KCoreAddons/KJob>
 
@@ -48,7 +48,7 @@ public:
      * @param url The url of the DAV collection.
      * @param parent The parent object.
      */
-    DavItemsListJob(const Utils::DavUrl &url, const EtagCache *cache, QObject *parent = Q_NULLPTR);
+    DavItemsListJob(const DavUrl &url, const EtagCache *cache, QObject *parent = Q_NULLPTR);
 
     /**
      * Limits the mime types of the items requested.
@@ -92,7 +92,7 @@ private Q_SLOTS:
     void davJobFinished(KJob *);
 
 private:
-    Utils::DavUrl mUrl;
+    DavUrl mUrl;
     const EtagCache *mEtagCache;
     QStringList mMimeTypes;
     QString mRangeStart;

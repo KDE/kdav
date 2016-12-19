@@ -31,7 +31,7 @@
 
 using namespace KDAV;
 
-DavItemsListJob::DavItemsListJob(const Utils::DavUrl &url, const EtagCache *cache, QObject *parent)
+DavItemsListJob::DavItemsListJob(const DavUrl &url, const EtagCache *cache, QObject *parent)
     : KJob(parent), mUrl(url), mEtagCache(cache), mSubJobCount(0)
 {
 }

@@ -18,6 +18,7 @@
 
 #include "davcollectionmodifyjob.h"
 #include "davmanager.h"
+
 #include "utils.h"
 
 #include <KIO/DavJob>
@@ -26,7 +27,7 @@
 
 using namespace KDAV;
 
-DavCollectionModifyJob::DavCollectionModifyJob(const Utils::DavUrl &url, QObject *parent)
+DavCollectionModifyJob::DavCollectionModifyJob(const DavUrl &url, QObject *parent)
     : KJob(parent), mUrl(url)
 {
 }

@@ -19,6 +19,7 @@
 #include "davprincipalsearchjob.h"
 
 #include "davmanager.h"
+#include "utils.h"
 
 #include <KIO/Job>
 #include <KIO/DavJob>
@@ -28,7 +29,7 @@
 
 using namespace KDAV;
 
-DavPrincipalSearchJob::DavPrincipalSearchJob(const Utils::DavUrl &url, DavPrincipalSearchJob::FilterType type,
+DavPrincipalSearchJob::DavPrincipalSearchJob(const DavUrl &url, DavPrincipalSearchJob::FilterType type,
         const QString &filter, QObject *parent)
     : KJob(parent), mUrl(url), mType(type), mFilter(filter), mPrincipalPropertySearchSubJobCount(0),
       mPrincipalPropertySearchSubJobSuccessful(false)
@@ -45,7 +46,7 @@ void DavPrincipalSearchJob::fetchProperty(const QString &name, const QString &ns
     mFetchProperties << QPair<QString, QString>(propNamespace, name);
 }
 
-Utils::DavUrl DavPrincipalSearchJob::davUrl() const
+DavUrl DavPrincipalSearchJob::davUrl() const
 {
     return mUrl;
 }
