@@ -21,10 +21,15 @@
 
 #include "libkdav_export.h"
 
+#include <memory>
+
 #include <QtCore/QByteArray>
 #include <QtCore/QDataStream>
-#include <QtCore/QList>
 #include <QtCore/QString>
+#include <QtCore/QVector>
+
+
+class DavItemPrivate;
 
 namespace KDAV
 {
@@ -60,6 +65,11 @@ public:
      * @param etag The etag of the item.
      */
     DavItem(const QString &url, const QString &contentType, const QByteArray &data, const QString &etag);
+
+    DavItem(const DavItem &other);
+    DavItem &operator=(const DavItem &other);
+
+    ~DavItem();
 
     /**
      * Sets the @p url that identifies the item.
@@ -102,10 +112,7 @@ public:
     QString etag() const;
 
 private:
-    QString mUrl;
-    QString mContentType;
-    QByteArray mData;
-    QString mEtag;
+    std::unique_ptr<DavItemPrivate> d;
 };
 
 QDataStream &operator<<(QDataStream &out, const DavItem &item);

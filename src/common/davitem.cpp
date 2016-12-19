@@ -20,53 +20,98 @@
 
 using namespace KDAV;
 
+class DavItemPrivate
+{
+public:
+    DavItemPrivate(DavItem *qPtr) : q(qPtr) {}
+
+    void fillFrom(const DavItemPrivate &other);
+
+    DavItem *q;
+
+    QString mUrl;
+    QString mContentType;
+    QByteArray mData;
+    QString mEtag;
+};
+
+void DavItemPrivate::fillFrom(const DavItemPrivate& other)
+{
+    mUrl = other.mUrl;
+    mContentType = other.mContentType;
+    mData = other.mData;
+    mEtag = other.mEtag;
+}
+
+
 DavItem::DavItem()
+    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate(this)))
 {
 }
 
 DavItem::DavItem(const QString &url, const QString &contentType, const QByteArray &data, const QString &etag)
-    : mUrl(url), mContentType(contentType), mData(data), mEtag(etag)
+    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate(this)))
+{
+    d->mUrl = url;
+    d->mContentType = contentType;
+    d->mData = data;
+    d->mEtag = etag;
+}
+
+DavItem::DavItem(const DavItem &other)
+    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate(this)))
+{
+    d->fillFrom(*other.d.get());
+}
+
+DavItem &DavItem::operator=(const DavItem &other)
+{
+    d->fillFrom(*other.d.get());
+    return *this;
+}
+
+DavItem::~DavItem()
 {
 }
 
 void DavItem::setUrl(const QString &url)
 {
-    mUrl = url;
+    d->mUrl = url;
 }
 
 QString DavItem::url() const
 {
-    return mUrl;
+    return d->mUrl;
 }
 
 void DavItem::setContentType(const QString &contentType)
 {
-    mContentType = contentType;
+    d->mContentType = contentType;
 }
 
 QString DavItem::contentType() const
 {
-    return mContentType;
+    return d->mContentType;
 }
 
 void DavItem::setData(const QByteArray &data)
 {
-    mData = data;
+    d->mData = data;
 }
 
 QByteArray DavItem::data() const
 {
-    return mData;
+    return d->mData;
 }
 
 void DavItem::setEtag(const QString &etag)
 {
-    mEtag = etag;
+    d->mEtag = etag;
 }
 
 QString DavItem::etag() const
 {
-    return mEtag;
+    return d->mEtag;
 }
 
 QDataStream &operator<<(QDataStream &stream, const DavItem &item)
