@@ -207,7 +207,9 @@ void DavItemsListJob::davJobFinished(KJob *job)
             }
 
             mSeenUrls << itemUrl;
-            item.setUrl(itemUrl);
+            auto _url = url;
+            _url.setUserInfo(mUrl.url().userInfo());
+            item.setUrl(DavUrl(_url, mUrl.protocol()));
 
             // extract etag
             const QDomElement getetagElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("getetag"));

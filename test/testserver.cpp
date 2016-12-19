@@ -54,25 +54,23 @@ int main(int argc, char **argv)
             qDebug() << "deleted Items:" << itemListJob->deletedItems();
             foreach(const auto item, itemListJob->changedItems()) {
                 qDebug() << item.contentType() << item.data();
-                QUrl itemUrl(item.url());
-                itemUrl.setUserName(mainUrl.userName());
-                itemUrl.setPassword(mainUrl.password());
-                auto itemFetchJob = new KDAV::DavItemFetchJob(KDAV::DavUrl(itemUrl, KDAV::CardDav),item);
+                auto itemUrl(item.url());
+                auto itemFetchJob = new KDAV::DavItemFetchJob(itemUrl,item);
                 itemFetchJob->exec();
                 const auto fetchedItem = itemFetchJob->item();
                 qDebug() << fetchedItem.contentType() << fetchedItem.data();
 
-                auto itemsFetchJob = new KDAV::DavItemsFetchJob(collectionUrl, QStringList() << item.url());
+                auto itemsFetchJob = new KDAV::DavItemsFetchJob(collectionUrl, QStringList() << item.url().toDisplayString());
                 itemsFetchJob->exec();
-                if (itemsFetchJob->item(item.url()).contentType() != fetchedItem.contentType()) {       //itemsfetchjob do not get contentType
-                    qDebug() << "Fetched same item but got different contentType:" << itemsFetchJob->item(item.url()).contentType();
+                if (itemsFetchJob->item(item.url().toDisplayString()).contentType() != fetchedItem.contentType()) {       //itemsfetchjob do not get contentType
+                    qDebug() << "Fetched same item but got different contentType:" << itemsFetchJob->item(item.url().toDisplayString()).contentType();
                 }
 
-                if (itemsFetchJob->item(item.url()).data() != fetchedItem.data()) {
-                    qDebug() << "Fetched same item but got different data:" << itemsFetchJob->item(item.url()).data();
+                if (itemsFetchJob->item(item.url().toDisplayString()).data() != fetchedItem.data()) {
+                    qDebug() << "Fetched same item but got different data:" << itemsFetchJob->item(item.url().toDisplayString()).data();
                 }
 
-                cache.setEtag(item.url(), item.etag());
+                cache.setEtag(item.url().toDisplayString(), item.etag());
             }
             cache.setEtag(QStringLiteral("invalid"),QStringLiteral("invalid"));
         }

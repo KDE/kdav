@@ -113,8 +113,8 @@ void DavItemModifyJob::davJobFinished(KJob *job)
         url = QUrl::fromUserInput(location);
     }
 
-    url.setUserInfo(QString());
-    mItem.setUrl(url.toDisplayString());
+    url.setUserInfo(mUrl.url().userInfo());
+    mItem.setUrl(DavUrl(url, mUrl.protocol()));
 
     DavItemFetchJob *fetchJob = new DavItemFetchJob(mUrl, mItem);
     connect(fetchJob, &DavItemFetchJob::result, this, &DavItemModifyJob::itemRefreshed);

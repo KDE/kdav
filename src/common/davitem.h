@@ -33,6 +33,11 @@ class DavItemPrivate;
 
 namespace KDAV
 {
+    class DavUrl;
+}
+
+namespace KDAV
+{
 
 /**
  * @short A helper class to store information about DAV resources.
@@ -64,7 +69,7 @@ public:
      * @param data The actual raw content data of the item.
      * @param etag The etag of the item.
      */
-    DavItem(const QString &url, const QString &contentType, const QByteArray &data, const QString &etag);
+    DavItem(const DavUrl &url, const QString &contentType, const QByteArray &data, const QString &etag);
 
     DavItem(const DavItem &other);
     DavItem &operator=(const DavItem &other);
@@ -74,12 +79,12 @@ public:
     /**
      * Sets the @p url that identifies the item.
      */
-    void setUrl(const QString &url);
+    void setUrl(const DavUrl &url);
 
     /**
      * Returns the url that identifies the item.
      */
-    QString url() const;
+    DavUrl url() const;
 
     /**
      * Sets the content @p type of the item.

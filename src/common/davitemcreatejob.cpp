@@ -106,8 +106,7 @@ void DavItemCreateJob::davJobFinished(KJob *job)
             emitResult();
         } else {
             QUrl itemUrl(url);
-            itemUrl.setUserName(mUrl.url().userName());
-            itemUrl.setPassword(mUrl.url().password());
+            itemUrl.setUserInfo(mUrl.url().userInfo());
             mUrl.setUrl(itemUrl);
 
             ++mRedirectCount;
@@ -117,8 +116,8 @@ void DavItemCreateJob::davJobFinished(KJob *job)
         return;
     }
 
-    url.setUserInfo(QString());
-    mItem.setUrl(url.toDisplayString());
+    url.setUserInfo(mUrl.url().userInfo());
+    mItem.setUrl(DavUrl(url, mUrl.protocol()));
 
     DavItemFetchJob *fetchJob = new DavItemFetchJob(mUrl, mItem);
     connect(fetchJob, &DavItemFetchJob::result, this, &DavItemCreateJob::itemRefreshed);

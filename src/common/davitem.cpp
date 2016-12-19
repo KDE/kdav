@@ -18,6 +18,8 @@
 
 #include "davitem.h"
 
+#include "davurl.h"
+
 using namespace KDAV;
 
 class DavItemPrivate
@@ -29,7 +31,7 @@ public:
 
     DavItem *q;
 
-    QString mUrl;
+    DavUrl mUrl;
     QString mContentType;
     QByteArray mData;
     QString mEtag;
@@ -49,7 +51,7 @@ DavItem::DavItem()
 {
 }
 
-DavItem::DavItem(const QString &url, const QString &contentType, const QByteArray &data, const QString &etag)
+DavItem::DavItem(const DavUrl &url, const QString &contentType, const QByteArray &data, const QString &etag)
     : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate(this)))
 {
     d->mUrl = url;
@@ -74,12 +76,12 @@ DavItem::~DavItem()
 {
 }
 
-void DavItem::setUrl(const QString &url)
+void DavItem::setUrl(const DavUrl &url)
 {
     d->mUrl = url;
 }
 
-QString DavItem::url() const
+DavUrl DavItem::url() const
 {
     return d->mUrl;
 }
@@ -116,7 +118,7 @@ QString DavItem::etag() const
 
 QDataStream &operator<<(QDataStream &stream, const DavItem &item)
 {
-    stream << item.url();
+    //stream << item.url();
     stream << item.contentType();
     stream << item.data();
     stream << item.etag();
@@ -126,7 +128,7 @@ QDataStream &operator<<(QDataStream &stream, const DavItem &item)
 
 QDataStream &operator>>(QDataStream &stream, DavItem &item)
 {
-    QString url, contentType, etag;
+    /*QString url, contentType, etag;
     QByteArray data;
 
     stream >> url;
@@ -134,7 +136,7 @@ QDataStream &operator>>(QDataStream &stream, DavItem &item)
     stream >> data;
     stream >> etag;
 
-    item = DavItem(url, contentType, data, etag);
+    item = DavItem(url, contentType, data, etag);*/
 
     return stream;
 }
