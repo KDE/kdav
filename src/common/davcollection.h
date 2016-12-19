@@ -141,12 +141,12 @@ public:
     /**
      * Sets the privileges on this collection.
      */
-    void setPrivileges(Utils::Privileges privs);
+    void setPrivileges(Privileges privs);
 
     /**
      * Returns the privileges on this collection.
      */
-    Utils::Privileges privileges() const;
+    Privileges privileges() const;
 
 private:
     std::unique_ptr<DavCollectionPrivate> d;

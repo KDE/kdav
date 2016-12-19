@@ -25,8 +25,6 @@
 namespace KDAV
 {
 
-namespace Utils
-{
 /**
  * Describes the DAV protocol dialect.
  */
@@ -55,8 +53,6 @@ enum Privilege {
 };
 Q_DECLARE_FLAGS(Privileges, Privilege)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Privileges)
-
-}
 
 }
 

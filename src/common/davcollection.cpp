@@ -37,7 +37,7 @@ public:
     QString mDisplayName;
     QColor mColor;
     DavCollection::ContentTypes mContentTypes;
-    Utils::Privileges mPrivileges;
+    Privileges mPrivileges;
 };
 
 void DavCollectionPrivate::fillFrom(const DavCollectionPrivate &other)
@@ -62,7 +62,7 @@ DavCollection::DavCollection(const DavUrl &url, const QString &displayName, Cont
     d->mUrl = url;
     d->mDisplayName = displayName;
     d->mContentTypes = contentTypes;
-    d->mPrivileges = Utils::All;
+    d->mPrivileges = KDAV::All;
 }
 
 DavCollection::DavCollection(const DavCollection &other)
@@ -131,12 +131,12 @@ DavCollection::ContentTypes DavCollection::contentTypes() const
     return d->mContentTypes;
 }
 
-void DavCollection::setPrivileges(Utils::Privileges privs)
+void DavCollection::setPrivileges(Privileges privs)
 {
     d->mPrivileges = privs;
 }
 
-Utils::Privileges DavCollection::privileges() const
+Privileges DavCollection::privileges() const
 {
     return d->mPrivileges;
 }

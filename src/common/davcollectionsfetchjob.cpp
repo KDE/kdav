@@ -326,9 +326,9 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 const QDomElement currentPrivsElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("current-user-privilege-set"));
                 if (currentPrivsElement.isNull()) {
                     // Assume that we have all privileges
-                    collection.setPrivileges(Utils::All);
+                    collection.setPrivileges(KDAV::All);
                 } else {
-                    Utils::Privileges privileges = Utils::extractPrivileges(currentPrivsElement);
+                    Privileges privileges = Utils::extractPrivileges(currentPrivsElement);
                     collection.setPrivileges(privileges);
                 }
 

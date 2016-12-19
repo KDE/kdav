@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     QUrl mainUrl(QStringLiteral("http://kolab/iRony/addressbooks/john.doe%40example.org"));
     mainUrl.setUserName(QStringLiteral("john.doe@example.org"));
     mainUrl.setPassword(QStringLiteral("Welcome2KolabSystems"));
-    KDAV::DavUrl davUrl(mainUrl, KDAV::Utils::CardDav);
+    KDAV::DavUrl davUrl(mainUrl, KDAV::CardDav);
 
     auto *job = new KDAV::DavCollectionsFetchJob(davUrl);
     job->exec();
@@ -57,7 +57,7 @@ int main(int argc, char **argv)
                 QUrl itemUrl(item.url());
                 itemUrl.setUserName(mainUrl.userName());
                 itemUrl.setPassword(mainUrl.password());
-                auto itemFetchJob = new KDAV::DavItemFetchJob(KDAV::DavUrl(itemUrl, KDAV::Utils::CardDav),item);
+                auto itemFetchJob = new KDAV::DavItemFetchJob(KDAV::DavUrl(itemUrl, KDAV::CardDav),item);
                 itemFetchJob->exec();
                 const auto fetchedItem = itemFetchJob->item();
                 qDebug() << fetchedItem.contentType() << fetchedItem.data();

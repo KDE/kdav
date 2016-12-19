@@ -37,7 +37,7 @@ using namespace KDAV;
 
 typedef QSharedPointer<KCalCore::Incidence> IncidencePtr;
 
-QString Utils::translatedProtocolName(Utils::Protocol protocol)
+QString Utils::translatedProtocolName(Protocol protocol)
 {
     QString protocolName;
 
@@ -56,9 +56,9 @@ QString Utils::translatedProtocolName(Utils::Protocol protocol)
     return protocolName;
 }
 
-Utils::Protocol Utils::protocolByTranslatedName(const QString &name)
+Protocol Utils::protocolByTranslatedName(const QString &name)
 {
-    Utils::Protocol protocol = Utils::CalDav;
+    Protocol protocol = Utils::CalDav;
 
     if (name == i18n("CalDav")) {
         protocol = Utils::CalDav;
@@ -87,7 +87,7 @@ DavItem Utils::createDavItem(const Akonadi::Item &item, const Akonadi::Collectio
 
         const DavProtocolAttribute *protoAttr = collection.attribute<DavProtocolAttribute>();
         if (protoAttr) {
-            mimeType = Utils::contactsMimeType(Utils::Protocol(protoAttr->davProtocol()));
+            mimeType = Utils::contactsMimeType(Protocol(protoAttr->davProtocol()));
         } else {
             mimeType = KContacts::Addressee::mimeType();
         }

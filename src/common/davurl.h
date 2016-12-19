@@ -51,7 +51,7 @@ public:
      * @param url The url that identifies the DAV object.
      * @param protocol The DAV protocol dialect that is used to retrieve the DAV object.
      */
-    DavUrl(const QUrl &url, Utils::Protocol protocol);
+    DavUrl(const QUrl &url, Protocol protocol);
 
     /**
      * Sets the @p url that identifies the DAV object.
@@ -71,16 +71,16 @@ public:
     /**
      * Sets the DAV @p protocol dialect that is used to retrieve the DAV object.
      */
-    void setProtocol(Utils::Protocol protocol);
+    void setProtocol(Protocol protocol);
 
     /**
      * Returns the DAV protocol dialect that is used to retrieve the DAV object.
      */
-    Utils::Protocol protocol() const;
+    Protocol protocol() const;
 
 private:
     QUrl mUrl;
-    Utils::Protocol mProtocol;
+    Protocol mProtocol;
 };
 
 }

@@ -23,11 +23,11 @@
 using namespace KDAV;
 
 DavUrl::DavUrl()
-    : mProtocol(Utils::CalDav)
+    : mProtocol(KDAV::CalDav)
 {
 }
 
-DavUrl::DavUrl(const QUrl &url, Utils::Protocol protocol)
+DavUrl::DavUrl(const QUrl &url, Protocol protocol)
     : mUrl(url), mProtocol(protocol)
 {
 }
@@ -42,12 +42,12 @@ QUrl DavUrl::url() const
     return mUrl;
 }
 
-void DavUrl::setProtocol(Utils::Protocol protocol)
+void DavUrl::setProtocol(Protocol protocol)
 {
     mProtocol = protocol;
 }
 
-Utils::Protocol DavUrl::protocol() const
+Protocol DavUrl::protocol() const
 {
     return mProtocol;
 }

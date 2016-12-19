@@ -89,7 +89,7 @@ public:
     /**
      * Returns the DAV protocol dialect object for the given DAV @p protocol.
      */
-    const DavProtocolBase *davProtocol(Utils::Protocol protocol);
+    const DavProtocolBase *davProtocol(Protocol protocol);
 
 private:
     /**
@@ -100,9 +100,9 @@ private:
     /**
      * Creates a new protocol.
      */
-    bool createProtocol(Utils::Protocol protocol);
+    bool createProtocol(Protocol protocol);
 
-    typedef QMap<Utils::Protocol, DavProtocolBase *> protocolsMap;
+    typedef QMap<Protocol, DavProtocolBase *> protocolsMap;
     protocolsMap mProtocols;
     static DavManager *mSelf;
 };
