@@ -17,6 +17,8 @@
 */
 
 #include <KDAV/Utils>
+#include <KDAV/DavCollectionDeleteJob>
+#include <KDAV/DavCollectionModifyJob>
 #include <KDAV/DavCollectionsFetchJob>
 #include <KDAV/DavItemFetchJob>
 #include <KDAV/DavItemsFetchJob>
@@ -40,7 +42,7 @@ int main(int argc, char **argv)
     job->exec();
 
     foreach(const auto collection, job->collections()) {
-        qDebug() << collection.url().toDisplayString() << "PRIVS: " << collection.privileges();
+        qDebug() << collection.displayName() << "PRIVS: " << collection.privileges();
         auto collectionUrl = collection.url();
         std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
         int anz = -1;
@@ -87,6 +89,27 @@ int main(int argc, char **argv)
             if (itemListJob->deletedItems() != QStringList() << QStringLiteral("invalid")) {
                 qDebug() << "more items deleted:" << itemListJob->deletedItems();
             }
+        }
+    }
+    {
+        QUrl url(QStringLiteral("http://URLTOCOLLECTION/test"));
+        url.setUserInfo(mainUrl.userInfo());
+        KDAV::DavUrl collectionUrl(url, KDAV::CardDav);
+        auto collectionModifyJob = new KDAV::DavCollectionModifyJob(collectionUrl);
+        collectionModifyJob->setProperty(QStringLiteral("displayname"), QStringLiteral("test23"), QStringLiteral("DAV:"));
+        collectionModifyJob->exec();
+        if (collectionModifyJob->error()) {
+            qDebug() << collectionModifyJob->errorString();
+        }
+    }
+    {
+        QUrl url(QStringLiteral("http://URLTOCOLLECTION/test2"));
+        url.setUserInfo(mainUrl.userInfo());
+        KDAV::DavUrl collectionUrl(url, KDAV::CardDav);
+        auto collectionDeleteJob = new KDAV::DavCollectionDeleteJob(collectionUrl);
+        collectionDeleteJob->exec();
+        if (collectionDeleteJob->error()) {
+            qDebug() << collectionDeleteJob->errorString();
         }
     }
 }
