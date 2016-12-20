@@ -39,7 +39,7 @@ void DavCollectionModifyJob::setProperty(const QString &prop, const QString &val
     if (ns.isEmpty()) {
         propElement = mQuery.createElement(prop);
     } else {
-        propElement = mQuery.createElementNS(prop, ns);
+        propElement = mQuery.createElementNS(ns, prop);
     }
 
     const QDomText textElement = mQuery.createTextNode(value);
@@ -55,7 +55,7 @@ void DavCollectionModifyJob::removeProperty(const QString &prop, const QString &
     if (ns.isEmpty()) {
         propElement = mQuery.createElement(prop);
     } else {
-        propElement = mQuery.createElementNS(prop, ns);
+        propElement = mQuery.createElementNS(ns, prop);
     }
 
     mRemoveProperties << propElement;
