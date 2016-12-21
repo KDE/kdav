@@ -77,7 +77,7 @@ void DavItemDeleteJob::davJobFinished(KJob *job)
         }
 
         if (hasConflict()) {
-            DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem.url(), mItem);
+            DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
             connect(fetchJob, &DavItemFetchJob::result, this, &DavItemDeleteJob::conflictingItemFetched);
             fetchJob->start();
             return;

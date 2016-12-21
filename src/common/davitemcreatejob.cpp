@@ -124,7 +124,7 @@ void DavItemCreateJob::davJobFinished(KJob *job)
     url.setUserInfo(itemUrl().userInfo());
     mItem.setUrl(DavUrl(url, mItem.url().protocol()));
 
-    DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem.url(), mItem);
+    DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
     connect(fetchJob, &DavItemFetchJob::result, this, &DavItemCreateJob::itemRefreshed);
     fetchJob->start();
 }

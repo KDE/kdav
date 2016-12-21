@@ -89,7 +89,7 @@ void DavItemModifyJob::davJobFinished(KJob *job)
                           "%1 (%2).", err, responseCode));
 
         if (hasConflict()) {
-            DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem.url(), mItem);
+            DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
             connect(fetchJob, &DavItemFetchJob::result, this, &DavItemModifyJob::conflictingItemFetched);
             fetchJob->start();
         } else {
@@ -121,7 +121,7 @@ void DavItemModifyJob::davJobFinished(KJob *job)
     url.setUserInfo(itemUrl().userInfo());
     mItem.url().setUrl(url);
 
-    DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem.url(), mItem);
+    DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
     connect(fetchJob, &DavItemFetchJob::result, this, &DavItemModifyJob::itemRefreshed);
     fetchJob->start();
 }

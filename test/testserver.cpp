@@ -60,8 +60,7 @@ int main(int argc, char **argv)
             qDebug() << "deleted Items:" << itemListJob->deletedItems();
             foreach(const auto item, itemListJob->changedItems()) {
                 qDebug() << item.url().url() << item.contentType() << item.data();
-                auto itemUrl(item.url());
-                auto itemFetchJob = new KDAV::DavItemFetchJob(itemUrl,item);
+                auto itemFetchJob = new KDAV::DavItemFetchJob(item);
                 itemFetchJob->exec();
                 const auto fetchedItem = itemFetchJob->item();
                 qDebug() << fetchedItem.contentType() << fetchedItem.data();

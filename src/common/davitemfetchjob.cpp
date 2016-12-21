@@ -40,14 +40,14 @@ static QString etagFromHeaders(const QString &headers)
     return etag;
 }
 
-DavItemFetchJob::DavItemFetchJob(const DavUrl &url, const DavItem &item, QObject *parent)
-    : DavJobBase(parent), mUrl(url), mItem(item)
+DavItemFetchJob::DavItemFetchJob(const DavItem &item, QObject *parent)
+    : DavJobBase(parent), mItem(item)
 {
 }
 
 void DavItemFetchJob::start()
 {
-    KIO::StoredTransferJob *job = KIO::storedGet(mUrl.url(), KIO::Reload, KIO::HideProgressInfo | KIO::DefaultFlags);
+    KIO::StoredTransferJob *job = KIO::storedGet(mItem.url().url(), KIO::Reload, KIO::HideProgressInfo | KIO::DefaultFlags);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     // Work around a strange bug in Zimbra (seen at least on CE 5.0.18) : if the user-agent
     // contains "Mozilla", some strange debug data is displayed in the shared calendars.

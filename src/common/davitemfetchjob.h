@@ -39,11 +39,10 @@ public:
     /**
      * Creates a new dav item fetch job.
      *
-     * @param url The DAV url of the item that shall be fetched.
      * @param item The item that shall be fetched.
      * @param parent The parent object.
      */
-    DavItemFetchJob(const DavUrl &url, const DavItem &item, QObject *parent = Q_NULLPTR);
+    DavItemFetchJob(const DavItem &item, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
