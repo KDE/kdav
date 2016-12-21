@@ -21,9 +21,13 @@
 #include <KDAV/DavCollectionModifyJob>
 #include <KDAV/DavCollectionsFetchJob>
 #include <KDAV/DavItemFetchJob>
+#include <KDAV/DavItemCreateJob>
 #include <KDAV/DavItemsFetchJob>
+#include <KDAV/DavItemModifyJob>
+#include <KDAV/DavItemDeleteJob>
 #include <KDAV/DavItemsListJob>
 #include <KDAV/EtagCache>
+#include <KDAV/Utils>
 
 #include <QtCore/QDebug>
 #include <QtCore/QStringList>
@@ -33,8 +37,8 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    QUrl mainUrl(QStringLiteral("http://kolab/iRony/addressbooks/john.doe%40example.org"));
-    mainUrl.setUserName(QStringLiteral("john.doe@example.org"));
+    QUrl mainUrl(QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org"));
+    mainUrl.setUserName(QStringLiteral("test1@kolab.org"));
     mainUrl.setPassword(QStringLiteral("Welcome2KolabSystems"));
     KDAV::DavUrl davUrl(mainUrl, KDAV::CardDav);
 
@@ -55,7 +59,7 @@ int main(int argc, char **argv)
             qDebug() << "changed Items:" << itemListJob->changedItems().size();
             qDebug() << "deleted Items:" << itemListJob->deletedItems();
             foreach(const auto item, itemListJob->changedItems()) {
-                qDebug() << item.contentType() << item.data();
+                qDebug() << item.url().url() << item.contentType() << item.data();
                 auto itemUrl(item.url());
                 auto itemFetchJob = new KDAV::DavItemFetchJob(itemUrl,item);
                 itemFetchJob->exec();
@@ -91,25 +95,70 @@ int main(int argc, char **argv)
             }
         }
     }
+
     {
-        QUrl url(QStringLiteral("http://URLTOCOLLECTION/test"));
-        url.setUserInfo(mainUrl.userInfo());
-        KDAV::DavUrl collectionUrl(url, KDAV::CardDav);
-        auto collectionModifyJob = new KDAV::DavCollectionModifyJob(collectionUrl);
-        collectionModifyJob->setProperty(QStringLiteral("displayname"), QStringLiteral("test23"), QStringLiteral("DAV:"));
-        collectionModifyJob->exec();
-        if (collectionModifyJob->error()) {
-            qDebug() << collectionModifyJob->errorString();
-        }
-    }
-    {
-        QUrl url(QStringLiteral("http://URLTOCOLLECTION/test2"));
+        QUrl url(QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/cbbf386d-7e9b-4e72-947d-0b813ea9b347/"));
         url.setUserInfo(mainUrl.userInfo());
         KDAV::DavUrl collectionUrl(url, KDAV::CardDav);
         auto collectionDeleteJob = new KDAV::DavCollectionDeleteJob(collectionUrl);
         collectionDeleteJob->exec();
         if (collectionDeleteJob->error()) {
             qDebug() << collectionDeleteJob->errorString();
+        }
+    }
+
+    {
+        QUrl url(QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/"));
+        url.setUserInfo(mainUrl.userInfo());
+        KDAV::DavUrl testCollectionUrl(url, KDAV::CardDav);
+        auto collectionModifyJob = new KDAV::DavCollectionModifyJob(testCollectionUrl);
+        collectionModifyJob->setProperty(QStringLiteral("displayname"), QStringLiteral("test234"));
+        collectionModifyJob->exec();
+        if (collectionModifyJob->error()) {
+            qDebug() << collectionModifyJob->errorString();
+        }
+    }
+
+    //create element with "wrong put url" test if we get the correct url back
+    {
+        QUrl url(QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/xxx.vcf"));
+        url.setUserInfo(mainUrl.userInfo());
+        KDAV::DavUrl testItemUrl(url, KDAV::CardDav);
+        QByteArray data = "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject 2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John Doe\r\nN:Doe;John;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john.doe@example.com\r\nREV;VALUE=DATE-TIME:20161221T145611Z\r\nEND:VCARD\r\n";
+        KDAV::DavItem item(testItemUrl, QStringLiteral("text/x-vcard"), data, QString());
+        auto createJob = new KDAV::DavItemCreateJob(item);
+        createJob->exec();
+        if (createJob->error()) {
+            qDebug() << createJob->errorString();
+        }
+        if (createJob->item().url().toDisplayString() != QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf")) {
+            qDebug() << "unexpected url" << createJob->item().url().url();
+        }
+    }
+
+    {
+        QUrl url(QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf"));
+        url.setUserInfo(mainUrl.userInfo());
+        KDAV::DavUrl testItemUrl(url, KDAV::CardDav);
+        QByteArray data = "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject 2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John2 Doe\r\nN:Doe;John2;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john2.doe@example.com\r\nREV;VALUE=DATE-TIME:20161221T145611Z\r\nEND:VCARD\r\n";
+        KDAV::DavItem item(testItemUrl, QStringLiteral("text/x-vcard"), data, QString());
+        auto modifyJob = new KDAV::DavItemModifyJob(item);
+        modifyJob->exec();
+        if (modifyJob->error()) {
+            qDebug() << modifyJob->errorString();
+        }
+    }
+
+    {
+        QUrl url(QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf"));
+        url.setUserInfo(mainUrl.userInfo());
+        KDAV::DavUrl testItemUrl(url, KDAV::CardDav);
+        QByteArray data = "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject 2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John2 Doe\r\nN:Doe;John2;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john2.doe@example.com\r\nREV;VALUE=DATE-TIME:20161221T145611Z\r\nEND:VCARD\r\n";
+        KDAV::DavItem item(testItemUrl, QStringLiteral("text/x-vcard"), data, QString());
+        auto deleteJob = new KDAV::DavItemDeleteJob(item);
+        deleteJob->exec();
+        if (deleteJob->error()) {
+            qDebug() << deleteJob->errorString();
         }
     }
 }
