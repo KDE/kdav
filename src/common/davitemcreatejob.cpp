@@ -29,8 +29,8 @@
 
 using namespace KDAV;
 
-DavItemCreateJob::DavItemCreateJob(const DavUrl &url, const DavItem &item, QObject *parent)
-    : DavJobBase(parent), mUrl(url), mItem(item), mRedirectCount(0)
+DavItemCreateJob::DavItemCreateJob(const DavItem &item, QObject *parent)
+    : DavJobBase(parent), mItem(item), mRedirectCount(0)
 {
 }
 
@@ -41,7 +41,7 @@ void DavItemCreateJob::start()
     headers += QLatin1String("\r\n");
     headers += QLatin1String("If-None-Match: *");
 
-    KIO::StoredTransferJob *job = KIO::storedPut(mItem.data(), mUrl.url(), -1, KIO::HideProgressInfo | KIO::DefaultFlags);
+    KIO::StoredTransferJob *job = KIO::storedPut(mItem.data(), itemUrl(), -1, KIO::HideProgressInfo | KIO::DefaultFlags);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     job->addMetaData(QStringLiteral("customHTTPHeader"), headers);
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
@@ -54,6 +54,11 @@ void DavItemCreateJob::start()
 DavItem DavItemCreateJob::item() const
 {
     return mItem;
+}
+
+QUrl DavItemCreateJob::itemUrl() const
+{
+    return mItem.url().url();
 }
 
 void DavItemCreateJob::davJobFinished(KJob *job)
@@ -105,9 +110,9 @@ void DavItemCreateJob::davJobFinished(KJob *job)
             setError(UserDefinedError + responseCode);
             emitResult();
         } else {
-            QUrl itemUrl(url);
-            itemUrl.setUserInfo(mUrl.url().userInfo());
-            mUrl.setUrl(itemUrl);
+            QUrl _itemUrl(url);
+            _itemUrl.setUserInfo(itemUrl().userInfo());
+            mItem.url().setUrl(_itemUrl);
 
             ++mRedirectCount;
             start();
@@ -116,10 +121,10 @@ void DavItemCreateJob::davJobFinished(KJob *job)
         return;
     }
 
-    url.setUserInfo(mUrl.url().userInfo());
-    mItem.setUrl(DavUrl(url, mUrl.protocol()));
+    url.setUserInfo(itemUrl().userInfo());
+    mItem.setUrl(DavUrl(url, mItem.url().protocol()));
 
-    DavItemFetchJob *fetchJob = new DavItemFetchJob(mUrl, mItem);
+    DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem.url(), mItem);
     connect(fetchJob, &DavItemFetchJob::result, this, &DavItemCreateJob::itemRefreshed);
     fetchJob->start();
 }

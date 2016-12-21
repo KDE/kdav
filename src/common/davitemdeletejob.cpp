@@ -27,14 +27,14 @@
 
 using namespace KDAV;
 
-DavItemDeleteJob::DavItemDeleteJob(const DavUrl &url, const DavItem &item, QObject *parent)
-    : DavJobBase(parent), mUrl(url), mItem(item), mFreshResponseCode(-1)
+DavItemDeleteJob::DavItemDeleteJob(const DavItem &item, QObject *parent)
+    : DavJobBase(parent), mItem(item), mFreshResponseCode(-1)
 {
 }
 
 void DavItemDeleteJob::start()
 {
-    KIO::DeleteJob *job = KIO::del(mUrl.url(), KIO::HideProgressInfo | KIO::DefaultFlags);
+    KIO::DeleteJob *job = KIO::del(mItem.url().url(), KIO::HideProgressInfo | KIO::DefaultFlags);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     job->addMetaData(QStringLiteral("customHTTPHeader"), QStringLiteral("If-Match: ") + mItem.etag());
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
@@ -77,7 +77,7 @@ void DavItemDeleteJob::davJobFinished(KJob *job)
         }
 
         if (hasConflict()) {
-            DavItemFetchJob *fetchJob = new DavItemFetchJob(mUrl, mItem);
+            DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem.url(), mItem);
             connect(fetchJob, &DavItemFetchJob::result, this, &DavItemDeleteJob::conflictingItemFetched);
             fetchJob->start();
             return;

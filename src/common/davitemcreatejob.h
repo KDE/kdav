@@ -39,11 +39,10 @@ public:
     /**
      * Creates a new dav item create job.
      *
-     * @param url The target url where the item shall be created.
      * @param item The item that shall be created.
      * @param parent The parent object.
      */
-    DavItemCreateJob(const DavUrl &url, const DavItem &item, QObject *parent = Q_NULLPTR);
+    DavItemCreateJob(const DavItem &item, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
@@ -56,12 +55,13 @@ public:
      */
     DavItem item() const;
 
+    QUrl itemUrl() const;
+
 private Q_SLOTS:
     void davJobFinished(KJob *);
     void itemRefreshed(KJob *);
 
 private:
-    DavUrl mUrl;
     DavItem mItem;
     int mRedirectCount;
 };

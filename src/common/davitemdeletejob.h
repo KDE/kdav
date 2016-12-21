@@ -39,11 +39,10 @@ public:
     /**
      * Creates a new dav item delete job.
      *
-     * @param url The url of the item that shall be deleted.
      * @param item The item that shall be deleted.
      * @param parent The parent object.
      */
-    DavItemDeleteJob(const DavUrl &url, const DavItem &item, QObject *parent = Q_NULLPTR);
+    DavItemDeleteJob(const DavItem &item, QObject *parent = Q_NULLPTR);
 
     /**
      * Starts the job.
@@ -65,7 +64,6 @@ private Q_SLOTS:
     void conflictingItemFetched(KJob *);
 
 private:
-    DavUrl mUrl;
     DavItem mItem;
     DavItem mFreshItem;
     int mFreshResponseCode;
