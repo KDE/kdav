@@ -20,10 +20,10 @@
 
 #include "davitemfetchjob.h"
 #include "davmanager.h"
+#include "daverror.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
-#include <KLocalizedString>
 
 #include "libkdav_debug.h"
 
@@ -69,17 +69,9 @@ void DavItemCreateJob::davJobFinished(KJob *job)
                              storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
     if (storedJob->error()) {
-        QString err;
-        if (storedJob->error() != KIO::ERR_SLAVE_DEFINED) {
-            err = KIO::buildErrorString(storedJob->error(), storedJob->errorText());
-        } else {
-            err = storedJob->errorText();
-        }
-
         setLatestResponseCode(responseCode);
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request. The item has not been created on the server.\n"
-                          "%1 (%2).", err, responseCode));
+        setError(ERR_ITEMCREATE);
+        setErrorText(buildErrorString(ERR_ITEMCREATE, storedJob->errorText(), responseCode, storedJob->error()));
 
         emitResult();
         return;

@@ -21,6 +21,7 @@
 
 #include "libkdav_export.h"
 
+#include "davjobbase.h"
 #include "davurl.h"
 
 #include <QtCore/QList>
@@ -37,7 +38,7 @@ namespace KDAV
  * This job is used to modify a property of a DAV collection
  * on the DAV server.
  */
-class LIBKDAV_EXPORT DavCollectionModifyJob : public KJob
+class LIBKDAV_EXPORT DavCollectionModifyJob : public DavJobBase
 {
     Q_OBJECT
 

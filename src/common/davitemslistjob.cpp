@@ -18,6 +18,7 @@
 
 #include "davitemslistjob.h"
 
+#include "daverror.h"
 #include "davmanager.h"
 #include "davprotocolbase.h"
 #include "davurl.h"
@@ -26,7 +27,6 @@
 
 #include <KIO/DavJob>
 #include <KIO/Job>
-#include <KLocalizedString>
 
 #include <QtCore/QBuffer>
 
@@ -57,7 +57,7 @@ DavItemsListJobPrivate::DavItemsListJobPrivate(const DavUrl &url, const std::sha
 
 
 DavItemsListJob::DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent)
-    : KJob(parent)
+    : DavJobBase(parent)
     , d(std::unique_ptr<DavItemsListJobPrivate>(new DavItemsListJobPrivate(url, cache)))
 {
 }
@@ -138,16 +138,9 @@ void DavItemsListJob::davJobFinished(KJob *job)
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        QString err;
-        if (davJob->error() && davJob->error() != KIO::ERR_SLAVE_DEFINED) {
-            err = KIO::buildErrorString(davJob->error(), davJob->errorText());
-        } else {
-            err = davJob->errorText();
-        }
-
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request.\n"
-                          "%1 (%2).", err, responseCode));
+        setLatestResponseCode(responseCode);
+        setError(ERR_PROBLEM_WITH_REQUEST);
+        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
     } else {
         /*
          * Extract data from a document like the following:

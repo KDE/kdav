@@ -22,10 +22,10 @@
 #include "libkdav_export.h"
 
 #include "davitem.h"
+#include "davjobbase.h"
 
 #include <memory>
 
-#include <KCoreAddons/KJob>
 
 #include <QtCore/QStringList>
 
@@ -40,7 +40,7 @@ class DavUrl;
 /**
  * @short A job that lists all DAV items inside a DAV collection.
  */
-class LIBKDAV_EXPORT DavItemsListJob : public KJob
+class LIBKDAV_EXPORT DavItemsListJob : public DavJobBase
 {
     Q_OBJECT
 

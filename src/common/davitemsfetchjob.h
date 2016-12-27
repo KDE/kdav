@@ -23,9 +23,8 @@
 #include "libkdav_export.h"
 
 #include "davitem.h"
+#include "davjobbase.h"
 #include "davurl.h"
-
-#include <KCoreAddons/KJob>
 
 #include <QtCore/QMap>
 #include <QtCore/QStringList>
@@ -36,7 +35,7 @@ namespace KDAV
 /**
  * @short A job that fetches a list of items from a DAV server using a multiget query.
  */
-class LIBKDAV_EXPORT DavItemsFetchJob : public KJob
+class LIBKDAV_EXPORT DavItemsFetchJob : public DavJobBase
 {
     Q_OBJECT
 

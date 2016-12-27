@@ -18,18 +18,19 @@
 */
 
 #include "davitemsfetchjob.h"
+
 #include "davmanager.h"
 #include "davmultigetprotocol.h"
 #include "utils.h"
+#include "daverror.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
-#include <KLocalizedString>
 
 using namespace KDAV;
 
 DavItemsFetchJob::DavItemsFetchJob(const DavUrl &collectionUrl, const QStringList &urls, QObject *parent)
-    : KJob(parent), mCollectionUrl(collectionUrl), mUrls(urls)
+    : DavJobBase(parent), mCollectionUrl(collectionUrl), mUrls(urls)
 {
 }
 
@@ -38,8 +39,8 @@ void DavItemsFetchJob::start()
     const DavMultigetProtocol *protocol =
         dynamic_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(mCollectionUrl.protocol()));
     if (!protocol) {
-        setError(UserDefinedError);
-        setErrorText(i18n("Protocol for the collection does not support MULTIGET"));
+        setError(ERR_NO_MULTIGET);
+        setErrorText(buildErrorString(ERR_NO_MULTIGET, QString(), 0, 0));
         emitResult();
         return;
     }
@@ -74,16 +75,9 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        QString err;
-        if (davJob->error() && davJob->error() != KIO::ERR_SLAVE_DEFINED) {
-            err = KIO::buildErrorString(davJob->error(), davJob->errorText());
-        } else {
-            err = davJob->errorText();
-        }
-
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request.\n"
-                          "%1 (%2).", err, responseCode));
+        setLatestResponseCode(responseCode);
+        setError(ERR_PROBLEM_WITH_REQUEST);
+        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
 
         emitResult();
         return;

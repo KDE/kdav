@@ -18,14 +18,15 @@
 
 #include "davcollectiondeletejob.h"
 
+#include "daverror.h"
+
 #include <KIO/DeleteJob>
 #include <KIO/Job>
-#include <KLocalizedString>
 
 using namespace KDAV;
 
 DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUrl &url, QObject *parent)
-    : KJob(parent), mUrl(url)
+    : DavJobBase(parent), mUrl(url)
 {
 }
 
@@ -48,16 +49,9 @@ void DavCollectionDeleteJob::davJobFinished(KJob *job)
                                  0 :
                                  deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
-        QString err;
-        if (deleteJob->error() != KIO::ERR_SLAVE_DEFINED) {
-            err = KIO::buildErrorString(deleteJob->error(), deleteJob->errorText());
-        } else {
-            err = deleteJob->errorText();
-        }
-
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request. The collection has not been deleted from the server.\n"
-                          "%1 (%2).", err, responseCode));
+        setLatestResponseCode(responseCode);
+        setError(ERR_COLLECTIONDELETE);
+        setErrorText(buildErrorString(ERR_COLLECTIONDELETE, deleteJob->errorText(), responseCode, deleteJob->error()));
     }
 
     emitResult();

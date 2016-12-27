@@ -20,10 +20,10 @@
 
 #include "davitemfetchjob.h"
 #include "davmanager.h"
+#include "daverror.h"
 
 #include <KIO/DeleteJob>
 #include <KIO/Job>
-#include <KLocalizedString>
 
 using namespace KDAV;
 
@@ -63,17 +63,9 @@ void DavItemDeleteJob::davJobFinished(KJob *job)
                                  deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
         if (responseCode != 404 && responseCode != 410) {
-            QString err;
-            if (deleteJob->error() != KIO::ERR_SLAVE_DEFINED) {
-                err = KIO::buildErrorString(deleteJob->error(), deleteJob->errorText());
-            } else {
-                err = deleteJob->errorText();
-            }
-
             setLatestResponseCode(responseCode);
-            setError(UserDefinedError + responseCode);
-            setErrorText(i18n("There was a problem with the request. The item has not been deleted from the server.\n"
-                              "%1 (%2).", err, responseCode));
+            setError(ERR_ITEMDELETE);
+            setErrorText(buildErrorString(ERR_ITEMDELETE, deleteJob->errorText(), responseCode, deleteJob->error()));
         }
 
         if (hasConflict()) {

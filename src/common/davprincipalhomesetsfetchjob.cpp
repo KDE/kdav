@@ -20,11 +20,11 @@
 
 #include "davmanager.h"
 #include "davprotocolbase.h"
+#include "daverror.h"
 #include "utils.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
-#include <KLocalizedString>
 
 using namespace KDAV;
 
@@ -84,9 +84,8 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
         }
 
         setLatestResponseCode(responseCode);
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request.\n"
-                          "%1 (%2).", err, responseCode));
+        setError(ERR_PROBLEM_WITH_REQUEST);
+        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
 
         emitResult();
         return;

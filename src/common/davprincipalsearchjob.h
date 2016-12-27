@@ -21,6 +21,7 @@
 
 #include "libkdav_export.h"
 
+#include "davjobbase.h"
 #include "davurl.h"
 
 #include <QtCore/QList>
@@ -42,7 +43,7 @@ namespace KDAV
  *
  * The properties to fetch are set with @ref fetchProperty().
  */
-class LIBKDAV_EXPORT DavPrincipalSearchJob : public KJob
+class LIBKDAV_EXPORT DavPrincipalSearchJob : public DavJobBase
 {
     Q_OBJECT
 

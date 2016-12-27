@@ -22,6 +22,7 @@
 #include "libkdav_export.h"
 
 #include "davcollection.h"
+#include "davjobbase.h"
 #include "davurl.h"
 
 #include <KCoreAddons/KJob>
@@ -35,7 +36,7 @@ namespace KDAV
  * This job is used to fetch all DAV collection that are available
  * under a certain DAV url.
  */
-class LIBKDAV_EXPORT DavCollectionsFetchJob : public KJob
+class LIBKDAV_EXPORT DavCollectionsFetchJob : public DavJobBase
 {
     Q_OBJECT
 

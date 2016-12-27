@@ -19,16 +19,16 @@
 #include "davcollectionmodifyjob.h"
 #include "davmanager.h"
 
+#include "daverror.h"
 #include "utils.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
-#include <KLocalizedString>
 
 using namespace KDAV;
 
 DavCollectionModifyJob::DavCollectionModifyJob(const DavUrl &url, QObject *parent)
-    : KJob(parent), mUrl(url)
+    : DavJobBase(parent), mUrl(url)
 {
 }
 
@@ -64,8 +64,8 @@ void DavCollectionModifyJob::removeProperty(const QString &prop, const QString &
 void DavCollectionModifyJob::start()
 {
     if (mSetProperties.isEmpty() && mRemoveProperties.isEmpty()) {
-        setError(UserDefinedError);   // no special meaning, for now at least
-        setErrorText(i18n("No properties to change or remove"));
+        setError(ERR_COLLECTIONMODIFY_NO_PROPERITES);
+        setErrorText(buildErrorString(ERR_COLLECTIONMODIFY_NO_PROPERITES, QString(), 0, 0));
         emitResult();
         return;
     }
@@ -119,9 +119,9 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
             err = davJob->errorText();
         }
 
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request. The item has not been modified on the server.\n"
-                          "%1 (%2).", err, responseCode));
+        setLatestResponseCode(responseCode);
+        setError(ERR_COLLECTIONMODIFY);
+        setErrorText(buildErrorString(ERR_COLLECTIONMODIFY, davJob->errorText(), responseCode, davJob->error()));
 
         emitResult();
         return;
@@ -141,25 +141,24 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
 
         const QString statusText = statusElement.text();
         if (statusText.contains(QStringLiteral("200"))) {
-            // Nothing special to do here, this indicates the success of the whole request
-            break;
+            continue;
         } else {
             // Generic error
             hasError = true;
-            errorText = i18n("There was an error when modifying the properties");
+            break;
         }
     }
 
     if (hasError) {
+        setError(ERR_COLLECTIONMODIFY_RESPONSE);
+
         // Trying to get more information about the error
         const QDomElement responseDescriptionElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("responsedescription"));
         if (!responseDescriptionElement.isNull()) {
-            errorText.append(i18n("\nThe server returned more information:\n"));
-            errorText.append(responseDescriptionElement.text());
+            setErrorText(buildErrorString(ERR_COLLECTIONMODIFY_RESPONSE, responseDescriptionElement.text(), 0 , 0));
+        } else {
+            setErrorText(buildErrorString(ERR_COLLECTIONMODIFY_RESPONSE, QString(), 0 , 0));
         }
-
-        setError(UserDefinedError);
-        setErrorText(errorText);
     }
 
     emitResult();

@@ -13,6 +13,7 @@ set(libkdav_SRCS
  common/davcollectionmodifyjob.cpp
  common/davcollectionsmultifetchjob.cpp
  common/davprotocolbase.cpp
+ common/daverror.cpp
  common/davitem.cpp
  common/davitemcreatejob.cpp
  common/davitemdeletejob.cpp
@@ -52,7 +53,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavCollectionsFetchJob
     DavCollectionModifyJob
     DavCollectionsMultiFetchJob
-    DavProtocolBase
+    DavError
     DavItem
     DavItemCreateJob
     DavItemDeleteJob
@@ -61,6 +62,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavItemsFetchJob
     DavItemsListJob
     DavManager
+    DavProtocolBase
     DavUrl
     Utils
     Enums

@@ -20,9 +20,9 @@
 
 #include "davitemfetchjob.h"
 #include "davmanager.h"
+#include "daverror.h"
 
 #include <KIO/Job>
-#include <KLocalizedString>
 
 using namespace KDAV;
 
@@ -76,17 +76,9 @@ void DavItemModifyJob::davJobFinished(KJob *job)
                                  0 :
                                  storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
-        QString err;
-        if (storedJob->error() != KIO::ERR_SLAVE_DEFINED) {
-            err = KIO::buildErrorString(storedJob->error(), storedJob->errorText());
-        } else {
-            err = storedJob->errorText();
-        }
-
         setLatestResponseCode(responseCode);
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request. The item was not modified on the server.\n"
-                          "%1 (%2).", err, responseCode));
+        setError(ERR_ITEMMODIFY);
+        setErrorText(buildErrorString(ERR_ITEMMODIFY, storedJob->errorText(), responseCode, storedJob->error()));
 
         if (hasConflict()) {
             DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);

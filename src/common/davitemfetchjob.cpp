@@ -19,10 +19,10 @@
 #include "davitemfetchjob.h"
 
 #include "davmanager.h"
+#include "daverror.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
-#include <KLocalizedString>
 
 using namespace KDAV;
 
@@ -73,16 +73,9 @@ void DavItemFetchJob::davJobFinished(KJob *job)
     setLatestResponseCode(responseCode);
 
     if (storedJob->error()) {
-        QString err;
-        if (storedJob->error() != KIO::ERR_SLAVE_DEFINED) {
-            err = KIO::buildErrorString(storedJob->error(), storedJob->errorText());
-        } else {
-            err = storedJob->errorText();
-        }
-
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request.\n"
-                          "%1 (%2).", err, responseCode));
+        setLatestResponseCode(responseCode);
+        setError(ERR_PROBLEM_WITH_REQUEST);
+        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, storedJob->errorText(), responseCode, storedJob->error()));
     } else {
         mItem.setData(storedJob->data());
         mItem.setContentType(storedJob->queryMetaData(QStringLiteral("content-type")));

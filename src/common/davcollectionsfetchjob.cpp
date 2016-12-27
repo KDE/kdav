@@ -22,11 +22,11 @@
 #include "davprincipalhomesetsfetchjob.h"
 #include "davprotocolbase.h"
 #include "utils.h"
+#include "daverror.h"
 
 #include "libkdav_debug.h"
 #include <KIO/DavJob>
 #include <KIO/Job>
-#include <KLocalizedString>
 
 #include <QColor>
 #include <QtCore/QBuffer>
@@ -35,7 +35,7 @@
 using namespace KDAV;
 
 DavCollectionsFetchJob::DavCollectionsFetchJob(const DavUrl &url, QObject *parent)
-    : KJob(parent), mUrl(url), mSubJobCount(0)
+    : DavJobBase(parent), mUrl(url), mSubJobCount(0)
 {
 }
 
@@ -137,16 +137,9 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
             return;
         }
 
-        QString err;
-        if (davJob->error() && davJob->error() != KIO::ERR_SLAVE_DEFINED) {
-            err = KIO::buildErrorString(davJob->error(), davJob->errorText());
-        } else {
-            err = davJob->errorText();
-        }
-
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request.\n"
-                          "%1 (%2).", err, responseCode));
+        setLatestResponseCode(responseCode);
+        setError(ERR_PROBLEM_WITH_REQUEST);
+        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
     } else {
         // For use in the collectionDiscovered() signal
         QUrl _jobUrl = mUrl.url();
@@ -156,8 +149,8 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
         // Validate that we got a valid PROPFIND response
         QDomElement rootElement = davJob->response().documentElement();
         if (rootElement.tagName().compare(QStringLiteral("multistatus"), Qt::CaseInsensitive) != 0) {
-            setError(UserDefinedError);
-            setErrorText(i18n("Invalid responses from backend"));
+            setError(ERR_COLLECTIONFETCH);
+            setErrorText(buildErrorString(ERR_COLLECTIONFETCH, QString(), 0, 0));
             subjobFinished();
             return;
         }
@@ -168,16 +161,16 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
         QXmlQuery xquery;
         if (!xquery.setFocus(&buffer)) {
-            setError(UserDefinedError);
-            setErrorText(i18n("Error setting focus for XQuery"));
+            setError(ERR_COLLECTIONFETCH_XQUERY_SETFOCUS);
+            setErrorText(buildErrorString(ERR_COLLECTIONFETCH_XQUERY_SETFOCUS, QString(), 0, 0));
             subjobFinished();
             return;
         }
 
         xquery.setQuery(DavManager::self()->davProtocol(mUrl.protocol())->collectionsXQuery());
         if (!xquery.isValid()) {
-            setError(UserDefinedError);
-            setErrorText(i18n("Invalid XQuery submitted by DAV implementation"));
+            setError(ERR_COLLECTIONFETCH_XQUERY_INVALID);
+            setErrorText(buildErrorString(ERR_COLLECTIONFETCH_XQUERY_INVALID, QString(), 0, 0));
             subjobFinished();
             return;
         }
@@ -189,8 +182,8 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
         QDomDocument document;
         if (!document.setContent(responsesStr, true)) {
-            setError(UserDefinedError);
-            setErrorText(i18n("Invalid responses from backend"));
+            setError(ERR_COLLECTIONFETCH);
+            setErrorText(buildErrorString(ERR_COLLECTIONFETCH, QString(), 0, 0));
             subjobFinished();
             return;
         }

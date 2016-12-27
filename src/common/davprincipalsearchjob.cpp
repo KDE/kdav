@@ -20,10 +20,10 @@
 
 #include "davmanager.h"
 #include "utils.h"
+#include "daverror.h"
 
 #include <KIO/Job>
 #include <KIO/DavJob>
-#include <KLocalizedString>
 
 #include <QtCore/QUrl>
 
@@ -31,7 +31,7 @@ using namespace KDAV;
 
 DavPrincipalSearchJob::DavPrincipalSearchJob(const DavUrl &url, DavPrincipalSearchJob::FilterType type,
         const QString &filter, QObject *parent)
-    : KJob(parent), mUrl(url), mType(type), mFilter(filter), mPrincipalPropertySearchSubJobCount(0),
+    : DavJobBase(parent), mUrl(url), mType(type), mFilter(filter), mPrincipalPropertySearchSubJobCount(0),
       mPrincipalPropertySearchSubJobSuccessful(false)
 {
 }
@@ -96,9 +96,9 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
             err = davJob->errorText();
         }
 
-        setError(UserDefinedError + responseCode);
-        setErrorText(i18n("There was a problem with the request.\n"
-                          "%1 (%2).", err, responseCode));
+        setLatestResponseCode(responseCode);
+        setError(ERR_PROBLEM_WITH_REQUEST);
+        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
 
         emitResult();
         return;
@@ -216,28 +216,18 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
 
     if (responseCode > 499 && responseCode < 600 && !mPrincipalPropertySearchSubJobSuccessful) {
         // Server-side error, unrecoverable
-        setError(UserDefinedError);
-        setErrorText(i18n("The server encountered an error that prevented it from completing your request"));
+        setLatestResponseCode(responseCode);
+        setError(ERR_SERVER_UNRECOVERABLE);
+        setErrorText(buildErrorString(ERR_SERVER_UNRECOVERABLE, davJob->errorText(), responseCode, davJob->error()));
         if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
         return;
     } else if (responseCode > 399 && responseCode < 500 && !mPrincipalPropertySearchSubJobSuccessful) {
-        // User-side error
-        QString extraMessage;
-        if (responseCode == 401) {
-            extraMessage = i18n("Invalid username/password");
-        } else if (responseCode == 403) {
-            extraMessage = i18n("Access forbidden");
-        } else if (responseCode == 404) {
-            extraMessage = i18n("Resource not found");
-        } else {
-            extraMessage = i18n("HTTP error");
-        }
+        setLatestResponseCode(responseCode);
+        setError(ERR_PROBLEM_WITH_REQUEST);
+        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
 
-        setError(UserDefinedError);
-        setErrorText(i18n("There was a problem with the request.\n"
-                          "%1 (%2).", extraMessage, responseCode));
         if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }

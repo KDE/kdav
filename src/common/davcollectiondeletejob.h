@@ -21,6 +21,7 @@
 
 #include "libkdav_export.h"
 
+#include "davjobbase.h"
 #include "davurl.h"
 
 #include <KCoreAddons/KJob>
@@ -33,7 +34,7 @@ namespace KDAV
  *
  * This job is used to delete a DAV collection at a certain URL.
  */
-class LIBKDAV_EXPORT DavCollectionDeleteJob : public KJob
+class LIBKDAV_EXPORT DavCollectionDeleteJob : public DavJobBase
 {
     Q_OBJECT
 
