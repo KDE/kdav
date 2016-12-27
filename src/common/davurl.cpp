@@ -58,3 +58,24 @@ QString DavUrl::toDisplayString() const
     url.setUserInfo(QString());
     return url.toDisplayString();
 }
+
+QDataStream &KDAV::operator<<(QDataStream &stream, const DavUrl &url)
+{
+    stream << QString::number(url.protocol());
+    stream << url.url();
+
+    return stream;
+}
+
+QDataStream &KDAV::operator>>(QDataStream &stream, DavUrl &davUrl)
+{
+    QUrl url;
+    QString p;
+
+    stream >> p;
+    stream >> url;
+
+    davUrl = DavUrl(url, (Protocol) p.toInt());
+
+    return stream;
+}

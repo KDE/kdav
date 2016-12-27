@@ -116,9 +116,9 @@ QString DavItem::etag() const
     return d->mEtag;
 }
 
-QDataStream &operator<<(QDataStream &stream, const DavItem &item)
+QDataStream &KDAV::operator<<(QDataStream &stream, const DavItem &item)
 {
-    //stream << item.url();
+    stream << item.url();
     stream << item.contentType();
     stream << item.data();
     stream << item.etag();
@@ -126,9 +126,10 @@ QDataStream &operator<<(QDataStream &stream, const DavItem &item)
     return stream;
 }
 
-QDataStream &operator>>(QDataStream &stream, DavItem &item)
+QDataStream &KDAV::operator>>(QDataStream &stream, DavItem &item)
 {
-    /*QString url, contentType, etag;
+    QString contentType, etag;
+    DavUrl url;
     QByteArray data;
 
     stream >> url;
@@ -136,7 +137,7 @@ QDataStream &operator>>(QDataStream &stream, DavItem &item)
     stream >> data;
     stream >> etag;
 
-    item = DavItem(url, contentType, data, etag);*/
+    item = DavItem(url, contentType, data, etag);
 
     return stream;
 }

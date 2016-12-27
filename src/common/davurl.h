@@ -83,6 +83,9 @@ private:
     Protocol mProtocol;
 };
 
+QDataStream &operator<<(QDataStream &out, const DavUrl &url);
+QDataStream &operator>>(QDataStream &in, DavUrl &url);
+
 }
 
 Q_DECLARE_TYPEINFO(KDAV::DavUrl, Q_MOVABLE_TYPE);
