@@ -19,12 +19,17 @@
 #ifndef KDAV_DAVJOBBASE_H
 #define KDAV_DAVJOBBASE_H
 
+#include <memory>
+
 #include "libkdav_export.h"
 
 #include <KCoreAddons/KJob>
 
+class DavJobBasePrivate;
+
 namespace KDAV
 {
+class Error;
 
 /**
  * @short base class for the jobs used by the resource.
@@ -35,6 +40,7 @@ class LIBKDAV_EXPORT DavJobBase : public KJob
 
 public:
     explicit DavJobBase(QObject *parent = Q_NULLPTR);
+    ~DavJobBase();
 
     /**
      * Get the latest response code.
@@ -70,6 +76,11 @@ public:
      */
     bool hasConflict() const;
 
+    /**
+     * Returns a instance of the KDAV:Error to be able to translate the error
+     */
+    Error davError() const;
+
 protected:
     /**
      * Sets the latest response code received.
@@ -81,8 +92,12 @@ protected:
      */
     void setLatestResponseCode(unsigned int code);
 
+    void setJobErrorText(const QString &errorText);
+    void setJobError(unsigned int jobErrorCode);
+    void setErrorTextFromDavError();
+    void setDavError(const Error &error);
 private:
-    unsigned int mLatestResponseCode;
+    std::unique_ptr<DavJobBasePrivate> d;
 };
 
 }

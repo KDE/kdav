@@ -83,8 +83,8 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
             doCollectionsFetch(mUrl.url());
         } else {
             // Just give up here.
-            setError(davJob->error());
-            setErrorText(davJob->errorText());
+            setDavError(davJob->davError());
+            setErrorTextFromDavError();
             emitResult();
         }
 
@@ -139,7 +139,9 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
     } else {
         // For use in the collectionDiscovered() signal
         QUrl _jobUrl = mUrl.url();
@@ -150,7 +152,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
         QDomElement rootElement = davJob->response().documentElement();
         if (rootElement.tagName().compare(QStringLiteral("multistatus"), Qt::CaseInsensitive) != 0) {
             setError(ERR_COLLECTIONFETCH);
-            setErrorText(buildErrorString(ERR_COLLECTIONFETCH, QString(), 0, 0));
+            setErrorTextFromDavError();
             subjobFinished();
             return;
         }
@@ -162,7 +164,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
         QXmlQuery xquery;
         if (!xquery.setFocus(&buffer)) {
             setError(ERR_COLLECTIONFETCH_XQUERY_SETFOCUS);
-            setErrorText(buildErrorString(ERR_COLLECTIONFETCH_XQUERY_SETFOCUS, QString(), 0, 0));
+            setErrorTextFromDavError();
             subjobFinished();
             return;
         }
@@ -170,7 +172,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
         xquery.setQuery(DavManager::self()->davProtocol(mUrl.protocol())->collectionsXQuery());
         if (!xquery.isValid()) {
             setError(ERR_COLLECTIONFETCH_XQUERY_INVALID);
-            setErrorText(buildErrorString(ERR_COLLECTIONFETCH_XQUERY_INVALID, QString(), 0, 0));
+            setErrorTextFromDavError();
             subjobFinished();
             return;
         }
@@ -183,7 +185,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
         QDomDocument document;
         if (!document.setContent(responsesStr, true)) {
             setError(ERR_COLLECTIONFETCH);
-            setErrorText(buildErrorString(ERR_COLLECTIONFETCH, QString(), 0, 0));
+            setErrorTextFromDavError();
             subjobFinished();
             return;
         }

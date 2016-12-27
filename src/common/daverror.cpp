@@ -21,93 +21,137 @@
 #include <KIO/Global>
 #include <KIO/Job>
 
-#include <KLocalizedString>
-
 using namespace KDAV;
 
-QString KDAV::buildErrorString(KDAV::Error errorCode, const QString &errorText, int responseCode, int jobErrorCode)
+Error::Error()
+    : mErrorNumber(NO_ERR)
+    , mResponseCode(0)
+    , mJobErrorCode(0)
+{
+}
+
+Error::Error(ErrorNumber errNo, int responseCode, const QString &errorText, int jobErrorCode)
+    : mErrorNumber(errNo)
+    , mResponseCode(responseCode)
+    , mErrorText(errorText)
+    , mJobErrorCode(jobErrorCode)
+{
+}
+
+ErrorNumber Error::errorNumber() const
+{
+    return mErrorNumber;
+}
+
+
+QString Error::internalErrorText() const
+{
+    return mErrorText;
+}
+
+
+int Error::jobErrorCode() const
+{
+    return mJobErrorCode;
+}
+
+
+int Error::responseCode() const
+{
+    return mResponseCode;
+}
+
+QString KDAV::Error::translatedJobError() const
+{
+    QString err;
+    if (mJobErrorCode > 0 && mJobErrorCode != KIO::ERR_SLAVE_DEFINED) {
+        err = KIO::buildErrorString(mJobErrorCode, mErrorText);
+    } else {
+        err = mErrorText;
+    }
+    return err;
+}
+
+QString Error::errorText() const
 {
     QString result;
 
-    QString err;
-    if (jobErrorCode > 0 && jobErrorCode != KIO::ERR_SLAVE_DEFINED) {
-        err = KIO::buildErrorString(jobErrorCode, errorText);
-    } else {
-        err = errorText;
-    }
+    QString err = translatedJobError();
 
-    switch (errorCode) {
+    switch (mErrorNumber) {
     case ERR_PROBLEM_WITH_REQUEST: {
         // User-side error
-        if (responseCode == 401) {
-            err = i18n("Invalid username/password");
-        } else if (responseCode == 403) {
-            err = i18n("Access forbidden");
-        } else if (responseCode == 404) {
-            err = i18n("Resource not found");
+        if (mResponseCode == 401) {
+            err = QStringLiteral("Invalid username/password");
+        } else if (mResponseCode == 403) {
+            err = QStringLiteral("Access forbidden");
+        } else if (mResponseCode == 404) {
+            err = QStringLiteral("Resource not found");
         } else {
-            err = i18n("HTTP error");
+            err = QStringLiteral("HTTP error");
         }
-        result = i18n("There was a problem with the request.\n"
-                          "%1 (%2).", err, responseCode);
+        result = QStringLiteral("There was a problem with the request.\n"
+                          "%1 (%2).").arg(err, mResponseCode);
         break;
         }
     case ERR_NO_MULTIGET: {
-        result = i18n("Protocol for the collection does not support MULTIGET");
+        result = QStringLiteral("Protocol for the collection does not support MULTIGET");
         break;
         }
     case ERR_SERVER_UNRECOVERABLE: {
-        result = i18n("The server encountered an error that prevented it from completing your request: %1 (%2)", err, responseCode);
+        result = QStringLiteral("The server encountered an error that prevented it from completing your request: %1 (%2)").arg(err, mResponseCode);
         break;
         }
     case ERR_COLLECTIONDELETE: {
-        result = i18n("There was a problem with the request. The collection has not been deleted from the server.\n"
-                          "%1 (%2).", err, responseCode);
+        result = QStringLiteral("There was a problem with the request. The collection has not been deleted from the server.\n"
+                          "%1 (%2).").arg(err, mResponseCode);
         break;
         }
     case ERR_COLLECTIONFETCH: {
-        result = i18n("Invalid responses from backend");
+        result = QStringLiteral("Invalid responses from backend");
         break;
         }
     case ERR_COLLECTIONFETCH_XQUERY_SETFOCUS: {
-        result = i18n("Error setting focus for XQuery");
+        result = QStringLiteral("Error setting focus for XQuery");
         break;
         }
     case ERR_COLLECTIONFETCH_XQUERY_INVALID: {
-        result = i18n("Invalid XQuery submitted by DAV implementation");
+        result = QStringLiteral("Invalid XQuery submitted by DAV implementation");
         break;
         }
     case ERR_COLLECTIONMODIFY: {
-        result = i18n("There was a problem with the request. The collection has not been modified on the server.\n"
-                      "%1 (%2).", err, responseCode);
+        result = QStringLiteral("There was a problem with the request. The collection has not been modified on the server.\n"
+                      "%1 (%2).").arg(err, mResponseCode);
         break;
         }
     case ERR_COLLECTIONMODIFY_NO_PROPERITES: {
-        result = i18n("No properties to change or remove");
+        result = QStringLiteral("No properties to change or remove");
         break;
         }
     case ERR_COLLECTIONMODIFY_RESPONSE: {
-        result = i18n("There was an error when modifying the properties");
-        if (!errorText.isEmpty()) {
-            result.append(i18n("\nThe server returned more information:\n%1", errorText));
+        result = QStringLiteral("There was an error when modifying the properties");
+        if (!mErrorText.isEmpty()) {
+            result.append(QStringLiteral("\nThe server returned more information:\n%1").arg(mErrorText));
         }
         break;
         }
     case ERR_ITEMCREATE: {
-        result = i18n("There was a problem with the request. The item has not been created on the server.\n"
-                      "%1 (%2).", err, responseCode);
+        result = QStringLiteral("There was a problem with the request. The item has not been created on the server.\n"
+                      "%1 (%2).").arg(err, mResponseCode);
         break;
         }
     case ERR_ITEMDELETE: {
-        result = i18n("There was a problem with the request. The item has not been deleted from the server.\n"
-                      "%1 (%2).", err, responseCode);
+        result = QStringLiteral("There was a problem with the request. The item has not been deleted from the server.\n"
+                      "%1 (%2).").arg(err, mResponseCode);
         break;
         }
     case ERR_ITEMMODIFY: {
-        result = i18n("There was a problem with the request. The item was not modified on the server.\n"
-                      "%1 (%2).", err, responseCode);
+        result = QStringLiteral("There was a problem with the request. The item was not modified on the server.\n"
+                      "%1 (%2).").arg(err, mResponseCode);
         break;
         }
+    case NO_ERR:
+        break;
     }
     return result;
 }

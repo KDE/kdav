@@ -140,7 +140,9 @@ void DavItemsListJob::davJobFinished(KJob *job)
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
     } else {
         /*
          * Extract data from a document like the following:

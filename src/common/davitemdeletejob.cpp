@@ -65,7 +65,9 @@ void DavItemDeleteJob::davJobFinished(KJob *job)
         if (responseCode != 404 && responseCode != 410) {
             setLatestResponseCode(responseCode);
             setError(ERR_ITEMDELETE);
-            setErrorText(buildErrorString(ERR_ITEMDELETE, deleteJob->errorText(), responseCode, deleteJob->error()));
+            setJobErrorText(deleteJob->errorText());
+            setJobError(deleteJob->error());
+            setErrorTextFromDavError();
         }
 
         if (hasConflict()) {

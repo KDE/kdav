@@ -75,7 +75,9 @@ void DavItemFetchJob::davJobFinished(KJob *job)
     if (storedJob->error()) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, storedJob->errorText(), responseCode, storedJob->error()));
+        setJobErrorText(storedJob->errorText());
+        setJobError(storedJob->error());
+        setErrorTextFromDavError();
     } else {
         mItem.setData(storedJob->data());
         mItem.setContentType(storedJob->queryMetaData(QStringLiteral("content-type")));

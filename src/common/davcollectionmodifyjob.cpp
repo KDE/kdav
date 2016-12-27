@@ -65,7 +65,7 @@ void DavCollectionModifyJob::start()
 {
     if (mSetProperties.isEmpty() && mRemoveProperties.isEmpty()) {
         setError(ERR_COLLECTIONMODIFY_NO_PROPERITES);
-        setErrorText(buildErrorString(ERR_COLLECTIONMODIFY_NO_PROPERITES, QString(), 0, 0));
+        setErrorTextFromDavError();
         emitResult();
         return;
     }
@@ -112,17 +112,11 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        QString err;
-        if (davJob->error() && davJob->error() != KIO::ERR_SLAVE_DEFINED) {
-            err = KIO::buildErrorString(davJob->error(), davJob->errorText());
-        } else {
-            err = davJob->errorText();
-        }
-
         setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONMODIFY);
-        setErrorText(buildErrorString(ERR_COLLECTIONMODIFY, davJob->errorText(), responseCode, davJob->error()));
-
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
         emitResult();
         return;
     }
@@ -155,10 +149,9 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
         // Trying to get more information about the error
         const QDomElement responseDescriptionElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("responsedescription"));
         if (!responseDescriptionElement.isNull()) {
-            setErrorText(buildErrorString(ERR_COLLECTIONMODIFY_RESPONSE, responseDescriptionElement.text(), 0 , 0));
-        } else {
-            setErrorText(buildErrorString(ERR_COLLECTIONMODIFY_RESPONSE, QString(), 0 , 0));
+            setJobErrorText(responseDescriptionElement.text());
         }
+        setErrorTextFromDavError();
     }
 
     emitResult();

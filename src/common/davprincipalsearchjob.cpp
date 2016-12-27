@@ -89,16 +89,11 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        QString err;
-        if (davJob->error() && davJob->error() != KIO::ERR_SLAVE_DEFINED) {
-            err = KIO::buildErrorString(davJob->error(), davJob->errorText());
-        } else {
-            err = davJob->errorText();
-        }
-
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
 
         emitResult();
         return;
@@ -218,7 +213,9 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
         // Server-side error, unrecoverable
         setLatestResponseCode(responseCode);
         setError(ERR_SERVER_UNRECOVERABLE);
-        setErrorText(buildErrorString(ERR_SERVER_UNRECOVERABLE, davJob->errorText(), responseCode, davJob->error()));
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
         if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
@@ -226,7 +223,9 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
     } else if (responseCode > 399 && responseCode < 500 && !mPrincipalPropertySearchSubJobSuccessful) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
 
         if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();

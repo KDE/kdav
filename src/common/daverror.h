@@ -23,10 +23,13 @@
 
 #include <KJob>
 
+#include <QString>
+
 namespace KDAV
 {
 
-enum Error {
+enum ErrorNumber {
+   NO_ERR = 0,
    ERR_PROBLEM_WITH_REQUEST = KJob::UserDefinedError + 200,         //it would be better to request KIO about uts UserDefinedError space.
    ERR_NO_MULTIGET,
    ERR_SERVER_UNRECOVERABLE,
@@ -42,7 +45,24 @@ enum Error {
    ERR_ITEMMODIFY
 };
 
-LIBKDAV_EXPORT QString buildErrorString(Error errorCode, const QString &errorText, int responseCode, int jobErrorCode);
+class LIBKDAV_EXPORT Error {
+public:
+    explicit Error();
+    explicit Error(ErrorNumber errNo, int responseCode, const QString &errorText, int jobErrorCode);
+
+    ErrorNumber errorNumber() const;
+    int responseCode() const;
+    QString internalErrorText() const;
+    int jobErrorCode() const;
+    QString translatedJobError() const;
+    QString errorText() const;
+
+private:
+    ErrorNumber mErrorNumber;
+    int mResponseCode;
+    QString mErrorText;
+    int mJobErrorCode;
+};
 
 }
 

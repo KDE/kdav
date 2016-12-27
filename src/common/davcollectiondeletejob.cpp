@@ -51,7 +51,9 @@ void DavCollectionDeleteJob::davJobFinished(KJob *job)
 
         setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONDELETE);
-        setErrorText(buildErrorString(ERR_COLLECTIONDELETE, deleteJob->errorText(), responseCode, deleteJob->error()));
+        setJobErrorText(deleteJob->errorText());
+        setJobError(deleteJob->error());
+        setErrorTextFromDavError();
     }
 
     emitResult();

@@ -78,7 +78,9 @@ void DavItemModifyJob::davJobFinished(KJob *job)
 
         setLatestResponseCode(responseCode);
         setError(ERR_ITEMMODIFY);
-        setErrorText(buildErrorString(ERR_ITEMMODIFY, storedJob->errorText(), responseCode, storedJob->error()));
+        setJobErrorText(storedJob->errorText());
+        setJobError(storedJob->error());
+        setErrorTextFromDavError();
 
         if (hasConflict()) {
             DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);

@@ -71,7 +71,9 @@ void DavItemCreateJob::davJobFinished(KJob *job)
     if (storedJob->error()) {
         setLatestResponseCode(responseCode);
         setError(ERR_ITEMCREATE);
-        setErrorText(buildErrorString(ERR_ITEMCREATE, storedJob->errorText(), responseCode, storedJob->error()));
+        setJobErrorText(storedJob->errorText());
+        setJobError(storedJob->error());
+        setErrorTextFromDavError();
 
         emitResult();
         return;

@@ -60,7 +60,6 @@ set(AKONADI_VERSION "5.4.40")
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui XmlPatterns)
 
 find_package(KF5KIO ${KF5_VERSION} CONFIG REQUIRED)
-find_package(KF5I18n ${KF5_VERSION} CONFIG REQUIRED)
 
 # KdepimLibs package
 #find_package(KF5Akonadi ${AKONADI_VERSION} CONFIG REQUIRED)

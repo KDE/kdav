@@ -40,7 +40,7 @@ void DavItemsFetchJob::start()
         dynamic_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(mCollectionUrl.protocol()));
     if (!protocol) {
         setError(ERR_NO_MULTIGET);
-        setErrorText(buildErrorString(ERR_NO_MULTIGET, QString(), 0, 0));
+        setErrorTextFromDavError();
         emitResult();
         return;
     }
@@ -77,7 +77,9 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setErrorText(buildErrorString(ERR_PROBLEM_WITH_REQUEST, davJob->errorText(), responseCode, davJob->error()));
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
 
         emitResult();
         return;
