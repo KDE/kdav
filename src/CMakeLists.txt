@@ -65,6 +65,8 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavItemsListJob
     DavManager
     DavProtocolBase
+    DavPrincipalHomesetsFetchJob
+    DavPrincipalSearchJob
     DavUrl
     Utils
     Enums
