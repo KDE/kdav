@@ -36,14 +36,6 @@ set(libkdav_SRCS
 
  #KCalCore
  protocols/caldavprotocol.cpp
-
- # will move to kdepim-runtime
- #common/daverror-kdepim-runtime.cpp
- 
- # With Akonadi reference
- #common/etagcache-akonadi.cpp
- #common/davutils-akonadi.cpp
- #resource/davprotocolattribute.cpp
 )
 
 
@@ -117,7 +109,6 @@ PRIVATE
     Qt5::Gui
     Qt5::XmlPatterns
     KF5::KIOCore
-    #KF5::Akonadi
     )
 
 

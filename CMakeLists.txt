@@ -54,15 +54,11 @@ include(ECMQtDeclareLoggingCategory)
 include(ECMCoverageOption)
 
 set(QT_REQUIRED_VERSION "5.6.0")
-set(AKONADI_VERSION "5.4.40")
 
 # QT5 package
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui XmlPatterns)
 
 find_package(KF5KIO ${KF5_VERSION} CONFIG REQUIRED)
-
-# KdepimLibs package
-#find_package(KF5Akonadi ${AKONADI_VERSION} CONFIG REQUIRED)
 
 add_definitions( -DQT_NO_CAST_FROM_ASCII )
 add_definitions( -DQT_NO_CAST_TO_ASCII )
