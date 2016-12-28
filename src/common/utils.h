@@ -38,13 +38,13 @@ namespace Utils
 /**
  * Returns the untranslated name of the given DAV @p protocol dialect.
  */
-QLatin1String protocolName(Protocol protocol);
+QLatin1String LIBKDAV_EXPORT protocolName(Protocol protocol);
 
 /**
  * Returns the protocol matching the given name. This is the opposite of
  * Utils::protocolName().
  */
-Protocol protocolByName(const QString &name);
+Protocol LIBKDAV_EXPORT protocolByName(const QString &name);
 
 /**
  * Returns the first child element of @p parent that has the given @p tagName and is part of the @p namespaceUri.
