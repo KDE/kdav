@@ -1,6 +1,6 @@
 ==== What's this ? ====
 
-This is an Akonadi resource to access DAV-enabled PIM storages.
+This is an DAV protocol implemention with KJobs.
 
 Calendars and todos are supported, using either GroupDAV
 or CalDAV, and contacts are supported using GroupDAV or
