@@ -11,6 +11,7 @@ set(KF5_VERSION "5.27.0")
 find_package(ECM ${KF5_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
+include(ECMAddTests)
 include(ECMPackageConfigHelpers)
 include(ECMSetupVersion)
 include(GenerateExportHeader)
@@ -27,7 +28,7 @@ include(ECMCoverageOption)
 set(QT_REQUIRED_VERSION "5.6.0")
 
 # QT5 package
-find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui XmlPatterns)
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui XmlPatterns Test)
 
 find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons KIO)
 
@@ -68,6 +69,7 @@ install(FILES
 
 
 add_subdirectory(src)
+add_subdirectory(autotests)
 add_subdirectory(test)
 
 feature_summary(WHAT ALL
