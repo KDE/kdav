@@ -120,8 +120,8 @@ private:
     std::unique_ptr<DavItemPrivate> d;
 };
 
-QDataStream &operator<<(QDataStream &out, const DavItem &item);
-QDataStream &operator>>(QDataStream &in, DavItem &item);
+LIBKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);
+LIBKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavItem &item);
 
 }
 

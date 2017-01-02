@@ -83,8 +83,8 @@ private:
     Protocol mProtocol;
 };
 
-QDataStream &operator<<(QDataStream &out, const DavUrl &url);
-QDataStream &operator>>(QDataStream &in, DavUrl &url);
+LIBKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavUrl &url);
+LIBKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavUrl &url);
 
 }
 
