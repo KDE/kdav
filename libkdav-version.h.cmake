@@ -17,13 +17,10 @@
 */
 
 /*
-  Set the version for this libdav release.
+  Set the version for this libkdav release.
 
   This version may be used by programs within this module that
   do not want to maintain a version on their own.
-
-  Note that we cannot use the kdelibs version because we may
-  build against older kdelibs releases.
 */
 
 #ifndef LIBKDAV_VERSION_H
