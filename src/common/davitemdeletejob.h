@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVITEMDELETEJOB_H
 #define KDAV_DAVITEMDELETEJOB_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davitem.h"
 #include "davjobbase.h"
@@ -31,7 +31,7 @@ namespace KDAV
 /**
  * @short A job to delete a DAV item on the DAV server.
  */
-class LIBKDAV_EXPORT DavItemDeleteJob : public DavJobBase
+class KPIMKDAV_EXPORT DavItemDeleteJob : public DavJobBase
 {
     Q_OBJECT
 

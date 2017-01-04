@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVCOLLECTIONSMULTIFETCHJOB_H
 #define KDAV_DAVCOLLECTIONSMULTIFETCHJOB_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davcollection.h"
 #include "davurl.h"
@@ -38,7 +38,7 @@ namespace KDAV
  * @note This class just combines multiple calls of DavCollectionsFetchJob
  *       into one job.
  */
-class LIBKDAV_EXPORT DavCollectionsMultiFetchJob : public KJob
+class KPIMKDAV_EXPORT DavCollectionsMultiFetchJob : public KJob
 {
     Q_OBJECT
 

@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVITEM_H
 #define KDAV_DAVITEM_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include <memory>
 
@@ -48,7 +48,7 @@ namespace KDAV
  * @note While the DAV RFC names them DAV resource we call them items
  *       to comply to Akonadi terminology.
  */
-class LIBKDAV_EXPORT DavItem
+class KPIMKDAV_EXPORT DavItem
 {
 public:
     /**
@@ -120,8 +120,8 @@ private:
     std::unique_ptr<DavItemPrivate> d;
 };
 
-LIBKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);
-LIBKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavItem &item);
+KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);
+KPIMKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavItem &item);
 
 }
 

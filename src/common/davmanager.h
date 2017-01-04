@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVMANAGER_H
 #define KDAV_DAVMANAGER_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "enums.h"
 
@@ -47,7 +47,7 @@ class DavProtocolBase;
  * low-level DAV jobs and has access to the global DAV protocol dialect
  * objects which abstract the access to the various DAV protocol dialects.
  */
-class LIBKDAV_EXPORT DavManager
+class KPIMKDAV_EXPORT DavManager
 {
 public:
     /**

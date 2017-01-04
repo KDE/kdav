@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVURL_H
 #define KDAV_DAVURL_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "enums.h"
 
@@ -32,7 +32,7 @@ namespace KDAV
 /**
  * @short A helper class to combine url and protocol of a DAV url.
  */
-class LIBKDAV_EXPORT DavUrl
+class KPIMKDAV_EXPORT DavUrl
 {
 public:
     /**
@@ -83,8 +83,8 @@ private:
     Protocol mProtocol;
 };
 
-LIBKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavUrl &url);
-LIBKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavUrl &url);
+KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavUrl &url);
+KPIMKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavUrl &url);
 
 }
 

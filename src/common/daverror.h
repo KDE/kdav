@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVERROR_H
 #define KDAV_DAVERROR_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include <KJob>
 
@@ -45,7 +45,7 @@ enum ErrorNumber {
    ERR_ITEMMODIFY
 };
 
-class LIBKDAV_EXPORT Error {
+class KPIMKDAV_EXPORT Error {
 public:
     explicit Error();
     explicit Error(ErrorNumber errNo, int responseCode, const QString &errorText, int jobErrorCode);

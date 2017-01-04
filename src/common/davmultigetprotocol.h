@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVMULTIGETPROTOCOL_H
 #define KDAV_DAVMULTIGETPROTOCOL_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davprotocolbase.h"
 
@@ -29,7 +29,7 @@ namespace KDAV
 /**
  * @short Base class for protocols that implement multiget capabilities
  */
-class LIBKDAV_EXPORT DavMultigetProtocol : public DavProtocolBase
+class KPIMKDAV_EXPORT DavMultigetProtocol : public DavProtocolBase
 {
 public:
     /**

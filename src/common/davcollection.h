@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVCOLLECTION_H
 #define KDAV_DAVCOLLECTION_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "enums.h"
 
@@ -46,7 +46,7 @@ namespace KDAV
  * This class is used as container to transfer information about DAV
  * collections between the Akonadi resource and the DAV jobs.
  */
-class LIBKDAV_EXPORT DavCollection
+class KPIMKDAV_EXPORT DavCollection
 {
 public:
     /**

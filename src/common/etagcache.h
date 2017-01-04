@@ -19,7 +19,7 @@
 #ifndef KDAV_ETAGCACHE_H
 #define KDAV_ETAGCACHE_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include <QtCore/QMap>
 #include <QtCore/QObject>
@@ -37,7 +37,7 @@ namespace KDAV
  * out which items have been changed in the backend and have to
  * be refetched on the next call of ResourceBase::retrieveItems()
  */
-class LIBKDAV_EXPORT EtagCache : public QObject
+class KPIMKDAV_EXPORT EtagCache : public QObject
 {
     Q_OBJECT
 

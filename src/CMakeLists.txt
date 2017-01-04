@@ -76,7 +76,7 @@ install(FILES
 
 install(FILES
     ${KDAV_HEADERS}
-    ${CMAKE_CURRENT_BINARY_DIR}/libkdav_export.h
+    ${CMAKE_CURRENT_BINARY_DIR}/kpimkdav_export.h
     ${CMAKE_CURRENT_BINARY_DIR}/libkdav_debug.h
 
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim/kdav

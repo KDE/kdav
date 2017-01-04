@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVPRINCIPALHOMESETSFETCHJOB_H
 #define KDAV_DAVPRINCIPALHOMESETSFETCHJOB_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davjobbase.h"
 #include "davurl.h"
@@ -34,7 +34,7 @@ namespace KDAV
 /**
  * @short A job that fetches home sets for a principal.
  */
-class LIBKDAV_EXPORT DavPrincipalHomeSetsFetchJob : public DavJobBase
+class KPIMKDAV_EXPORT DavPrincipalHomeSetsFetchJob : public DavJobBase
 {
     Q_OBJECT
 

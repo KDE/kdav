@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVPRINCIPALSEARCHJOB_H
 #define KDAV_DAVPRINCIPALSEARCHJOB_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davjobbase.h"
 #include "davurl.h"
@@ -43,7 +43,7 @@ namespace KDAV
  *
  * The properties to fetch are set with @ref fetchProperty().
  */
-class LIBKDAV_EXPORT DavPrincipalSearchJob : public DavJobBase
+class KPIMKDAV_EXPORT DavPrincipalSearchJob : public DavJobBase
 {
     Q_OBJECT
 

@@ -21,7 +21,7 @@
 
 #include <memory>
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include <KCoreAddons/KJob>
 
@@ -34,7 +34,7 @@ class Error;
 /**
  * @short base class for the jobs used by the resource.
  */
-class LIBKDAV_EXPORT DavJobBase : public KJob
+class KPIMKDAV_EXPORT DavJobBase : public KJob
 {
     Q_OBJECT
 

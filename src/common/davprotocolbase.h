@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVPROTOCOLBASE_H
 #define KDAV_DAVPROTOCOLBASE_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davcollection.h"
 
@@ -34,7 +34,7 @@ namespace KDAV
 /**
  * @short Base class for XML query builders
  */
-class LIBKDAV_EXPORT XMLQueryBuilder
+class KPIMKDAV_EXPORT XMLQueryBuilder
 {
 public:
     typedef QSharedPointer<XMLQueryBuilder> Ptr;
@@ -62,7 +62,7 @@ private:
  *   @li CarddavProtocol
  *   @li GroupdavProtocol
  */
-class LIBKDAV_EXPORT DavProtocolBase
+class KPIMKDAV_EXPORT DavProtocolBase
 {
 public:
     /**

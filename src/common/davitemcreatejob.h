@@ -19,7 +19,7 @@
 #ifndef KDAV_DAVITEMCREATEJOB_H
 #define KDAV_DAVITEMCREATEJOB_H
 
-#include "libkdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davitem.h"
 #include "davjobbase.h"
@@ -31,7 +31,7 @@ namespace KDAV
 /**
  * @short A job to create a DAV item on the DAV server.
  */
-class LIBKDAV_EXPORT DavItemCreateJob : public DavJobBase
+class KPIMKDAV_EXPORT DavItemCreateJob : public DavJobBase
 {
     Q_OBJECT
 
