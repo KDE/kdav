@@ -1,0 +1,17 @@
+C: GET /item HTTP/1.1
+C: User-Agent: KDE DAV groupware client
+S: HTTP/1.0 200 OK
+S: Date: Wed, 04 Jan 2017 18:26:48 GMT
+S: Last-Modified: Wed, 04 Jan 2017 18:26:47 GMT
+S: ETag: 7a33141f192d904d-47
+S: Content-Type: text/x-vcard; charset=utf-8
+D: BEGIN:VCARD
+D: VERSION:3.0
+D: PRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject 2.1.7//EN
+D: UID:12345678-1234-1234-1234-123456789abc
+D: FN:John2 Doe
+D: N:Doe;John2;;;
+D: EMAIL;TYPE=INTERNET;TYPE=HOME:john2.doe@example.com
+D: REV;VALUE=DATE-TIME:20170104T182647Z
+D: END:VCARD
+X
