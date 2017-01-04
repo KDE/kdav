@@ -70,7 +70,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
 
 install(FILES
     ${KDAV_Camelcase_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KDAV
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim/KDAV
     COMPONENT Devel
     )
 
@@ -79,13 +79,13 @@ install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/libkdav_export.h
     ${CMAKE_CURRENT_BINARY_DIR}/libkdav_debug.h
 
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/kdav
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim/kdav
     COMPONENT Devel
     )
 
 ecm_generate_pri_file(BASE_NAME kdav
-    LIB_NAME kdav
-    FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF5}/KDAV
+    LIB_NAME KPimKDAV
+    FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR}/KDAV
     )
 
 install(FILES
@@ -95,13 +95,15 @@ install(FILES
 
 ecm_qt_declare_logging_category(libkdav_SRCS HEADER libkdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav)
 
-add_library(kdav
+add_library(KPimKDAV
    ${libkdav_SRCS}
    )
 
-generate_export_header(kdav BASE_NAME libkdav)
+generate_export_header(KPimKDAV BASE_NAME kpimkdav)
 
-target_link_libraries(kdav
+add_library(KPim::KDAV ALIAS KPimKDAV)
+
+target_link_libraries(KPimKDAV
 PUBLIC
     KF5::CoreAddons
 PRIVATE
@@ -111,8 +113,16 @@ PRIVATE
     KF5::KIOCore
     )
 
+set_target_properties(KPimKDAV PROPERTIES
+    VERSION ${KDAV_VERSION_STRING}
+    SOVERSION ${KDAV_SOVERSION}
+    EXPORT_NAME KDAV
+    )
 
 install(TARGETS
-    kdav
-    EXPORT KDAVTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} ${LIBRARY_NAMELINK}
+    KPimKDAV
+    EXPORT KPimKDAVTargets ${KF5_INSTALL_TARGETS_DEFAULT_ARGS} ${LIBRARY_NAMELINK}
     )
+
+target_include_directories(KPimKDAV INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/KPim/KDAV/;${KDE_INSTALL_INCLUDEDIR}/KPim/kdav>")
+target_include_directories(KPimKDAV PUBLIC "$<BUILD_INTERFACE:${kdav_SOURCE_DIR}/src;${kdav_BINARY_DIR}/src;>")

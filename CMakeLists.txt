@@ -27,46 +27,43 @@ include(ECMCoverageOption)
 
 set(QT_REQUIRED_VERSION "5.6.0")
 
-# QT5 package
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui XmlPatterns Test)
 
 find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons KIO)
+
+# setup lib
 
 add_definitions( -DQT_NO_CAST_FROM_ASCII )
 add_definitions( -DQT_NO_CAST_TO_ASCII )
 add_definitions( -DQT_NO_URL_CAST_FROM_STRING )
 
 ecm_setup_version(${LIBKDAV_VERSION} VARIABLE_PREFIX KDAV
-    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/libkdav_version.h"
-    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KDAVConfigVersion.cmake"
+    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kpimkdav_version.h"
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KPimKDAVConfigVersion.cmake"
     SOVERSION 5
     )
-
-
-########### Targets ###########
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KDAV")
 
 ecm_configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/KDAVConfig.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/KDAVConfig.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/KPimKDAVConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/KPimKDAVConfig.cmake"
     INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
     )
 
 install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/KDAVConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/KDAVConfigVersion.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/KPimKDAVConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/KPimKDAVConfigVersion.cmake"
     DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
     COMPONENT Devel
     )
 
-install(EXPORT KDAVTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KDAVTargets.cmake NAMESPACE KPIM::)
+install(EXPORT KPimKDAVTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KPimKDAVTargets.cmake NAMESPACE KPim::)
 
 install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/libkdav_version.h
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF5} COMPONENT Devel
+    ${CMAKE_CURRENT_BINARY_DIR}/kpimkdav_version.h
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR} COMPONENT Devel
     )
-
 
 add_subdirectory(src)
 add_subdirectory(autotests)
