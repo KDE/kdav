@@ -47,7 +47,7 @@ public:
      * @param url The DAV url of the DAV collection whose sub collections shall be fetched.
      * @param parent The parent object.
      */
-    explicit DavCollectionsFetchJob(const DavUrl &url, QObject *parent = Q_NULLPTR);
+    explicit DavCollectionsFetchJob(const DavUrl &url, QObject *parent = nullptr);
 
     /**
      * Starts the job.

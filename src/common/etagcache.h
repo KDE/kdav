@@ -46,7 +46,7 @@ public:
      * Creates a new etag cache and populates it with the ETags
      * of items found in @p collection.
      */
-    explicit EtagCache(QObject *parent = Q_NULLPTR);
+    explicit EtagCache(QObject *parent = nullptr);
 
     /**
      * Sets the ETag for the remote ID. If the remote ID is marked as

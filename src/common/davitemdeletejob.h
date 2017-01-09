@@ -42,7 +42,7 @@ public:
      * @param item The item that shall be deleted.
      * @param parent The parent object.
      */
-    DavItemDeleteJob(const DavItem &item, QObject *parent = Q_NULLPTR);
+    DavItemDeleteJob(const DavItem &item, QObject *parent = nullptr);
 
     /**
      * Starts the job.

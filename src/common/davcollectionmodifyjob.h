@@ -49,7 +49,7 @@ public:
      * @param url The DAV url that identifies the collection.
      * @param parent The parent object.
      */
-    explicit DavCollectionModifyJob(const DavUrl &url, QObject *parent = Q_NULLPTR);
+    explicit DavCollectionModifyJob(const DavUrl &url, QObject *parent = nullptr);
 
     /**
      * Sets the property that shall be modified by the job.

@@ -49,7 +49,7 @@ public:
      * @param urls The list of DAV urls whose sub collections shall be fetched.
      * @param parent The parent object.
      */
-    explicit DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent = Q_NULLPTR);
+    explicit DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent = nullptr);
 
     /**
      * Starts the job.

@@ -75,7 +75,7 @@ public:
      * @param filter The filter that will be used to match the displayname attribute.
      * @param parent The parent object.
      */
-    explicit DavPrincipalSearchJob(const DavUrl &url, FilterType type, const QString &filter, QObject *parent = Q_NULLPTR);
+    explicit DavPrincipalSearchJob(const DavUrl &url, FilterType type, const QString &filter, QObject *parent = nullptr);
 
     /**
      * Add a new property to fetch from the server.

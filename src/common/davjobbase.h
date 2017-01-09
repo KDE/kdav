@@ -39,7 +39,7 @@ class KPIMKDAV_EXPORT DavJobBase : public KJob
     Q_OBJECT
 
 public:
-    explicit DavJobBase(QObject *parent = Q_NULLPTR);
+    explicit DavJobBase(QObject *parent = nullptr);
     ~DavJobBase();
 
     /**

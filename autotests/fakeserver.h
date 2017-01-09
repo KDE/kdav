@@ -95,7 +95,7 @@ class FakeServer : public QThread
     Q_OBJECT
 
 public:
-    FakeServer(QObject *parent = Q_NULLPTR);
+    FakeServer(QObject *parent = nullptr);
     ~FakeServer();
 
     /**

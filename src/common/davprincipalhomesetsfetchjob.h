@@ -45,7 +45,7 @@ public:
      * @param url The DAV url of the DAV principal.
      * @param parent The parent object.
      */
-    explicit DavPrincipalHomeSetsFetchJob(const DavUrl &url, QObject *parent = Q_NULLPTR);
+    explicit DavPrincipalHomeSetsFetchJob(const DavUrl &url, QObject *parent = nullptr);
 
     /**
      * Starts the job.

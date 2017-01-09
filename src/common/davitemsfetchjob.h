@@ -47,7 +47,7 @@ public:
      * @param urls The list of urls to fetch
      * @param parent The parent object
      */
-    DavItemsFetchJob(const DavUrl &collectionUrl, const QStringList &urls, QObject *parent = Q_NULLPTR);
+    DavItemsFetchJob(const DavUrl &collectionUrl, const QStringList &urls, QObject *parent = nullptr);
 
     /**
      * Starts the job.
