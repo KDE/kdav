@@ -65,6 +65,8 @@ install(FILES
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim COMPONENT Devel
     )
 
+install(FILES kdav.categories DESTINATION ${KDE_INSTALL_CONFDIR})
+
 add_subdirectory(src)
 add_subdirectory(autotests)
 add_subdirectory(test)
