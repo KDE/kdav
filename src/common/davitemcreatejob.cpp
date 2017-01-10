@@ -106,7 +106,7 @@ void DavItemCreateJob::davJobFinished(KJob *job)
         } else {
             QUrl _itemUrl(url);
             _itemUrl.setUserInfo(itemUrl().userInfo());
-            mItem.url().setUrl(_itemUrl);
+            mItem.setUrl(DavUrl(_itemUrl, mItem.url().protocol()));
 
             ++mRedirectCount;
             start();
