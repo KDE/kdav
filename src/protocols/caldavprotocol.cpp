@@ -117,7 +117,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return QStringLiteral("text/calendar");     //TODO: set correct mimetype
+        return QStringLiteral("application/x-vnd.akonadi.calendar.event");
     }
 };
 
@@ -182,7 +182,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return QStringLiteral("KCalCore::Todo::todoMimeType()");    //TODO: set correct mimetype
+        return QStringLiteral("application/x-vnd.akonadi.calendar.todo");
     }
 };
 
@@ -247,7 +247,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return QStringLiteral("KCalCore::Journal::journalMimeType()"); //TODO: set correct mimetype
+        return QStringLiteral("application/x-vnd.akonadi.calendar.journal");
     }
 };
 

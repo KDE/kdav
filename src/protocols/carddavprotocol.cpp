@@ -73,7 +73,7 @@ public:
 
     QString mimeType() const Q_DECL_OVERRIDE
     {
-        return QStringLiteral("text/vcard");
+        return QStringLiteral("text/directory");
     }
 };
 
