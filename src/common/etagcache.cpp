@@ -40,13 +40,16 @@ void EtagCache::setEtagInternal(const QString &remoteId, const QString &etag)
     mCache[ remoteId ] = etag;
 }
 
-bool EtagCache::contains(const QString &remoteId)
+bool EtagCache::contains(const QString &remoteId) const
 {
     return mCache.contains(remoteId);
 }
 
 bool EtagCache::etagChanged(const QString &remoteId, const QString &refEtag) const
 {
+    if (!contains(remoteId)) {
+        return true;
+    }
     return mCache.value(remoteId) != refEtag;
 }
 

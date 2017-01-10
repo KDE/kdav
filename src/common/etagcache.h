@@ -58,7 +58,7 @@ public:
     /**
      * Checks if the given item is in the cache
      */
-    bool contains(const QString &remoteId);
+    bool contains(const QString &remoteId) const;
 
     /**
      * Check if the known ETag for the remote ID is equal to @p refEtag.
