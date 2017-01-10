@@ -51,7 +51,7 @@ public:
      * @param url The url of the DAV collection.
      * @param parent The parent object.
      */
-    DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent = nullptr);
+    DavItemsListJob(const DavUrl &url, std::shared_ptr<EtagCache> cache, QObject *parent = nullptr);
 
     ~DavItemsListJob();
 
