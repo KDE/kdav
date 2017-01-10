@@ -29,15 +29,16 @@
 #include <KIO/Job>
 
 #include <QtCore/QBuffer>
+#include <QtCore/QDebug>
 
 using namespace KDAV;
 
 class DavItemsListJobPrivate {
 public:
-    DavItemsListJobPrivate(const DavUrl &url, const std::shared_ptr<EtagCache> &cache);
+    DavItemsListJobPrivate(const DavUrl &url, std::shared_ptr<EtagCache> cache);
 
     DavUrl mUrl;
-    const std::shared_ptr<EtagCache> &mEtagCache;
+    std::shared_ptr<EtagCache> mEtagCache;
     QStringList mMimeTypes;
     QString mRangeStart;
     QString mRangeEnd;
@@ -111,6 +112,12 @@ void DavItemsListJob::start()
                 connect(job, &KIO::DavJob::result, this, &DavItemsListJob::davJobFinished);
             }
         }
+    }
+
+    if (d->mSubJobCount == 0) {
+        setError(ERR_ITEMLIST_NOMIMETYPE);
+        setErrorTextFromDavError();
+        emitResult();
     }
 }
 
