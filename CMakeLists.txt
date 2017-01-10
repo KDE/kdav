@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(libkdav)
 
+if (POLICY CMP0063)
+    cmake_policy(SET CMP0063 NEW)
+endif()
+
 set(LIBKDAV_VERSION_NUMBER "5.4.0")
 set(LIBKDAV_VERSION "5.4.0")
 
