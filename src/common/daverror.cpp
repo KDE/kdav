@@ -91,7 +91,7 @@ QString Error::errorText() const
             err = QStringLiteral("HTTP error");
         }
         result = QStringLiteral("There was a problem with the request.\n"
-                          "%1 (%2).").arg(err, mResponseCode);
+                          "%1 (%2).").arg(err).arg(mResponseCode);
         break;
         }
     case ERR_NO_MULTIGET: {
@@ -99,12 +99,12 @@ QString Error::errorText() const
         break;
         }
     case ERR_SERVER_UNRECOVERABLE: {
-        result = QStringLiteral("The server encountered an error that prevented it from completing your request: %1 (%2)").arg(err, mResponseCode);
+        result = QStringLiteral("The server encountered an error that prevented it from completing your request: %1 (%2)").arg(err).arg(mResponseCode);
         break;
         }
     case ERR_COLLECTIONDELETE: {
         result = QStringLiteral("There was a problem with the request. The collection has not been deleted from the server.\n"
-                          "%1 (%2).").arg(err, mResponseCode);
+                          "%1 (%2).").arg(err).arg(mResponseCode);
         break;
         }
     case ERR_COLLECTIONFETCH: {
@@ -121,7 +121,7 @@ QString Error::errorText() const
         }
     case ERR_COLLECTIONMODIFY: {
         result = QStringLiteral("There was a problem with the request. The collection has not been modified on the server.\n"
-                      "%1 (%2).").arg(err, mResponseCode);
+                      "%1 (%2).").arg(err).arg(mResponseCode);
         break;
         }
     case ERR_COLLECTIONMODIFY_NO_PROPERITES: {
@@ -137,19 +137,27 @@ QString Error::errorText() const
         }
     case ERR_ITEMCREATE: {
         result = QStringLiteral("There was a problem with the request. The item has not been created on the server.\n"
-                      "%1 (%2).").arg(err, mResponseCode);
+                      "%1 (%2).").arg(err).arg(mResponseCode);
         break;
         }
     case ERR_ITEMDELETE: {
         result = QStringLiteral("There was a problem with the request. The item has not been deleted from the server.\n"
-                      "%1 (%2).").arg(err, mResponseCode);
+                      "%1 (%2).").arg(err).arg(mResponseCode);
         break;
         }
     case ERR_ITEMMODIFY: {
         result = QStringLiteral("There was a problem with the request. The item was not modified on the server.\n"
-                      "%1 (%2).").arg(err, mResponseCode);
+                      "%1 (%2).").arg(err).arg(mResponseCode);
         break;
         }
+    case ERR_ITEMLIST: {
+        result = QStringLiteral("There was a problem with the request.");
+        break;
+    };
+    case ERR_ITEMLIST_NOMIMETYPE: {
+        result = QStringLiteral("There was a problem with the request. The requested mimetypes are not supported.");
+        break;
+    }
     case NO_ERR:
         break;
     }
