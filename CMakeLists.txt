@@ -6,8 +6,7 @@ if (POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif()
 
-set(LIBKDAV_VERSION_NUMBER "5.4.0")
-set(LIBKDAV_VERSION "5.4.0")
+set(LIBKDAV_VERSION "5.4.40")
 
 configure_file(libkdav-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkdav-version.h @ONLY)
 
