@@ -127,4 +127,4 @@ install(TARGETS
     )
 
 target_include_directories(KPimKDAV INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/KPim/KDAV/;${KDE_INSTALL_INCLUDEDIR}/KPim/kdav;${KDE_INSTALL_INCLUDEDIR}/KPim>")
-target_include_directories(KPimKDAV PUBLIC "$<BUILD_INTERFACE:${kdav_SOURCE_DIR}/src;${kdav_BINARY_DIR}/src;>")
+
