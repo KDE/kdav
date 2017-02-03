@@ -2,10 +2,6 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(libkdav)
 
-if (POLICY CMP0063)
-    cmake_policy(SET CMP0063 NEW)
-endif()
-
 set(LIBKDAV_VERSION "5.4.40")
 
 configure_file(libkdav-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkdav-version.h @ONLY)
@@ -14,7 +10,6 @@ set(KF5_VERSION "5.27.0")
 find_package(ECM ${KF5_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
-include(ECMAddTests)
 include(ECMPackageConfigHelpers)
 include(ECMSetupVersion)
 include(GenerateExportHeader)
@@ -24,6 +19,7 @@ include(FeatureSummary)
 include(KDEInstallDirs)
 include(KDECMakeSettings)
 include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
+include(ECMAddTests)
 include(ECMInstallIcons)
 include(ECMQtDeclareLoggingCategory)
 include(ECMCoverageOption)
