@@ -1,0 +1,17 @@
+maintainer:
+description: The KDav library 
+type: functional
+platforms:
+    - name: All
+portingAid: false
+deprecated: false
+release: false
+libraries:
+ - qmake: PimKDAV
+   cmake: "KPimKDAV"
+   cmakename: KPimKDAV
+
+public_lib: true
+group: kdepim
+platforms:
+    - name: Linux
