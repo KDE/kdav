@@ -37,6 +37,7 @@ find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons KIO)
 add_definitions( -DQT_NO_CAST_FROM_ASCII )
 add_definitions( -DQT_NO_CAST_TO_ASCII )
 add_definitions( -DQT_NO_URL_CAST_FROM_STRING )
+add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x060000 )
 
 ecm_setup_version(${LIBKDAV_VERSION} VARIABLE_PREFIX KDAV
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kpimkdav_version.h"
