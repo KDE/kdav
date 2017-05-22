@@ -27,6 +27,7 @@
 #include <QtCore/QMap>
 #include <QtXml/QDomDocument>
 #include <QSharedPointer>
+#include <QVariant>
 
 namespace KDAV
 {
