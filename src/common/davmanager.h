@@ -26,18 +26,16 @@
 #include <QtCore/QMap>
 #include <QtCore/QString>
 
-namespace KIO
-{
-class DavJob;
-}
 
 class QUrl;
 
 class QDomDocument;
+class QWebdav;
 
 namespace KDAV
 {
 
+class DavJob;
 class DavProtocolBase;
 
 /**
@@ -67,7 +65,11 @@ public:
      * @param document The query XML document.
      * @param depth The Depth: value to send in the HTTP request
      */
-    KIO::DavJob *createPropFindJob(const QUrl &url, const QDomDocument &document, const QString &depth = QStringLiteral("1")) const;
+    DavJob *createPropFindJob(const QUrl &url, const QDomDocument &document, const QString &depth = QStringLiteral("1"));
+    DavJob *createGetJob(const QUrl &url);
+    DavJob *createDeleteJob(const QUrl &url);
+    DavJob *createCreateJob(const QByteArray &data, const QUrl &url, const QByteArray &contentType);
+    DavJob *createModifyJob(const QByteArray &data, const QUrl &url, const QByteArray &contentType, const QByteArray &etag);
 
     /**
      * Returns a preconfigured DAV REPORT job.
@@ -76,7 +78,7 @@ public:
      * @param document The query XML document.
      * @param depth The Depth: value to send in the HTTP request
      */
-    KIO::DavJob *createReportJob(const QUrl &url, const QDomDocument &document, const QString &depth = QStringLiteral("1")) const;
+    DavJob *createReportJob(const QUrl &url, const QDomDocument &document, const QString &depth = QStringLiteral("1"));
 
     /**
      * Returns a preconfigured DAV PROPPATCH job.
@@ -84,7 +86,7 @@ public:
      * @param url The target url of the job.
      * @param document The query XML document.
      */
-    KIO::DavJob *createPropPatchJob(const QUrl &url, const QDomDocument &document) const;
+    DavJob *createPropPatchJob(const QUrl &url, const QDomDocument &document);
 
     /**
      * Returns the DAV protocol dialect object for the given DAV @p protocol.
@@ -97,6 +99,8 @@ private:
      */
     DavManager();
 
+    void setConnectionSettings(const QUrl &url);
+
     /**
      * Creates a new protocol.
      */
@@ -105,6 +109,7 @@ private:
     typedef QMap<Protocol, DavProtocolBase *> protocolsMap;
     protocolsMap mProtocols;
     static DavManager *mSelf;
+    QWebdav *mWebDav;
 };
 
 }

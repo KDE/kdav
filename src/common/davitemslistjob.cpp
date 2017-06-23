@@ -24,9 +24,7 @@
 #include "davurl.h"
 #include "utils.h"
 #include "etagcache.h"
-
-#include <KIO/DavJob>
-#include <KIO/Job>
+#include "davjob.h"
 
 #include <QtCore/QBuffer>
 #include <QtCore/QDebug>
@@ -99,17 +97,15 @@ void DavItemsListJob::start()
         if (d->mMimeTypes.isEmpty() || d->mMimeTypes.contains(mimeType)) {
             ++d->mSubJobCount;
             if (protocol->useReport()) {
-                KIO::DavJob *job = DavManager::self()->createReportJob(d->mUrl.url(), props);
-                job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
+                DavJob *job = DavManager::self()->createReportJob(d->mUrl.url(), props);
                 job->setProperty("davType", QStringLiteral("report"));
                 job->setProperty("itemsMimeType", mimeType);
-                connect(job, &KIO::DavJob::result, this, &DavItemsListJob::davJobFinished);
+                connect(job, &DavJob::result, this, &DavItemsListJob::davJobFinished);
             } else {
-                KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), props);
-                job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
+                DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), props);
                 job->setProperty("davType", QStringLiteral("propFind"));
                 job->setProperty("itemsMimeType", mimeType);
-                connect(job, &KIO::DavJob::result, this, &DavItemsListJob::davJobFinished);
+                connect(job, &DavJob::result, this, &DavItemsListJob::davJobFinished);
             }
         }
     }
@@ -138,13 +134,10 @@ QStringList DavItemsListJob::deletedItems() const
 
 void DavItemsListJob::davJobFinished(KJob *job)
 {
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
-                             0 :
-                             davJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    DavJob *davJob = qobject_cast<DavJob *>(job);
+    const int responseCode = davJob->responseCode();
 
-    // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
-    if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
+    if (davJob->error()) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
         setJobErrorText(davJob->errorText());

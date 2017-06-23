@@ -20,25 +20,9 @@
 
 #include "davmanager.h"
 #include "daverror.h"
-
-#include <KIO/DavJob>
-#include <KIO/Job>
+#include "davjob.h"
 
 using namespace KDAV;
-
-static QString etagFromHeaders(const QString &headers)
-{
-    const QStringList allHeaders = headers.split(QLatin1Char('\n'));
-
-    QString etag;
-    for (const QString &header : allHeaders) {
-        if (header.startsWith(QStringLiteral("etag:"), Qt::CaseInsensitive)) {
-            etag = header.section(QLatin1Char(' '), 1);
-        }
-    }
-
-    return etag;
-}
 
 DavItemFetchJob::DavItemFetchJob(const DavItem &item, QObject *parent)
     : DavJobBase(parent), mItem(item)
@@ -47,16 +31,8 @@ DavItemFetchJob::DavItemFetchJob(const DavItem &item, QObject *parent)
 
 void DavItemFetchJob::start()
 {
-    KIO::StoredTransferJob *job = KIO::storedGet(mItem.url().url(), KIO::Reload, KIO::HideProgressInfo | KIO::DefaultFlags);
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    // Work around a strange bug in Zimbra (seen at least on CE 5.0.18) : if the user-agent
-    // contains "Mozilla", some strange debug data is displayed in the shared calendars.
-    // This kinda mess up the events parsing...
-    job->addMetaData(QStringLiteral("UserAgent"), QStringLiteral("KDE DAV groupware client"));
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-
-    connect(job, &KIO::StoredTransferJob::result, this, &DavItemFetchJob::davJobFinished);
+    auto job = DavManager::self()->createGetJob(mItem.url().url());
+    connect(job, &DavJob::result, this, &DavItemFetchJob::davJobFinished);
 }
 
 DavItem DavItemFetchJob::item() const
@@ -66,10 +42,8 @@ DavItem DavItemFetchJob::item() const
 
 void DavItemFetchJob::davJobFinished(KJob *job)
 {
-    KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
-    const int responseCode = storedJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
-                             0 :
-                             storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    auto *storedJob = qobject_cast<DavJob*>(job);
+    const int responseCode = storedJob->responseCode();
     setLatestResponseCode(responseCode);
 
     if (storedJob->error()) {
@@ -80,8 +54,8 @@ void DavItemFetchJob::davJobFinished(KJob *job)
         setErrorTextFromDavError();
     } else {
         mItem.setData(storedJob->data());
-        mItem.setContentType(storedJob->queryMetaData(QStringLiteral("content-type")));
-        mItem.setEtag(etagFromHeaders(storedJob->queryMetaData(QStringLiteral("HTTP-Headers"))));
+        mItem.setContentType(storedJob->getContentTypeHeader());
+        mItem.setEtag(storedJob->getETagHeader());
     }
 
     emitResult();

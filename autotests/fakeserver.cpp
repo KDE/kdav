@@ -206,7 +206,7 @@ void FakeServer::readClientPart(int scenarioNumber)
         QByteArray expected = scenario.takeFirst().mid(3) + "\r\n";
 
         if (!header.contains(expected)) {
-            qWarning() << expected << "not found in header";
+            qWarning() << expected << "not found in header: " << header;
             QVERIFY(false);
             break;
         }

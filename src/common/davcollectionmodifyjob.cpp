@@ -21,9 +21,7 @@
 
 #include "daverror.h"
 #include "utils.h"
-
-#include <KIO/DavJob>
-#include <KIO/Job>
+#include "davjob.h"
 
 using namespace KDAV;
 
@@ -98,20 +96,16 @@ void DavCollectionModifyJob::start()
         }
     }
 
-    KIO::DavJob *job = DavManager::self()->createPropPatchJob(mUrl.url(), mQuery);
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, &DavCollectionModifyJob::davJobFinished);
+    auto job = DavManager::self()->createPropPatchJob(mUrl.url(), mQuery);
+    connect(job, &DavJob::result, this, &DavCollectionModifyJob::davJobFinished);
 }
 
 void DavCollectionModifyJob::davJobFinished(KJob *job)
 {
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
-                             0 :
-                             davJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    DavJob *davJob = qobject_cast<DavJob *>(job);
+    const int responseCode = davJob->responseCode();
 
-    // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
-    if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
+    if (davJob->error()) {
         setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONMODIFY);
         setJobErrorText(davJob->errorText());

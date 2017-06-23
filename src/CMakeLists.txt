@@ -28,6 +28,7 @@ set(libkdav_SRCS
  common/davurl.cpp
  common/utils.cpp
  common/etagcache.cpp
+ common/davjob.cpp
 
  protocols/groupdavprotocol.cpp
 
@@ -110,7 +111,7 @@ PRIVATE
     Qt5::Xml
     Qt5::Gui
     Qt5::XmlPatterns
-    KF5::KIOCore
+    qwebdavlib
     )
 
 set_target_properties(KPimKDAV PROPERTIES

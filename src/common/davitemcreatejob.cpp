@@ -21,9 +21,7 @@
 #include "davitemfetchjob.h"
 #include "davmanager.h"
 #include "daverror.h"
-
-#include <KIO/DavJob>
-#include <KIO/Job>
+#include "davjob.h"
 
 #include "libkdav_debug.h"
 
@@ -36,19 +34,8 @@ DavItemCreateJob::DavItemCreateJob(const DavItem &item, QObject *parent)
 
 void DavItemCreateJob::start()
 {
-    QString headers = QStringLiteral("Content-Type: ");
-    headers += mItem.contentType();
-    headers += QLatin1String("\r\n");
-    headers += QLatin1String("If-None-Match: *");
-
-    KIO::StoredTransferJob *job = KIO::storedPut(mItem.data(), itemUrl(), -1, KIO::HideProgressInfo | KIO::DefaultFlags);
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), headers);
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-    job->setRedirectionHandlingEnabled(false);
-
-    connect(job, &KIO::StoredTransferJob::result, this, &DavItemCreateJob::davJobFinished);
+    auto job = DavManager::self()->createCreateJob(mItem.data(), itemUrl(), mItem.contentType().toLatin1());
+    connect(job, &DavJob::result, this, &DavItemCreateJob::davJobFinished);
 }
 
 DavItem DavItemCreateJob::item() const
@@ -61,12 +48,44 @@ QUrl DavItemCreateJob::itemUrl() const
     return mItem.url().url();
 }
 
+
+static QUrl assembleUrl(QUrl existingUrl, const QString &location)
+{
+    if (location.isEmpty()) {
+        return existingUrl;
+    } else if (location.startsWith(QLatin1Char('/'))) {
+        auto url = existingUrl;
+        url.setPath(location, QUrl::TolerantMode);
+        return url;
+    } else {
+        return QUrl::fromUserInput(location);
+    }
+    return {};
+}
+
 void DavItemCreateJob::davJobFinished(KJob *job)
 {
-    KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
-    const int responseCode = storedJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
-                             0 :
-                             storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    qWarning() << "Create job finished";
+    auto *storedJob = qobject_cast<DavJob*>(job);
+    const int responseCode = storedJob->responseCode();
+
+    if (responseCode == 301 || responseCode == 302 || responseCode == 307 || responseCode == 308) {
+        if (mRedirectCount > 4) {
+            setLatestResponseCode(responseCode);
+            setError(UserDefinedError + responseCode);
+            emitResult();
+        } else {
+            auto url = assembleUrl(storedJob->url(), storedJob->getLocationHeader());
+            QUrl _itemUrl(url);
+            _itemUrl.setUserInfo(itemUrl().userInfo());
+            mItem.setUrl(DavUrl(_itemUrl, mItem.url().protocol()));
+
+            ++mRedirectCount;
+            start();
+        }
+
+        return;
+    }
 
     if (storedJob->error()) {
         setLatestResponseCode(responseCode);
@@ -79,42 +98,7 @@ void DavItemCreateJob::davJobFinished(KJob *job)
         return;
     }
 
-    // The 'Location:' HTTP header is used to indicate the new URL
-    const QStringList allHeaders = storedJob->queryMetaData(QStringLiteral("HTTP-Headers")).split(QLatin1Char('\n'));
-    QString location;
-    foreach (const QString &header, allHeaders) {
-        if (header.startsWith(QLatin1String("location:"), Qt::CaseInsensitive)) {
-            location = header.section(QLatin1Char(' '), 1);
-        }
-    }
-
-    QUrl url;
-    if (location.isEmpty()) {
-        url = storedJob->url();
-    } else if (location.startsWith(QLatin1Char('/'))) {
-        url = storedJob->url();
-        url.setPath(location, QUrl::TolerantMode);
-    } else {
-        url = QUrl::fromUserInput(location);
-    }
-
-    if (responseCode == 301 || responseCode == 302 || responseCode == 307 || responseCode == 308) {
-        if (mRedirectCount > 4) {
-            setLatestResponseCode(responseCode);
-            setError(UserDefinedError + responseCode);
-            emitResult();
-        } else {
-            QUrl _itemUrl(url);
-            _itemUrl.setUserInfo(itemUrl().userInfo());
-            mItem.setUrl(DavUrl(_itemUrl, mItem.url().protocol()));
-
-            ++mRedirectCount;
-            start();
-        }
-
-        return;
-    }
-
+    auto url = assembleUrl(storedJob->url(), storedJob->getLocationHeader());
     url.setUserInfo(itemUrl().userInfo());
     mItem.setUrl(DavUrl(url, mItem.url().protocol()));
 

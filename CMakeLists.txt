@@ -26,15 +26,14 @@ include(ECMCoverageOption)
 
 set(QT_REQUIRED_VERSION "5.6.0")
 
-find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui XmlPatterns Test)
-
-find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons KIO)
+find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui Xml XmlPatterns Test)
+find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons)
 
 # setup lib
 
-add_definitions( -DQT_NO_CAST_FROM_ASCII )
-add_definitions( -DQT_NO_CAST_TO_ASCII )
-add_definitions( -DQT_NO_URL_CAST_FROM_STRING )
+remove_definitions( -DQT_NO_CAST_FROM_ASCII )
+remove_definitions( -DQT_NO_CAST_TO_ASCII )
+remove_definitions( -DQT_NO_URL_CAST_FROM_STRING )
 
 ecm_setup_version(${LIBKDAV_VERSION} VARIABLE_PREFIX KDAV
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kpimkdav_version.h"
@@ -66,6 +65,9 @@ install(FILES
 
 install(FILES kdav.categories DESTINATION ${KDE_INSTALL_CONFDIR})
 
+
+add_subdirectory(3rdparty)
+include_directories(3rdparty)
 add_subdirectory(src)
 add_subdirectory(autotests)
 add_subdirectory(test)

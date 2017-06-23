@@ -18,9 +18,6 @@
 
 #include "daverror.h"
 
-#include <KIO/Global>
-#include <KIO/Job>
-
 using namespace KDAV;
 
 Error::Error()
@@ -64,11 +61,7 @@ int Error::responseCode() const
 QString KDAV::Error::translatedJobError() const
 {
     QString err;
-    if (mJobErrorCode > 0 && mJobErrorCode != KIO::ERR_SLAVE_DEFINED) {
-        err = KIO::buildErrorString(mJobErrorCode, mErrorText);
-    } else {
         err = mErrorText;
-    }
     return err;
 }
 

@@ -23,9 +23,7 @@
 #include "davmultigetprotocol.h"
 #include "utils.h"
 #include "daverror.h"
-
-#include <KIO/DavJob>
-#include <KIO/Job>
+#include "davjob.h"
 
 using namespace KDAV;
 
@@ -46,9 +44,8 @@ void DavItemsFetchJob::start()
     }
 
     const QDomDocument report = protocol->itemsReportQuery(mUrls)->buildQuery();
-    KIO::DavJob *job = DavManager::self()->createReportJob(mCollectionUrl.url(), report, QStringLiteral("0"));
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, &DavItemsFetchJob::davJobFinished);
+    DavJob *job = DavManager::self()->createReportJob(mCollectionUrl.url(), report, QStringLiteral("0"));
+    connect(job, &DavJob::result, this, &DavItemsFetchJob::davJobFinished);
 }
 
 DavItem::List DavItemsFetchJob::items() const
@@ -68,13 +65,10 @@ DavItem DavItemsFetchJob::item(const QString &url) const
 
 void DavItemsFetchJob::davJobFinished(KJob *job)
 {
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
-                             0 :
-                             davJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    DavJob *davJob = qobject_cast<DavJob *>(job);
+    const int responseCode = davJob->responseCode();
 
-    // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
-    if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
+    if (davJob->error()) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
         setJobErrorText(davJob->errorText());

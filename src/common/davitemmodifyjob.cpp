@@ -21,8 +21,7 @@
 #include "davitemfetchjob.h"
 #include "davmanager.h"
 #include "daverror.h"
-
-#include <KIO/Job>
+#include "davjob.h"
 
 using namespace KDAV;
 
@@ -33,18 +32,8 @@ DavItemModifyJob::DavItemModifyJob(const DavItem &item, QObject *parent)
 
 void DavItemModifyJob::start()
 {
-    QString headers = QStringLiteral("Content-Type: ");
-    headers += mItem.contentType();
-    headers += QLatin1String("\r\n");
-    headers += QLatin1String("If-Match: ") + mItem.etag();
-
-    KIO::StoredTransferJob *job = KIO::storedPut(mItem.data(), itemUrl(), -1, KIO::HideProgressInfo | KIO::DefaultFlags);
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), headers);
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-
-    connect(job, &KIO::StoredTransferJob::result, this, &DavItemModifyJob::davJobFinished);
+    auto job = DavManager::self()->createModifyJob(mItem.data(), itemUrl(), mItem.contentType().toUtf8(), mItem.etag().toUtf8());
+    connect(job, &DavJob::result, this, &DavItemModifyJob::davJobFinished);
 }
 
 DavItem DavItemModifyJob::item() const
@@ -69,12 +58,10 @@ QUrl DavItemModifyJob::itemUrl() const
 
 void DavItemModifyJob::davJobFinished(KJob *job)
 {
-    KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
+    auto *storedJob = qobject_cast<DavJob*>(job);
 
     if (storedJob->error()) {
-        const int responseCode = storedJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
-                                 0 :
-                                 storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+        const int responseCode = storedJob->responseCode();;
 
         setLatestResponseCode(responseCode);
         setError(ERR_ITEMMODIFY);
@@ -93,15 +80,7 @@ void DavItemModifyJob::davJobFinished(KJob *job)
         return;
     }
 
-    // The 'Location:' HTTP header is used to indicate the new URL
-    const QStringList allHeaders = storedJob->queryMetaData(QStringLiteral("HTTP-Headers")).split(QLatin1Char('\n'));
-    QString location;
-    for (const QString &header : allHeaders) {
-        if (header.startsWith(QLatin1String("location:"), Qt::CaseInsensitive)) {
-            location = header.section(QLatin1Char(' '), 1);
-        }
-    }
-
+    const auto location = storedJob->getLocationHeader();
     QUrl url;
     if (location.isEmpty()) {
         url = storedJob->url();

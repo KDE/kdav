@@ -21,9 +21,7 @@
 #include "davitemfetchjob.h"
 #include "davmanager.h"
 #include "daverror.h"
-
-#include <KIO/DeleteJob>
-#include <KIO/Job>
+#include "davjob.h"
 
 using namespace KDAV;
 
@@ -34,13 +32,8 @@ DavItemDeleteJob::DavItemDeleteJob(const DavItem &item, QObject *parent)
 
 void DavItemDeleteJob::start()
 {
-    KIO::DeleteJob *job = KIO::del(mItem.url().url(), KIO::HideProgressInfo | KIO::DefaultFlags);
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), QStringLiteral("If-Match: ") + mItem.etag());
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-
-    connect(job, &KIO::DeleteJob::result, this, &DavItemDeleteJob::davJobFinished);
+    DavJob *job = DavManager::self()->createDeleteJob(mItem.url().url());
+    connect(job, &DavJob::result, this, &DavItemDeleteJob::davJobFinished);
 }
 
 DavItem DavItemDeleteJob::freshItem() const
@@ -55,12 +48,10 @@ int DavItemDeleteJob::freshResponseCode() const
 
 void DavItemDeleteJob::davJobFinished(KJob *job)
 {
-    KIO::DeleteJob *deleteJob = qobject_cast<KIO::DeleteJob *>(job);
+    auto *deleteJob = qobject_cast<DavJob *>(job);
 
-    if (deleteJob->error() && deleteJob->error() != KIO::ERR_NO_CONTENT) {
-        const int responseCode = deleteJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
-                                 0 :
-                                 deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    if (deleteJob->error()) {
+        const int responseCode = deleteJob->responseCode();
 
         if (responseCode != 404 && responseCode != 410) {
             setLatestResponseCode(responseCode);

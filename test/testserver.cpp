@@ -45,8 +45,8 @@ int main(int argc, char **argv)
     auto *job = new KDAV::DavCollectionsFetchJob(davUrl);
     job->exec();
 
-    foreach(const auto collection, job->collections()) {
         qDebug() << collection.displayName() << "PRIVS: " << collection.privileges();
+    for(const auto collection : job->collections()) {
         auto collectionUrl = collection.url();
         std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
         int anz = -1;
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
             qDebug() << "items:" << itemListJob->items().size();
             qDebug() << "changed Items:" << itemListJob->changedItems().size();
             qDebug() << "deleted Items:" << itemListJob->deletedItems();
-            foreach(const auto item, itemListJob->changedItems()) {
+            for (const auto &item : itemListJob->changedItems()) {
                 qDebug() << item.url().url() << item.contentType() << item.data();
                 auto itemFetchJob = new KDAV::DavItemFetchJob(item);
                 itemFetchJob->exec();
