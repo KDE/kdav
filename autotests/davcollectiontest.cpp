@@ -21,7 +21,7 @@
 #include <KDAV/DavCollection>
 #include <KDAV/DavUrl>
 
-#include <QColor>
+// #include <QColor>
 #include <QDebug>
 #include <QDataStream>
 #include <QTest>
@@ -33,7 +33,7 @@ void DavCollectionTest::createEmpty()
     QCOMPARE(davCollection.url().protocol(), KDAV::CalDav);
     QCOMPARE(davCollection.CTag(), QString());
     QCOMPARE(davCollection.displayName(), QString());
-    QCOMPARE(davCollection.color(), QColor());
+    // QCOMPARE(davCollection.color(), QColor());
     QCOMPARE(davCollection.contentTypes(), KDAV::DavCollection::ContentTypes());
     QCOMPARE(davCollection.privileges(), KDAV::Privileges());
 }
@@ -48,7 +48,7 @@ void DavCollectionTest::storeTest()
     QCOMPARE(davCollection.url().url(), url);
     QCOMPARE(davCollection.CTag(), QString());
     QCOMPARE(davCollection.displayName(), QStringLiteral("myname"));
-    QCOMPARE(davCollection.color(), QColor());
+    // QCOMPARE(davCollection.color(), QColor());
     QCOMPARE(davCollection.contentTypes(), KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
     QCOMPARE(davCollection.privileges(), KDAV::All);
 }
@@ -62,7 +62,7 @@ void DavCollectionTest::setTest()
     davCollection.setUrl(davUrl);
     davCollection.setCTag(QStringLiteral("ctag"));
     davCollection.setDisplayName(QStringLiteral("myname"));
-    davCollection.setColor(QColor(1,2,3));
+    // davCollection.setColor(QColor(1,2,3));
     davCollection.setContentTypes(KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
     davCollection.setPrivileges(KDAV::Read | KDAV::Write);
 
@@ -70,7 +70,7 @@ void DavCollectionTest::setTest()
     QCOMPARE(davCollection.url().url(), url);
     QCOMPARE(davCollection.CTag(), QStringLiteral("ctag"));
     QCOMPARE(davCollection.displayName(), QStringLiteral("myname"));
-    QCOMPARE(davCollection.color(), QColor(1,2,3));
+    // QCOMPARE(davCollection.color(), QColor(1,2,3));
     QCOMPARE(davCollection.contentTypes(), KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
     QCOMPARE(davCollection.privileges(), KDAV::Read | KDAV::Write);
 }
@@ -85,7 +85,7 @@ void DavCollectionTest::copyTest()
     davCollection.setUrl(davUrl);
     davCollection.setCTag(QStringLiteral("ctag"));
     davCollection.setDisplayName(QStringLiteral("myname"));
-    davCollection.setColor(QColor(1,2,3));
+    // davCollection.setColor(QColor(1,2,3));
     davCollection.setContentTypes(KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
     davCollection.setPrivileges(KDAV::Read | KDAV::Write);
 
@@ -110,4 +110,4 @@ void DavCollectionTest::copyTest()
     QCOMPARE(copy2.privileges(), davCollection.privileges());
 }
 
-QTEST_MAIN(DavCollectionTest)
+QTEST_GUILESS_MAIN(DavCollectionTest)

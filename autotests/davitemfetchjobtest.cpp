@@ -54,4 +54,4 @@ void DavItemFetchJobTest::runSuccessfullTest()
 
 }
 
-QTEST_MAIN(DavItemFetchJobTest)
+QTEST_GUILESS_MAIN(DavItemFetchJobTest)

@@ -41,4 +41,4 @@ void DavItemsListJobTest::noMatchingMimetype()
 
 }
 
-QTEST_MAIN(DavItemsListJobTest)
+QTEST_GUILESS_MAIN(DavItemsListJobTest)
