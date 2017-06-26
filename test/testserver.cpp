@@ -45,8 +45,8 @@ int main(int argc, char **argv)
     auto *job = new KDAV::DavCollectionsFetchJob(davUrl);
     job->exec();
 
-        qDebug() << collection.displayName() << "PRIVS: " << collection.privileges();
     for(const auto collection : job->collections()) {
+        qDebug() << collection.displayName() << "PRIVS: " << collection.privileges();
         auto collectionUrl = collection.url();
         std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
         int anz = -1;
