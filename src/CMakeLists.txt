@@ -111,7 +111,7 @@ PRIVATE
     Qt5::Xml
     Qt5::Gui
     Qt5::XmlPatterns
-    qwebdavlib
+    kdav_webdavlib
     )
 
 set_target_properties(KPimKDAV PROPERTIES
