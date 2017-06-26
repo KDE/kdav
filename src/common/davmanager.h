@@ -67,9 +67,38 @@ public:
      * @param depth The Depth: value to send in the HTTP request
      */
     DavJob *createPropFindJob(const QUrl &url, const QDomDocument &document, const QString &depth = QStringLiteral("1"));
+
+    /**
+     * Returns a preconfigured DAV GET job.
+     *
+     * @param url The target url of the job.
+     */
     DavJob *createGetJob(const QUrl &url);
+
+    /**
+     * Returns a preconfigured DAV DELETE job.
+     *
+     * @param url The target url of the job.
+     */
     DavJob *createDeleteJob(const QUrl &url);
+
+    /**
+     * Returns a preconfigured DAV PUT job with a If-None-Match header.
+     *
+     * @param data The data to PUT.
+     * @param url The target url of the job.
+     * @param contentType The content-type.
+     */
     DavJob *createCreateJob(const QByteArray &data, const QUrl &url, const QByteArray &contentType);
+
+    /**
+     * Returns a preconfigured DAV PUT job with a If-Match header, that matches the @param etag.
+     *
+     * @param data The data to PUT.
+     * @param url The target url of the job.
+     * @param contentType The content-type.
+     * @param etag The etag of the entity to modify.
+     */
     DavJob *createModifyJob(const QByteArray &data, const QUrl &url, const QByteArray &contentType, const QByteArray &etag);
 
     /**
