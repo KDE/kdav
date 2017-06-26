@@ -87,12 +87,7 @@ public:
                             const QString &username = "",
                             const QString &password = "",
                             int port = 0,
-                            const QString &sslCertDigestMd5 = "",
-                            const QString &sslCertDigestSha1 = "" );
-
-    //! set SSL certificate digests after emitted checkSslCertifcate() signal
-    void acceptSslCertificate(const QString &sslCertDigestMd5 = "",
-                              const QString &sslCertDigestSha1 = "");
+                            bool ignoreSslErrors = true);
 
     QNetworkReply* list(const QString& path);
     QNetworkReply* list(const QString& path, int depth);
@@ -119,16 +114,7 @@ public:
     QNetworkReply* proppatch(const QString& path, const QWebdav::PropValues& props);
     QNetworkReply* proppatch(const QString& path, const QByteArray& query);
 
-    /* TODO lock, unlock */
-
-    //! converts a digest from QByteArray to hexadecimal format ( XX:XX:XX:... with X in [0-9,A-F] )
-    static QString digestToHex(const QByteArray &input);
-    //! converts a digest from hexadecimal format ( XX:XX:XX:... with X in [0-9,A-F] ) to QByteArray
-    static QByteArray hexToDigest(const QString &input);
-
 Q_SIGNALS:
-    //! signal is emitted when an SSL error occured, the SSL certificates have to be checked
-    void checkSslCertifcate(const QList<QSslError> &errors);
     void errorChanged(QString error);
 
 protected Q_SLOTS:
@@ -159,9 +145,7 @@ private:
 
     QNetworkReply *m_authenticator_lastReply;
 
-    // MD5 and SHA1 digests to accept explicitly a SSL certificate
-    QByteArray m_sslCertDigestMd5;
-    QByteArray m_sslCertDigestSha1;
+    bool m_ignoreSslErrors;
 };
 
 #endif // QWEBDAV_H

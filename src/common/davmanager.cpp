@@ -34,6 +34,7 @@ using namespace KDAV;
 DavManager *DavManager::mSelf = nullptr;
 
 DavManager::DavManager()
+    : mIgnoreSslErrors(true)
 {
     mWebDav = new QWebdav;
     QObject::connect(mWebDav, &QWebdav::errorChanged, [=] (const QString &error) {
@@ -62,7 +63,7 @@ DavManager *DavManager::self()
 
 void DavManager::setConnectionSettings(const QUrl &url)
 {
-    mWebDav->setConnectionSettings(url.scheme() == "https" ? QWebdav::HTTPS : QWebdav::HTTP, url.host(), "/", url.userName(), url.password(), url.port(0));
+    mWebDav->setConnectionSettings(url.scheme() == "https" ? QWebdav::HTTPS : QWebdav::HTTP, url.host(), "/", url.userName(), url.password(), url.port(0), mIgnoreSslErrors);
 }
 
 DavJob *DavManager::createPropFindJob(const QUrl &url, const QDomDocument &document, const QString &depth)
@@ -150,3 +151,14 @@ bool DavManager::createProtocol(Protocol protocol)
 
     return true;
 }
+
+QNetworkAccessManager *DavManager::networkAccessManager()
+{
+    return DavManager::self()->mWebDav;
+}
+
+void DavManager::setIgnoreSslErrors(bool ignore)
+{
+    mIgnoreSslErrors = ignore;
+}
+

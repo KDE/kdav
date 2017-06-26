@@ -31,6 +31,7 @@ class QUrl;
 
 class QDomDocument;
 class QWebdav;
+class QNetworkAccessManager;
 
 namespace KDAV
 {
@@ -93,6 +94,20 @@ public:
      */
     const DavProtocolBase *davProtocol(Protocol protocol);
 
+    /**
+     * Provides access to the internally used network access manager.
+     */
+    static QNetworkAccessManager *networkAccessManager();
+
+    /**
+     * Ignore all ssl errors.
+     * 
+     * If you want to handle ssl errors yourself via the networkAccessManager, then set to false.
+     * 
+     * Enabled by default.
+     */
+    void setIgnoreSslErrors(bool);
+
 private:
     /**
      * Creates a new DAV manager.
@@ -110,6 +125,7 @@ private:
     protocolsMap mProtocols;
     static DavManager *mSelf;
     QWebdav *mWebDav;
+    bool mIgnoreSslErrors;
 };
 
 }

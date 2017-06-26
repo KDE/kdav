@@ -57,8 +57,6 @@ QWebdav::QWebdav (QObject *parent) : QNetworkAccessManager(parent)
   ,m_baseUrl()
   ,m_currentConnectionType(QWebdav::HTTP)
   ,m_authenticator_lastReply(0)
-  ,m_sslCertDigestMd5("")
-  ,m_sslCertDigestSha1("")
 
 {
     qRegisterMetaType<QNetworkReply*>("QNetworkReply*");
@@ -113,8 +111,7 @@ void QWebdav::setConnectionSettings(const QWebdavConnectionType connectionType,
                                     const QString& username,
                                     const QString& password,
                                     int port,
-                                    const QString &sslCertDigestMd5,
-                                    const QString &sslCertDigestSha1)
+                                    bool ignoreSslErrors)
 {
     m_rootPath = rootPath;
 
@@ -146,18 +143,10 @@ void QWebdav::setConnectionSettings(const QWebdavConnectionType connectionType,
             m_baseUrl.setPort(port);
     }
 
-    m_sslCertDigestMd5 = hexToDigest(sslCertDigestMd5);
-    m_sslCertDigestSha1 = hexToDigest(sslCertDigestSha1);
+    m_ignoreSslErrors = ignoreSslErrors;
 
     m_username = username;
     m_password = password;
-}
-
-void QWebdav::acceptSslCertificate(const QString &sslCertDigestMd5,
-                                   const QString &sslCertDigestSha1)
-{
-    m_sslCertDigestMd5 = hexToDigest(sslCertDigestMd5);
-    m_sslCertDigestSha1 = hexToDigest(sslCertDigestSha1);
 }
 
 void QWebdav::replyReadyRead()
@@ -257,48 +246,10 @@ void QWebdav::sslErrors(QNetworkReply *reply, const QList<QSslError> &errors)
     qDebug() << "QWebdav::sslErrors()   reply->url == " << reply->url().toString(QUrl::RemoveUserInfo);
 #endif
 
-    QSslCertificate sslcert = errors[0].certificate();
-
-    if ( ( sslcert.digest(QCryptographicHash::Md5) == m_sslCertDigestMd5 ) &&
-         ( sslcert.digest(QCryptographicHash::Sha1) == m_sslCertDigestSha1) )
-    {
+    if (m_ignoreSslErrors) {
         // user accepted this SSL certifcate already ==> ignore SSL errors
         reply->ignoreSslErrors();
-    } else {
-        // user has to check the SSL certificate and has to accept manually
-        emit checkSslCertifcate(errors);
-        reply->abort();
     }
-}
-
-QString QWebdav::digestToHex(const QByteArray &input)
-{
-    QByteArray inputHex = input.toHex();
-
-    QString result = "";
-    for (int i = 0; i<inputHex.size(); i+=2) {
-        result.append(inputHex.at(i));
-        result.append(inputHex.at(i+1));
-        result.append(":");
-    }
-    result.chop(1);
-    result = result.toUpper();
-
-    return result;
-}
-
-QByteArray QWebdav::hexToDigest(const QString &input)
-{
-    QByteArray result;
-    int i = 2;
-    int l = input.size();
-    result.append(input.left(2).toLatin1());
-    while ((i<l) && (input.at(i) == ':')) {
-        ++i;
-        result.append(input.mid(i,2).toLatin1());
-        i+=2;
-    }
-    return QByteArray::fromHex(result);
 }
 
 QString QWebdav::absolutePath(const QString &relPath)
