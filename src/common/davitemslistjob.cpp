@@ -29,7 +29,7 @@
 #include <QtCore/QBuffer>
 #include <QtCore/QDebug>
 
-using namespace KDAV;
+using namespace KDAV2;
 
 class DavItemsListJobPrivate {
 public:

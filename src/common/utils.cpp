@@ -28,9 +28,9 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QString>
 
-#include "libkdav_debug.h"
+#include "libkdav2_debug.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 QDomElement Utils::firstChildElementNS(const QDomElement &parent, const QString &namespaceUri, const QString &tagName)
 {
@@ -95,27 +95,27 @@ Privileges Utils::parsePrivilege(const QDomElement &element)
         const QString privname = element.localName();
 
         if (privname == QLatin1String("read")) {
-            final |= KDAV::Read;
+            final |= KDAV2::Read;
         } else if (privname == QLatin1String("write")) {
-            final |= KDAV::Write;
+            final |= KDAV2::Write;
         } else if (privname == QLatin1String("write-properties")) {
-            final |= KDAV::WriteProperties;
+            final |= KDAV2::WriteProperties;
         } else if (privname == QLatin1String("write-content")) {
-            final |= KDAV::WriteContent;
+            final |= KDAV2::WriteContent;
         } else if (privname == QLatin1String("unlock")) {
-            final |= KDAV::Unlock;
+            final |= KDAV2::Unlock;
         } else if (privname == QLatin1String("read-acl")) {
-            final |= KDAV::ReadAcl;
+            final |= KDAV2::ReadAcl;
         } else if (privname == QLatin1String("read-current-user-privilege-set")) {
-            final |= KDAV::ReadCurrentUserPrivilegeSet;
+            final |= KDAV2::ReadCurrentUserPrivilegeSet;
         } else if (privname == QLatin1String("write-acl")) {
-            final |= KDAV::WriteAcl;
+            final |= KDAV2::WriteAcl;
         } else if (privname == QLatin1String("bind")) {
-            final |= KDAV::Bind;
+            final |= KDAV2::Bind;
         } else if (privname == QLatin1String("unbind")) {
-            final |= KDAV::Unbind;
+            final |= KDAV2::Unbind;
         } else if (privname == QLatin1String("all")) {
-            final |= KDAV::All;
+            final |= KDAV2::All;
         }
     }
 
@@ -127,13 +127,13 @@ QLatin1String Utils::protocolName(Protocol protocol)
     QLatin1String protocolName("");
 
     switch (protocol) {
-    case KDAV::CalDav:
+    case KDAV2::CalDav:
         protocolName = QLatin1String("CalDav");
         break;
-    case KDAV::CardDav:
+    case KDAV2::CardDav:
         protocolName = QLatin1String("CardDav");
         break;
-    case KDAV::GroupDav:
+    case KDAV2::GroupDav:
         protocolName = QLatin1String("GroupDav");
         break;
     }
@@ -143,16 +143,16 @@ QLatin1String Utils::protocolName(Protocol protocol)
 
 Protocol Utils::protocolByName(const QString &name)
 {
-    Protocol protocol = KDAV::CalDav;
+    Protocol protocol = KDAV2::CalDav;
 
     if (name == QLatin1String("CalDav")) {
-        protocol = KDAV::CalDav;
+        protocol = KDAV2::CalDav;
     } else if (name == QLatin1String("CardDav")) {
-        protocol = KDAV::CardDav;
+        protocol = KDAV2::CardDav;
     } else if (name == QLatin1String("GroupDav")) {
-        protocol = KDAV::GroupDav;
+        protocol = KDAV2::GroupDav;
     } else {
-        qCCritical(KDAV_LOG) << "Unexpected protocol name : " << name;
+        qCCritical(KDAV2_LOG) << "Unexpected protocol name : " << name;
     }
 
     return protocol;
@@ -171,9 +171,9 @@ QString Utils::contactsMimeType(Protocol protocol)
 {
     QString ret;
 
-    if (protocol == KDAV::CardDav) {
+    if (protocol == KDAV2::CardDav) {
         ret = QStringLiteral("text/vcard");
-    } else if (protocol == KDAV::GroupDav) {
+    } else if (protocol == KDAV2::GroupDav) {
         ret = QStringLiteral("text/x-vcard");
     }
 

@@ -16,20 +16,20 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVMULTIGETPROTOCOL_H
-#define KDAV_DAVMULTIGETPROTOCOL_H
+#ifndef KDAV2_DAVMULTIGETPROTOCOL_H
+#define KDAV2_DAVMULTIGETPROTOCOL_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davprotocolbase.h"
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
  * @short Base class for protocols that implement multiget capabilities
  */
-class KPIMKDAV_EXPORT DavMultigetProtocol : public DavProtocolBase
+class KPIMKDAV2_EXPORT DavMultigetProtocol : public DavProtocolBase
 {
 public:
     /**

@@ -25,13 +25,13 @@
 #include "daverror.h"
 #include "davjob.h"
 
-#include "libkdav_debug.h"
+#include "libkdav2_debug.h"
 
 #include <QColor>
 #include <QtCore/QBuffer>
 #include <QtXmlPatterns/QXmlQuery>
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavCollectionsFetchJob::DavCollectionsFetchJob(const DavUrl &url, QObject *parent)
     : DavJobBase(parent), mUrl(url), mSubJobCount(0)
@@ -77,7 +77,7 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
         if (davJob->latestResponseCode()) {
             // If we have a HTTP response code then this may mean that
             // the URL was not a principal URL. Retry as if it were a calendar URL.
-            qCDebug(KDAV_LOG) << job->errorText();
+            qCDebug(KDAV2_LOG) << job->errorText();
             doCollectionsFetch(mUrl.url());
         } else {
             // Just give up here.
@@ -90,8 +90,8 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
     }
 
     const QStringList homeSets = davJob->homeSets();
-    qCDebug(KDAV_LOG) << "Found " << homeSets.size() << " homesets";
-    qCDebug(KDAV_LOG) << homeSets;
+    qCDebug(KDAV2_LOG) << "Found " << homeSets.size() << " homesets";
+    qCDebug(KDAV2_LOG) << homeSets;
 
     if (homeSets.isEmpty()) {
         // Same as above, retry as if it were a calendar URL.
@@ -315,13 +315,13 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 const QDomElement currentPrivsElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("current-user-privilege-set"));
                 if (currentPrivsElement.isNull()) {
                     // Assume that we have all privileges
-                    collection.setPrivileges(KDAV::All);
+                    collection.setPrivileges(KDAV2::All);
                 } else {
                     Privileges privileges = Utils::extractPrivileges(currentPrivsElement);
                     collection.setPrivileges(privileges);
                 }
 
-                qCDebug(KDAV_LOG) << url.toDisplayString() << "PRIVS: " << collection.privileges();
+                qCDebug(KDAV2_LOG) << url.toDisplayString() << "PRIVS: " << collection.privileges();
                 mCollections << collection;
                 Q_EMIT collectionDiscovered(mUrl.protocol(), url.toDisplayString(), jobUrl);
 

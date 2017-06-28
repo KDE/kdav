@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVCOLLECTION_H
-#define KDAV_DAVCOLLECTION_H
+#ifndef KDAV2_DAVCOLLECTION_H
+#define KDAV2_DAVCOLLECTION_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "enums.h"
 
@@ -32,12 +32,12 @@ class QColor;
 
 class DavCollectionPrivate;
 
-namespace KDAV
+namespace KDAV2
 {
     class DavUrl;
 }
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
@@ -46,7 +46,7 @@ namespace KDAV
  * This class is used as container to transfer information about DAV
  * collections between the Akonadi resource and the DAV jobs.
  */
-class KPIMKDAV_EXPORT DavCollection
+class KPIMKDAV2_EXPORT DavCollection
 {
 public:
     /**
@@ -154,7 +154,7 @@ private:
 
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(KDAV::DavCollection::ContentTypes)
-Q_DECLARE_TYPEINFO(KDAV::DavCollection, Q_MOVABLE_TYPE);
+Q_DECLARE_OPERATORS_FOR_FLAGS(KDAV2::DavCollection::ContentTypes)
+Q_DECLARE_TYPEINFO(KDAV2::DavCollection, Q_MOVABLE_TYPE);
 
 #endif

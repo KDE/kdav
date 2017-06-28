@@ -16,22 +16,22 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVITEMFETCHJOB_H
-#define KDAV_DAVITEMFETCHJOB_H
+#ifndef KDAV2_DAVITEMFETCHJOB_H
+#define KDAV2_DAVITEMFETCHJOB_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davitem.h"
 #include "davjobbase.h"
 #include "davurl.h"
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
  * @short A job that fetches a DAV item from the DAV server.
  */
-class KPIMKDAV_EXPORT DavItemFetchJob : public DavJobBase
+class KPIMKDAV2_EXPORT DavItemFetchJob : public DavJobBase
 {
     Q_OBJECT
 

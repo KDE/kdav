@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVPROTOCOLBASE_H
-#define KDAV_DAVPROTOCOLBASE_H
+#ifndef KDAV2_DAVPROTOCOLBASE_H
+#define KDAV2_DAVPROTOCOLBASE_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davcollection.h"
 
@@ -28,13 +28,13 @@
 #include <QtXml/QDomDocument>
 #include <QSharedPointer>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
  * @short Base class for XML query builders
  */
-class KPIMKDAV_EXPORT XMLQueryBuilder
+class KPIMKDAV2_EXPORT XMLQueryBuilder
 {
 public:
     typedef QSharedPointer<XMLQueryBuilder> Ptr;
@@ -62,7 +62,7 @@ private:
  *   @li CarddavProtocol
  *   @li GroupdavProtocol
  */
-class KPIMKDAV_EXPORT DavProtocolBase
+class KPIMKDAV2_EXPORT DavProtocolBase
 {
 public:
     /**

@@ -18,25 +18,25 @@
 
 #include "davurltest.h"
 
-#include <KDAV/DavUrl>
+#include <KDAV2/DavUrl>
 
 #include <QDataStream>
 #include <QTest>
 
 void DavUrlTest::createEmpty()
 {
-    KDAV::DavUrl davUrl;
+    KDAV2::DavUrl davUrl;
 
-    QCOMPARE(davUrl.protocol(), KDAV::CalDav);
+    QCOMPARE(davUrl.protocol(), KDAV2::CalDav);
     QCOMPARE(davUrl.url(), QUrl());
 }
 
 void DavUrlTest::storeTest()
 {
     QUrl url(QStringLiteral("test://me:pw@test"));
-    KDAV::DavUrl davUrl(url, KDAV::CardDav);
+    KDAV2::DavUrl davUrl(url, KDAV2::CardDav);
 
-    QCOMPARE(davUrl.protocol(), KDAV::CardDav);
+    QCOMPARE(davUrl.protocol(), KDAV2::CardDav);
     QCOMPARE(davUrl.url(), url);
     QCOMPARE(davUrl.toDisplayString(), QStringLiteral("test://test"));
 }
@@ -44,22 +44,22 @@ void DavUrlTest::storeTest()
 void DavUrlTest::setTest()
 {
     QUrl url(QStringLiteral("test://me:pw@test"));
-    KDAV::DavUrl davUrl;
+    KDAV2::DavUrl davUrl;
 
-    davUrl.setProtocol(KDAV::CardDav);
+    davUrl.setProtocol(KDAV2::CardDav);
     davUrl.setUrl(url);
 
-    QCOMPARE(davUrl.protocol(), KDAV::CardDav);
+    QCOMPARE(davUrl.protocol(), KDAV2::CardDav);
     QCOMPARE(davUrl.url(), url);
     QCOMPARE(davUrl.toDisplayString(), QStringLiteral("test://test"));
 }
 
 void DavUrlTest::serializeTest()
 {
-    KDAV::DavUrl davUrl1, davUrl2;
+    KDAV2::DavUrl davUrl1, davUrl2;
 
     QUrl url(QStringLiteral("test://me:pw@test"));
-    davUrl1.setProtocol(KDAV::CardDav);
+    davUrl1.setProtocol(KDAV2::CardDav);
     davUrl1.setUrl(url);
 
     QByteArray data;

@@ -16,16 +16,16 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVERROR_H
-#define KDAV_DAVERROR_H
+#ifndef KDAV2_DAVERROR_H
+#define KDAV2_DAVERROR_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include <KJob>
 
 #include <QString>
 
-namespace KDAV
+namespace KDAV2
 {
 
 enum ErrorNumber {
@@ -47,7 +47,7 @@ enum ErrorNumber {
    ERR_ITEMLIST_NOMIMETYPE
 };
 
-class KPIMKDAV_EXPORT Error {
+class KPIMKDAV2_EXPORT Error {
 public:
     explicit Error();
     explicit Error(ErrorNumber errNo, int responseCode, const QString &errorText, int jobErrorCode);

@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVUTILS_H
-#define KDAV_DAVUTILS_H
+#ifndef KDAV2_DAVUTILS_H
+#define KDAV2_DAVUTILS_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "enums.h"
 
@@ -27,7 +27,7 @@
 #include <QtXml/QDomElement>
 #include <QtCore/QVector>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
@@ -38,43 +38,43 @@ namespace Utils
 /**
  * Returns the untranslated name of the given DAV @p protocol dialect.
  */
-QLatin1String KPIMKDAV_EXPORT protocolName(Protocol protocol);
+QLatin1String KPIMKDAV2_EXPORT protocolName(Protocol protocol);
 
 /**
  * Returns the protocol matching the given name. This is the opposite of
  * Utils::protocolName().
  */
-Protocol KPIMKDAV_EXPORT protocolByName(const QString &name);
+Protocol KPIMKDAV2_EXPORT protocolByName(const QString &name);
 
 /**
  * Returns the first child element of @p parent that has the given @p tagName and is part of the @p namespaceUri.
  */
-QDomElement KPIMKDAV_EXPORT firstChildElementNS(const QDomElement &parent, const QString &namespaceUri, const QString &tagName);
+QDomElement KPIMKDAV2_EXPORT firstChildElementNS(const QDomElement &parent, const QString &namespaceUri, const QString &tagName);
 
 /**
  * Returns the next sibling element of @p element that has the given @p tagName and is part of the @p namespaceUri.
  */
-QDomElement KPIMKDAV_EXPORT nextSiblingElementNS(const QDomElement &element, const QString &namespaceUri, const QString &tagName);
+QDomElement KPIMKDAV2_EXPORT nextSiblingElementNS(const QDomElement &element, const QString &namespaceUri, const QString &tagName);
 
 /**
  * Extracts privileges from @p element. The <privilege/> tags are expected to be first level children of @p element.
  */
-Privileges KPIMKDAV_EXPORT extractPrivileges(const QDomElement &element);
+Privileges KPIMKDAV2_EXPORT extractPrivileges(const QDomElement &element);
 
 /**
  * Parses a single <privilege/> tag and returns the final Privileges.
  */
-Privileges KPIMKDAV_EXPORT parsePrivilege(const QDomElement &element);
+Privileges KPIMKDAV2_EXPORT parsePrivilege(const QDomElement &element);
 
 /**
  * Creates a unique identifier that can be used as a file name to upload the dav item
  */
-QString KPIMKDAV_EXPORT createUniqueId();
+QString KPIMKDAV2_EXPORT createUniqueId();
 
 /**
  * Returns the mimetype that shall be used for contact DAV resources using @p protocol.
  */
-QString KPIMKDAV_EXPORT contactsMimeType(Protocol protocol);
+QString KPIMKDAV2_EXPORT contactsMimeType(Protocol protocol);
 }
 
 }

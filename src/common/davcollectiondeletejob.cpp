@@ -22,7 +22,7 @@
 #include "davjob.h"
 #include "davmanager.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUrl &url, QObject *parent)
     : DavJobBase(parent), mUrl(url)

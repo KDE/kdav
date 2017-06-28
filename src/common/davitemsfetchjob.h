@@ -17,10 +17,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVITEMSFETCHJOB_H
-#define KDAV_DAVITEMSFETCHJOB_H
+#ifndef KDAV2_DAVITEMSFETCHJOB_H
+#define KDAV2_DAVITEMSFETCHJOB_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davitem.h"
 #include "davjobbase.h"
@@ -29,13 +29,13 @@
 #include <QtCore/QMap>
 #include <QtCore/QStringList>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
  * @short A job that fetches a list of items from a DAV server using a multiget query.
  */
-class KPIMKDAV_EXPORT DavItemsFetchJob : public DavJobBase
+class KPIMKDAV2_EXPORT DavItemsFetchJob : public DavJobBase
 {
     Q_OBJECT
 

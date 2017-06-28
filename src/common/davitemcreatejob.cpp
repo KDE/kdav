@@ -23,9 +23,9 @@
 #include "daverror.h"
 #include "davjob.h"
 
-#include "libkdav_debug.h"
+#include "libkdav2_debug.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavItemCreateJob::DavItemCreateJob(const DavItem &item, QObject *parent)
     : DavJobBase(parent), mItem(item), mRedirectCount(0)

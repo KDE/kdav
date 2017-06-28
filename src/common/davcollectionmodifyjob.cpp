@@ -23,7 +23,7 @@
 #include "utils.h"
 #include "davjob.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavCollectionModifyJob::DavCollectionModifyJob(const DavUrl &url, QObject *parent)
     : DavJobBase(parent), mUrl(url)

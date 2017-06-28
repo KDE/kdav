@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVCOLLECTIONMODIFYJOB_H
-#define KDAV_DAVCOLLECTIONMODIFYJOB_H
+#ifndef KDAV2_DAVCOLLECTIONMODIFYJOB_H
+#define KDAV2_DAVCOLLECTIONMODIFYJOB_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davjobbase.h"
 #include "davurl.h"
@@ -29,7 +29,7 @@
 
 #include <KCoreAddons/KJob>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
@@ -38,7 +38,7 @@ namespace KDAV
  * This job is used to modify a property of a DAV collection
  * on the DAV server.
  */
-class KPIMKDAV_EXPORT DavCollectionModifyJob : public DavJobBase
+class KPIMKDAV2_EXPORT DavCollectionModifyJob : public DavJobBase
 {
     Q_OBJECT
 

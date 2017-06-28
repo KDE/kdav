@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVMANAGER_H
-#define KDAV_DAVMANAGER_H
+#ifndef KDAV2_DAVMANAGER_H
+#define KDAV2_DAVMANAGER_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "enums.h"
 
@@ -33,7 +33,7 @@ class QDomDocument;
 class QWebdav;
 class QNetworkAccessManager;
 
-namespace KDAV
+namespace KDAV2
 {
 
 class DavJob;
@@ -46,7 +46,7 @@ class DavProtocolBase;
  * low-level DAV jobs and has access to the global DAV protocol dialect
  * objects which abstract the access to the various DAV protocol dialects.
  */
-class KPIMKDAV_EXPORT DavManager
+class KPIMKDAV2_EXPORT DavManager
 {
 public:
     /**

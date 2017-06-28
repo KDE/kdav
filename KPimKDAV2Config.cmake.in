@@ -2,4 +2,4 @@
 
 find_dependency(KF5CoreAddons "@KF5_VERSION@")
 
-include("${CMAKE_CURRENT_LIST_DIR}/KPimKDAVTargets.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/KPimKDAV2Targets.cmake")

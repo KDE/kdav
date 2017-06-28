@@ -23,7 +23,7 @@
 #include <QtCore/QVariant>
 #include <QtXml/QDomDocument>
 
-using namespace KDAV;
+using namespace KDAV2;
 
 class CarddavCollectionQueryBuilder : public XMLQueryBuilder
 {

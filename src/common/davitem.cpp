@@ -20,7 +20,7 @@
 
 #include "davurl.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 class DavItemPrivate
 {
@@ -116,7 +116,7 @@ QString DavItem::etag() const
     return d->mEtag;
 }
 
-QDataStream &KDAV::operator<<(QDataStream &stream, const DavItem &item)
+QDataStream &KDAV2::operator<<(QDataStream &stream, const DavItem &item)
 {
     stream << item.url();
     stream << item.contentType();
@@ -126,7 +126,7 @@ QDataStream &KDAV::operator<<(QDataStream &stream, const DavItem &item)
     return stream;
 }
 
-QDataStream &KDAV::operator>>(QDataStream &stream, DavItem &item)
+QDataStream &KDAV2::operator>>(QDataStream &stream, DavItem &item)
 {
     QString contentType, etag;
     DavUrl url;

@@ -21,18 +21,18 @@
 
 #include "common/davprotocolbase.h"
 
-class GroupdavProtocol : public KDAV::DavProtocolBase
+class GroupdavProtocol : public KDAV2::DavProtocolBase
 {
 public:
     GroupdavProtocol();
     bool supportsPrincipals() const Q_DECL_OVERRIDE;
     bool useReport() const Q_DECL_OVERRIDE;
     bool useMultiget() const Q_DECL_OVERRIDE;
-    KDAV::XMLQueryBuilder::Ptr collectionsQuery() const Q_DECL_OVERRIDE;
+    KDAV2::XMLQueryBuilder::Ptr collectionsQuery() const Q_DECL_OVERRIDE;
     QString collectionsXQuery() const Q_DECL_OVERRIDE;
-    QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const Q_DECL_OVERRIDE;
+    QVector<KDAV2::XMLQueryBuilder::Ptr> itemsQueries() const Q_DECL_OVERRIDE;
 
-    KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const Q_DECL_OVERRIDE;
+    KDAV2::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const Q_DECL_OVERRIDE;
 };
 
 #endif

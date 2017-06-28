@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVPRINCIPALSEARCHJOB_H
-#define KDAV_DAVPRINCIPALSEARCHJOB_H
+#ifndef KDAV2_DAVPRINCIPALSEARCHJOB_H
+#define KDAV2_DAVPRINCIPALSEARCHJOB_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davjobbase.h"
 #include "davurl.h"
@@ -32,7 +32,7 @@
 
 class QDomDocument;
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
@@ -43,7 +43,7 @@ namespace KDAV
  *
  * The properties to fetch are set with @ref fetchProperty().
  */
-class KPIMKDAV_EXPORT DavPrincipalSearchJob : public DavJobBase
+class KPIMKDAV2_EXPORT DavPrincipalSearchJob : public DavJobBase
 {
     Q_OBJECT
 

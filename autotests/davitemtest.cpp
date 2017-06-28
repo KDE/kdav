@@ -18,15 +18,15 @@
 
 #include "davitemtest.h"
 
-#include <KDAV/DavItem>
-#include <KDAV/DavUrl>
+#include <KDAV2/DavItem>
+#include <KDAV2/DavUrl>
 
 #include <QDataStream>
 #include <QTest>
 
 void DavItemTest::createEmpty()
 {
-    KDAV::DavItem davItem;
+    KDAV2::DavItem davItem;
 
     QCOMPARE(davItem.url().toDisplayString(), QString());
     QCOMPARE(davItem.contentType(), QString());
@@ -38,10 +38,10 @@ void DavItemTest::createEmpty()
 void DavItemTest::storeTest()
 {
     QUrl url(QStringLiteral("test://me:pw@test"));
-    KDAV::DavUrl davUrl(url, KDAV::CardDav);
-    KDAV::DavItem davItem(davUrl, QStringLiteral("text/test"), QByteArray("data"), QStringLiteral("991233434-234345"));
+    KDAV2::DavUrl davUrl(url, KDAV2::CardDav);
+    KDAV2::DavItem davItem(davUrl, QStringLiteral("text/test"), QByteArray("data"), QStringLiteral("991233434-234345"));
 
-    QCOMPARE(davItem.url().protocol(), KDAV::CardDav);
+    QCOMPARE(davItem.url().protocol(), KDAV2::CardDav);
     QCOMPARE(davItem.contentType(), QStringLiteral("text/test"));
     QCOMPARE(davItem.data(), QByteArray("data"));
     QCOMPARE(davItem.etag(), QStringLiteral("991233434-234345"));
@@ -50,15 +50,15 @@ void DavItemTest::storeTest()
 void DavItemTest::setTest()
 {
     QUrl url(QStringLiteral("test://me:pw@test"));
-    KDAV::DavUrl davUrl(url, KDAV::CardDav);
-    KDAV::DavItem davItem;
+    KDAV2::DavUrl davUrl(url, KDAV2::CardDav);
+    KDAV2::DavItem davItem;
 
     davItem.setUrl(davUrl);
     davItem.setContentType(QStringLiteral("text/test"));
     davItem.setData(QByteArray("data"));
     davItem.setEtag(QStringLiteral("991233434-234345"));
 
-    QCOMPARE(davItem.url().protocol(), KDAV::CardDav);
+    QCOMPARE(davItem.url().protocol(), KDAV2::CardDav);
     QCOMPARE(davItem.contentType(), QStringLiteral("text/test"));
     QCOMPARE(davItem.data(), QByteArray("data"));
     QCOMPARE(davItem.etag(), QStringLiteral("991233434-234345"));
@@ -67,17 +67,17 @@ void DavItemTest::setTest()
 void DavItemTest::copyTest()
 {
     QUrl url(QStringLiteral("test://me:pw@test"));
-    KDAV::DavUrl davUrl(url, KDAV::CardDav);
-    KDAV::DavItem davItem(davUrl, QStringLiteral("text/test"), QByteArray("data"), QStringLiteral("991233434-234345"));
+    KDAV2::DavUrl davUrl(url, KDAV2::CardDav);
+    KDAV2::DavItem davItem(davUrl, QStringLiteral("text/test"), QByteArray("data"), QStringLiteral("991233434-234345"));
 
-    KDAV::DavItem davItemCopy1(davItem);
+    KDAV2::DavItem davItemCopy1(davItem);
     QCOMPARE(davItemCopy1.url().protocol(), davItem.url().protocol());
     QCOMPARE(davItemCopy1.url().url(), davItem.url().url());
     QCOMPARE(davItemCopy1.contentType(), davItem.contentType());
     QCOMPARE(davItemCopy1.data(), davItem.data());
     QCOMPARE(davItemCopy1.etag(), davItem.etag());
  
-    KDAV::DavItem davItemCopy2;
+    KDAV2::DavItem davItemCopy2;
     davItemCopy2 = davItem;
     QCOMPARE(davItemCopy2.url().protocol(), davItem.url().protocol());
     QCOMPARE(davItemCopy2.url().url(), davItem.url().url());
@@ -88,10 +88,10 @@ void DavItemTest::copyTest()
 
 void DavItemTest::serializeTest()
 {
-    KDAV::DavItem davItem1, davItem2;
+    KDAV2::DavItem davItem1, davItem2;
 
     QUrl url(QStringLiteral("test://me:pw@test"));
-    KDAV::DavUrl davUrl(url, KDAV::CardDav);
+    KDAV2::DavUrl davUrl(url, KDAV2::CardDav);
 
     davItem1.setUrl(davUrl);
     davItem1.setContentType(QStringLiteral("text/test"));

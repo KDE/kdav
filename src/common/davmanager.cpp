@@ -24,12 +24,12 @@
 #include "davjob.h"
 #include "qwebdavlib/qwebdav.h"
 
-#include "libkdav_debug.h"
+#include "libkdav2_debug.h"
 
 #include <QtCore/QUrl>
 #include <QtXml/QDomDocument>
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavManager *DavManager::mSelf = nullptr;
 
@@ -135,17 +135,17 @@ bool DavManager::createProtocol(Protocol protocol)
     }
 
     switch (protocol) {
-    case KDAV::CalDav:
-        mProtocols.insert(KDAV::CalDav, new CaldavProtocol());
+    case KDAV2::CalDav:
+        mProtocols.insert(KDAV2::CalDav, new CaldavProtocol());
         break;
-    case KDAV::CardDav:
-        mProtocols.insert(KDAV::CardDav, new CarddavProtocol());
+    case KDAV2::CardDav:
+        mProtocols.insert(KDAV2::CardDav, new CarddavProtocol());
         break;
-    case KDAV::GroupDav:
-        mProtocols.insert(KDAV::GroupDav, new GroupdavProtocol());
+    case KDAV2::GroupDav:
+        mProtocols.insert(KDAV2::GroupDav, new GroupdavProtocol());
         break;
     default:
-        qCCritical(KDAV_LOG) << "Unknown protocol: " << static_cast<int>(protocol);
+        qCCritical(KDAV2_LOG) << "Unknown protocol: " << static_cast<int>(protocol);
         return false;
     }
 

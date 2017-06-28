@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVPRINCIPALHOMESETSFETCHJOB_H
-#define KDAV_DAVPRINCIPALHOMESETSFETCHJOB_H
+#ifndef KDAV2_DAVPRINCIPALHOMESETSFETCHJOB_H
+#define KDAV2_DAVPRINCIPALHOMESETSFETCHJOB_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davjobbase.h"
 #include "davurl.h"
@@ -28,13 +28,13 @@
 
 #include <QtCore/QStringList>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
  * @short A job that fetches home sets for a principal.
  */
-class KPIMKDAV_EXPORT DavPrincipalHomeSetsFetchJob : public DavJobBase
+class KPIMKDAV2_EXPORT DavPrincipalHomeSetsFetchJob : public DavJobBase
 {
     Q_OBJECT
 

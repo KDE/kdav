@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVCOLLECTIONSFETCHJOB_H
-#define KDAV_DAVCOLLECTIONSFETCHJOB_H
+#ifndef KDAV2_DAVCOLLECTIONSFETCHJOB_H
+#define KDAV2_DAVCOLLECTIONSFETCHJOB_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davcollection.h"
 #include "davjobbase.h"
@@ -27,7 +27,7 @@
 
 #include <KCoreAddons/KJob>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
@@ -36,7 +36,7 @@ namespace KDAV
  * This job is used to fetch all DAV collection that are available
  * under a certain DAV url.
  */
-class KPIMKDAV_EXPORT DavCollectionsFetchJob : public DavJobBase
+class KPIMKDAV2_EXPORT DavCollectionsFetchJob : public DavJobBase
 {
     Q_OBJECT
 

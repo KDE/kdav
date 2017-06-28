@@ -22,7 +22,7 @@
 #include "daverror.h"
 #include "davjob.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavItemFetchJob::DavItemFetchJob(const DavItem &item, QObject *parent)
     : DavJobBase(parent), mItem(item)

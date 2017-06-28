@@ -20,7 +20,7 @@
 
 #include "daverror.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 class DavJobBasePrivate {
 public:
@@ -105,7 +105,7 @@ void DavJobBase::setLatestResponseCode(unsigned int code)
 
 Error DavJobBase::davError() const
 {
-    return Error((KDAV::ErrorNumber)error(), d->mLatestResponseCode, d->mInternalErrorText, d->mJobErrorCode);
+    return Error((KDAV2::ErrorNumber)error(), d->mLatestResponseCode, d->mInternalErrorText, d->mJobErrorCode);
 }
 
 void DavJobBase::setJobErrorText(const QString &errorText)

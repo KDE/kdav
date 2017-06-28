@@ -16,17 +16,17 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVCOLLECTIONDELETEJOB_H
-#define KDAV_DAVCOLLECTIONDELETEJOB_H
+#ifndef KDAV2_DAVCOLLECTIONDELETEJOB_H
+#define KDAV2_DAVCOLLECTIONDELETEJOB_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davjobbase.h"
 #include "davurl.h"
 
 #include <KCoreAddons/KJob>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
@@ -34,7 +34,7 @@ namespace KDAV
  *
  * This job is used to delete a DAV collection at a certain URL.
  */
-class KPIMKDAV_EXPORT DavCollectionDeleteJob : public DavJobBase
+class KPIMKDAV2_EXPORT DavCollectionDeleteJob : public DavJobBase
 {
     Q_OBJECT
 

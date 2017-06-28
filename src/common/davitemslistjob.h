@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVITEMSLISTJOB_H
-#define KDAV_DAVITEMSLISTJOB_H
+#ifndef KDAV2_DAVITEMSLISTJOB_H
+#define KDAV2_DAVITEMSLISTJOB_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davitem.h"
 #include "davjobbase.h"
@@ -31,7 +31,7 @@
 
 class DavItemsListJobPrivate;
 
-namespace KDAV
+namespace KDAV2
 {
 
 class EtagCache;
@@ -40,7 +40,7 @@ class DavUrl;
 /**
  * @short A job that lists all DAV items inside a DAV collection.
  */
-class KPIMKDAV_EXPORT DavItemsListJob : public DavJobBase
+class KPIMKDAV2_EXPORT DavItemsListJob : public DavJobBase
 {
     Q_OBJECT
 

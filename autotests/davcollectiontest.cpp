@@ -18,8 +18,8 @@
 
 #include "davcollectiontest.h"
 
-#include <KDAV/DavCollection>
-#include <KDAV/DavUrl>
+#include <KDAV2/DavCollection>
+#include <KDAV2/DavUrl>
 
 // #include <QColor>
 #include <QDebug>
@@ -28,68 +28,68 @@
 
 void DavCollectionTest::createEmpty()
 {
-    KDAV::DavCollection davCollection;
+    KDAV2::DavCollection davCollection;
 
-    QCOMPARE(davCollection.url().protocol(), KDAV::CalDav);
+    QCOMPARE(davCollection.url().protocol(), KDAV2::CalDav);
     QCOMPARE(davCollection.CTag(), QString());
     QCOMPARE(davCollection.displayName(), QString());
     // QCOMPARE(davCollection.color(), QColor());
-    QCOMPARE(davCollection.contentTypes(), KDAV::DavCollection::ContentTypes());
-    QCOMPARE(davCollection.privileges(), KDAV::Privileges());
+    QCOMPARE(davCollection.contentTypes(), KDAV2::DavCollection::ContentTypes());
+    QCOMPARE(davCollection.privileges(), KDAV2::Privileges());
 }
 
 void DavCollectionTest::storeTest()
 {
     QUrl url(QStringLiteral("test://me:pw@test"));
-    KDAV::DavUrl davUrl(url, KDAV::CardDav);
-    KDAV::DavCollection davCollection(davUrl, QStringLiteral("myname"), KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
+    KDAV2::DavUrl davUrl(url, KDAV2::CardDav);
+    KDAV2::DavCollection davCollection(davUrl, QStringLiteral("myname"), KDAV2::DavCollection::Events | KDAV2::DavCollection::Todos);
 
-    QCOMPARE(davCollection.url().protocol(), KDAV::CardDav);
+    QCOMPARE(davCollection.url().protocol(), KDAV2::CardDav);
     QCOMPARE(davCollection.url().url(), url);
     QCOMPARE(davCollection.CTag(), QString());
     QCOMPARE(davCollection.displayName(), QStringLiteral("myname"));
     // QCOMPARE(davCollection.color(), QColor());
-    QCOMPARE(davCollection.contentTypes(), KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
-    QCOMPARE(davCollection.privileges(), KDAV::All);
+    QCOMPARE(davCollection.contentTypes(), KDAV2::DavCollection::Events | KDAV2::DavCollection::Todos);
+    QCOMPARE(davCollection.privileges(), KDAV2::All);
 }
 
 void DavCollectionTest::setTest()
 {
     QUrl url(QStringLiteral("test://me:pw@test"));
-    KDAV::DavUrl davUrl(url, KDAV::CardDav);
-    KDAV::DavCollection davCollection;
+    KDAV2::DavUrl davUrl(url, KDAV2::CardDav);
+    KDAV2::DavCollection davCollection;
 
     davCollection.setUrl(davUrl);
     davCollection.setCTag(QStringLiteral("ctag"));
     davCollection.setDisplayName(QStringLiteral("myname"));
     // davCollection.setColor(QColor(1,2,3));
-    davCollection.setContentTypes(KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
-    davCollection.setPrivileges(KDAV::Read | KDAV::Write);
+    davCollection.setContentTypes(KDAV2::DavCollection::Events | KDAV2::DavCollection::Todos);
+    davCollection.setPrivileges(KDAV2::Read | KDAV2::Write);
 
-    QCOMPARE(davCollection.url().protocol(), KDAV::CardDav);
+    QCOMPARE(davCollection.url().protocol(), KDAV2::CardDav);
     QCOMPARE(davCollection.url().url(), url);
     QCOMPARE(davCollection.CTag(), QStringLiteral("ctag"));
     QCOMPARE(davCollection.displayName(), QStringLiteral("myname"));
     // QCOMPARE(davCollection.color(), QColor(1,2,3));
-    QCOMPARE(davCollection.contentTypes(), KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
-    QCOMPARE(davCollection.privileges(), KDAV::Read | KDAV::Write);
+    QCOMPARE(davCollection.contentTypes(), KDAV2::DavCollection::Events | KDAV2::DavCollection::Todos);
+    QCOMPARE(davCollection.privileges(), KDAV2::Read | KDAV2::Write);
 }
 
 void DavCollectionTest::copyTest()
 {
-    KDAV::DavCollection davCollection;
+    KDAV2::DavCollection davCollection;
 
     QUrl url(QStringLiteral("test://me:pw@test"));
-    KDAV::DavUrl davUrl(url, KDAV::CardDav);
+    KDAV2::DavUrl davUrl(url, KDAV2::CardDav);
 
     davCollection.setUrl(davUrl);
     davCollection.setCTag(QStringLiteral("ctag"));
     davCollection.setDisplayName(QStringLiteral("myname"));
     // davCollection.setColor(QColor(1,2,3));
-    davCollection.setContentTypes(KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
-    davCollection.setPrivileges(KDAV::Read | KDAV::Write);
+    davCollection.setContentTypes(KDAV2::DavCollection::Events | KDAV2::DavCollection::Todos);
+    davCollection.setPrivileges(KDAV2::Read | KDAV2::Write);
 
-    KDAV::DavCollection copy1(davCollection);
+    KDAV2::DavCollection copy1(davCollection);
     QCOMPARE(copy1.url().protocol(), davCollection.url().protocol());
     QCOMPARE(copy1.url().url(), davCollection.url().url());
     QCOMPARE(copy1.CTag(), davCollection.CTag());
@@ -98,7 +98,7 @@ void DavCollectionTest::copyTest()
     QCOMPARE(copy1.contentTypes(), davCollection.contentTypes());
     QCOMPARE(copy1.privileges(), davCollection.privileges());
 
-    KDAV::DavCollection copy2;
+    KDAV2::DavCollection copy2;
     copy2 = davCollection;
 
     QCOMPARE(copy2.url().protocol(), davCollection.url().protocol());

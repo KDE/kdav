@@ -16,17 +16,17 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_ETAGCACHE_H
-#define KDAV_ETAGCACHE_H
+#ifndef KDAV2_ETAGCACHE_H
+#define KDAV2_ETAGCACHE_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include <QtCore/QMap>
 #include <QtCore/QObject>
 #include <QtCore/QSet>
 #include <QtCore/QStringList>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
@@ -37,7 +37,7 @@ namespace KDAV
  * out which items have been changed in the backend and have to
  * be refetched on the next call of ResourceBase::retrieveItems()
  */
-class KPIMKDAV_EXPORT EtagCache : public QObject
+class KPIMKDAV2_EXPORT EtagCache : public QObject
 {
     Q_OBJECT
 

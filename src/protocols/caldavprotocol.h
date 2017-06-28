@@ -16,12 +16,12 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_CALDAVPROTOCOL_H
-#define KDAV_CALDAVPROTOCOL_H
+#ifndef KDAV2_CALDAVPROTOCOL_H
+#define KDAV2_CALDAVPROTOCOL_H
 
 #include "common/davmultigetprotocol.h"
 
-class CaldavProtocol : public KDAV::DavMultigetProtocol
+class CaldavProtocol : public KDAV2::DavMultigetProtocol
 {
 public:
     CaldavProtocol();
@@ -30,14 +30,14 @@ public:
     bool useMultiget() const Q_DECL_OVERRIDE;
     QString principalHomeSet() const Q_DECL_OVERRIDE;
     QString principalHomeSetNS() const Q_DECL_OVERRIDE;
-    KDAV::XMLQueryBuilder::Ptr collectionsQuery() const Q_DECL_OVERRIDE;
+    KDAV2::XMLQueryBuilder::Ptr collectionsQuery() const Q_DECL_OVERRIDE;
     QString collectionsXQuery() const Q_DECL_OVERRIDE;
-    QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const Q_DECL_OVERRIDE;
-    KDAV::XMLQueryBuilder::Ptr itemsReportQuery(const QStringList &urls) const Q_DECL_OVERRIDE;
+    QVector<KDAV2::XMLQueryBuilder::Ptr> itemsQueries() const Q_DECL_OVERRIDE;
+    KDAV2::XMLQueryBuilder::Ptr itemsReportQuery(const QStringList &urls) const Q_DECL_OVERRIDE;
     QString responseNamespace() const Q_DECL_OVERRIDE;
     QString dataTagName() const Q_DECL_OVERRIDE;
 
-    KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const Q_DECL_OVERRIDE;
+    KDAV2::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const Q_DECL_OVERRIDE;
 };
 
 #endif

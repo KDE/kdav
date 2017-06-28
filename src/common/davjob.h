@@ -16,12 +16,12 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVJOB_H
-#define KDAV_DAVJOB_H
+#ifndef KDAV2_DAVJOB_H
+#define KDAV2_DAVJOB_H
 
 #include <memory>
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include <KCoreAddons/KJob>
 #include <QDomDocument>
@@ -34,7 +34,7 @@ namespace KIO {
     class DavJob;
 }
 
-namespace KDAV
+namespace KDAV2
 {
 class Error;
 
@@ -44,7 +44,7 @@ class Error;
      * url
      * QDomDocument &response();
      */
-class KPIMKDAV_EXPORT DavJob : public KJob
+class KPIMKDAV2_EXPORT DavJob : public KJob
 {
     Q_OBJECT
 

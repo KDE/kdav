@@ -17,16 +17,16 @@
 */
 
 /*
-  Set the version for this libkdav release.
+  Set the version for this libkdav2 release.
 
   This version may be used by programs within this module that
   do not want to maintain a version on their own.
 */
 
-#ifndef LIBKDAV_VERSION_H
-#define LIBKDAV_VERSION_H
+#ifndef LIBKDAV2_VERSION_H
+#define LIBKDAV2_VERSION_H
 
 
-#define LIBKDAV_VERSION "@LIBKDAV_VERSION@"
+#define LIBKDAV2_VERSION "@LIBKDAV2_VERSION@"
 
 #endif

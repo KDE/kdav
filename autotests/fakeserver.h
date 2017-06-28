@@ -80,10 +80,10 @@ Q_DECLARE_METATYPE(QList<QByteArray>)
  *
  * QUrl url(QStringLiteral("http://localhost/item"));
  * url.setPort(fakeServer.port());
- * KDAV::DavUrl davUrl(url, KDAV::CardDav);
- * KDAV::DavItem item(davUrl, QString(), QByteArray(), QString());
+ * KDAV2::DavUrl davUrl(url, KDAV2::CardDav);
+ * KDAV2::DavItem item(davUrl, QString(), QByteArray(), QString());
  *
- * auto job = new KDAV::DavItemFetchJob(item);
+ * auto job = new KDAV2::DavItemFetchJob(item);
  * job->exec();
  * fakeServer.quit();
  * QVERIFY(fakeServer.isAllScenarioDone());

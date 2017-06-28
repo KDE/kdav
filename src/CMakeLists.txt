@@ -5,7 +5,7 @@ include_directories(
 
 ########### next target ###############
 
-set(libkdav_SRCS
+set(libkdav2_SRCS
  common/davjobbase.cpp
  common/davcollection.cpp
  common/davcollectiondeletejob.cpp
@@ -40,7 +40,7 @@ set(libkdav_SRCS
 )
 
 
-ecm_generate_headers(KDAV_Camelcase_HEADERS
+ecm_generate_headers(KDAV2_Camelcase_HEADERS
     HEADER_NAMES
     DavJobBase
     DavCollection
@@ -64,29 +64,29 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     Utils
     Enums
     EtagCache
-    REQUIRED_HEADERS KDAV_HEADERS
-    PREFIX KDAV
+    REQUIRED_HEADERS KDAV2_HEADERS
+    PREFIX KDAV2
     RELATIVE common
     )
 
 install(FILES
-    ${KDAV_Camelcase_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim/KDAV
+    ${KDAV2_Camelcase_HEADERS}
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim/KDAV2
     COMPONENT Devel
     )
 
 install(FILES
-    ${KDAV_HEADERS}
-    ${CMAKE_CURRENT_BINARY_DIR}/kpimkdav_export.h
-    ${CMAKE_CURRENT_BINARY_DIR}/libkdav_debug.h
+    ${KDAV2_HEADERS}
+    ${CMAKE_CURRENT_BINARY_DIR}/kpimkdav2_export.h
+    ${CMAKE_CURRENT_BINARY_DIR}/libkdav2_debug.h
 
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim/kdav
+    DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim/kdav2
     COMPONENT Devel
     )
 
-ecm_generate_pri_file(BASE_NAME kdav
-    LIB_NAME KPimKDAV
-    FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR}/KDAV
+ecm_generate_pri_file(BASE_NAME kdav2
+    LIB_NAME KPimKDAV2
+    FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR}/KDAV2
     )
 
 install(FILES
@@ -94,38 +94,38 @@ install(FILES
     DESTINATION ${ECM_MKSPECS_INSTALL_DIR}
     )
 
-ecm_qt_declare_logging_category(libkdav_SRCS HEADER libkdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav)
+ecm_qt_declare_logging_category(libkdav2_SRCS HEADER libkdav2_debug.h IDENTIFIER KDAV2_LOG CATEGORY_NAME org.kde.pim.kdav2)
 
-add_library(KPimKDAV
-   ${libkdav_SRCS}
+add_library(KPimKDAV2
+   ${libkdav2_SRCS}
    )
 
-generate_export_header(KPimKDAV BASE_NAME kpimkdav)
+generate_export_header(KPimKDAV2 BASE_NAME kpimkdav2)
 
-add_library(KPim::KDAV ALIAS KPimKDAV)
+add_library(KPim::KDAV2 ALIAS KPimKDAV2)
 
-target_link_libraries(KPimKDAV
+target_link_libraries(KPimKDAV2
 PUBLIC
     KF5::CoreAddons
 PRIVATE
     Qt5::Xml
     Qt5::Gui
     Qt5::XmlPatterns
-    kdav_webdavlib
+    kdav2_webdavlib
     )
 
-set_target_properties(KPimKDAV PROPERTIES
-    VERSION ${KDAV_VERSION_STRING}
-    SOVERSION ${KDAV_SOVERSION}
-    EXPORT_NAME KDAV
+set_target_properties(KPimKDAV2 PROPERTIES
+    VERSION ${KDAV2_VERSION_STRING}
+    SOVERSION ${KDAV2_SOVERSION}
+    EXPORT_NAME KDAV2
     )
 
 install(TARGETS
-    KPimKDAV
-    EXPORT KPimKDAVTargets
+    KPimKDAV2
+    EXPORT KPimKDAV2Targets
     ${KDE_INSTALL_TARGETS_DEFAULT_ARGS}
     ${LIBRARY_NAMELINK}
     )
 
-target_include_directories(KPimKDAV INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/KPim/KDAV/;${KDE_INSTALL_INCLUDEDIR}/KPim/kdav;${KDE_INSTALL_INCLUDEDIR}/KPim>")
+target_include_directories(KPimKDAV2 INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/KPim/KDAV2/;${KDE_INSTALL_INCLUDEDIR}/KPim/kdav2;${KDE_INSTALL_INCLUDEDIR}/KPim>")
 

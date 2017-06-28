@@ -25,7 +25,7 @@
 #include "daverror.h"
 #include "davjob.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavItemsFetchJob::DavItemsFetchJob(const DavUrl &collectionUrl, const QStringList &urls, QObject *parent)
     : DavJobBase(parent), mCollectionUrl(collectionUrl), mUrls(urls)

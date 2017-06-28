@@ -16,13 +16,13 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_ENUMS_H
-#define KDAV_ENUMS_H
+#ifndef KDAV2_ENUMS_H
+#define KDAV2_ENUMS_H
 
 
 #include <QtCore/QFlags>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**

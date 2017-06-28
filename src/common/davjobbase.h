@@ -16,25 +16,25 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVJOBBASE_H
-#define KDAV_DAVJOBBASE_H
+#ifndef KDAV2_DAVJOBBASE_H
+#define KDAV2_DAVJOBBASE_H
 
 #include <memory>
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include <KCoreAddons/KJob>
 
 class DavJobBasePrivate;
 
-namespace KDAV
+namespace KDAV2
 {
 class Error;
 
 /**
  * @short base class for the jobs used by the resource.
  */
-class KPIMKDAV_EXPORT DavJobBase : public KJob
+class KPIMKDAV2_EXPORT DavJobBase : public KJob
 {
     Q_OBJECT
 
@@ -77,7 +77,7 @@ public:
     bool hasConflict() const;
 
     /**
-     * Returns a instance of the KDAV:Error to be able to translate the error
+     * Returns a instance of the KDAV2:Error to be able to translate the error
      */
     Error davError() const;
 

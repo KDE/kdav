@@ -20,7 +20,7 @@
 
 #include "daverror.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 class DavJobPrivate {
 public:

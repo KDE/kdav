@@ -24,7 +24,7 @@
 #include "utils.h"
 #include "davjob.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const DavUrl &url, QObject *parent)
     : DavJobBase(parent), mUrl(url)

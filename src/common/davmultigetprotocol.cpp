@@ -18,7 +18,7 @@
 
 #include "davmultigetprotocol.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavMultigetProtocol::~DavMultigetProtocol()
 {

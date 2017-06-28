@@ -16,10 +16,10 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVITEM_H
-#define KDAV_DAVITEM_H
+#ifndef KDAV2_DAVITEM_H
+#define KDAV2_DAVITEM_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include <memory>
 
@@ -31,12 +31,12 @@
 
 class DavItemPrivate;
 
-namespace KDAV
+namespace KDAV2
 {
     class DavUrl;
 }
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
@@ -48,7 +48,7 @@ namespace KDAV
  * @note While the DAV RFC names them DAV resource we call them items
  *       to comply to Akonadi terminology.
  */
-class KPIMKDAV_EXPORT DavItem
+class KPIMKDAV2_EXPORT DavItem
 {
 public:
     /**
@@ -120,11 +120,11 @@ private:
     std::unique_ptr<DavItemPrivate> d;
 };
 
-KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);
-KPIMKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavItem &item);
+KPIMKDAV2_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);
+KPIMKDAV2_EXPORT QDataStream &operator>>(QDataStream &in, DavItem &item);
 
 }
 
-Q_DECLARE_TYPEINFO(KDAV::DavItem, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(KDAV2::DavItem, Q_MOVABLE_TYPE);
 
 #endif

@@ -16,17 +16,17 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVCOLLECTIONSMULTIFETCHJOB_H
-#define KDAV_DAVCOLLECTIONSMULTIFETCHJOB_H
+#ifndef KDAV2_DAVCOLLECTIONSMULTIFETCHJOB_H
+#define KDAV2_DAVCOLLECTIONSMULTIFETCHJOB_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "davcollection.h"
 #include "davurl.h"
 
 #include <KCoreAddons/KJob>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
@@ -38,7 +38,7 @@ namespace KDAV
  * @note This class just combines multiple calls of DavCollectionsFetchJob
  *       into one job.
  */
-class KPIMKDAV_EXPORT DavCollectionsMultiFetchJob : public KJob
+class KPIMKDAV2_EXPORT DavCollectionsMultiFetchJob : public KJob
 {
     Q_OBJECT
 

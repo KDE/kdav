@@ -18,7 +18,7 @@
 
 #include "etagcache.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 EtagCache::EtagCache(QObject *parent)
     : QObject(parent)

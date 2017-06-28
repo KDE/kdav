@@ -20,10 +20,10 @@
 
 #include "enums.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavUrl::DavUrl()
-    : mProtocol(KDAV::CalDav)
+    : mProtocol(KDAV2::CalDav)
 {
 }
 
@@ -59,7 +59,7 @@ QString DavUrl::toDisplayString() const
     return url.toDisplayString();
 }
 
-QDataStream &KDAV::operator<<(QDataStream &stream, const DavUrl &url)
+QDataStream &KDAV2::operator<<(QDataStream &stream, const DavUrl &url)
 {
     stream << QString::number(url.protocol());
     stream << url.url();
@@ -67,7 +67,7 @@ QDataStream &KDAV::operator<<(QDataStream &stream, const DavUrl &url)
     return stream;
 }
 
-QDataStream &KDAV::operator>>(QDataStream &stream, DavUrl &davUrl)
+QDataStream &KDAV2::operator>>(QDataStream &stream, DavUrl &davUrl)
 {
     QUrl url;
     QString p;

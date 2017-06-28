@@ -23,7 +23,7 @@
 #include "daverror.h"
 #include "davjob.h"
 
-using namespace KDAV;
+using namespace KDAV2;
 
 DavItemModifyJob::DavItemModifyJob(const DavItem &item, QObject *parent)
     : DavJobBase(parent), mItem(item), mFreshResponseCode(0)

@@ -16,23 +16,23 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef KDAV_DAVURL_H
-#define KDAV_DAVURL_H
+#ifndef KDAV2_DAVURL_H
+#define KDAV2_DAVURL_H
 
-#include "kpimkdav_export.h"
+#include "kpimkdav2_export.h"
 
 #include "enums.h"
 
 #include <QtCore/QUrl>
 #include <QtCore/QVector>
 
-namespace KDAV
+namespace KDAV2
 {
 
 /**
  * @short A helper class to combine url and protocol of a DAV url.
  */
-class KPIMKDAV_EXPORT DavUrl
+class KPIMKDAV2_EXPORT DavUrl
 {
 public:
     /**
@@ -83,11 +83,11 @@ private:
     Protocol mProtocol;
 };
 
-KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavUrl &url);
-KPIMKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavUrl &url);
+KPIMKDAV2_EXPORT QDataStream &operator<<(QDataStream &out, const DavUrl &url);
+KPIMKDAV2_EXPORT QDataStream &operator>>(QDataStream &in, DavUrl &url);
 
 }
 
-Q_DECLARE_TYPEINFO(KDAV::DavUrl, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(KDAV2::DavUrl, Q_MOVABLE_TYPE);
 
 #endif

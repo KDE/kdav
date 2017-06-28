@@ -22,7 +22,7 @@
 
 #include <QColor>
 
-using namespace KDAV;
+using namespace KDAV2;
 
 class DavCollectionPrivate
 {
@@ -62,7 +62,7 @@ DavCollection::DavCollection(const DavUrl &url, const QString &displayName, Cont
     d->mUrl = url;
     d->mDisplayName = displayName;
     d->mContentTypes = contentTypes;
-    d->mPrivileges = KDAV::All;
+    d->mPrivileges = KDAV2::All;
 }
 
 DavCollection::DavCollection(const DavCollection &other)
