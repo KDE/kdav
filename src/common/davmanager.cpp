@@ -94,7 +94,7 @@ DavJob *DavManager::createGetJob(const QUrl &url)
     // Work around a strange bug in Zimbra (seen at least on CE 5.0.18) : if the user-agent
     // contains "Mozilla", some strange debug data is displayed in the shared calendars.
     // This kinda mess up the events parsing...
-    auto reply = mWebDav->get(url.path(), {{"User-Agent", "KDE DAV groupware client"}});
+    auto reply = mWebDav->get(url.path(), {{"User-Agent", "KDAV2"}});
     return new DavJob{reply, url};
 }
 

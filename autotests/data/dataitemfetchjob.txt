@@ -1,5 +1,5 @@
 C: GET /item HTTP/1.1
-C: User-Agent: KDE DAV groupware client
+C: User-Agent: KDAV2
 S: HTTP/1.0 200 OK
 S: Date: Wed, 04 Jan 2017 18:26:48 GMT
 S: Last-Modified: Wed, 04 Jan 2017 18:26:47 GMT
