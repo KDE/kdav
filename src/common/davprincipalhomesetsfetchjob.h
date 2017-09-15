@@ -24,9 +24,9 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <KCoreAddons/KJob>
+#include <KJob>
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 namespace KDAV
 {
@@ -50,7 +50,7 @@ public:
     /**
      * Starts the job.
      */
-    void start() Q_DECL_OVERRIDE;
+    void start() override;
 
     /**
      * Returns the found home sets.

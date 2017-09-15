@@ -24,7 +24,7 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <KCoreAddons/KJob>
+#include <KJob>
 
 namespace KDAV
 {
@@ -50,7 +50,7 @@ public:
     /**
      * Starts the job.
      */
-    void start() Q_DECL_OVERRIDE;
+    void start() override;
 
 private Q_SLOTS:
     void davJobFinished(KJob *);

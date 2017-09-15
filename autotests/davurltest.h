@@ -19,7 +19,7 @@
 #ifndef DAVURL_TEST_H
 #define DAVURL_TEST_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class DavUrlTest : public QObject
 {

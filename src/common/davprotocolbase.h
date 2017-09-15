@@ -23,9 +23,9 @@
 
 #include "davcollection.h"
 
-#include <QtCore/QList>
-#include <QtCore/QMap>
-#include <QtXml/QDomDocument>
+#include <QList>
+#include <QMap>
+#include <QDomDocument>
 #include <QSharedPointer>
 #include <QVariant>
 

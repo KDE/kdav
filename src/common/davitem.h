@@ -23,10 +23,10 @@
 
 #include <memory>
 
-#include <QtCore/QByteArray>
-#include <QtCore/QDataStream>
-#include <QtCore/QString>
-#include <QtCore/QVector>
+#include <QByteArray>
+#include <QDataStream>
+#include <QString>
+#include <QVector>
 
 
 class DavItemPrivate;

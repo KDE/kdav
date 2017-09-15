@@ -29,8 +29,8 @@
 #include <KDAV/EtagCache>
 #include <KDAV/Utils>
 
-#include <QtCore/QDebug>
-#include <QtCore/QStringList>
+#include <QDebug>
+#include <QStringList>
 #include <QCoreApplication>
 
 int main(int argc, char **argv)

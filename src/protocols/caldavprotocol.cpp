@@ -19,18 +19,18 @@
 #include "caldavprotocol.h"
 #include "common/utils.h"
 
-#include <QtCore/QDateTime>
-#include <QtCore/QStringList>
-#include <QtCore/QUrl>
-#include <QtCore/QVariant>
-#include <QtXml/QDomDocument>
+#include <QDateTime>
+#include <QStringList>
+#include <QUrl>
+#include <QVariant>
+#include <QDomDocument>
 
 using namespace KDAV;
 
 class CaldavCollectionQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QDomDocument document;
 
@@ -50,7 +50,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QString();
     }
@@ -59,7 +59,7 @@ public:
 class CaldavListEventQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QString startTime = parameter(QStringLiteral("start")).toString();
         QString endTime = parameter(QStringLiteral("end")).toString();
@@ -115,7 +115,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QStringLiteral("application/x-vnd.akonadi.calendar.event");
     }
@@ -124,7 +124,7 @@ public:
 class CaldavListTodoQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QString startTime = parameter(QStringLiteral("start")).toString();
         QString endTime = parameter(QStringLiteral("end")).toString();
@@ -180,7 +180,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QStringLiteral("application/x-vnd.akonadi.calendar.todo");
     }
@@ -189,7 +189,7 @@ public:
 class CaldavListJournalQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QString startTime = parameter(QStringLiteral("start")).toString();
         QString endTime = parameter(QStringLiteral("end")).toString();
@@ -245,7 +245,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QStringLiteral("application/x-vnd.akonadi.calendar.journal");
     }
@@ -254,7 +254,7 @@ public:
 class CaldavMultigetQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QDomDocument document;
         const QStringList urls = parameter(QStringLiteral("urls")).toStringList();
@@ -283,7 +283,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QString();
     }

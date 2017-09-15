@@ -25,8 +25,8 @@
 
 #include <memory>
 
-#include <QtCore/QVector>
-#include <QtCore/QString>
+#include <QVector>
+#include <QString>
 
 class QColor;
 

@@ -21,10 +21,10 @@
 
 #include "kpimkdav_export.h"
 
-#include <QtCore/QMap>
-#include <QtCore/QObject>
-#include <QtCore/QSet>
-#include <QtCore/QStringList>
+#include <QMap>
+#include <QObject>
+#include <QSet>
+#include <QStringList>
 
 namespace KDAV
 {

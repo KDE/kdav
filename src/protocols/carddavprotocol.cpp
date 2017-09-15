@@ -18,17 +18,17 @@
 
 #include "carddavprotocol.h"
 
-#include <QtCore/QStringList>
-#include <QtCore/QUrl>
-#include <QtCore/QVariant>
-#include <QtXml/QDomDocument>
+#include <QStringList>
+#include <QUrl>
+#include <QVariant>
+#include <QDomDocument>
 
 using namespace KDAV;
 
 class CarddavCollectionQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QDomDocument document;
 
@@ -45,7 +45,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QString();
     }
@@ -54,7 +54,7 @@ public:
 class CarddavListItemsQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QDomDocument document;
 
@@ -71,7 +71,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QStringLiteral("text/directory");
     }
@@ -80,7 +80,7 @@ public:
 class CarddavMultigetQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QDomDocument document;
         const QStringList urls = parameter(QStringLiteral("urls")).toStringList();
@@ -111,7 +111,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QString();
     }

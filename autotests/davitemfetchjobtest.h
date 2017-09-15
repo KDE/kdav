@@ -19,7 +19,7 @@
 #ifndef DAVITEMFETCHJOB_TEST_H
 #define DAVITEMFETCHJOB_TEST_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class DavItemFetchJobTest : public QObject
 {

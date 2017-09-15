@@ -26,8 +26,8 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <QtCore/QMap>
-#include <QtCore/QStringList>
+#include <QMap>
+#include <QStringList>
 
 namespace KDAV
 {
@@ -52,7 +52,7 @@ public:
     /**
      * Starts the job.
      */
-    void start() Q_DECL_OVERRIDE;
+    void start() override;
 
     /**
      * Returns the list of fetched items

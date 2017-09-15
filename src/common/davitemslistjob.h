@@ -27,7 +27,7 @@
 #include <memory>
 
 
-#include <QtCore/QStringList>
+#include <QStringList>
 
 class DavItemsListJobPrivate;
 
@@ -75,7 +75,7 @@ public:
     /**
      * Starts the job.
      */
-    void start() Q_DECL_OVERRIDE;
+    void start() override;
 
     /**
      * Returns the list of items seen including identifier url and etag information.

@@ -24,11 +24,11 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <QtCore/QList>
-#include <QtCore/QPair>
-#include <QtCore/QString>
+#include <QList>
+#include <QPair>
+#include <QString>
 
-#include <KCoreAddons/KJob>
+#include <KJob>
 
 class QDomDocument;
 
@@ -88,7 +88,7 @@ public:
     /**
      * Starts the job
      */
-    void start() Q_DECL_OVERRIDE;
+    void start() override;
 
     /**
      * Return the DavUrl used by this job

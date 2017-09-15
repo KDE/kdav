@@ -19,7 +19,7 @@
 #ifndef DAVITEMSLISTJOB_TEST_H
 #define DAVITEMSLISTJOB_TEST_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class DavItemsListJobTest : public QObject
 {

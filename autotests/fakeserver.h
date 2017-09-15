@@ -112,7 +112,7 @@ public:
      *
      * @reimp
      */
-    void run() Q_DECL_OVERRIDE;
+    void run() override;
 
     /**
      * Removes any previously-added scenarios, and adds a new one

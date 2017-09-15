@@ -25,7 +25,7 @@
 #include <KIO/Job>
 #include <KIO/DavJob>
 
-#include <QtCore/QUrl>
+#include <QUrl>
 
 using namespace KDAV;
 

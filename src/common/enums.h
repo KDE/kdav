@@ -20,7 +20,7 @@
 #define KDAV_ENUMS_H
 
 
-#include <QtCore/QFlags>
+#include <QFlags>
 
 namespace KDAV
 {

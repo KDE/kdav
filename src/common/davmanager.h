@@ -23,8 +23,8 @@
 
 #include "enums.h"
 
-#include <QtCore/QMap>
-#include <QtCore/QString>
+#include <QMap>
+#include <QString>
 
 namespace KIO
 {

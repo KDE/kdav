@@ -26,8 +26,8 @@
 
 #include "libkdav_debug.h"
 
-#include <QtCore/QUrl>
-#include <QtXml/QDomDocument>
+#include <QUrl>
+#include <QDomDocument>
 
 using namespace KDAV;
 

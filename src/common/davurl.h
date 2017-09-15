@@ -23,8 +23,8 @@
 
 #include "enums.h"
 
-#include <QtCore/QUrl>
-#include <QtCore/QVector>
+#include <QUrl>
+#include <QVector>
 
 namespace KDAV
 {

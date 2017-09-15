@@ -25,19 +25,19 @@ class CaldavProtocol : public KDAV::DavMultigetProtocol
 {
 public:
     CaldavProtocol();
-    bool supportsPrincipals() const Q_DECL_OVERRIDE;
-    bool useReport() const Q_DECL_OVERRIDE;
-    bool useMultiget() const Q_DECL_OVERRIDE;
-    QString principalHomeSet() const Q_DECL_OVERRIDE;
-    QString principalHomeSetNS() const Q_DECL_OVERRIDE;
-    KDAV::XMLQueryBuilder::Ptr collectionsQuery() const Q_DECL_OVERRIDE;
-    QString collectionsXQuery() const Q_DECL_OVERRIDE;
-    QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const Q_DECL_OVERRIDE;
-    KDAV::XMLQueryBuilder::Ptr itemsReportQuery(const QStringList &urls) const Q_DECL_OVERRIDE;
-    QString responseNamespace() const Q_DECL_OVERRIDE;
-    QString dataTagName() const Q_DECL_OVERRIDE;
+    bool supportsPrincipals() const override;
+    bool useReport() const override;
+    bool useMultiget() const override;
+    QString principalHomeSet() const override;
+    QString principalHomeSetNS() const override;
+    KDAV::XMLQueryBuilder::Ptr collectionsQuery() const override;
+    QString collectionsXQuery() const override;
+    QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const override;
+    KDAV::XMLQueryBuilder::Ptr itemsReportQuery(const QStringList &urls) const override;
+    QString responseNamespace() const override;
+    QString dataTagName() const override;
 
-    KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const Q_DECL_OVERRIDE;
+    KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const override;
 };
 
 #endif

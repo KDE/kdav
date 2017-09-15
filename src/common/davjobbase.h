@@ -23,7 +23,7 @@
 
 #include "kpimkdav_export.h"
 
-#include <KCoreAddons/KJob>
+#include <KJob>
 
 class DavJobBasePrivate;
 

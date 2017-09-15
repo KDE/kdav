@@ -20,15 +20,15 @@
 
 #include "common/utils.h"
 
-#include <QtCore/QVariant>
-#include <QtXml/QDomDocument>
+#include <QVariant>
+#include <QDomDocument>
 
 using namespace KDAV;
 
 class GroupdavCollectionQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QDomDocument document;
 
@@ -44,7 +44,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QString();
     }
@@ -53,7 +53,7 @@ public:
 class GroupdavItemQueryBuilder : public XMLQueryBuilder
 {
 public:
-    QDomDocument buildQuery() const Q_DECL_OVERRIDE
+    QDomDocument buildQuery() const override
     {
         QDomDocument document;
 
@@ -70,7 +70,7 @@ public:
         return document;
     }
 
-    QString mimeType() const Q_DECL_OVERRIDE
+    QString mimeType() const override
     {
         return QString();
     }

@@ -29,7 +29,7 @@
 #include <KIO/Job>
 
 #include <QColor>
-#include <QtCore/QBuffer>
+#include <QBuffer>
 #include <QtXmlPatterns/QXmlQuery>
 
 using namespace KDAV;

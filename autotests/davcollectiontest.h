@@ -19,7 +19,7 @@
 #ifndef DAVCOLLECTION_TEST_H
 #define DAVCOLLECTION_TEST_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class DavCollectionTest : public QObject
 {

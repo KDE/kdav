@@ -19,7 +19,7 @@
 #ifndef DAVITEM_TEST_H
 #define DAVITEM_TEST_H
 
-#include <QtCore/QObject>
+#include <QObject>
 
 class DavItemTest : public QObject
 {
