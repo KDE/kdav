@@ -24,7 +24,6 @@
 #include "davmanager.h"
 #include "davprotocolbase.h"
 
-#include <QByteArray>
 #include <QDateTime>
 #include <QString>
 

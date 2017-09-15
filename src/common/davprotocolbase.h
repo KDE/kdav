@@ -23,7 +23,6 @@
 
 #include "davcollection.h"
 
-#include <QList>
 #include <QMap>
 #include <QDomDocument>
 #include <QSharedPointer>

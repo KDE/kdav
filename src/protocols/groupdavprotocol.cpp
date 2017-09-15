@@ -20,7 +20,6 @@
 
 #include "common/utils.h"
 
-#include <QVariant>
 #include <QDomDocument>
 
 using namespace KDAV;

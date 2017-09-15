@@ -22,8 +22,6 @@
 #include <KDAV/DavUrl>
 
 #include <QColor>
-#include <QDebug>
-#include <QDataStream>
 #include <QTest>
 
 void DavCollectionTest::createEmpty()

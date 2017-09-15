@@ -28,8 +28,6 @@
 #include <KIO/DavJob>
 #include <KIO/Job>
 
-#include <QBuffer>
-#include <QDebug>
 
 using namespace KDAV;
 

@@ -24,7 +24,6 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <QList>
 #include <QDomDocument>
 
 #include <KJob>

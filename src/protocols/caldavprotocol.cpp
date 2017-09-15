@@ -19,10 +19,8 @@
 #include "caldavprotocol.h"
 #include "common/utils.h"
 
-#include <QDateTime>
 #include <QStringList>
 #include <QUrl>
-#include <QVariant>
 #include <QDomDocument>
 
 using namespace KDAV;

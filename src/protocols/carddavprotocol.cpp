@@ -20,7 +20,6 @@
 
 #include <QStringList>
 #include <QUrl>
-#include <QVariant>
 #include <QDomDocument>
 
 using namespace KDAV;
