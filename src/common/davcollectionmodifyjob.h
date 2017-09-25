@@ -72,10 +72,8 @@ public:
      */
     void start() override;
 
-private Q_SLOTS:
-    void davJobFinished(KJob *job);
-
 private:
+    void davJobFinished(KJob *job);
     DavUrl mUrl;
     QDomDocument mQuery;
 

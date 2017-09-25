@@ -59,11 +59,9 @@ public:
      */
     int freshResponseCode() const;
 
-private Q_SLOTS:
+private:
     void davJobFinished(KJob *);
     void conflictingItemFetched(KJob *);
-
-private:
     DavItem mItem;
     DavItem mFreshItem;
     int mFreshResponseCode;

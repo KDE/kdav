@@ -100,11 +100,9 @@ public:
      */
     QList<Result> results() const;
 
-private Q_SLOTS:
+private:
     void principalCollectionSetSearchFinished(KJob *job);
     void principalPropertySearchFinished(KJob *job);
-
-private:
     void buildReportQuery(QDomDocument &query);
 
 private:

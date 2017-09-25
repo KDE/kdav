@@ -73,11 +73,9 @@ Q_SIGNALS:
      */
     void collectionDiscovered(int protocol, const QString &collectionUrl, const QString &configuredUrl);
 
-private Q_SLOTS:
+private:
     void principalFetchFinished(KJob *);
     void collectionsFetchFinished(KJob *);
-
-private:
     void doCollectionsFetch(const QUrl &url);
     void subjobFinished();
 

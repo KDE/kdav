@@ -57,11 +57,9 @@ public:
 
     QUrl itemUrl() const;
 
-private Q_SLOTS:
+private:
     void davJobFinished(KJob *);
     void itemRefreshed(KJob *);
-
-private:
     DavItem mItem;
     int mRedirectCount;
 };

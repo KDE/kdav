@@ -64,10 +64,8 @@ public:
      */
     DavItem item(const QString &url) const;
 
-private Q_SLOTS:
-    void davJobFinished(KJob *);
-
 private:
+    void davJobFinished(KJob *);
     DavUrl mCollectionUrl;
     QStringList mUrls;
     QMap<QString, DavItem> mItems;

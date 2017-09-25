@@ -93,10 +93,8 @@ public:
      */
     QStringList deletedItems() const;
 
-private Q_SLOTS:
-    void davJobFinished(KJob *);
-
 private:
+    void davJobFinished(KJob *);
     std::unique_ptr<DavItemsListJobPrivate> d;
 };
 

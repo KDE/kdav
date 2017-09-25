@@ -57,10 +57,8 @@ public:
      */
     QStringList homeSets() const;
 
-private Q_SLOTS:
-    void davJobFinished(KJob *);
-
 private:
+    void davJobFinished(KJob *);
     /**
      * Start the fetch process.
      *

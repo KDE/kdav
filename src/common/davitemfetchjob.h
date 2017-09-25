@@ -54,10 +54,8 @@ public:
      */
     DavItem item() const;
 
-private Q_SLOTS:
-    void davJobFinished(KJob *);
-
 private:
+    void davJobFinished(KJob *);
     DavUrl mUrl;
     DavItem mItem;
 };
