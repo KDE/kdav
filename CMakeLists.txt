@@ -1,8 +1,7 @@
-cmake_minimum_required(VERSION 2.8.12)
-
-project(libkdav)
-
+cmake_minimum_required(VERSION 3.0)
 set(PIM_VERSION "5.6.40")
+
+project(libkdav VERSION ${PIM_VERSION})
 
 set(LIBKDAV_VERSION ${PIM_VERSION})
 
