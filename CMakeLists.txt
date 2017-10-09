@@ -12,7 +12,7 @@ set(KF5_VERSION "5.38.0")
 find_package(ECM ${KF5_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
-include(ECMPackageConfigHelpers)
+include(CMakeFindDependencyMacro)
 include(ECMSetupVersion)
 include(GenerateExportHeader)
 include(ECMGenerateHeaders)
@@ -49,7 +49,7 @@ ecm_setup_version(${LIBKDAV_VERSION} VARIABLE_PREFIX KDAV
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KPimKDAV")
 
-ecm_configure_package_config_file(
+configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/KPimKDAVConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/KPimKDAVConfig.cmake"
     INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
