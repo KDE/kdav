@@ -33,7 +33,7 @@ using namespace KDAV;
 
 class DavItemsListJobPrivate {
 public:
-    DavItemsListJobPrivate(const DavUrl &url, std::shared_ptr<EtagCache> cache);
+    DavItemsListJobPrivate(const DavUrl &url, const std::shared_ptr<EtagCache> &cache);
 
     DavUrl mUrl;
     std::shared_ptr<EtagCache> mEtagCache;
@@ -47,7 +47,7 @@ public:
     uint mSubJobCount;
 };
 
-DavItemsListJobPrivate::DavItemsListJobPrivate(const DavUrl &url, std::shared_ptr<EtagCache> cache)
+DavItemsListJobPrivate::DavItemsListJobPrivate(const DavUrl &url, const std::shared_ptr<EtagCache> &cache)
     : mUrl(url)
     , mEtagCache(cache)
     , mSubJobCount(0)
@@ -55,7 +55,7 @@ DavItemsListJobPrivate::DavItemsListJobPrivate(const DavUrl &url, std::shared_pt
 }
 
 
-DavItemsListJob::DavItemsListJob(const DavUrl &url, std::shared_ptr<EtagCache> cache, QObject *parent)
+DavItemsListJob::DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent)
     : DavJobBase(parent)
     , d(std::unique_ptr<DavItemsListJobPrivate>(new DavItemsListJobPrivate(url, cache)))
 {
