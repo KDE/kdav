@@ -7,7 +7,7 @@ set(LIBKDAV_VERSION ${PIM_VERSION})
 
 configure_file(libkdav-version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/libkdav-version.h @ONLY)
 
-set(KF5_VERSION "5.38.0")
+set(KF5_VERSION "5.39.0")
 
 find_package(ECM ${KF5_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
