@@ -72,8 +72,10 @@ install(FILES
 install(FILES kdav.categories DESTINATION ${KDE_INSTALL_CONFDIR})
 
 add_subdirectory(src)
-add_subdirectory(autotests)
-add_subdirectory(test)
+if(BUILD_TESTING)
+    add_subdirectory(autotests)
+    add_subdirectory(test)
+endif()
 
 feature_summary(WHAT ALL
                 INCLUDE_QUIET_PACKAGES
