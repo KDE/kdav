@@ -98,7 +98,7 @@ public:
     /**
      * Get the job results.
      */
-    QList<Result> results() const;
+    QVector<Result> results() const;
 
 private:
     void principalCollectionSetSearchFinished(KJob *job);
@@ -112,9 +112,10 @@ private:
     int mPrincipalPropertySearchSubJobCount;
     bool mPrincipalPropertySearchSubJobSuccessful;
     QList< QPair<QString, QString> > mFetchProperties;
-    QList<Result> mResults;
+    QVector<Result> mResults;
 };
 
 }
 
+Q_DECLARE_TYPEINFO(KDAV::DavPrincipalSearchJob::Result, Q_MOVABLE_TYPE);
 #endif

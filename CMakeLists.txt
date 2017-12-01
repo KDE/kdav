@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-set(PIM_VERSION "5.7.40")
+set(PIM_VERSION "5.7.41")
 
 project(libkdav VERSION ${PIM_VERSION})
 
@@ -30,7 +30,7 @@ set(QT_REQUIRED_VERSION "5.8.0")
 
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui XmlPatterns Test)
 
-find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons KIO)
+find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons KIO I18n)
 
 # setup lib
 

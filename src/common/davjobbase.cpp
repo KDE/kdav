@@ -26,14 +26,12 @@ class DavJobBasePrivate {
 public:
     DavJobBasePrivate();
 
-    int mLatestResponseCode;
-    int mJobErrorCode;
+    int mLatestResponseCode = 0;
+    int mJobErrorCode = 0;
     QString mInternalErrorText;
 };
 
 DavJobBasePrivate::DavJobBasePrivate()
-    : mLatestResponseCode(0)
-    , mJobErrorCode(0)
 {
 }
 
@@ -68,7 +66,7 @@ bool DavJobBase::canRetryLater() const
         // Payment required
         ret = true;
     } else if (latestResponseCode() == 407) {
-        // Proxy authentication required
+        // Proxy authentication required
         ret = true;
     } else if (latestResponseCode() == 408) {
         // Request timeout

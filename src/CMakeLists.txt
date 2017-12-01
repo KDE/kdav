@@ -1,3 +1,4 @@
+add_definitions(-DTRANSLATION_DOMAIN=\"libkdav\")
 include_directories(
    common/
    protocols/
@@ -111,6 +112,7 @@ PRIVATE
     Qt5::Gui
     Qt5::XmlPatterns
     KF5::KIOCore
+    KF5::I18n
     )
 
 set_target_properties(KPimKDAV PROPERTIES

@@ -312,7 +312,7 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
     }
 }
 
-QList< DavPrincipalSearchJob::Result > DavPrincipalSearchJob::results() const
+QVector< DavPrincipalSearchJob::Result > DavPrincipalSearchJob::results() const
 {
     return mResults;
 }

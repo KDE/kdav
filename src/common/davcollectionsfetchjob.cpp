@@ -101,7 +101,7 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
         return;
     }
 
-    foreach (const QString &homeSet, homeSets) {
+    for (const QString &homeSet : homeSets) {
         QUrl url = mUrl.url();
 
         if (homeSet.startsWith(QLatin1Char('/'))) {

@@ -17,6 +17,7 @@
 */
 
 #include "daverror.h"
+#include <KLocalizedString>
 
 #include <KIO/Global>
 #include <KIO/Job>
@@ -49,12 +50,10 @@ QString Error::internalErrorText() const
     return mErrorText;
 }
 
-
 int Error::jobErrorCode() const
 {
     return mJobErrorCode;
 }
-
 
 int Error::responseCode() const
 {
@@ -82,80 +81,80 @@ QString Error::errorText() const
     case ERR_PROBLEM_WITH_REQUEST: {
         // User-side error
         if (mResponseCode == 401) {
-            err = QStringLiteral("Invalid username/password");
+            err = i18n("Invalid username/password");
         } else if (mResponseCode == 403) {
-            err = QStringLiteral("Access forbidden");
+            err = i18n("Access forbidden");
         } else if (mResponseCode == 404) {
-            err = QStringLiteral("Resource not found");
+            err = i18n("Resource not found");
         } else {
-            err = QStringLiteral("HTTP error");
+            err = i18n("HTTP error");
         }
-        result = QStringLiteral("There was a problem with the request.\n"
-                          "%1 (%2).").arg(err).arg(mResponseCode);
+        result = i18n("There was a problem with the request.\n"
+                          "%1 (%2).", err, mResponseCode);
         break;
         }
     case ERR_NO_MULTIGET: {
-        result = QStringLiteral("Protocol for the collection does not support MULTIGET");
+        result = i18n("Protocol for the collection does not support MULTIGET");
         break;
         }
     case ERR_SERVER_UNRECOVERABLE: {
-        result = QStringLiteral("The server encountered an error that prevented it from completing your request: %1 (%2)").arg(err).arg(mResponseCode);
+        result = i18n("The server encountered an error that prevented it from completing your request: %1 (%2)", err, mResponseCode);
         break;
         }
     case ERR_COLLECTIONDELETE: {
-        result = QStringLiteral("There was a problem with the request. The collection has not been deleted from the server.\n"
-                          "%1 (%2).").arg(err).arg(mResponseCode);
+        result = i18n("There was a problem with the request. The collection has not been deleted from the server.\n"
+                          "%1 (%2).", err, mResponseCode);
         break;
         }
     case ERR_COLLECTIONFETCH: {
-        result = QStringLiteral("Invalid responses from backend");
+        result = i18n("Invalid responses from backend");
         break;
         }
     case ERR_COLLECTIONFETCH_XQUERY_SETFOCUS: {
-        result = QStringLiteral("Error setting focus for XQuery");
+        result = i18n("Error setting focus for XQuery");
         break;
         }
     case ERR_COLLECTIONFETCH_XQUERY_INVALID: {
-        result = QStringLiteral("Invalid XQuery submitted by DAV implementation");
+        result = i18n("Invalid XQuery submitted by DAV implementation");
         break;
         }
     case ERR_COLLECTIONMODIFY: {
-        result = QStringLiteral("There was a problem with the request. The collection has not been modified on the server.\n"
-                      "%1 (%2).").arg(err).arg(mResponseCode);
+        result = i18n("There was a problem with the request. The collection has not been modified on the server.\n"
+                      "%1 (%2).", err, mResponseCode);
         break;
         }
     case ERR_COLLECTIONMODIFY_NO_PROPERITES: {
-        result = QStringLiteral("No properties to change or remove");
+        result = i18n("No properties to change or remove");
         break;
         }
     case ERR_COLLECTIONMODIFY_RESPONSE: {
-        result = QStringLiteral("There was an error when modifying the properties");
+        result = i18n("There was an error when modifying the properties");
         if (!mErrorText.isEmpty()) {
-            result.append(QStringLiteral("\nThe server returned more information:\n%1").arg(mErrorText));
+            result.append(i18n("\nThe server returned more information:\n%1", mErrorText));
         }
         break;
         }
     case ERR_ITEMCREATE: {
-        result = QStringLiteral("There was a problem with the request. The item has not been created on the server.\n"
-                      "%1 (%2).").arg(err).arg(mResponseCode);
+        result = i18n("There was a problem with the request. The item has not been created on the server.\n"
+                      "%1 (%2).", err, mResponseCode);
         break;
         }
     case ERR_ITEMDELETE: {
-        result = QStringLiteral("There was a problem with the request. The item has not been deleted from the server.\n"
-                      "%1 (%2).").arg(err).arg(mResponseCode);
+        result = i18n("There was a problem with the request. The item has not been deleted from the server.\n"
+                      "%1 (%2).", err, mResponseCode);
         break;
         }
     case ERR_ITEMMODIFY: {
-        result = QStringLiteral("There was a problem with the request. The item was not modified on the server.\n"
-                      "%1 (%2).").arg(err).arg(mResponseCode);
+        result = i18n("There was a problem with the request. The item was not modified on the server.\n"
+                      "%1 (%2).", err, mResponseCode);
         break;
         }
     case ERR_ITEMLIST: {
-        result = QStringLiteral("There was a problem with the request.");
+        result = i18n("There was a problem with the request.");
         break;
     };
     case ERR_ITEMLIST_NOMIMETYPE: {
-        result = QStringLiteral("There was a problem with the request. The requested mimetypes are not supported.");
+        result = i18n("There was a problem with the request. The requested mimetypes are not supported.");
         break;
     }
     case NO_ERR:
