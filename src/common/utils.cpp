@@ -159,10 +159,10 @@ Protocol Utils::protocolByName(const QString &name)
 
 QString Utils::createUniqueId()
 {
-    qint64 time = QDateTime::currentMSecsSinceEpoch() / 1000;
-    int r = qrand() % 1000;
-    QString id = QLatin1String("R") + QString::number(r);
-    QString uid = QString::number(time) + QLatin1String(".") + id;
+    const qint64 time = QDateTime::currentMSecsSinceEpoch() / 1000;
+    const int r = qrand() % 1000;
+    const QString id = QLatin1Char('R') + QString::number(r);
+    const QString uid = QString::number(time) + QLatin1Char('.') + id;
     return uid;
 }
 
