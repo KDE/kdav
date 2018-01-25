@@ -133,7 +133,7 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
         const QDomElement statusElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("status"));
 
         const QString statusText = statusElement.text();
-        if (statusText.contains(QStringLiteral("200"))) {
+        if (statusText.contains(QLatin1String("200"))) {
             continue;
         } else {
             // Generic error

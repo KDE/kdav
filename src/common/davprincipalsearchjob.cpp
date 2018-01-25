@@ -142,7 +142,7 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
         for (int i = 0; i < propstats.length(); ++i) {
             const QDomElement propstatCandidate = propstats.item(i).toElement();
             const QDomElement statusElement = Utils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
-            if (statusElement.text().contains(QStringLiteral("200"))) {
+            if (statusElement.text().contains(QLatin1String("200"))) {
                 propstatElement = propstatCandidate;
             }
         }
@@ -272,7 +272,7 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
         for (int i = 0; i < propStatsEnd; ++i) {
             const QDomElement propstatCandidate = propstats.item(i).toElement();
             const QDomElement statusElement = Utils::firstChildElementNS(propstatCandidate, QStringLiteral("DAV:"), QStringLiteral("status"));
-            if (statusElement.text().contains(QStringLiteral("200"))) {
+            if (statusElement.text().contains(QLatin1String("200"))) {
                 propstatElement = propstatCandidate;
             }
         }
