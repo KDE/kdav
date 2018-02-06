@@ -150,7 +150,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
         // Validate that we got a valid PROPFIND response
         QDomElement rootElement = davJob->response().documentElement();
-        if (rootElement.tagName().compare(QStringLiteral("multistatus"), Qt::CaseInsensitive) != 0) {
+        if (rootElement.tagName().compare(QLatin1String("multistatus"), Qt::CaseInsensitive) != 0) {
             setError(ERR_COLLECTIONFETCH);
             setErrorTextFromDavError();
             subjobFinished();
