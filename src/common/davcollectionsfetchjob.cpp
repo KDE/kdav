@@ -179,8 +179,8 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
         QString responsesStr;
         xquery.evaluateTo(&responsesStr);
-        responsesStr.prepend(QStringLiteral("<responses>"));
-        responsesStr.append(QStringLiteral("</responses>"));
+        responsesStr.prepend(QLatin1String("<responses>"));
+        responsesStr.append(QLatin1String("</responses>"));
 
         QDomDocument document;
         if (!document.setContent(responsesStr, true)) {
