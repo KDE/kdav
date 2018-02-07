@@ -32,7 +32,7 @@ static QString etagFromHeaders(const QString &headers)
 
     QString etag;
     for (const QString &header : allHeaders) {
-        if (header.startsWith(QStringLiteral("etag:"), Qt::CaseInsensitive)) {
+        if (header.startsWith(QLatin1String("etag:"), Qt::CaseInsensitive)) {
             etag = header.section(QLatin1Char(' '), 1);
         }
     }
