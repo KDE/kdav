@@ -103,7 +103,7 @@ void DavJobBase::setLatestResponseCode(unsigned int code)
 
 Error DavJobBase::davError() const
 {
-    return Error((KDAV::ErrorNumber)error(), d->mLatestResponseCode, d->mInternalErrorText, d->mJobErrorCode);
+    return Error(static_cast<KDAV::ErrorNumber>(error()), d->mLatestResponseCode, d->mInternalErrorText, d->mJobErrorCode);
 }
 
 void DavJobBase::setJobErrorText(const QString &errorText)

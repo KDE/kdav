@@ -111,17 +111,14 @@ bool DavManager::createProtocol(Protocol protocol)
     switch (protocol) {
     case KDAV::CalDav:
         mProtocols.insert(KDAV::CalDav, new CaldavProtocol());
-        break;
+        return true;
     case KDAV::CardDav:
         mProtocols.insert(KDAV::CardDav, new CarddavProtocol());
-        break;
+        return true;
     case KDAV::GroupDav:
         mProtocols.insert(KDAV::GroupDav, new GroupdavProtocol());
-        break;
-    default:
-        qCCritical(KDAV_LOG) << "Unknown protocol: " << static_cast<int>(protocol);
-        return false;
+        return true;
     }
-
-    return true;
+    qCCritical(KDAV_LOG) << "Unknown protocol: " << static_cast<int>(protocol);
+    return false;
 }
