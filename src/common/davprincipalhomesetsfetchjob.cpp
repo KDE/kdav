@@ -29,7 +29,8 @@
 using namespace KDAV;
 
 DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const DavUrl &url, QObject *parent)
-    : DavJobBase(parent), mUrl(url)
+    : DavJobBase(parent)
+    , mUrl(url)
 {
 }
 
@@ -71,9 +72,9 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ?
-                             0 :
-                             responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty()
+                             ? 0
+                             : responseCodeStr.toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
@@ -146,7 +147,6 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
 
     QDomElement responseElement = Utils::firstChildElementNS(multistatusElement, QStringLiteral("DAV:"), QStringLiteral("response"));
     while (!responseElement.isNull()) {
-
         QDomElement propstatElement;
 
         // check for the valid propstat, without giving up on first error

@@ -23,9 +23,7 @@
 
 #include "davprotocolbase.h"
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short Base class for protocols that implement multiget capabilities
  */
@@ -53,7 +51,6 @@ public:
      */
     virtual QString dataTagName() const = 0;
 };
-
 }
 
 #endif

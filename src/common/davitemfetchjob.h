@@ -25,9 +25,7 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A job that fetches a DAV item from the DAV server.
  */
@@ -59,7 +57,6 @@ private:
     DavUrl mUrl;
     DavItem mItem;
 };
-
 }
 
 #endif

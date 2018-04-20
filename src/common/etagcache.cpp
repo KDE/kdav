@@ -23,7 +23,6 @@ using namespace KDAV;
 EtagCache::EtagCache(QObject *parent)
     : QObject(parent)
 {
-
 }
 
 void EtagCache::setEtag(const QString &remoteId, const QString &etag)
@@ -78,4 +77,3 @@ QStringList EtagCache::changedRemoteIds() const
 {
     return mChangedRemoteIds.toList();
 }
-

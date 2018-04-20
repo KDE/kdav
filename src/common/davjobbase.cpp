@@ -22,7 +22,8 @@
 
 using namespace KDAV;
 
-class DavJobBasePrivate {
+class DavJobBasePrivate
+{
 public:
     DavJobBasePrivate();
 

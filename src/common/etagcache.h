@@ -26,9 +26,7 @@
 #include <QSet>
 #include <QStringList>
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A helper class to cache etags.
  *
@@ -102,7 +100,6 @@ private:
     QMap<QString, QString> mCache;
     QSet<QString> mChangedRemoteIds;
 };
-
 }
 
 #endif

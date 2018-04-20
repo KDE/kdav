@@ -23,7 +23,9 @@
 using namespace KDAV;
 
 DavCollectionsMultiFetchJob::DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent)
-    : KJob(parent), mUrls(urls), mSubJobCount(urls.size())
+    : KJob(parent)
+    , mUrls(urls)
+    , mSubJobCount(urls.size())
 {
 }
 
@@ -61,4 +63,3 @@ void DavCollectionsMultiFetchJob::davJobFinished(KJob *job)
         emitResult();
     }
 }
-

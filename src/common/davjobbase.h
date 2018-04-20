@@ -27,8 +27,7 @@
 
 class DavJobBasePrivate;
 
-namespace KDAV
-{
+namespace KDAV {
 class Error;
 
 /**
@@ -99,7 +98,6 @@ protected:
 private:
     std::unique_ptr<DavJobBasePrivate> d;
 };
-
 }
 
 #endif

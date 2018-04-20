@@ -28,17 +28,13 @@
 #include <QString>
 #include <QVector>
 
-
 class DavItemPrivate;
 
-namespace KDAV
-{
-    class DavUrl;
+namespace KDAV {
+class DavUrl;
 }
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A helper class to store information about DAV resources.
  *
@@ -122,7 +118,6 @@ private:
 
 KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);
 KPIMKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavItem &item);
-
 }
 
 Q_DECLARE_TYPEINFO(KDAV::DavItem, Q_MOVABLE_TYPE);

@@ -30,14 +30,16 @@
 using namespace KDAV;
 
 DavItemsFetchJob::DavItemsFetchJob(const DavUrl &collectionUrl, const QStringList &urls, QObject *parent)
-    : DavJobBase(parent), mCollectionUrl(collectionUrl), mUrls(urls)
+    : DavJobBase(parent)
+    , mCollectionUrl(collectionUrl)
+    , mUrls(urls)
 {
 }
 
 void DavItemsFetchJob::start()
 {
-    const DavMultigetProtocol *protocol =
-        dynamic_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(mCollectionUrl.protocol()));
+    const DavMultigetProtocol *protocol
+        = dynamic_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(mCollectionUrl.protocol()));
     if (!protocol) {
         setError(ERR_NO_MULTIGET);
         setErrorTextFromDavError();
@@ -70,9 +72,9 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ?
-                             0 :
-                             responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty()
+                             ? 0
+                             : responseCodeStr.toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
@@ -86,8 +88,8 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
         return;
     }
 
-    const DavMultigetProtocol *protocol =
-        static_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(mCollectionUrl.protocol()));
+    const DavMultigetProtocol *protocol
+        = static_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(mCollectionUrl.protocol()));
 
     const QDomDocument document = davJob->response();
     const QDomElement documentElement = document.documentElement();
@@ -136,8 +138,8 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
 
         // extract content
         const QDomElement dataElement = Utils::firstChildElementNS(propElement,
-                                        protocol->responseNamespace(),
-                                        protocol->dataTagName());
+                                                                   protocol->responseNamespace(),
+                                                                   protocol->dataTagName());
 
         if (dataElement.isNull()) {
             responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));

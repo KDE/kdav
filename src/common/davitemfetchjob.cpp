@@ -41,7 +41,8 @@ static QString etagFromHeaders(const QString &headers)
 }
 
 DavItemFetchJob::DavItemFetchJob(const DavItem &item, QObject *parent)
-    : DavJobBase(parent), mItem(item)
+    : DavJobBase(parent)
+    , mItem(item)
 {
 }
 
@@ -68,9 +69,9 @@ void DavItemFetchJob::davJobFinished(KJob *job)
 {
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
     const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ?
-                             0 :
-                             responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty()
+                             ? 0
+                             : responseCodeStr.toInt();
 
     setLatestResponseCode(responseCode);
 
@@ -88,4 +89,3 @@ void DavItemFetchJob::davJobFinished(KJob *job)
 
     emitResult();
 }
-

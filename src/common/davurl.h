@@ -26,9 +26,7 @@
 #include <QUrl>
 #include <QVector>
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A helper class to combine url and protocol of a DAV url.
  */
@@ -85,7 +83,6 @@ private:
 
 KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavUrl &url);
 KPIMKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavUrl &url);
-
 }
 
 Q_DECLARE_TYPEINFO(KDAV::DavUrl, Q_MOVABLE_TYPE);

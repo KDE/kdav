@@ -30,7 +30,9 @@
 using namespace KDAV;
 
 DavItemCreateJob::DavItemCreateJob(const DavItem &item, QObject *parent)
-    : DavJobBase(parent), mItem(item), mRedirectCount(0)
+    : DavJobBase(parent)
+    , mItem(item)
+    , mRedirectCount(0)
 {
 }
 
@@ -65,9 +67,9 @@ void DavItemCreateJob::davJobFinished(KJob *job)
 {
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
     const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ?
-                             0 :
-                             responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty()
+                             ? 0
+                             : responseCodeStr.toInt();
     if (storedJob->error()) {
         setLatestResponseCode(responseCode);
         setError(ERR_ITEMCREATE);
@@ -131,4 +133,3 @@ void DavItemCreateJob::itemRefreshed(KJob *job)
     }
     emitResult();
 }
-

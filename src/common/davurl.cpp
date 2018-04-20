@@ -28,7 +28,8 @@ DavUrl::DavUrl()
 }
 
 DavUrl::DavUrl(const QUrl &url, Protocol protocol)
-    : mUrl(url), mProtocol(protocol)
+    : mUrl(url)
+    , mProtocol(protocol)
 {
 }
 
@@ -75,7 +76,7 @@ QDataStream &KDAV::operator>>(QDataStream &stream, DavUrl &davUrl)
     stream >> p;
     stream >> url;
 
-    davUrl = DavUrl(url, static_cast<Protocol>( p.toInt() ));
+    davUrl = DavUrl(url, static_cast<Protocol>(p.toInt()));
 
     return stream;
 }

@@ -25,14 +25,11 @@
 
 #include <QDomElement>
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A namespace that contains helper methods for DAV functionality.
  */
-namespace Utils
-{
+namespace Utils {
 /**
  * Returns the untranslated name of the given DAV @p protocol dialect.
  */
@@ -74,7 +71,6 @@ QString KPIMKDAV_EXPORT createUniqueId();
  */
 QString KPIMKDAV_EXPORT contactsMimeType(Protocol protocol);
 }
-
 }
 
 #endif

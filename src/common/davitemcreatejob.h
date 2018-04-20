@@ -25,9 +25,7 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A job to create a DAV item on the DAV server.
  */
@@ -63,7 +61,6 @@ private:
     DavItem mItem;
     int mRedirectCount;
 };
-
 }
 
 #endif

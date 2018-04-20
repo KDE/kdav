@@ -28,9 +28,7 @@
 
 #include <QStringList>
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A job that fetches home sets for a principal.
  */
@@ -76,7 +74,6 @@ private:
     DavUrl mUrl;
     QStringList mHomeSets;
 };
-
 }
 
 #endif

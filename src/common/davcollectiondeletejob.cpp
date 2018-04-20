@@ -26,7 +26,8 @@
 using namespace KDAV;
 
 DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUrl &url, QObject *parent)
-    : DavJobBase(parent), mUrl(url)
+    : DavJobBase(parent)
+    , mUrl(url)
 {
 }
 
@@ -45,9 +46,9 @@ void DavCollectionDeleteJob::davJobFinished(KJob *job)
     KIO::DeleteJob *deleteJob = qobject_cast<KIO::DeleteJob *>(job);
 
     if (deleteJob->error() && deleteJob->error() != KIO::ERR_NO_CONTENT) {
-        const int responseCode = deleteJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
-                                 0 :
-                                 deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+        const int responseCode = deleteJob->queryMetaData(QStringLiteral("responsecode")).isEmpty()
+                                 ? 0
+                                 : deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
         setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONDELETE);
@@ -58,4 +59,3 @@ void DavCollectionDeleteJob::davJobFinished(KJob *job)
 
     emitResult();
 }
-

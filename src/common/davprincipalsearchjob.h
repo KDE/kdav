@@ -32,9 +32,7 @@
 
 class QDomDocument;
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A job that search a DAV principal on a server
  *
@@ -114,7 +112,6 @@ private:
     QList< QPair<QString, QString> > mFetchProperties;
     QVector<Result> mResults;
 };
-
 }
 
 Q_DECLARE_TYPEINFO(KDAV::DavPrincipalSearchJob::Result, Q_MOVABLE_TYPE);

@@ -26,14 +26,11 @@
 
 #include <memory>
 
-
 #include <QStringList>
 
 class DavItemsListJobPrivate;
 
-namespace KDAV
-{
-
+namespace KDAV {
 class EtagCache;
 class DavUrl;
 
@@ -97,7 +94,6 @@ private:
     void davJobFinished(KJob *);
     std::unique_ptr<DavItemsListJobPrivate> d;
 };
-
 }
 
 #endif

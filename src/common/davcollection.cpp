@@ -27,7 +27,9 @@ using namespace KDAV;
 class DavCollectionPrivate
 {
 public:
-    DavCollectionPrivate(DavCollection *qPtr) : q(qPtr) {}
+    DavCollectionPrivate(DavCollection *qPtr) : q(qPtr)
+    {
+    }
 
     void fillFrom(const DavCollectionPrivate &other);
 
@@ -49,7 +51,6 @@ void DavCollectionPrivate::fillFrom(const DavCollectionPrivate &other)
     mContentTypes = other.mContentTypes;
     mPrivileges = other.mPrivileges;
 }
-
 
 DavCollection::DavCollection()
     : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
@@ -140,4 +141,3 @@ Privileges DavCollection::privileges() const
 {
     return d->mPrivileges;
 }
-

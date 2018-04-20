@@ -29,10 +29,13 @@
 
 using namespace KDAV;
 
-DavPrincipalSearchJob::DavPrincipalSearchJob(const DavUrl &url, DavPrincipalSearchJob::FilterType type,
-        const QString &filter, QObject *parent)
-    : DavJobBase(parent), mUrl(url), mType(type), mFilter(filter), mPrincipalPropertySearchSubJobCount(0),
-      mPrincipalPropertySearchSubJobSuccessful(false)
+DavPrincipalSearchJob::DavPrincipalSearchJob(const DavUrl &url, DavPrincipalSearchJob::FilterType type, const QString &filter, QObject *parent)
+    : DavJobBase(parent)
+    , mUrl(url)
+    , mType(type)
+    , mFilter(filter)
+    , mPrincipalPropertySearchSubJobCount(0)
+    , mPrincipalPropertySearchSubJobSuccessful(false)
 {
 }
 
@@ -84,9 +87,9 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ?
-                             0 :
-                             responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty()
+                             ? 0
+                             : responseCodeStr.toInt();
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);

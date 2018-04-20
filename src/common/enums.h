@@ -19,12 +19,9 @@
 #ifndef KDAV_ENUMS_H
 #define KDAV_ENUMS_H
 
-
 #include <QFlags>
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * Describes the DAV protocol dialect.
  */
@@ -53,7 +50,6 @@ enum Privilege {
 };
 Q_DECLARE_FLAGS(Privileges, Privilege)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Privileges)
-
 }
 
 #endif

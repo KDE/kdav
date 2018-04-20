@@ -28,9 +28,7 @@
 #include <QSharedPointer>
 #include <QVariant>
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short Base class for XML query builders
  */
@@ -132,7 +130,6 @@ public:
      */
     virtual DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const = 0;
 };
-
 }
 
 #endif

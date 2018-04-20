@@ -26,9 +26,7 @@
 
 #include <KJob>
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A job that deletes a DAV collection.
  *
@@ -58,8 +56,6 @@ private Q_SLOTS:
 private:
     DavUrl mUrl;
 };
-
 }
 
 #endif
-

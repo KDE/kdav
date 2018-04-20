@@ -28,7 +28,8 @@
 using namespace KDAV;
 
 DavCollectionModifyJob::DavCollectionModifyJob(const DavUrl &url, QObject *parent)
-    : DavJobBase(parent), mUrl(url)
+    : DavJobBase(parent)
+    , mUrl(url)
 {
 }
 
@@ -107,9 +108,9 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ?
-                             0 :
-                             responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty()
+                             ? 0
+                             : responseCodeStr.toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {

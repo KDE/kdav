@@ -25,7 +25,9 @@ using namespace KDAV;
 class DavItemPrivate
 {
 public:
-    DavItemPrivate(DavItem *qPtr) : q(qPtr) {}
+    DavItemPrivate(DavItem *qPtr) : q(qPtr)
+    {
+    }
 
     void fillFrom(const DavItemPrivate &other);
 
@@ -37,14 +39,13 @@ public:
     QString mEtag;
 };
 
-void DavItemPrivate::fillFrom(const DavItemPrivate& other)
+void DavItemPrivate::fillFrom(const DavItemPrivate &other)
 {
     mUrl = other.mUrl;
     mContentType = other.mContentType;
     mData = other.mData;
     mEtag = other.mEtag;
 }
-
 
 DavItem::DavItem()
     : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate(this)))

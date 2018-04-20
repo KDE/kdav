@@ -35,7 +35,9 @@
 using namespace KDAV;
 
 DavCollectionsFetchJob::DavCollectionsFetchJob(const DavUrl &url, QObject *parent)
-    : DavJobBase(parent), mUrl(url), mSubJobCount(0)
+    : DavJobBase(parent)
+    , mUrl(url)
+    , mSubJobCount(0)
 {
 }
 
@@ -123,9 +125,9 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ?
-                             0 :
-                             responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty()
+                             ? 0
+                             : responseCodeStr.toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
@@ -230,7 +232,6 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
             QDomElement responseElement = Utils::firstChildElementNS(responsesElement, QStringLiteral("DAV:"), QStringLiteral("response"));
             while (!responseElement.isNull()) {
-
                 QDomElement propstatElement;
 
                 // check for the valid propstat, without giving up on first error
@@ -346,4 +347,3 @@ void DavCollectionsFetchJob::subjobFinished()
         emitResult();
     }
 }
-

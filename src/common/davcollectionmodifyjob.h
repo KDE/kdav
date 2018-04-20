@@ -28,9 +28,7 @@
 
 #include <KJob>
 
-namespace KDAV
-{
-
+namespace KDAV {
 /**
  * @short A job that modifies a DAV collection.
  *
@@ -80,7 +78,6 @@ private:
     QVector<QDomElement> mSetProperties;
     QVector<QDomElement> mRemoveProperties;
 };
-
 }
 
 #endif

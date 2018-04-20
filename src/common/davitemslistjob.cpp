@@ -28,10 +28,10 @@
 #include <KIO/DavJob>
 #include <KIO/Job>
 
-
 using namespace KDAV;
 
-class DavItemsListJobPrivate {
+class DavItemsListJobPrivate
+{
 public:
     DavItemsListJobPrivate(const DavUrl &url, const std::shared_ptr<EtagCache> &cache);
 
@@ -53,7 +53,6 @@ DavItemsListJobPrivate::DavItemsListJobPrivate(const DavUrl &url, const std::sha
     , mSubJobCount(0)
 {
 }
-
 
 DavItemsListJob::DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent)
     : DavJobBase(parent)
@@ -137,9 +136,9 @@ QStringList DavItemsListJob::deletedItems() const
 void DavItemsListJob::davJobFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
-                             0 :
-                             davJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).isEmpty()
+                             ? 0
+                             : davJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
@@ -180,7 +179,6 @@ void DavItemsListJob::davJobFinished(KJob *job)
 
         QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
         while (!responseElement.isNull()) {
-
             QDomElement propstatElement;
 
             // check for the valid propstat, without giving up on first error
@@ -264,4 +262,3 @@ void DavItemsListJob::davJobFinished(KJob *job)
         emitResult();
     }
 }
-
