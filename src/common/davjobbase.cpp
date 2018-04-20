@@ -45,7 +45,7 @@ DavJobBase::~DavJobBase()
 {
 }
 
-unsigned int DavJobBase::latestResponseCode() const
+int DavJobBase::latestResponseCode() const
 {
     return d->mLatestResponseCode;
 }
@@ -96,7 +96,7 @@ bool DavJobBase::hasConflict() const
     return latestResponseCode() == 412;
 }
 
-void DavJobBase::setLatestResponseCode(unsigned int code)
+void DavJobBase::setLatestResponseCode(int code)
 {
     d->mLatestResponseCode = code;
 }
@@ -111,7 +111,7 @@ void DavJobBase::setJobErrorText(const QString &errorText)
     d->mInternalErrorText = errorText;
 }
 
-void DavJobBase::setJobError(unsigned int jobErrorCode)
+void DavJobBase::setJobError(int jobErrorCode)
 {
     d->mJobErrorCode = jobErrorCode;
 }

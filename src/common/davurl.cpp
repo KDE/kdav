@@ -75,7 +75,7 @@ QDataStream &KDAV::operator>>(QDataStream &stream, DavUrl &davUrl)
     stream >> p;
     stream >> url;
 
-    davUrl = DavUrl(url, (Protocol) p.toInt());
+    davUrl = DavUrl(url, static_cast<Protocol>( p.toInt() ));
 
     return stream;
 }

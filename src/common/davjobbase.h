@@ -49,7 +49,7 @@ public:
      * be meaningless unless error() is non-zero. In that case this means
      * that the latest error was not at the HTTP level.
      */
-    unsigned int latestResponseCode() const;
+    int latestResponseCode() const;
 
     /**
      * Check if the job can be retried later.
@@ -90,10 +90,10 @@ protected:
      *
      * @param code The code to set, should be a valid HTTP response code or zero.
      */
-    void setLatestResponseCode(unsigned int code);
+    void setLatestResponseCode(int code);
 
     void setJobErrorText(const QString &errorText);
-    void setJobError(unsigned int jobErrorCode);
+    void setJobError(int jobErrorCode);
     void setErrorTextFromDavError();
     void setDavError(const Error &error);
 private:
