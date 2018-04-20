@@ -64,10 +64,10 @@ QUrl DavItemCreateJob::itemUrl() const
 void DavItemCreateJob::davJobFinished(KJob *job)
 {
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
-    const int responseCode = storedJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
+    const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
+    const int responseCode = responseCodeStr.isEmpty() ?
                              0 :
-                             storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
-
+                             responseCodeStr.toInt();
     if (storedJob->error()) {
         setLatestResponseCode(responseCode);
         setError(ERR_ITEMCREATE);

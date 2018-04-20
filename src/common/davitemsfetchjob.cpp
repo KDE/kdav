@@ -69,9 +69,10 @@ DavItem DavItemsFetchJob::item(const QString &url) const
 void DavItemsFetchJob::davJobFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
+    const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
+    const int responseCode = responseCodeStr.isEmpty() ?
                              0 :
-                             davJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+                             responseCodeStr.toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {

@@ -67,9 +67,11 @@ DavItem DavItemFetchJob::item() const
 void DavItemFetchJob::davJobFinished(KJob *job)
 {
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
-    const int responseCode = storedJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() ?
+    const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
+    const int responseCode = responseCodeStr.isEmpty() ?
                              0 :
-                             storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+                             responseCodeStr.toInt();
+
     setLatestResponseCode(responseCode);
 
     if (storedJob->error()) {
