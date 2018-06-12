@@ -303,7 +303,14 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 if (!colorElement.isNull()) {
                     QString colorValue = colorElement.text();
                     if (QColor::isValidColor(colorValue)) {
-                        color.setNamedColor(colorValue);
+                        // Color is either #RRGGBBAA or #RRGGBB but QColor expects #AARRGGBB
+                        // so we put the AA in front if the string's length is 9.
+                        if (colorValue.size() == 9) {
+                            QString fixedColorValue = QStringLiteral("#") + colorValue.mid(7, 2) + colorValue.mid(1, 6);
+                            color.setNamedColor(fixedColorValue);
+                        } else {
+                            color.setNamedColor(colorValue);
+                        }
                     }
                 }
 
