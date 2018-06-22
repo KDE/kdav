@@ -59,12 +59,12 @@ public:
     /**
      * Returns the url that identifies the DAV object.
      */
-    QUrl url() const;
+    Q_REQUIRED_RESULT QUrl url() const;
 
     /**
      * Returns the url in a userfriendly way without login informations.
      */
-    QString toDisplayString() const;
+    Q_REQUIRED_RESULT QString toDisplayString() const;
 
     /**
      * Sets the DAV @p protocol dialect that is used to retrieve the DAV object.
@@ -74,7 +74,7 @@ public:
     /**
      * Returns the DAV protocol dialect that is used to retrieve the DAV object.
      */
-    Protocol protocol() const;
+    Q_REQUIRED_RESULT Protocol protocol() const;
 
 private:
     QUrl mUrl;

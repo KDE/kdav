@@ -55,12 +55,12 @@ public:
     /**
      * Returns the list of fetched items
      */
-    DavItem::List items() const;
+    Q_REQUIRED_RESULT DavItem::List items() const;
 
     /**
      * Return the item found at @p url
      */
-    DavItem item(const QString &url) const;
+    Q_REQUIRED_RESULT DavItem item(const QString &url) const;
 
 private:
     void davJobFinished(KJob *);

@@ -51,9 +51,9 @@ public:
      * Returns the created DAV item including the correct identifier url
      * and current etag information.
      */
-    DavItem item() const;
+    Q_REQUIRED_RESULT DavItem item() const;
 
-    QUrl itemUrl() const;
+    Q_REQUIRED_RESULT QUrl itemUrl() const;
 
 private:
     void davJobFinished(KJob *);

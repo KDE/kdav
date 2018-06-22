@@ -25,14 +25,14 @@ class GroupdavProtocol : public KDAV::DavProtocolBase
 {
 public:
     GroupdavProtocol();
-    bool supportsPrincipals() const override;
-    bool useReport() const override;
-    bool useMultiget() const override;
-    KDAV::XMLQueryBuilder::Ptr collectionsQuery() const override;
-    QString collectionsXQuery() const override;
-    QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const override;
+    Q_REQUIRED_RESULT bool supportsPrincipals() const override;
+    Q_REQUIRED_RESULT bool useReport() const override;
+    Q_REQUIRED_RESULT bool useMultiget() const override;
+    Q_REQUIRED_RESULT KDAV::XMLQueryBuilder::Ptr collectionsQuery() const override;
+    Q_REQUIRED_RESULT QString collectionsXQuery() const override;
+    Q_REQUIRED_RESULT QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const override;
 
-    KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const override;
+    Q_REQUIRED_RESULT KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const override;
 };
 
 #endif

@@ -50,7 +50,7 @@ public:
     /**
      * Returns the fetched item including current etag information.
      */
-    DavItem item() const;
+    Q_REQUIRED_RESULT DavItem item() const;
 
 private:
     void davJobFinished(KJob *);

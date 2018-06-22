@@ -51,12 +51,12 @@ public:
     explicit Error();
     explicit Error(ErrorNumber errNo, int responseCode, const QString &errorText, int jobErrorCode);
 
-    ErrorNumber errorNumber() const;
-    int responseCode() const;
-    QString internalErrorText() const;
-    int jobErrorCode() const;
-    QString translatedJobError() const;
-    QString errorText() const;
+    Q_REQUIRED_RESULT ErrorNumber errorNumber() const;
+    Q_REQUIRED_RESULT int responseCode() const;
+    Q_REQUIRED_RESULT QString internalErrorText() const;
+    Q_REQUIRED_RESULT int jobErrorCode() const;
+    Q_REQUIRED_RESULT QString translatedJobError() const;
+    Q_REQUIRED_RESULT QString errorText() const;
 
 private:
     ErrorNumber mErrorNumber;

@@ -55,12 +55,12 @@ public:
     /**
      * Returns the list of fetched DAV collections.
      */
-    DavCollection::List collections() const;
+    Q_REQUIRED_RESULT DavCollection::List collections() const;
 
     /**
      * Return the DavUrl used by this job
      */
-    DavUrl davUrl() const;
+    Q_REQUIRED_RESULT DavUrl davUrl() const;
 
 Q_SIGNALS:
     /**

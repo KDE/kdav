@@ -25,19 +25,19 @@ class CarddavProtocol : public KDAV::DavMultigetProtocol
 {
 public:
     CarddavProtocol();
-    bool supportsPrincipals() const override;
-    bool useReport() const override;
-    bool useMultiget() const override;
-    QString principalHomeSet() const override;
-    QString principalHomeSetNS() const override;
-    KDAV::XMLQueryBuilder::Ptr collectionsQuery() const override;
-    QString collectionsXQuery() const override;
-    QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const override;
-    KDAV::XMLQueryBuilder::Ptr itemsReportQuery(const QStringList &urls) const override;
-    QString responseNamespace() const override;
-    QString dataTagName() const override;
+    Q_REQUIRED_RESULT bool supportsPrincipals() const override;
+    Q_REQUIRED_RESULT bool useReport() const override;
+    Q_REQUIRED_RESULT bool useMultiget() const override;
+    Q_REQUIRED_RESULT QString principalHomeSet() const override;
+    Q_REQUIRED_RESULT QString principalHomeSetNS() const override;
+    Q_REQUIRED_RESULT KDAV::XMLQueryBuilder::Ptr collectionsQuery() const override;
+    Q_REQUIRED_RESULT QString collectionsXQuery() const override;
+    Q_REQUIRED_RESULT QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const override;
+    Q_REQUIRED_RESULT KDAV::XMLQueryBuilder::Ptr itemsReportQuery(const QStringList &urls) const override;
+    Q_REQUIRED_RESULT QString responseNamespace() const override;
+    Q_REQUIRED_RESULT QString dataTagName() const override;
 
-    KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const override;
+    Q_REQUIRED_RESULT KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const override;
 };
 
 #endif

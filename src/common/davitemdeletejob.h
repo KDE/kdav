@@ -50,12 +50,12 @@ public:
     /**
      * Returns the item that triggered the conflict, if any.
      */
-    DavItem freshItem() const;
+    Q_REQUIRED_RESULT DavItem freshItem() const;
 
     /**
      * Returns the response code we got when fetching the fresh item.
      */
-    int freshResponseCode() const;
+    Q_REQUIRED_RESULT int freshResponseCode() const;
 
 private:
     void davJobFinished(KJob *);

@@ -56,12 +56,12 @@ public:
     /**
      * Checks if the given item is in the cache
      */
-    bool contains(const QString &remoteId) const;
+    Q_REQUIRED_RESULT bool contains(const QString &remoteId) const;
 
     /**
      * Check if the known ETag for the remote ID is equal to @p refEtag.
      */
-    bool etagChanged(const QString &remoteId, const QString &refEtag) const;
+    Q_REQUIRED_RESULT bool etagChanged(const QString &remoteId, const QString &refEtag) const;
 
     /**
      * Mark an item as changed in the backend.
@@ -72,7 +72,7 @@ public:
      * Returns true if the remote ID is marked as changed (is contained in the
      * return of changedRemoteIds)
      */
-    bool isOutOfDate(const QString &remoteId) const;
+    Q_REQUIRED_RESULT bool isOutOfDate(const QString &remoteId) const;
 
     /**
      * Removes the entry for item with remote ID @p remoteId.
@@ -82,13 +82,13 @@ public:
     /**
      * Returns the list of all items URLs.
      */
-    QStringList urls() const;
+    Q_REQUIRED_RESULT QStringList urls() const;
 
     /**
      * Returns the list of remote ids of items that have been changed
      * in the backend.
      */
-    QStringList changedRemoteIds() const;
+    Q_REQUIRED_RESULT QStringList changedRemoteIds() const;
 
 protected:
     /**

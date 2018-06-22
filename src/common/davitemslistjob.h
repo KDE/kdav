@@ -50,7 +50,7 @@ public:
      */
     DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent = nullptr);
 
-    ~DavItemsListJob();
+    ~DavItemsListJob() override;
 
     /**
      * Limits the mime types of the items requested.
@@ -77,18 +77,18 @@ public:
     /**
      * Returns the list of items seen including identifier url and etag information.
      */
-    DavItem::List items() const;
+    Q_REQUIRED_RESULT DavItem::List items() const;
 
     /**
      * Returns the list of items that were changed on the server.
      */
-    DavItem::List changedItems() const;
+    Q_REQUIRED_RESULT DavItem::List changedItems() const;
 
     /**
      * Returns the list of items URLs that were not seen in the backend.
      * As this is based on the etag cache this may contain dependent items.
      */
-    QStringList deletedItems() const;
+    Q_REQUIRED_RESULT QStringList deletedItems() const;
 
 private:
     void davJobFinished(KJob *);

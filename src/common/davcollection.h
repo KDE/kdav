@@ -92,7 +92,7 @@ public:
      * Returns this collection CTag. The returned value will be empty
      * if no CTag was found.
      */
-    QString CTag() const;
+    Q_REQUIRED_RESULT QString CTag() const;
 
     /**
      * Sets the @p url that identifies the collection.
@@ -102,7 +102,7 @@ public:
     /**
      * Returns the url that identifies the collection.
      */
-    DavUrl url() const;
+    Q_REQUIRED_RESULT DavUrl url() const;
 
     /**
      * Sets the display @p name of the collection.
@@ -112,7 +112,7 @@ public:
     /**
      * Returns the display name of the collection.
      */
-    QString displayName() const;
+    Q_REQUIRED_RESULT QString displayName() const;
 
     /**
      * Sets the color for this collection
@@ -123,7 +123,7 @@ public:
      * Return the color of the collection, or an empty string if
      * none was provided by the backend.
      */
-    QColor color() const;
+    Q_REQUIRED_RESULT QColor color() const;
 
     /**
      * Sets the possible content @p types of the collection.
@@ -133,7 +133,7 @@ public:
     /**
      * Returns the possible content types of the collection.
      */
-    ContentTypes contentTypes() const;
+    Q_REQUIRED_RESULT ContentTypes contentTypes() const;
 
     /**
      * Sets the privileges on this collection.
@@ -143,7 +143,7 @@ public:
     /**
      * Returns the privileges on this collection.
      */
-    Privileges privileges() const;
+    Q_REQUIRED_RESULT Privileges privileges() const;
 
 private:
     std::unique_ptr<DavCollectionPrivate> d;

@@ -91,12 +91,12 @@ public:
     /**
      * Return the DavUrl used by this job
      */
-    DavUrl davUrl() const;
+    Q_REQUIRED_RESULT DavUrl davUrl() const;
 
     /**
      * Get the job results.
      */
-    QVector<Result> results() const;
+    Q_REQUIRED_RESULT QVector<Result> results() const;
 
 private:
     void principalCollectionSetSearchFinished(KJob *job);

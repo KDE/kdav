@@ -53,7 +53,7 @@ public:
     /**
      * Returns the found home sets.
      */
-    QStringList homeSets() const;
+    Q_REQUIRED_RESULT QStringList homeSets() const;
 
 private:
     void davJobFinished(KJob *);

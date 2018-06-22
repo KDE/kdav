@@ -80,7 +80,7 @@ public:
     /**
      * Returns the url that identifies the item.
      */
-    DavUrl url() const;
+    Q_REQUIRED_RESULT DavUrl url() const;
 
     /**
      * Sets the content @p type of the item.
@@ -90,7 +90,7 @@ public:
     /**
      * Returns the content type of the item.
      */
-    QString contentType() const;
+    Q_REQUIRED_RESULT QString contentType() const;
 
     /**
      * Sets the raw content @p data of the item.
@@ -100,7 +100,7 @@ public:
     /**
      * Returns the raw content data of the item.
      */
-    QByteArray data() const;
+    Q_REQUIRED_RESULT QByteArray data() const;
 
     /**
      * Sets the @p etag of the item.
@@ -110,7 +110,7 @@ public:
     /**
      * Returns the etag of the item.
      */
-    QString etag() const;
+    Q_REQUIRED_RESULT QString etag() const;
 
 private:
     std::unique_ptr<DavItemPrivate> d;
