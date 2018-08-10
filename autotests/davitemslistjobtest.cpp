@@ -22,6 +22,7 @@
 #include <KDAV/DavItemsListJob>
 #include <KDAV/DavUrl>
 #include <KDAV/EtagCache>
+#include <KDAV/DavError>
 
 #include <QTest>
 
@@ -31,13 +32,14 @@ void DavItemsListJobTest::noMatchingMimetype()
 
     QUrl url(QStringLiteral("http://localhost/collection"));
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
+    KDAV::Error error(KDAV::ErrorNumber::ERR_ITEMLIST_NOMIMETYPE, 0, QString(), 0);
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
     job->setContentMimeTypes(QStringList() << QStringLiteral("mime/invalid1") << QStringLiteral("mime/invalid2"));
     job->exec();
 
-    QCOMPARE(job->error(), 431);
-    QCOMPARE(job->errorText(), QStringLiteral("There was a problem with the request. The requested mimetypes are not supported."));
+    QCOMPARE(job->error(), KDAV::ErrorNumber::ERR_ITEMLIST_NOMIMETYPE);
+    QCOMPARE(job->errorText(), error.errorText());
 
 }
 
