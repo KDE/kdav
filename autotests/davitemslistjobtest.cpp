@@ -38,7 +38,7 @@ void DavItemsListJobTest::noMatchingMimetype()
     job->setContentMimeTypes(QStringList() << QStringLiteral("mime/invalid1") << QStringLiteral("mime/invalid2"));
     job->exec();
 
-    QCOMPARE(job->error(), KDAV::ErrorNumber::ERR_ITEMLIST_NOMIMETYPE);
+    QCOMPARE(job->error(), static_cast<int>(KDAV::ErrorNumber::ERR_ITEMLIST_NOMIMETYPE));
     QCOMPARE(job->errorText(), error.errorText());
 
 }
