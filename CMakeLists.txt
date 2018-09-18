@@ -32,9 +32,6 @@ find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons KIO I18n)
 
 # setup lib
 
-add_definitions(-DQT_NO_CAST_FROM_ASCII)
-add_definitions(-DQT_NO_CAST_TO_ASCII)
-add_definitions(-DQT_NO_URL_CAST_FROM_STRING)
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
 add_definitions(-DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT)
 
