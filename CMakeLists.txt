@@ -22,7 +22,7 @@ include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 include(ECMAddTests)
 include(ECMInstallIcons)
 include(ECMQtDeclareLoggingCategory)
-include(ECMCoverageOption)
+
 
 set(QT_REQUIRED_VERSION "5.9.0")
 
