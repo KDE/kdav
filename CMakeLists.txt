@@ -33,7 +33,7 @@ find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons KIO I18n)
 # setup lib
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
-add_definitions(-DQT_NO_NARROWING_CONVERSIONS_IN_CONNECT)
+
 
 
 ecm_setup_version(${LIBKDAV_VERSION} VARIABLE_PREFIX KDAV
