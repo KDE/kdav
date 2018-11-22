@@ -27,7 +27,6 @@
 #include <KDAV/DavItemDeleteJob>
 #include <KDAV/DavItemsListJob>
 #include <KDAV/EtagCache>
-#include <KDAV/Utils>
 
 #include <QDebug>
 #include <QStringList>

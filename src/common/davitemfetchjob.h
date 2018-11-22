@@ -40,7 +40,7 @@ public:
      * @param item The item that shall be fetched.
      * @param parent The parent object.
      */
-    DavItemFetchJob(const DavItem &item, QObject *parent = nullptr);
+    explicit DavItemFetchJob(const DavItem &item, QObject *parent = nullptr);
 
     /**
      * Starts the job.

@@ -40,7 +40,7 @@ public:
      * @param item The item that shall be created.
      * @param parent The parent object.
      */
-    DavItemCreateJob(const DavItem &item, QObject *parent = nullptr);
+    explicit DavItemCreateJob(const DavItem &item, QObject *parent = nullptr);
 
     /**
      * Starts the job.

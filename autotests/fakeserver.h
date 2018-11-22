@@ -51,7 +51,7 @@ Q_DECLARE_METATYPE(QList<QByteArray>)
  * start to indicate whether it is message that will be sent by the
  * client ("C: ") or a response that should be sent by the server
  * ("S: "). Or ("D: ") for the exchanged data. Content-length header is added
- * automatically with the corrent length and also the empty line between Header
+ * automatically with the current length and also the empty line between Header
  * and Content. For example:
  * @code
  * C: GET /item HTTP/1.1

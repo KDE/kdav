@@ -40,7 +40,7 @@ public:
      * @param item The item that shall be modified.
      * @param parent The parent object.
      */
-    DavItemModifyJob(const DavItem &item, QObject *parent = nullptr);
+    explicit DavItemModifyJob(const DavItem &item, QObject *parent = nullptr);
 
     /**
      * Starts the job.

@@ -62,7 +62,7 @@ public:
     Q_REQUIRED_RESULT QUrl url() const;
 
     /**
-     * Returns the url in a userfriendly way without login informations.
+     * Returns the url in a user-friendly way without login information.
      */
     Q_REQUIRED_RESULT QString toDisplayString() const;
 
