@@ -5,9 +5,9 @@ project(libkdav VERSION ${PIM_VERSION})
 
 set(LIBKDAV_VERSION ${PIM_VERSION})
 
-set(KF5_VERSION "5.53.0")
+set(KF5_MIN_VERSION "5.53.0")
 
-find_package(ECM ${KF5_VERSION} CONFIG REQUIRED)
+find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(CMakeFindDependencyMacro)
@@ -28,7 +28,7 @@ set(QT_REQUIRED_VERSION "5.10.0")
 
 find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui XmlPatterns Test)
 
-find_package(KF5 ${KF5_VERSION} REQUIRED CoreAddons KIO I18n)
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED CoreAddons KIO I18n)
 
 # setup lib
 
