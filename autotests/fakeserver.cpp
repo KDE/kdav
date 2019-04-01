@@ -28,7 +28,7 @@
 #include <QDebug>
 #include <QTcpServer>
 #include <QFile>
-#include <qtest.h>
+#include <QTest>
 
 FakeServer::FakeServer(QObject *parent) 
     : QThread(parent)
