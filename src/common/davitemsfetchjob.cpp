@@ -57,7 +57,7 @@ DavItem::List DavItemsFetchJob::items() const
 {
     DavItem::List values;
     values.reserve(mItems.size());
-    Q_FOREACH (const auto &value, mItems) {
+    for (const auto &value : qAsConst(mItems)) {
         values << value;
     }
     return values;

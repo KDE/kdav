@@ -72,7 +72,7 @@ private:
     void davJobFinished(KJob *);
     DavUrl::List mUrls;
     DavCollection::List mCollections;
-    uint mSubJobCount;
+    int mSubJobCount = -1;
 };
 }
 

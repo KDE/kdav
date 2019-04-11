@@ -35,7 +35,7 @@ void DavCollectionsMultiFetchJob::start()
         emitResult();
     }
 
-    foreach (const DavUrl &url, mUrls) {
+    for (const DavUrl &url : qAsConst(mUrls)) {
         DavCollectionsFetchJob *job = new DavCollectionsFetchJob(url, this);
         connect(job, &DavCollectionsFetchJob::result, this, &DavCollectionsMultiFetchJob::davJobFinished);
         connect(job, &DavCollectionsFetchJob::collectionDiscovered, this, &DavCollectionsMultiFetchJob::collectionDiscovered);

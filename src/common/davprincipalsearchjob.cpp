@@ -298,7 +298,7 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
 
     // All requested properties are now under propElement, so let's find them
     typedef QPair<QString, QString> PropertyPair;
-    foreach (const PropertyPair &fetchProperty, mFetchProperties) {
+    for (const PropertyPair &fetchProperty : qAsConst(mFetchProperties)) {
         QDomNodeList fetchNodes = propElement.elementsByTagNameNS(fetchProperty.first, fetchProperty.second);
         for (int i = 0; i < fetchNodes.size(); ++i) {
             QDomElement fetchElement = fetchNodes.at(i).toElement();
@@ -369,7 +369,7 @@ void DavPrincipalSearchJob::buildReportQuery(QDomDocument &query)
     principalPropertySearch.appendChild(prop);
 
     typedef QPair<QString, QString> PropertyPair;
-    foreach (const PropertyPair &fetchProperty, mFetchProperties) {
+    for (const PropertyPair &fetchProperty : qAsConst(mFetchProperties)) {
         QDomElement elem = query.createElementNS(fetchProperty.first, fetchProperty.second);
         prop.appendChild(elem);
     }

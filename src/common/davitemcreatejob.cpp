@@ -84,7 +84,7 @@ void DavItemCreateJob::davJobFinished(KJob *job)
     // The 'Location:' HTTP header is used to indicate the new URL
     const QStringList allHeaders = storedJob->queryMetaData(QStringLiteral("HTTP-Headers")).split(QLatin1Char('\n'));
     QString location;
-    foreach (const QString &header, allHeaders) {
+    for (const QString &header : allHeaders) {
         if (header.startsWith(QLatin1String("location:"), Qt::CaseInsensitive)) {
             location = header.section(QLatin1Char(' '), 1);
         }
