@@ -9,7 +9,7 @@ release: false
 libraries:
  - qmake: PimKDAV
    cmake: "KPimKDAV"
-   cmakename: KPimKDAV
+cmakename: KPimKDAV
 
 public_lib: true
 group: kdepim
