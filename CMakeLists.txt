@@ -5,7 +5,7 @@ project(libkdav VERSION ${PIM_VERSION})
 
 set(LIBKDAV_VERSION ${PIM_VERSION})
 
-set(KF5_MIN_VERSION "5.58.0")
+set(KF5_MIN_VERSION "5.59.0")
 
 find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -65,11 +65,7 @@ install(FILES
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KPim COMPONENT Devel
     )
 
-if (${ECM_VERSION} STRGREATER "5.58.0")
-    install(FILES kdav.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
-else()
-    install(FILES kdav.categories  DESTINATION ${KDE_INSTALL_CONFDIR})
-endif()
+install(FILES kdav.categories  DESTINATION  ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 add_subdirectory(src)
 if(BUILD_TESTING)
