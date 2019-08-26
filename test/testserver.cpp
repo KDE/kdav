@@ -131,7 +131,7 @@ int main(int argc, char **argv)
         if (createJob->error()) {
             qDebug() << createJob->errorString();
         }
-        if (createJob->item().url().toDisplayString() != QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf")) {
+        if (createJob->item().url().toDisplayString() != QLatin1String("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf")) {
             qDebug() << "unexpected url" << createJob->item().url().url();
         }
     }
