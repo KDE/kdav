@@ -25,13 +25,7 @@ using namespace KDAV;
 class DavItemPrivate
 {
 public:
-    DavItemPrivate(DavItem *qPtr) : q(qPtr)
-    {
-    }
-
     void fillFrom(const DavItemPrivate &other);
-
-    DavItem *q;
 
     DavUrl mUrl;
     QString mContentType;
@@ -48,12 +42,12 @@ void DavItemPrivate::fillFrom(const DavItemPrivate &other)
 }
 
 DavItem::DavItem()
-    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate(this)))
+    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate))
 {
 }
 
 DavItem::DavItem(const DavUrl &url, const QString &contentType, const QByteArray &data, const QString &etag)
-    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate(this)))
+    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate))
 {
     d->mUrl = url;
     d->mContentType = contentType;
@@ -62,7 +56,7 @@ DavItem::DavItem(const DavUrl &url, const QString &contentType, const QByteArray
 }
 
 DavItem::DavItem(const DavItem &other)
-    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate(this)))
+    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate))
 {
     d->fillFrom(*other.d.get());
 }

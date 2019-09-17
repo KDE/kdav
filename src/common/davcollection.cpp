@@ -27,13 +27,8 @@ using namespace KDAV;
 class DavCollectionPrivate
 {
 public:
-    DavCollectionPrivate(DavCollection *qPtr) : q(qPtr)
-    {
-    }
-
     void fillFrom(const DavCollectionPrivate &other);
 
-    DavCollection *q;
     QString mCTag;
     DavUrl mUrl;
     QString mDisplayName;
@@ -53,12 +48,12 @@ void DavCollectionPrivate::fillFrom(const DavCollectionPrivate &other)
 }
 
 DavCollection::DavCollection()
-    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
+    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate))
 {
 }
 
 DavCollection::DavCollection(const DavUrl &url, const QString &displayName, ContentTypes contentTypes)
-    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
+    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate))
 {
     d->mUrl = url;
     d->mDisplayName = displayName;
@@ -67,7 +62,7 @@ DavCollection::DavCollection(const DavUrl &url, const QString &displayName, Cont
 }
 
 DavCollection::DavCollection(const DavCollection &other)
-    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate(this)))
+    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate))
 {
     d->fillFrom(*other.d.get());
 }
