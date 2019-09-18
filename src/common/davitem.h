@@ -21,10 +21,9 @@
 
 #include "kpimkdav_export.h"
 
-#include <memory>
-
 #include <QByteArray>
 #include <QDataStream>
+#include <QSharedDataPointer>
 #include <QString>
 #include <QVector>
 
@@ -113,7 +112,7 @@ public:
     Q_REQUIRED_RESULT QString etag() const;
 
 private:
-    std::unique_ptr<DavItemPrivate> d;
+    QSharedDataPointer<DavItemPrivate> d;
 };
 
 KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);

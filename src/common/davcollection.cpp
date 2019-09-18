@@ -24,36 +24,24 @@
 
 using namespace KDAV;
 
-class DavCollectionPrivate
+class DavCollectionPrivate : public QSharedData
 {
 public:
-    void fillFrom(const DavCollectionPrivate &other);
-
+    DavCollection::ContentTypes mContentTypes;
     QString mCTag;
     DavUrl mUrl;
     QString mDisplayName;
     QColor mColor;
-    DavCollection::ContentTypes mContentTypes;
     Privileges mPrivileges;
 };
 
-void DavCollectionPrivate::fillFrom(const DavCollectionPrivate &other)
-{
-    mCTag = other.mCTag;
-    mUrl = other.mUrl;
-    mDisplayName = other.mDisplayName;
-    mColor = other.mColor;
-    mContentTypes = other.mContentTypes;
-    mPrivileges = other.mPrivileges;
-}
-
 DavCollection::DavCollection()
-    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate))
+    : d(new DavCollectionPrivate)
 {
 }
 
 DavCollection::DavCollection(const DavUrl &url, const QString &displayName, ContentTypes contentTypes)
-    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate))
+    : d(new DavCollectionPrivate)
 {
     d->mUrl = url;
     d->mDisplayName = displayName;
@@ -61,21 +49,9 @@ DavCollection::DavCollection(const DavUrl &url, const QString &displayName, Cont
     d->mPrivileges = KDAV::All;
 }
 
-DavCollection::DavCollection(const DavCollection &other)
-    : d(std::unique_ptr<DavCollectionPrivate>(new DavCollectionPrivate))
-{
-    d->fillFrom(*other.d.get());
-}
-
-DavCollection &DavCollection::operator=(const DavCollection &other)
-{
-    d->fillFrom(*other.d.get());
-    return *this;
-}
-
-DavCollection::~DavCollection()
-{
-}
+DavCollection::DavCollection(const DavCollection &other) = default;
+DavCollection &DavCollection::operator=(const DavCollection &other) = default;
+DavCollection::~DavCollection() = default;
 
 void DavCollection::setCTag(const QString &ctag)
 {

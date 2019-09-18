@@ -23,10 +23,9 @@
 
 #include "enums.h"
 
-#include <memory>
-
-#include <QVector>
+#include <QSharedDataPointer>
 #include <QString>
+#include <QVector>
 
 class QColor;
 
@@ -146,7 +145,7 @@ public:
     Q_REQUIRED_RESULT Privileges privileges() const;
 
 private:
-    std::unique_ptr<DavCollectionPrivate> d;
+    QSharedDataPointer<DavCollectionPrivate> d;
 };
 }
 

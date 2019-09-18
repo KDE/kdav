@@ -22,32 +22,22 @@
 
 using namespace KDAV;
 
-class DavItemPrivate
+class DavItemPrivate : public QSharedData
 {
 public:
-    void fillFrom(const DavItemPrivate &other);
-
     DavUrl mUrl;
     QString mContentType;
     QByteArray mData;
     QString mEtag;
 };
 
-void DavItemPrivate::fillFrom(const DavItemPrivate &other)
-{
-    mUrl = other.mUrl;
-    mContentType = other.mContentType;
-    mData = other.mData;
-    mEtag = other.mEtag;
-}
-
 DavItem::DavItem()
-    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate))
+    : d(new DavItemPrivate)
 {
 }
 
 DavItem::DavItem(const DavUrl &url, const QString &contentType, const QByteArray &data, const QString &etag)
-    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate))
+    : d(new DavItemPrivate)
 {
     d->mUrl = url;
     d->mContentType = contentType;
@@ -55,21 +45,9 @@ DavItem::DavItem(const DavUrl &url, const QString &contentType, const QByteArray
     d->mEtag = etag;
 }
 
-DavItem::DavItem(const DavItem &other)
-    : d(std::unique_ptr<DavItemPrivate>(new DavItemPrivate))
-{
-    d->fillFrom(*other.d.get());
-}
-
-DavItem &DavItem::operator=(const DavItem &other)
-{
-    d->fillFrom(*other.d.get());
-    return *this;
-}
-
-DavItem::~DavItem()
-{
-}
+DavItem::DavItem(const DavItem &other) = default;
+DavItem &DavItem::operator=(const DavItem &other) = default;
+DavItem::~DavItem() = default;
 
 void DavItem::setUrl(const DavUrl &url)
 {
