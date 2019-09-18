@@ -34,6 +34,7 @@ class QUrl;
 
 class QDomDocument;
 
+/** CalDav/CardDav protocol implementation. */
 namespace KDAV {
 class DavProtocolBase;
 
