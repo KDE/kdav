@@ -24,48 +24,62 @@
 
 using namespace KDAV;
 
+namespace KDAV {
+class ErrorPrivate : public QSharedData
+{
+public:
+    ErrorNumber mErrorNumber = NO_ERR;
+    int mResponseCode = 0;
+    int mJobErrorCode = 0;
+    QString mErrorText;
+};
+}
+
 Error::Error()
-    : mErrorNumber(NO_ERR)
-    , mResponseCode(0)
-    , mJobErrorCode(0)
+    : d(new ErrorPrivate)
 {
 }
 
 Error::Error(ErrorNumber errNo, int responseCode, const QString &errorText, int jobErrorCode)
-    : mErrorNumber(errNo)
-    , mResponseCode(responseCode)
-    , mErrorText(errorText)
-    , mJobErrorCode(jobErrorCode)
+    : d(new ErrorPrivate)
 {
+    d->mErrorNumber = errNo;
+    d->mResponseCode = responseCode;
+    d->mErrorText = errorText;
+    d->mJobErrorCode = jobErrorCode;
 }
+
+Error::Error(const Error&) = default;
+Error::~Error() = default;
+Error& Error::operator=(const Error&) = default;
 
 ErrorNumber Error::errorNumber() const
 {
-    return mErrorNumber;
+    return d->mErrorNumber;
 }
 
 QString Error::internalErrorText() const
 {
-    return mErrorText;
+    return d->mErrorText;
 }
 
 int Error::jobErrorCode() const
 {
-    return mJobErrorCode;
+    return d->mJobErrorCode;
 }
 
 int Error::responseCode() const
 {
-    return mResponseCode;
+    return d->mResponseCode;
 }
 
 QString KDAV::Error::translatedJobError() const
 {
     QString err;
-    if (mJobErrorCode > 0 && mJobErrorCode != KIO::ERR_SLAVE_DEFINED) {
-        err = KIO::buildErrorString(mJobErrorCode, mErrorText);
+    if (d->mJobErrorCode > 0 && d->mJobErrorCode != KIO::ERR_SLAVE_DEFINED) {
+        err = KIO::buildErrorString(d->mJobErrorCode, d->mErrorText);
     } else {
-        err = mErrorText;
+        err = d->mErrorText;
     }
     return err;
 }
@@ -76,30 +90,30 @@ QString Error::errorText() const
 
     QString err = translatedJobError();
 
-    switch (mErrorNumber) {
+    switch (d->mErrorNumber) {
     case ERR_PROBLEM_WITH_REQUEST:
         // User-side error
-        if (mResponseCode == 401) {
+        if (d->mResponseCode == 401) {
             err = i18n("Invalid username/password");
-        } else if (mResponseCode == 403) {
+        } else if (d->mResponseCode == 403) {
             err = i18n("Access forbidden");
-        } else if (mResponseCode == 404) {
+        } else if (d->mResponseCode == 404) {
             err = i18n("Resource not found");
         } else {
             err = i18n("HTTP error");
         }
         result = i18n("There was a problem with the request.\n"
-                      "%1 (%2).", err, mResponseCode);
+                      "%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_NO_MULTIGET:
         result = i18n("Protocol for the collection does not support MULTIGET");
         break;
     case ERR_SERVER_UNRECOVERABLE:
-        result = i18n("The server encountered an error that prevented it from completing your request: %1 (%2)", err, mResponseCode);
+        result = i18n("The server encountered an error that prevented it from completing your request: %1 (%2)", err, d->mResponseCode);
         break;
     case ERR_COLLECTIONDELETE:
         result = i18n("There was a problem with the request. The collection has not been deleted from the server.\n"
-                      "%1 (%2).", err, mResponseCode);
+                      "%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_COLLECTIONFETCH:
         result = i18n("Invalid responses from backend");
@@ -112,28 +126,28 @@ QString Error::errorText() const
         break;
     case ERR_COLLECTIONMODIFY:
         result = i18n("There was a problem with the request. The collection has not been modified on the server.\n"
-                      "%1 (%2).", err, mResponseCode);
+                      "%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_COLLECTIONMODIFY_NO_PROPERITES:
         result = i18n("No properties to change or remove");
         break;
     case ERR_COLLECTIONMODIFY_RESPONSE:
         result = i18n("There was an error when modifying the properties");
-        if (!mErrorText.isEmpty()) {
-            result.append(i18n("\nThe server returned more information:\n%1", mErrorText));
+        if (!d->mErrorText.isEmpty()) {
+            result.append(i18n("\nThe server returned more information:\n%1", d->mErrorText));
         }
         break;
     case ERR_ITEMCREATE:
         result = i18n("There was a problem with the request. The item has not been created on the server.\n"
-                      "%1 (%2).", err, mResponseCode);
+                      "%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_ITEMDELETE:
         result = i18n("There was a problem with the request. The item has not been deleted from the server.\n"
-                      "%1 (%2).", err, mResponseCode);
+                      "%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_ITEMMODIFY:
         result = i18n("There was a problem with the request. The item was not modified on the server.\n"
-                      "%1 (%2).", err, mResponseCode);
+                      "%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_ITEMLIST:
     {

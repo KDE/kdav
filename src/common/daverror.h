@@ -23,9 +23,11 @@
 
 #include <KJob>
 
+#include <QSharedDataPointer>
 #include <QString>
 
 namespace KDAV {
+/** DAV operation error codes. */
 enum ErrorNumber {
     NO_ERR = 0,
     ERR_PROBLEM_WITH_REQUEST = KJob::UserDefinedError + 200,        //it would be better to request KIO about uts UserDefinedError space.
@@ -45,11 +47,17 @@ enum ErrorNumber {
     ERR_ITEMLIST_NOMIMETYPE
 };
 
+class ErrorPrivate;
+
+/** DAV operation error. */
 class KPIMKDAV_EXPORT Error
 {
 public:
     explicit Error();
     explicit Error(ErrorNumber errNo, int responseCode, const QString &errorText, int jobErrorCode);
+    Error(const Error&);
+    ~Error();
+    Error& operator=(const Error&);
 
     Q_REQUIRED_RESULT ErrorNumber errorNumber() const;
     Q_REQUIRED_RESULT int responseCode() const;
@@ -59,10 +67,7 @@ public:
     Q_REQUIRED_RESULT QString errorText() const;
 
 private:
-    ErrorNumber mErrorNumber;
-    int mResponseCode;
-    QString mErrorText;
-    int mJobErrorCode;
+    QSharedDataPointer<ErrorPrivate> d;
 };
 }
 

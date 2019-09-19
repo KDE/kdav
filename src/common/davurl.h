@@ -23,10 +23,12 @@
 
 #include "enums.h"
 
+#include <QSharedDataPointer>
 #include <QUrl>
 #include <QVector>
 
 namespace KDAV {
+class DavUrlPrivate;
 /**
  * @short A helper class to combine url and protocol of a DAV url.
  */
@@ -42,6 +44,9 @@ public:
      * Creates an empty DAV url.
      */
     DavUrl();
+    DavUrl(const DavUrl&);
+    ~DavUrl();
+    DavUrl& operator=(const DavUrl&);
 
     /**
      * Creates a new DAV url.
@@ -77,8 +82,7 @@ public:
     Q_REQUIRED_RESULT Protocol protocol() const;
 
 private:
-    QUrl mUrl;
-    Protocol mProtocol;
+    QSharedDataPointer<DavUrlPrivate> d;
 };
 
 KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavUrl &url);

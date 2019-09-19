@@ -22,40 +22,54 @@
 
 using namespace KDAV;
 
+namespace KDAV {
+class DavUrlPrivate : public QSharedData
+{
+public:
+    Protocol mProtocol = KDAV::CalDav;
+    QUrl mUrl;
+};
+}
+
 DavUrl::DavUrl()
-    : mProtocol(KDAV::CalDav)
+    : d(new DavUrlPrivate)
 {
 }
 
 DavUrl::DavUrl(const QUrl &url, Protocol protocol)
-    : mUrl(url)
-    , mProtocol(protocol)
+    : d(new DavUrlPrivate)
 {
+    d->mUrl = url;
+    d->mProtocol = protocol;
 }
+
+DavUrl::DavUrl(const DavUrl&) = default;
+DavUrl::~DavUrl() = default;
+DavUrl& DavUrl::operator=(const DavUrl&) = default;
 
 void DavUrl::setUrl(const QUrl &url)
 {
-    mUrl = url;
+    d->mUrl = url;
 }
 
 QUrl DavUrl::url() const
 {
-    return mUrl;
+    return d->mUrl;
 }
 
 void DavUrl::setProtocol(Protocol protocol)
 {
-    mProtocol = protocol;
+    d->mProtocol = protocol;
 }
 
 Protocol DavUrl::protocol() const
 {
-    return mProtocol;
+    return d->mProtocol;
 }
 
 QString DavUrl::toDisplayString() const
 {
-    auto url = mUrl;
+    auto url = d->mUrl;
     url.setUserInfo(QString());
     return url.toDisplayString();
 }
