@@ -17,6 +17,7 @@
 */
 
 #include "davprincipalhomesetsfetchjob.h"
+#include "davjobbase_p.h"
 
 #include "davmanager.h"
 #include "davprotocolbase.h"
@@ -28,10 +29,20 @@
 
 using namespace KDAV;
 
-DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const DavUrl &url, QObject *parent)
-    : DavJobBase(parent)
-    , mUrl(url)
+namespace KDAV {
+class DavPrincipalHomeSetsFetchJobPrivate : public DavJobBasePrivate
 {
+public:
+    DavUrl mUrl;
+    QStringList mHomeSets;
+};
+}
+
+DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const DavUrl &url, QObject *parent)
+    : DavJobBase(new DavPrincipalHomeSetsFetchJobPrivate, parent)
+{
+    Q_D(DavPrincipalHomeSetsFetchJob);
+    d->mUrl = url;
 }
 
 void DavPrincipalHomeSetsFetchJob::start()
@@ -41,6 +52,7 @@ void DavPrincipalHomeSetsFetchJob::start()
 
 void DavPrincipalHomeSetsFetchJob::fetchHomeSets(bool homeSetsOnly)
 {
+    Q_D(DavPrincipalHomeSetsFetchJob);
     QDomDocument document;
 
     QDomElement propfindElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("propfind"));
@@ -49,8 +61,8 @@ void DavPrincipalHomeSetsFetchJob::fetchHomeSets(bool homeSetsOnly)
     QDomElement propElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
     propfindElement.appendChild(propElement);
 
-    const QString homeSet = DavManager::self()->davProtocol(mUrl.protocol())->principalHomeSet();
-    const QString homeSetNS = DavManager::self()->davProtocol(mUrl.protocol())->principalHomeSetNS();
+    const QString homeSet = DavManager::self()->davProtocol(d->mUrl.protocol())->principalHomeSet();
+    const QString homeSetNS = DavManager::self()->davProtocol(d->mUrl.protocol())->principalHomeSetNS();
     propElement.appendChild(document.createElementNS(homeSetNS, homeSet));
 
     if (!homeSetsOnly) {
@@ -58,18 +70,20 @@ void DavPrincipalHomeSetsFetchJob::fetchHomeSets(bool homeSetsOnly)
         propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("principal-URL")));
     }
 
-    KIO::DavJob *job = DavManager::self()->createPropFindJob(mUrl.url(), document, QStringLiteral("0"));
+    KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), document, QStringLiteral("0"));
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     connect(job, &KIO::DavJob::result, this, &DavPrincipalHomeSetsFetchJob::davJobFinished);
 }
 
 QStringList DavPrincipalHomeSetsFetchJob::homeSets() const
 {
-    return mHomeSets;
+    Q_D(const DavPrincipalHomeSetsFetchJob);
+    return d->mHomeSets;
 }
 
 void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
 {
+    Q_D(DavPrincipalHomeSetsFetchJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
@@ -137,8 +151,8 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
      *  </multistatus>
      */
 
-    const QString homeSet = DavManager::self()->davProtocol(mUrl.protocol())->principalHomeSet();
-    const QString homeSetNS = DavManager::self()->davProtocol(mUrl.protocol())->principalHomeSetNS();
+    const QString homeSet = DavManager::self()->davProtocol(d->mUrl.protocol())->principalHomeSet();
+    const QString homeSetNS = DavManager::self()->davProtocol(d->mUrl.protocol())->principalHomeSetNS();
     QString nextRoundHref; // The content of the href element that will be used if no homeset was found.
     // This is either given by current-user-principal or by principal-URL.
 
@@ -175,8 +189,8 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
 
             while (!hrefElement.isNull()) {
                 const QString href = hrefElement.text();
-                if (!mHomeSets.contains(href)) {
-                    mHomeSets << href;
+                if (!d->mHomeSets.contains(href)) {
+                    d->mHomeSets << href;
                 }
 
                 hrefElement = Utils::nextSiblingElementNS(hrefElement, QStringLiteral("DAV:"), QStringLiteral("href"));
@@ -206,10 +220,10 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
      * If we have homesets, we're done here and can notify the caller.
      * Else we must ensure that we have an href for the next round.
      */
-    if (!mHomeSets.isEmpty() || nextRoundHref.isEmpty()) {
+    if (!d->mHomeSets.isEmpty() || nextRoundHref.isEmpty()) {
         emitResult();
     } else {
-        QUrl nextRoundUrl(mUrl.url());
+        QUrl nextRoundUrl(d->mUrl.url());
 
         if (nextRoundHref.startsWith(QLatin1Char('/'))) {
             // nextRoundHref is only a path, use request url to complete
@@ -217,11 +231,11 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
         } else {
             // href is a complete url
             nextRoundUrl = QUrl::fromUserInput(nextRoundHref);
-            nextRoundUrl.setUserName(mUrl.url().userName());
-            nextRoundUrl.setPassword(mUrl.url().password());
+            nextRoundUrl.setUserName(d->mUrl.url().userName());
+            nextRoundUrl.setPassword(d->mUrl.url().password());
         }
 
-        mUrl.setUrl(nextRoundUrl);
+        d->mUrl.setUrl(nextRoundUrl);
         // And one more round, fetching only homesets
         fetchHomeSets(true);
     }

@@ -17,6 +17,7 @@
 */
 
 #include "davcollectiondeletejob.h"
+#include "davjobbase_p.h"
 
 #include "daverror.h"
 
@@ -25,15 +26,25 @@
 
 using namespace KDAV;
 
-DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUrl &url, QObject *parent)
-    : DavJobBase(parent)
-    , mUrl(url)
+namespace KDAV {
+class DavCollectionDeleteJobPrivate : public DavJobBasePrivate
 {
+public:
+    DavUrl mUrl;
+};
+}
+
+DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUrl &url, QObject *parent)
+    : DavJobBase(new DavCollectionDeleteJobPrivate, parent)
+{
+    Q_D(DavCollectionDeleteJob);
+    d->mUrl = url;
 }
 
 void DavCollectionDeleteJob::start()
 {
-    KIO::DeleteJob *job = KIO::del(mUrl.url(), KIO::HideProgressInfo | KIO::DefaultFlags);
+    Q_D(DavCollectionDeleteJob);
+    KIO::DeleteJob *job = KIO::del(d->mUrl.url(), KIO::HideProgressInfo | KIO::DefaultFlags);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));

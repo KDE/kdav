@@ -29,6 +29,8 @@
 #include <QStringList>
 
 namespace KDAV {
+class DavPrincipalHomeSetsFetchJobPrivate;
+
 /**
  * @short A job that fetches home sets for a principal.
  */
@@ -71,8 +73,7 @@ private:
      */
     void fetchHomeSets(bool fetchHomeSetsOnly);
 
-    DavUrl mUrl;
-    QStringList mHomeSets;
+    Q_DECLARE_PRIVATE(DavPrincipalHomeSetsFetchJob)
 };
 }
 

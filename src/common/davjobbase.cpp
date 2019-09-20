@@ -17,38 +17,29 @@
 */
 
 #include "davjobbase.h"
+#include "davjobbase_p.h"
 
 #include "daverror.h"
 
 using namespace KDAV;
 
-class DavJobBasePrivate
-{
-public:
-    DavJobBasePrivate();
-
-    int mLatestResponseCode = 0;
-    int mJobErrorCode = 0;
-    QString mInternalErrorText;
-};
-
-DavJobBasePrivate::DavJobBasePrivate()
-{
-}
-
 DavJobBase::DavJobBase(QObject *parent)
     : KJob(parent)
-    , d(std::unique_ptr<DavJobBasePrivate>(new DavJobBasePrivate()))
+    , d_ptr(std::unique_ptr<DavJobBasePrivate>(new DavJobBasePrivate()))
 {
 }
 
-DavJobBase::~DavJobBase()
+DavJobBase::DavJobBase(DavJobBasePrivate *dd, QObject *parent)
+    : KJob(parent)
+    , d_ptr(std::unique_ptr<DavJobBasePrivate>(dd))
 {
 }
+
+DavJobBase::~DavJobBase() = default;
 
 int DavJobBase::latestResponseCode() const
 {
-    return d->mLatestResponseCode;
+    return d_ptr->mLatestResponseCode;
 }
 
 bool DavJobBase::canRetryLater() const
@@ -99,22 +90,22 @@ bool DavJobBase::hasConflict() const
 
 void DavJobBase::setLatestResponseCode(int code)
 {
-    d->mLatestResponseCode = code;
+    d_ptr->mLatestResponseCode = code;
 }
 
 Error DavJobBase::davError() const
 {
-    return Error(static_cast<KDAV::ErrorNumber>(error()), d->mLatestResponseCode, d->mInternalErrorText, d->mJobErrorCode);
+    return Error(static_cast<KDAV::ErrorNumber>(error()), d_ptr->mLatestResponseCode, d_ptr->mInternalErrorText, d_ptr->mJobErrorCode);
 }
 
 void DavJobBase::setJobErrorText(const QString &errorText)
 {
-    d->mInternalErrorText = errorText;
+    d_ptr->mInternalErrorText = errorText;
 }
 
 void DavJobBase::setJobError(int jobErrorCode)
 {
-    d->mJobErrorCode = jobErrorCode;
+    d_ptr->mJobErrorCode = jobErrorCode;
 }
 
 void DavJobBase::setErrorTextFromDavError()

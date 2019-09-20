@@ -28,6 +28,8 @@
 #include <KJob>
 
 namespace KDAV {
+class DavCollectionsFetchJobPrivate;
+
 /**
  * @short A job that fetches all DAV collection.
  *
@@ -77,9 +79,7 @@ private:
     void doCollectionsFetch(const QUrl &url);
     void subjobFinished();
 
-    DavUrl mUrl;
-    DavCollection::List mCollections;
-    uint mSubJobCount;
+    Q_DECLARE_PRIVATE(DavCollectionsFetchJob)
 };
 }
 

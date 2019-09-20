@@ -17,6 +17,7 @@
 */
 
 #include "davcollectionmodifyjob.h"
+#include "davjobbase_p.h"
 #include "davmanager.h"
 
 #include "daverror.h"
@@ -27,44 +28,60 @@
 
 using namespace KDAV;
 
-DavCollectionModifyJob::DavCollectionModifyJob(const DavUrl &url, QObject *parent)
-    : DavJobBase(parent)
-    , mUrl(url)
+namespace KDAV {
+class DavCollectionModifyJobPrivate : public DavJobBasePrivate
 {
+public:
+    DavUrl mUrl;
+    QDomDocument mQuery;
+
+    QVector<QDomElement> mSetProperties;
+    QVector<QDomElement> mRemoveProperties;
+};
+}
+
+DavCollectionModifyJob::DavCollectionModifyJob(const DavUrl &url, QObject *parent)
+    : DavJobBase(new DavCollectionModifyJobPrivate, parent)
+{
+    Q_D(DavCollectionModifyJob);
+    d->mUrl = url;
 }
 
 void DavCollectionModifyJob::setProperty(const QString &prop, const QString &value, const QString &ns)
 {
+    Q_D(DavCollectionModifyJob);
     QDomElement propElement;
 
     if (ns.isEmpty()) {
-        propElement = mQuery.createElement(prop);
+        propElement = d->mQuery.createElement(prop);
     } else {
-        propElement = mQuery.createElementNS(ns, prop);
+        propElement = d->mQuery.createElementNS(ns, prop);
     }
 
-    const QDomText textElement = mQuery.createTextNode(value);
+    const QDomText textElement = d->mQuery.createTextNode(value);
     propElement.appendChild(textElement);
 
-    mSetProperties << propElement;
+    d->mSetProperties << propElement;
 }
 
 void DavCollectionModifyJob::removeProperty(const QString &prop, const QString &ns)
 {
+    Q_D(DavCollectionModifyJob);
     QDomElement propElement;
 
     if (ns.isEmpty()) {
-        propElement = mQuery.createElement(prop);
+        propElement = d->mQuery.createElement(prop);
     } else {
-        propElement = mQuery.createElementNS(ns, prop);
+        propElement = d->mQuery.createElementNS(ns, prop);
     }
 
-    mRemoveProperties << propElement;
+    d->mRemoveProperties << propElement;
 }
 
 void DavCollectionModifyJob::start()
 {
-    if (mSetProperties.isEmpty() && mRemoveProperties.isEmpty()) {
+    Q_D(DavCollectionModifyJob);
+    if (d->mSetProperties.isEmpty() && d->mRemoveProperties.isEmpty()) {
         setError(ERR_COLLECTIONMODIFY_NO_PROPERITES);
         setErrorTextFromDavError();
         emitResult();
@@ -75,31 +92,31 @@ void DavCollectionModifyJob::start()
     QDomElement propertyUpdateElement = mQuery.createElementNS(QStringLiteral("DAV:"), QStringLiteral("propertyupdate"));
     mQuery.appendChild(propertyUpdateElement);
 
-    if (!mSetProperties.isEmpty()) {
+    if (!d->mSetProperties.isEmpty()) {
         QDomElement setElement = mQuery.createElementNS(QStringLiteral("DAV:"), QStringLiteral("set"));
         propertyUpdateElement.appendChild(setElement);
 
         QDomElement propElement = mQuery.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
         setElement.appendChild(propElement);
 
-        for (const QDomElement &element : qAsConst(mSetProperties)) {
+        for (const QDomElement &element : qAsConst(d->mSetProperties)) {
             propElement.appendChild(element);
         }
     }
 
-    if (!mRemoveProperties.isEmpty()) {
+    if (!d->mRemoveProperties.isEmpty()) {
         QDomElement removeElement = mQuery.createElementNS(QStringLiteral("DAV:"), QStringLiteral("remove"));
         propertyUpdateElement.appendChild(removeElement);
 
         QDomElement propElement = mQuery.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
         removeElement.appendChild(propElement);
 
-        for (const QDomElement &element : qAsConst(mSetProperties)) {
+        for (const QDomElement &element : qAsConst(d->mSetProperties)) {
             propElement.appendChild(element);
         }
     }
 
-    KIO::DavJob *job = DavManager::self()->createPropPatchJob(mUrl.url(), mQuery);
+    KIO::DavJob *job = DavManager::self()->createPropPatchJob(d->mUrl.url(), mQuery);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     connect(job, &KIO::DavJob::result, this, &DavCollectionModifyJob::davJobFinished);
 }

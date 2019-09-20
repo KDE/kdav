@@ -95,8 +95,11 @@ protected:
     void setJobError(int jobErrorCode);
     void setErrorTextFromDavError();
     void setDavError(const Error &error);
+
+    explicit DavJobBase(DavJobBasePrivate *dd, QObject *parent = nullptr);
+    std::unique_ptr<DavJobBasePrivate> d_ptr;
 private:
-    std::unique_ptr<DavJobBasePrivate> d;
+    Q_DECLARE_PRIVATE(DavJobBase)
 };
 }
 

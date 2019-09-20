@@ -29,6 +29,8 @@
 #include <KJob>
 
 namespace KDAV {
+class DavCollectionModifyJobPrivate;
+
 /**
  * @short A job that modifies a DAV collection.
  *
@@ -72,11 +74,7 @@ public:
 
 private:
     void davJobFinished(KJob *job);
-    DavUrl mUrl;
-    QDomDocument mQuery;
-
-    QVector<QDomElement> mSetProperties;
-    QVector<QDomElement> mRemoveProperties;
+    Q_DECLARE_PRIVATE(DavCollectionModifyJob)
 };
 }
 

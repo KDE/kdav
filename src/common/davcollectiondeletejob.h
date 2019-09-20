@@ -27,6 +27,8 @@
 #include <KJob>
 
 namespace KDAV {
+class DavCollectionDeleteJobPrivate;
+
 /**
  * @short A job that deletes a DAV collection.
  *
@@ -54,7 +56,7 @@ private Q_SLOTS:
     void davJobFinished(KJob *);
 
 private:
-    DavUrl mUrl;
+    Q_DECLARE_PRIVATE(DavCollectionDeleteJob)
 };
 }
 
