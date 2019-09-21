@@ -18,6 +18,7 @@
 */
 
 #include "davitemsfetchjob.h"
+#include "davjobbase_p.h"
 
 #include "davmanager.h"
 #include "davmultigetprotocol.h"
@@ -29,17 +30,29 @@
 
 using namespace KDAV;
 
-DavItemsFetchJob::DavItemsFetchJob(const DavUrl &collectionUrl, const QStringList &urls, QObject *parent)
-    : DavJobBase(parent)
-    , mCollectionUrl(collectionUrl)
-    , mUrls(urls)
+namespace KDAV {
+class DavItemsFetchJobPrivate : public DavJobBasePrivate
 {
+public:
+    DavUrl mCollectionUrl;
+    QStringList mUrls;
+    QMap<QString, DavItem> mItems;
+};
+}
+
+DavItemsFetchJob::DavItemsFetchJob(const DavUrl &collectionUrl, const QStringList &urls, QObject *parent)
+    : DavJobBase(new DavItemsFetchJobPrivate, parent)
+{
+    Q_D(DavItemsFetchJob);
+    d->mCollectionUrl = collectionUrl;
+    d->mUrls = urls;
 }
 
 void DavItemsFetchJob::start()
 {
+    Q_D(DavItemsFetchJob);
     const DavMultigetProtocol *protocol
-        = dynamic_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(mCollectionUrl.protocol()));
+        = dynamic_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(d->mCollectionUrl.protocol()));
     if (!protocol) {
         setError(ERR_NO_MULTIGET);
         setErrorTextFromDavError();
@@ -47,17 +60,18 @@ void DavItemsFetchJob::start()
         return;
     }
 
-    const QDomDocument report = protocol->itemsReportQuery(mUrls)->buildQuery();
-    KIO::DavJob *job = DavManager::self()->createReportJob(mCollectionUrl.url(), report, QStringLiteral("0"));
+    const QDomDocument report = protocol->itemsReportQuery(d->mUrls)->buildQuery();
+    KIO::DavJob *job = DavManager::self()->createReportJob(d->mCollectionUrl.url(), report, QStringLiteral("0"));
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     connect(job, &KIO::DavJob::result, this, &DavItemsFetchJob::davJobFinished);
 }
 
 DavItem::List DavItemsFetchJob::items() const
 {
+    Q_D(const DavItemsFetchJob);
     DavItem::List values;
-    values.reserve(mItems.size());
-    for (const auto &value : qAsConst(mItems)) {
+    values.reserve(d->mItems.size());
+    for (const auto &value : qAsConst(d->mItems)) {
         values << value;
     }
     return values;
@@ -65,11 +79,13 @@ DavItem::List DavItemsFetchJob::items() const
 
 DavItem DavItemsFetchJob::item(const QString &url) const
 {
-    return mItems.value(url);
+    Q_D(const DavItemsFetchJob);
+    return d->mItems.value(url);
 }
 
 void DavItemsFetchJob::davJobFinished(KJob *job)
 {
+    Q_D(DavItemsFetchJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
@@ -89,7 +105,7 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
     }
 
     const DavMultigetProtocol *protocol
-        = static_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(mCollectionUrl.protocol()));
+        = static_cast<const DavMultigetProtocol *>(DavManager::self()->davProtocol(d->mCollectionUrl.protocol()));
 
     const QDomDocument document = davJob->response();
     const QDomElement documentElement = document.documentElement();
@@ -129,8 +145,8 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
         }
 
         auto _url = url;
-        _url.setUserInfo(mCollectionUrl.url().userInfo());
-        item.setUrl(DavUrl(_url, mCollectionUrl.protocol()));
+        _url.setUserInfo(d->mCollectionUrl.url().userInfo());
+        item.setUrl(DavUrl(_url, d->mCollectionUrl.protocol()));
 
         // extract etag
         const QDomElement getetagElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("getetag"));
@@ -154,7 +170,7 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
 
         item.setData(data);
 
-        mItems.insert(item.url().toDisplayString(), item);
+        d->mItems.insert(item.url().toDisplayString(), item);
         responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
     }
 

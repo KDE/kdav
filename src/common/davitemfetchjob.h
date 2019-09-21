@@ -26,6 +26,8 @@
 #include "davurl.h"
 
 namespace KDAV {
+class DavItemFetchJobPrivate;
+
 /**
  * @short A job that fetches a DAV item from the DAV server.
  */
@@ -54,8 +56,7 @@ public:
 
 private:
     void davJobFinished(KJob *);
-    DavUrl mUrl;
-    DavItem mItem;
+    Q_DECLARE_PRIVATE(DavItemFetchJob)
 };
 }
 

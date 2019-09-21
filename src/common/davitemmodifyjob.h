@@ -26,6 +26,8 @@
 #include "davurl.h"
 
 namespace KDAV {
+class DavItemModifyJobPrivate;
+
 /**
  * @short A job that modifies a DAV item on the DAV server.
  */
@@ -68,9 +70,8 @@ private:
     void davJobFinished(KJob *);
     void itemRefreshed(KJob *);
     void conflictingItemFetched(KJob *);
-    DavItem mItem;
-    DavItem mFreshItem;
-    int mFreshResponseCode;
+
+    Q_DECLARE_PRIVATE(DavItemModifyJob)
 };
 }
 

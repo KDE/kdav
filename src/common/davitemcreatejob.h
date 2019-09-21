@@ -26,6 +26,8 @@
 #include "davurl.h"
 
 namespace KDAV {
+class DavItemCreateJobPrivate;
+
 /**
  * @short A job to create a DAV item on the DAV server.
  */
@@ -58,8 +60,8 @@ public:
 private:
     void davJobFinished(KJob *);
     void itemRefreshed(KJob *);
-    DavItem mItem;
-    int mRedirectCount;
+
+    Q_DECLARE_PRIVATE(DavItemCreateJob)
 };
 }
 

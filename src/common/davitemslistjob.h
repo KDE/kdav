@@ -28,11 +28,11 @@
 
 #include <QStringList>
 
-class DavItemsListJobPrivate;
 
 namespace KDAV {
 class EtagCache;
 class DavUrl;
+class DavItemsListJobPrivate;
 
 /**
  * @short A job that lists all DAV items inside a DAV collection.
@@ -92,7 +92,7 @@ public:
 
 private:
     void davJobFinished(KJob *);
-    std::unique_ptr<DavItemsListJobPrivate> d;
+    Q_DECLARE_PRIVATE(DavItemsListJob)
 };
 }
 

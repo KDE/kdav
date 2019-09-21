@@ -26,6 +26,8 @@
 #include "davurl.h"
 
 namespace KDAV {
+class DavItemDeleteJobPrivate;
+
 /**
  * @short A job to delete a DAV item on the DAV server.
  */
@@ -60,9 +62,8 @@ public:
 private:
     void davJobFinished(KJob *);
     void conflictingItemFetched(KJob *);
-    DavItem mItem;
-    DavItem mFreshItem;
-    int mFreshResponseCode;
+
+    Q_DECLARE_PRIVATE(DavItemDeleteJob)
 };
 }
 

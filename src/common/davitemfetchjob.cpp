@@ -17,6 +17,7 @@
 */
 
 #include "davitemfetchjob.h"
+#include "davjobbase_p.h"
 
 #include "davmanager.h"
 #include "daverror.h"
@@ -25,6 +26,14 @@
 #include <KIO/Job>
 
 using namespace KDAV;
+namespace KDAV {
+class DavItemFetchJobPrivate : public DavJobBasePrivate
+{
+public:
+    DavUrl mUrl;
+    DavItem mItem;
+};
+}
 
 static QString etagFromHeaders(const QString &headers)
 {
@@ -41,14 +50,16 @@ static QString etagFromHeaders(const QString &headers)
 }
 
 DavItemFetchJob::DavItemFetchJob(const DavItem &item, QObject *parent)
-    : DavJobBase(parent)
-    , mItem(item)
+    : DavJobBase(new DavItemFetchJobPrivate, parent)
 {
+    Q_D(DavItemFetchJob);
+    d->mItem = item;
 }
 
 void DavItemFetchJob::start()
 {
-    KIO::StoredTransferJob *job = KIO::storedGet(mItem.url().url(), KIO::Reload, KIO::HideProgressInfo | KIO::DefaultFlags);
+    Q_D(DavItemFetchJob);
+    KIO::StoredTransferJob *job = KIO::storedGet(d->mItem.url().url(), KIO::Reload, KIO::HideProgressInfo | KIO::DefaultFlags);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     // Work around a strange bug in Zimbra (seen at least on CE 5.0.18) : if the user-agent
     // contains "Mozilla", some strange debug data is displayed in the shared calendars.
@@ -62,11 +73,13 @@ void DavItemFetchJob::start()
 
 DavItem DavItemFetchJob::item() const
 {
-    return mItem;
+    Q_D(const DavItemFetchJob);
+    return d->mItem;
 }
 
 void DavItemFetchJob::davJobFinished(KJob *job)
 {
+    Q_D(DavItemFetchJob);
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
     const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
@@ -82,9 +95,9 @@ void DavItemFetchJob::davJobFinished(KJob *job)
         setJobError(storedJob->error());
         setErrorTextFromDavError();
     } else {
-        mItem.setData(storedJob->data());
-        mItem.setContentType(storedJob->queryMetaData(QStringLiteral("content-type")));
-        mItem.setEtag(etagFromHeaders(storedJob->queryMetaData(QStringLiteral("HTTP-Headers"))));
+        d->mItem.setData(storedJob->data());
+        d->mItem.setContentType(storedJob->queryMetaData(QStringLiteral("content-type")));
+        d->mItem.setEtag(etagFromHeaders(storedJob->queryMetaData(QStringLiteral("HTTP-Headers"))));
     }
 
     emitResult();

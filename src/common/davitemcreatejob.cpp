@@ -17,6 +17,7 @@
 */
 
 #include "davitemcreatejob.h"
+#include "davjobbase_p.h"
 
 #include "davitemfetchjob.h"
 #include "davmanager.h"
@@ -29,21 +30,31 @@
 
 using namespace KDAV;
 
-DavItemCreateJob::DavItemCreateJob(const DavItem &item, QObject *parent)
-    : DavJobBase(parent)
-    , mItem(item)
-    , mRedirectCount(0)
+namespace KDAV {
+class DavItemCreateJobPrivate : public DavJobBasePrivate
 {
+public:
+    DavItem mItem;
+    int mRedirectCount = 0;
+};
+}
+
+DavItemCreateJob::DavItemCreateJob(const DavItem &item, QObject *parent)
+    : DavJobBase(new DavItemCreateJobPrivate, parent)
+{
+    Q_D(DavItemCreateJob);
+    d->mItem = item;
 }
 
 void DavItemCreateJob::start()
 {
+    Q_D(DavItemCreateJob);
     QString headers = QStringLiteral("Content-Type: ");
-    headers += mItem.contentType();
+    headers += d->mItem.contentType();
     headers += QLatin1String("\r\n");
     headers += QLatin1String("If-None-Match: *");
 
-    KIO::StoredTransferJob *job = KIO::storedPut(mItem.data(), itemUrl(), -1, KIO::HideProgressInfo | KIO::DefaultFlags);
+    KIO::StoredTransferJob *job = KIO::storedPut(d->mItem.data(), itemUrl(), -1, KIO::HideProgressInfo | KIO::DefaultFlags);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     job->addMetaData(QStringLiteral("customHTTPHeader"), headers);
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
@@ -55,16 +66,19 @@ void DavItemCreateJob::start()
 
 DavItem DavItemCreateJob::item() const
 {
-    return mItem;
+    Q_D(const DavItemCreateJob);
+    return d->mItem;
 }
 
 QUrl DavItemCreateJob::itemUrl() const
 {
-    return mItem.url().url();
+    Q_D(const DavItemCreateJob);
+    return d->mItem.url().url();
 }
 
 void DavItemCreateJob::davJobFinished(KJob *job)
 {
+    Q_D(DavItemCreateJob);
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
     const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
@@ -101,16 +115,16 @@ void DavItemCreateJob::davJobFinished(KJob *job)
     }
 
     if (responseCode == 301 || responseCode == 302 || responseCode == 307 || responseCode == 308) {
-        if (mRedirectCount > 4) {
+        if (d->mRedirectCount > 4) {
             setLatestResponseCode(responseCode);
             setError(UserDefinedError + responseCode);
             emitResult();
         } else {
             QUrl _itemUrl(url);
             _itemUrl.setUserInfo(itemUrl().userInfo());
-            mItem.setUrl(DavUrl(_itemUrl, mItem.url().protocol()));
+            d->mItem.setUrl(DavUrl(_itemUrl, d->mItem.url().protocol()));
 
-            ++mRedirectCount;
+            ++d->mRedirectCount;
             start();
         }
 
@@ -118,18 +132,19 @@ void DavItemCreateJob::davJobFinished(KJob *job)
     }
 
     url.setUserInfo(itemUrl().userInfo());
-    mItem.setUrl(DavUrl(url, mItem.url().protocol()));
+    d->mItem.setUrl(DavUrl(url, d->mItem.url().protocol()));
 
-    DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
+    DavItemFetchJob *fetchJob = new DavItemFetchJob(d->mItem);
     connect(fetchJob, &DavItemFetchJob::result, this, &DavItemCreateJob::itemRefreshed);
     fetchJob->start();
 }
 
 void DavItemCreateJob::itemRefreshed(KJob *job)
 {
+    Q_D(DavItemCreateJob);
     if (!job->error()) {
         DavItemFetchJob *fetchJob = qobject_cast<DavItemFetchJob *>(job);
-        mItem.setEtag(fetchJob->item().etag());
+        d->mItem.setEtag(fetchJob->item().etag());
     }
     emitResult();
 }

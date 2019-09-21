@@ -17,6 +17,7 @@
 */
 
 #include "davitemslistjob.h"
+#include "davjobbase_p.h"
 
 #include "daverror.h"
 #include "davmanager.h"
@@ -30,11 +31,10 @@
 
 using namespace KDAV;
 
-class DavItemsListJobPrivate
+namespace KDAV {
+class DavItemsListJobPrivate : public DavJobBasePrivate
 {
 public:
-    DavItemsListJobPrivate(const DavUrl &url, const std::shared_ptr<EtagCache> &cache);
-
     DavUrl mUrl;
     std::shared_ptr<EtagCache> mEtagCache;
     QStringList mMimeTypes;
@@ -44,39 +44,36 @@ public:
     QSet<QString> mSeenUrls; // to prevent events duplication with some servers
     DavItem::List mChangedItems;
     QStringList mDeletedItems;
-    uint mSubJobCount;
+    uint mSubJobCount = 0;
 };
-
-DavItemsListJobPrivate::DavItemsListJobPrivate(const DavUrl &url, const std::shared_ptr<EtagCache> &cache)
-    : mUrl(url)
-    , mEtagCache(cache)
-    , mSubJobCount(0)
-{
 }
 
 DavItemsListJob::DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent)
-    : DavJobBase(parent)
-    , d(std::unique_ptr<DavItemsListJobPrivate>(new DavItemsListJobPrivate(url, cache)))
+    : DavJobBase(new DavItemsListJobPrivate, parent)
 {
+    Q_D(DavItemsListJob);
+    d->mUrl = url;
+    d->mEtagCache = cache;
 }
 
-DavItemsListJob::~DavItemsListJob()
-{
-}
+DavItemsListJob::~DavItemsListJob() = default;
 
 void DavItemsListJob::setContentMimeTypes(const QStringList &types)
 {
+    Q_D(DavItemsListJob);
     d->mMimeTypes = types;
 }
 
 void DavItemsListJob::setTimeRange(const QString &start, const QString &end)
 {
+    Q_D(DavItemsListJob);
     d->mRangeStart = start;
     d->mRangeEnd = end;
 }
 
 void DavItemsListJob::start()
 {
+    Q_D(DavItemsListJob);
     const DavProtocolBase *protocol = DavManager::self()->davProtocol(d->mUrl.protocol());
     Q_ASSERT(protocol);
     QVectorIterator<XMLQueryBuilder::Ptr> it(protocol->itemsQueries());
@@ -120,21 +117,25 @@ void DavItemsListJob::start()
 
 DavItem::List DavItemsListJob::items() const
 {
+    Q_D(const DavItemsListJob);
     return d->mItems;
 }
 
 DavItem::List DavItemsListJob::changedItems() const
 {
+    Q_D(const DavItemsListJob);
     return d->mChangedItems;
 }
 
 QStringList DavItemsListJob::deletedItems() const
 {
+    Q_D(const DavItemsListJob);
     return d->mDeletedItems;
 }
 
 void DavItemsListJob::davJobFinished(KJob *job)
 {
+    Q_D(DavItemsListJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).isEmpty()
                              ? 0

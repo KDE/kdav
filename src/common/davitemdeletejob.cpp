@@ -17,6 +17,7 @@
 */
 
 #include "davitemdeletejob.h"
+#include "davjobbase_p.h"
 
 #include "davitemfetchjob.h"
 #include "davmanager.h"
@@ -27,18 +28,29 @@
 
 using namespace KDAV;
 
-DavItemDeleteJob::DavItemDeleteJob(const DavItem &item, QObject *parent)
-    : DavJobBase(parent)
-    , mItem(item)
-    , mFreshResponseCode(-1)
+namespace KDAV {
+class DavItemDeleteJobPrivate : public DavJobBasePrivate
 {
+public:
+    DavItem mItem;
+    DavItem mFreshItem;
+    int mFreshResponseCode = -1;
+};
+}
+
+DavItemDeleteJob::DavItemDeleteJob(const DavItem &item, QObject *parent)
+    : DavJobBase(new DavItemDeleteJobPrivate, parent)
+{
+    Q_D(DavItemDeleteJob);
+    d->mItem = item;
 }
 
 void DavItemDeleteJob::start()
 {
-    KIO::DeleteJob *job = KIO::del(mItem.url().url(), KIO::HideProgressInfo | KIO::DefaultFlags);
+    Q_D(DavItemDeleteJob);
+    KIO::DeleteJob *job = KIO::del(d->mItem.url().url(), KIO::HideProgressInfo | KIO::DefaultFlags);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), QStringLiteral("If-Match: ") + mItem.etag());
+    job->addMetaData(QStringLiteral("customHTTPHeader"), QStringLiteral("If-Match: ") + d->mItem.etag());
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
 
@@ -47,16 +59,19 @@ void DavItemDeleteJob::start()
 
 DavItem DavItemDeleteJob::freshItem() const
 {
-    return mFreshItem;
+    Q_D(const DavItemDeleteJob);
+    return d->mFreshItem;
 }
 
 int DavItemDeleteJob::freshResponseCode() const
 {
-    return mFreshResponseCode;
+    Q_D(const DavItemDeleteJob);
+    return d->mFreshResponseCode;
 }
 
 void DavItemDeleteJob::davJobFinished(KJob *job)
 {
+    Q_D(DavItemDeleteJob);
     KIO::DeleteJob *deleteJob = qobject_cast<KIO::DeleteJob *>(job);
 
     if (deleteJob->error() && deleteJob->error() != KIO::ERR_NO_CONTENT) {
@@ -73,7 +88,7 @@ void DavItemDeleteJob::davJobFinished(KJob *job)
         }
 
         if (hasConflict()) {
-            DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
+            DavItemFetchJob *fetchJob = new DavItemFetchJob(d->mItem);
             connect(fetchJob, &DavItemFetchJob::result, this, &DavItemDeleteJob::conflictingItemFetched);
             fetchJob->start();
             return;
@@ -85,11 +100,12 @@ void DavItemDeleteJob::davJobFinished(KJob *job)
 
 void DavItemDeleteJob::conflictingItemFetched(KJob *job)
 {
+    Q_D(DavItemDeleteJob);
     DavItemFetchJob *fetchJob = qobject_cast<DavItemFetchJob *>(job);
-    mFreshResponseCode = fetchJob->latestResponseCode();
+    d->mFreshResponseCode = fetchJob->latestResponseCode();
 
     if (!job->error()) {
-        mFreshItem = fetchJob->item();
+        d->mFreshItem = fetchJob->item();
     }
 
     emitResult();

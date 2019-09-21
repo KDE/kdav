@@ -30,6 +30,8 @@
 #include <QStringList>
 
 namespace KDAV {
+class DavItemsFetchJobPrivate;
+
 /**
  * @short A job that fetches a list of items from a DAV server using a multiget query.
  */
@@ -64,9 +66,7 @@ public:
 
 private:
     void davJobFinished(KJob *);
-    DavUrl mCollectionUrl;
-    QStringList mUrls;
-    QMap<QString, DavItem> mItems;
+    Q_DECLARE_PRIVATE(DavItemsFetchJob)
 };
 }
 
