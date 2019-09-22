@@ -22,20 +22,33 @@
 
 using namespace KDAV;
 
+namespace KDAV {
+class DavCollectionsMultiFetchJobPrivate
+{
+public:
+    DavUrl::List mUrls;
+    DavCollection::List mCollections;
+    int mSubJobCount = -1;
+};
+}
+
 DavCollectionsMultiFetchJob::DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent)
     : KJob(parent)
-    , mUrls(urls)
-    , mSubJobCount(urls.size())
+    , d(new DavCollectionsMultiFetchJobPrivate)
 {
+    d->mUrls = urls;
+    d->mSubJobCount = urls.size();
 }
+
+DavCollectionsMultiFetchJob::~DavCollectionsMultiFetchJob() = default;
 
 void DavCollectionsMultiFetchJob::start()
 {
-    if (mUrls.isEmpty()) {
+    if (d->mUrls.isEmpty()) {
         emitResult();
     }
 
-    for (const DavUrl &url : qAsConst(mUrls)) {
+    for (const DavUrl &url : qAsConst(d->mUrls)) {
         DavCollectionsFetchJob *job = new DavCollectionsFetchJob(url, this);
         connect(job, &DavCollectionsFetchJob::result, this, &DavCollectionsMultiFetchJob::davJobFinished);
         connect(job, &DavCollectionsFetchJob::collectionDiscovered, this, &DavCollectionsMultiFetchJob::collectionDiscovered);
@@ -45,7 +58,7 @@ void DavCollectionsMultiFetchJob::start()
 
 DavCollection::List DavCollectionsMultiFetchJob::collections() const
 {
-    return mCollections;
+    return d->mCollections;
 }
 
 void DavCollectionsMultiFetchJob::davJobFinished(KJob *job)
@@ -56,10 +69,10 @@ void DavCollectionsMultiFetchJob::davJobFinished(KJob *job)
         setError(job->error());
         setErrorText(job->errorText());
     } else {
-        mCollections << fetchJob->collections();
+        d->mCollections << fetchJob->collections();
     }
 
-    if (--mSubJobCount == 0) {
+    if (--d->mSubJobCount == 0) {
         emitResult();
     }
 }

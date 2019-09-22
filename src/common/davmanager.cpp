@@ -31,28 +31,25 @@
 
 using namespace KDAV;
 
-DavManager *DavManager::mSelf = nullptr;
+namespace KDAV {
+class DavManagerPrivate
+{
+public:
+    std::unique_ptr<DavProtocolBase> mProtocols[PROTOCOL_COUNT];
+};
+}
 
-DavManager::DavManager()
+DavManager::DavManager() :
+    d(new DavManagerPrivate)
 {
 }
 
-DavManager::~DavManager()
-{
-    QMapIterator<Protocol, DavProtocolBase *> it(mProtocols);
-    while (it.hasNext()) {
-        it.next();
-        delete it.value();
-    }
-}
+DavManager::~DavManager() = default;
 
 DavManager *DavManager::self()
 {
-    if (!mSelf) {
-        mSelf = new DavManager();
-    }
-
-    return mSelf;
+    static DavManager sSelf;
+    return &sSelf;
 }
 
 KIO::DavJob *DavManager::createPropFindJob(const QUrl &url, const QDomDocument &document, const QString &depth) const
@@ -95,30 +92,22 @@ KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QDomDocument 
 
 const DavProtocolBase *DavManager::davProtocol(Protocol protocol)
 {
-    if (createProtocol(protocol)) {
-        return mProtocols[ protocol ];
-    } else {
-        return nullptr;
+    if (!d->mProtocols[protocol]) {
+        switch (protocol) {
+        case KDAV::CalDav:
+            d->mProtocols[KDAV::CalDav].reset(new CaldavProtocol());
+            break;
+        case KDAV::CardDav:
+            d->mProtocols[KDAV::CardDav].reset(new CarddavProtocol());
+            break;
+        case KDAV::GroupDav:
+            d->mProtocols[KDAV::GroupDav].reset(new GroupdavProtocol());
+            break;
+        default:
+            qCCritical(KDAV_LOG) << "Unknown protocol: " << static_cast<int>(protocol);
+            return nullptr;
+        }
     }
-}
 
-bool DavManager::createProtocol(Protocol protocol)
-{
-    if (mProtocols.contains(protocol)) {
-        return true;
-    }
-
-    switch (protocol) {
-    case KDAV::CalDav:
-        mProtocols.insert(KDAV::CalDav, new CaldavProtocol());
-        return true;
-    case KDAV::CardDav:
-        mProtocols.insert(KDAV::CardDav, new CarddavProtocol());
-        return true;
-    case KDAV::GroupDav:
-        mProtocols.insert(KDAV::GroupDav, new GroupdavProtocol());
-        return true;
-    }
-    qCCritical(KDAV_LOG) << "Unknown protocol: " << static_cast<int>(protocol);
-    return false;
+    return d->mProtocols[protocol].get();
 }

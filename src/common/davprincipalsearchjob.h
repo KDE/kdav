@@ -33,6 +33,8 @@
 class QDomDocument;
 
 namespace KDAV {
+class DavPrincipalSearchJobPrivate;
+
 /**
  * @short A job that search a DAV principal on a server
  *
@@ -103,14 +105,7 @@ private:
     void principalPropertySearchFinished(KJob *job);
     void buildReportQuery(QDomDocument &query);
 
-private:
-    DavUrl mUrl;
-    FilterType mType;
-    QString mFilter;
-    int mPrincipalPropertySearchSubJobCount;
-    bool mPrincipalPropertySearchSubJobSuccessful;
-    QList< QPair<QString, QString> > mFetchProperties;
-    QVector<Result> mResults;
+    Q_DECLARE_PRIVATE(DavPrincipalSearchJob)
 };
 }
 

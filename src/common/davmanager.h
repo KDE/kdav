@@ -26,6 +26,8 @@
 #include <QMap>
 #include <QString>
 
+#include <memory>
+
 namespace KIO {
 class DavJob;
 }
@@ -37,6 +39,7 @@ class QDomDocument;
 /** CalDav/CardDav protocol implementation. */
 namespace KDAV {
 class DavProtocolBase;
+class DavManagerPrivate;
 
 /**
  * @short A factory class for handling DAV jobs.
@@ -95,14 +98,7 @@ private:
      */
     DavManager();
 
-    /**
-     * Creates a new protocol.
-     */
-    bool createProtocol(Protocol protocol);
-
-    typedef QMap<Protocol, DavProtocolBase *> protocolsMap;
-    protocolsMap mProtocols;
-    static DavManager *mSelf;
+    const std::unique_ptr<DavManagerPrivate> d;
 };
 }
 

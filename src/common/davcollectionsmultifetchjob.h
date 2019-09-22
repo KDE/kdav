@@ -26,7 +26,11 @@
 
 #include <KJob>
 
+#include <memory>
+
 namespace KDAV {
+class DavCollectionsMultiFetchJobPrivate;
+
 /**
  * @short A job that fetches all DAV collection.
  *
@@ -48,6 +52,7 @@ public:
      * @param parent The parent object.
      */
     explicit DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent = nullptr);
+    ~DavCollectionsMultiFetchJob();
 
     /**
      * Starts the job.
@@ -70,9 +75,8 @@ Q_SIGNALS:
 
 private:
     void davJobFinished(KJob *);
-    DavUrl::List mUrls;
-    DavCollection::List mCollections;
-    int mSubJobCount = -1;
+
+    const std::unique_ptr<DavCollectionsMultiFetchJobPrivate> d;
 };
 }
 
