@@ -1,4 +1,6 @@
-==== What's this ? ====
+# KDAV
+
+## What's this?
 
 This is an DAV protocol implemention with KJobs.
 
@@ -7,14 +9,14 @@ or CalDAV, and contacts are supported using GroupDAV or
 CardDAV.
 
 
-==== Usage ====
+## Usage
 
 It should be pretty straightforward. The URL to use should be, if possible,
 the principals URL for your server (CalDAV / CardDAV) or the parent
 collection of your calendars to allow discovery.
 
 
-==== Tested with / known bugs ====
+## Tested with / known bugs
 
 Here is a list of servers tested with this resource with the URLs used.
 Feel free to contact the author(s) if you successfully tested a configuration
