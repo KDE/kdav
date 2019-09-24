@@ -87,17 +87,13 @@ public:
      */
     KIO::DavJob *createPropPatchJob(const QUrl &url, const QDomDocument &document) const;
 
-    /**
-     * Returns the DAV protocol dialect object for the given DAV @p protocol.
-     */
-    const DavProtocolBase *davProtocol(Protocol protocol);
-
 private:
     /**
      * Creates a new DAV manager.
      */
     DavManager();
 
+    friend class DavManagerPrivate;
     const std::unique_ptr<DavManagerPrivate> d;
 };
 }

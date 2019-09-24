@@ -15,23 +15,34 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "protocolinfo.h"
-#include "davmanager_p.h"
-#include "davprotocolbase.h"
+#ifndef KDAV_DAVMANAGER_P_H
+#define KDAV_DAVMANAGER_P_H
 
-using namespace KDAV;
+#include "davmanager.h"
+#include "enums.h"
 
-bool ProtocolInfo::useMultiget(KDAV::Protocol protocol)
+#include <memory>
+
+namespace KDAV {
+class DavProtocolBase;
+
+class DavManagerPrivate
 {
-    return DavManagerPrivate::davProtocol(protocol)->useMultiget();
+public:
+    /**
+     * Returns the DAV protocol dialect object for the given DAV @p protocol.
+     */
+    static const DavProtocolBase *davProtocol(Protocol protocol);
+
+    static inline DavManagerPrivate* get(DavManager *mgr)
+    {
+        return mgr->d.get();
+    }
+
+    std::unique_ptr<DavProtocolBase> mProtocols[PROTOCOL_COUNT];
+};
+
 }
 
-QString ProtocolInfo::principalHomeSet(KDAV::Protocol protocol)
-{
-    return DavManagerPrivate::davProtocol(protocol)->principalHomeSet();
-}
+#endif
 
-QString ProtocolInfo::principalHomeSetNS(KDAV::Protocol protocol)
-{
-    return DavManagerPrivate::davProtocol(protocol)->principalHomeSetNS();
-}

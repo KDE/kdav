@@ -21,6 +21,7 @@
 
 #include "daverror.h"
 #include "davmanager.h"
+#include "davmanager_p.h"
 #include "davprotocolbase.h"
 #include "davurl.h"
 #include "utils.h"
@@ -74,7 +75,7 @@ void DavItemsListJob::setTimeRange(const QString &start, const QString &end)
 void DavItemsListJob::start()
 {
     Q_D(DavItemsListJob);
-    const DavProtocolBase *protocol = DavManager::self()->davProtocol(d->mUrl.protocol());
+    const DavProtocolBase *protocol = DavManagerPrivate::davProtocol(d->mUrl.protocol());
     Q_ASSERT(protocol);
     QVectorIterator<XMLQueryBuilder::Ptr> it(protocol->itemsQueries());
 

@@ -32,7 +32,7 @@ namespace KDAV {
 /**
  * @short Base class for XML query builders
  */
-class KPIMKDAV_EXPORT XMLQueryBuilder
+class XMLQueryBuilder
 {
 public:
     typedef QSharedPointer<XMLQueryBuilder> Ptr;
@@ -60,7 +60,7 @@ private:
  *   @li CarddavProtocol
  *   @li GroupdavProtocol
  */
-class KPIMKDAV_EXPORT DavProtocolBase
+class DavProtocolBase
 {
 public:
     /**

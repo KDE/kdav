@@ -27,7 +27,7 @@ namespace KDAV {
 /**
  * @short Base class for protocols that implement multiget capabilities
  */
-class KPIMKDAV_EXPORT DavMultigetProtocol : public DavProtocolBase
+class DavMultigetProtocol : public DavProtocolBase
 {
 public:
     /**

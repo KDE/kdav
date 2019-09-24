@@ -20,6 +20,7 @@
 #include "davjobbase_p.h"
 
 #include "davmanager.h"
+#include "davmanager_p.h"
 #include "davprincipalhomesetsfetchjob.h"
 #include "davprotocolbase.h"
 #include "utils.h"
@@ -55,7 +56,7 @@ DavCollectionsFetchJob::DavCollectionsFetchJob(const DavUrl &url, QObject *paren
 void DavCollectionsFetchJob::start()
 {
     Q_D(DavCollectionsFetchJob);
-    if (DavManager::self()->davProtocol(d->mUrl.protocol())->supportsPrincipals()) {
+    if (DavManagerPrivate::davProtocol(d->mUrl.protocol())->supportsPrincipals()) {
         DavPrincipalHomeSetsFetchJob *job = new DavPrincipalHomeSetsFetchJob(d->mUrl);
         connect(job, &DavPrincipalHomeSetsFetchJob::result, this, &DavCollectionsFetchJob::principalFetchFinished);
         job->start();
@@ -81,7 +82,7 @@ void DavCollectionsFetchJob::doCollectionsFetch(const QUrl &url)
     Q_D(DavCollectionsFetchJob);
     ++d->mSubJobCount;
 
-    const QDomDocument collectionQuery = DavManager::self()->davProtocol(d->mUrl.protocol())->collectionsQuery()->buildQuery();
+    const QDomDocument collectionQuery = DavManagerPrivate::davProtocol(d->mUrl.protocol())->collectionsQuery()->buildQuery();
 
     KIO::DavJob *job = DavManager::self()->createPropFindJob(url, collectionQuery);
     connect(job, &KIO::DavJob::result, this, &DavCollectionsFetchJob::collectionsFetchFinished);
@@ -189,7 +190,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
             return;
         }
 
-        xquery.setQuery(DavManager::self()->davProtocol(d->mUrl.protocol())->collectionsXQuery());
+        xquery.setQuery(DavManagerPrivate::davProtocol(d->mUrl.protocol())->collectionsXQuery());
         if (!xquery.isValid()) {
             setError(ERR_COLLECTIONFETCH_XQUERY_INVALID);
             setErrorTextFromDavError();
@@ -332,7 +333,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 }
 
                 // extract allowed content types
-                const DavCollection::ContentTypes contentTypes = DavManager::self()->davProtocol(d->mUrl.protocol())->collectionContentTypes(propstatElement);
+                const DavCollection::ContentTypes contentTypes = DavManagerPrivate::davProtocol(d->mUrl.protocol())->collectionContentTypes(propstatElement);
 
                 auto _url = url;
                 _url.setUserInfo(d->mUrl.url().userInfo());

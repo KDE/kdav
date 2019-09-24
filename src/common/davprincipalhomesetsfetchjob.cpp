@@ -22,6 +22,7 @@
 #include "davmanager.h"
 #include "davprotocolbase.h"
 #include "daverror.h"
+#include "protocolinfo.h"
 #include "utils.h"
 
 #include <KIO/DavJob>
@@ -61,8 +62,8 @@ void DavPrincipalHomeSetsFetchJob::fetchHomeSets(bool homeSetsOnly)
     QDomElement propElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
     propfindElement.appendChild(propElement);
 
-    const QString homeSet = DavManager::self()->davProtocol(d->mUrl.protocol())->principalHomeSet();
-    const QString homeSetNS = DavManager::self()->davProtocol(d->mUrl.protocol())->principalHomeSetNS();
+    const QString homeSet = ProtocolInfo::principalHomeSet(d->mUrl.protocol());
+    const QString homeSetNS = ProtocolInfo::principalHomeSetNS(d->mUrl.protocol());
     propElement.appendChild(document.createElementNS(homeSetNS, homeSet));
 
     if (!homeSetsOnly) {
@@ -151,8 +152,8 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
      *  </multistatus>
      */
 
-    const QString homeSet = DavManager::self()->davProtocol(d->mUrl.protocol())->principalHomeSet();
-    const QString homeSetNS = DavManager::self()->davProtocol(d->mUrl.protocol())->principalHomeSetNS();
+    const QString homeSet = ProtocolInfo::principalHomeSet(d->mUrl.protocol());
+    const QString homeSetNS = ProtocolInfo::principalHomeSetNS(d->mUrl.protocol());
     QString nextRoundHref; // The content of the href element that will be used if no homeset was found.
     // This is either given by current-user-principal or by principal-URL.
 

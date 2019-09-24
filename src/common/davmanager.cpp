@@ -17,6 +17,7 @@
 */
 
 #include "davmanager.h"
+#include "davmanager_p.h"
 
 #include "protocols/caldavprotocol.h"
 #include "protocols/carddavprotocol.h"
@@ -30,14 +31,6 @@
 #include <QDomDocument>
 
 using namespace KDAV;
-
-namespace KDAV {
-class DavManagerPrivate
-{
-public:
-    std::unique_ptr<DavProtocolBase> mProtocols[PROTOCOL_COUNT];
-};
-}
 
 DavManager::DavManager() :
     d(new DavManagerPrivate)
@@ -90,8 +83,9 @@ KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QDomDocument 
     return job;
 }
 
-const DavProtocolBase *DavManager::davProtocol(Protocol protocol)
+const DavProtocolBase *DavManagerPrivate::davProtocol(Protocol protocol)
 {
+    const auto d = DavManagerPrivate::get(DavManager::self());
     if (!d->mProtocols[protocol]) {
         switch (protocol) {
         case KDAV::CalDav:
