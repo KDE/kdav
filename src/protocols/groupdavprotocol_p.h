@@ -19,7 +19,7 @@
 #ifndef GROUPDAVPROTOCOL_H
 #define GROUPDAVPROTOCOL_H
 
-#include "common/davprotocolbase.h"
+#include "common/davprotocolbase_p.h"
 
 class GroupdavProtocol : public KDAV::DavProtocolBase
 {

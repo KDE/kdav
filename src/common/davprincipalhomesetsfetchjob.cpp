@@ -20,7 +20,7 @@
 #include "davjobbase_p.h"
 
 #include "davmanager.h"
-#include "davprotocolbase.h"
+#include "davprotocolbase_p.h"
 #include "daverror.h"
 #include "protocolinfo.h"
 #include "utils.h"

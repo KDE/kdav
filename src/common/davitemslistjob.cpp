@@ -22,7 +22,7 @@
 #include "daverror.h"
 #include "davmanager.h"
 #include "davmanager_p.h"
-#include "davprotocolbase.h"
+#include "davprotocolbase_p.h"
 #include "davurl.h"
 #include "utils.h"
 #include "etagcache.h"

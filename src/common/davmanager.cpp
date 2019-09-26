@@ -19,9 +19,9 @@
 #include "davmanager.h"
 #include "davmanager_p.h"
 
-#include "protocols/caldavprotocol.h"
-#include "protocols/carddavprotocol.h"
-#include "protocols/groupdavprotocol.h"
+#include "protocols/caldavprotocol_p.h"
+#include "protocols/carddavprotocol_p.h"
+#include "protocols/groupdavprotocol_p.h"
 
 #include <KIO/DavJob>
 

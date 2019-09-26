@@ -17,7 +17,7 @@
 
 #include "protocolinfo.h"
 #include "davmanager_p.h"
-#include "davprotocolbase.h"
+#include "davprotocolbase_p.h"
 
 using namespace KDAV;
 

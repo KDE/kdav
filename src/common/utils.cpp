@@ -22,7 +22,7 @@
 
 #include "davitem.h"
 #include "davmanager.h"
-#include "davprotocolbase.h"
+#include "davprotocolbase_p.h"
 
 #include <QDateTime>
 #include <QString>

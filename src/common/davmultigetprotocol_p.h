@@ -21,7 +21,7 @@
 
 #include "kpimkdav_export.h"
 
-#include "davprotocolbase.h"
+#include "davprotocolbase_p.h"
 
 namespace KDAV {
 /**

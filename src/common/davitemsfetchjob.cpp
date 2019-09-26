@@ -22,7 +22,7 @@
 
 #include "davmanager.h"
 #include "davmanager_p.h"
-#include "davmultigetprotocol.h"
+#include "davmultigetprotocol_p.h"
 #include "utils.h"
 #include "daverror.h"
 

@@ -22,7 +22,7 @@
 #include "davmanager.h"
 #include "davmanager_p.h"
 #include "davprincipalhomesetsfetchjob.h"
-#include "davprotocolbase.h"
+#include "davprotocolbase_p.h"
 #include "utils.h"
 #include "daverror.h"
 
