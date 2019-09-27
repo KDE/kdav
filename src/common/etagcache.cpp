@@ -18,30 +18,45 @@
 
 #include "etagcache.h"
 
+#include <QMap>
+#include <QSet>
+
 using namespace KDAV;
+
+namespace KDAV {
+class EtagCachePrivate
+{
+public:
+    QMap<QString, QString> mCache;
+    QSet<QString> mChangedRemoteIds;
+};
+}
 
 EtagCache::EtagCache(QObject *parent)
     : QObject(parent)
+    , d(new EtagCachePrivate)
 {
 }
+
+EtagCache::~EtagCache() = default;
 
 void EtagCache::setEtag(const QString &remoteId, const QString &etag)
 {
     setEtagInternal(remoteId, etag);
 
-    if (mChangedRemoteIds.contains(remoteId)) {
-        mChangedRemoteIds.remove(remoteId);
+    if (d->mChangedRemoteIds.contains(remoteId)) {
+        d->mChangedRemoteIds.remove(remoteId);
     }
 }
 
 void EtagCache::setEtagInternal(const QString &remoteId, const QString &etag)
 {
-    mCache[ remoteId ] = etag;
+    d->mCache[ remoteId ] = etag;
 }
 
 bool EtagCache::contains(const QString &remoteId) const
 {
-    return mCache.contains(remoteId);
+    return d->mCache.contains(remoteId);
 }
 
 bool EtagCache::etagChanged(const QString &remoteId, const QString &refEtag) const
@@ -49,31 +64,31 @@ bool EtagCache::etagChanged(const QString &remoteId, const QString &refEtag) con
     if (!contains(remoteId)) {
         return true;
     }
-    return mCache.value(remoteId) != refEtag;
+    return d->mCache.value(remoteId) != refEtag;
 }
 
 void EtagCache::markAsChanged(const QString &remoteId)
 {
-    mChangedRemoteIds.insert(remoteId);
+    d->mChangedRemoteIds.insert(remoteId);
 }
 
 bool EtagCache::isOutOfDate(const QString &remoteId) const
 {
-    return mChangedRemoteIds.contains(remoteId);
+    return d->mChangedRemoteIds.contains(remoteId);
 }
 
 void EtagCache::removeEtag(const QString &remoteId)
 {
-    mChangedRemoteIds.remove(remoteId);
-    mCache.remove(remoteId);
+    d->mChangedRemoteIds.remove(remoteId);
+    d->mCache.remove(remoteId);
 }
 
 QStringList EtagCache::urls() const
 {
-    return mCache.keys();
+    return d->mCache.keys();
 }
 
 QStringList EtagCache::changedRemoteIds() const
 {
-    return mChangedRemoteIds.toList();
+    return d->mChangedRemoteIds.toList();
 }

@@ -30,6 +30,8 @@
 #include <KIO/DavJob>
 #include <KIO/Job>
 
+#include <QSet>
+
 using namespace KDAV;
 
 namespace KDAV {

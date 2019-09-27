@@ -21,12 +21,14 @@
 
 #include "kpimkdav_export.h"
 
-#include <QMap>
 #include <QObject>
-#include <QSet>
 #include <QStringList>
 
+#include <memory>
+
 namespace KDAV {
+class EtagCachePrivate;
+
 /**
  * @short A helper class to cache etags.
  *
@@ -45,6 +47,7 @@ public:
      * of items found in @p collection.
      */
     explicit EtagCache(QObject *parent = nullptr);
+    ~EtagCache();
 
     /**
      * Sets the ETag for the remote ID. If the remote ID is marked as
@@ -97,8 +100,7 @@ protected:
     void setEtagInternal(const QString &remoteId, const QString &etag);
 
 private:
-    QMap<QString, QString> mCache;
-    QSet<QString> mChangedRemoteIds;
+    const std::unique_ptr<EtagCachePrivate> d;
 };
 }
 
