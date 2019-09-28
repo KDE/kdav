@@ -20,7 +20,7 @@
 #include "davjobbase_p.h"
 
 #include "davitemfetchjob.h"
-#include "davmanager.h"
+#include "davmanager_p.h"
 #include "daverror.h"
 
 #include <KIO/DavJob>

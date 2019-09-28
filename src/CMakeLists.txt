@@ -57,7 +57,6 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavItemModifyJob
     DavItemsFetchJob
     DavItemsListJob
-    DavManager
     DavPrincipalHomesetsFetchJob
     DavPrincipalSearchJob
     DavUrl

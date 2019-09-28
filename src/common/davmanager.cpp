@@ -16,7 +16,6 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include "davmanager.h"
 #include "davmanager_p.h"
 
 #include "protocols/caldavprotocol_p.h"
@@ -32,11 +31,7 @@
 
 using namespace KDAV;
 
-DavManager::DavManager() :
-    d(new DavManagerPrivate)
-{
-}
-
+DavManager::DavManager() = default;
 DavManager::~DavManager() = default;
 
 DavManager *DavManager::self()
@@ -83,9 +78,9 @@ KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QDomDocument 
     return job;
 }
 
-const DavProtocolBase *DavManagerPrivate::davProtocol(Protocol protocol)
+const DavProtocolBase *DavManager::davProtocol(Protocol protocol)
 {
-    const auto d = DavManagerPrivate::get(DavManager::self());
+    const auto d = DavManager::self();
     if (!d->mProtocols[protocol]) {
         switch (protocol) {
         case KDAV::CalDav:

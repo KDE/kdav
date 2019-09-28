@@ -20,7 +20,6 @@
 #include "davitemsfetchjob.h"
 #include "davjobbase_p.h"
 
-#include "davmanager.h"
 #include "davmanager_p.h"
 #include "davmultigetprotocol_p.h"
 #include "utils.h"
@@ -53,7 +52,7 @@ void DavItemsFetchJob::start()
 {
     Q_D(DavItemsFetchJob);
     const DavMultigetProtocol *protocol
-        = dynamic_cast<const DavMultigetProtocol *>(DavManagerPrivate::davProtocol(d->mCollectionUrl.protocol()));
+        = dynamic_cast<const DavMultigetProtocol *>(DavManager::davProtocol(d->mCollectionUrl.protocol()));
     if (!protocol) {
         setError(ERR_NO_MULTIGET);
         setErrorTextFromDavError();
@@ -106,7 +105,7 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
     }
 
     const DavMultigetProtocol *protocol
-        = static_cast<const DavMultigetProtocol *>(DavManagerPrivate::davProtocol(d->mCollectionUrl.protocol()));
+        = static_cast<const DavMultigetProtocol *>(DavManager::davProtocol(d->mCollectionUrl.protocol()));
 
     const QDomDocument document = davJob->response();
     const QDomElement documentElement = document.documentElement();

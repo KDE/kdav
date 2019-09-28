@@ -23,15 +23,15 @@ using namespace KDAV;
 
 bool ProtocolInfo::useMultiget(KDAV::Protocol protocol)
 {
-    return DavManagerPrivate::davProtocol(protocol)->useMultiget();
+    return DavManager::davProtocol(protocol)->useMultiget();
 }
 
 QString ProtocolInfo::principalHomeSet(KDAV::Protocol protocol)
 {
-    return DavManagerPrivate::davProtocol(protocol)->principalHomeSet();
+    return DavManager::davProtocol(protocol)->principalHomeSet();
 }
 
 QString ProtocolInfo::principalHomeSetNS(KDAV::Protocol protocol)
 {
-    return DavManagerPrivate::davProtocol(protocol)->principalHomeSetNS();
+    return DavManager::davProtocol(protocol)->principalHomeSetNS();
 }

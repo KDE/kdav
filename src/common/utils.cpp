@@ -21,7 +21,7 @@
 #include "enums.h"
 
 #include "davitem.h"
-#include "davmanager.h"
+#include "davmanager_p.h"
 #include "davprotocolbase_p.h"
 
 #include <QDateTime>
