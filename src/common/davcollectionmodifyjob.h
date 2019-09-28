@@ -24,8 +24,6 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <QDomDocument>
-
 #include <KJob>
 
 namespace KDAV {

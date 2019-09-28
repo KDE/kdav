@@ -30,8 +30,6 @@
 
 #include <KJob>
 
-class QDomDocument;
-
 namespace KDAV {
 class DavPrincipalSearchJobPrivate;
 
@@ -103,7 +101,6 @@ public:
 private:
     void principalCollectionSetSearchFinished(KJob *job);
     void principalPropertySearchFinished(KJob *job);
-    void buildReportQuery(QDomDocument &query);
 
     Q_DECLARE_PRIVATE(DavPrincipalSearchJob)
 };

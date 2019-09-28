@@ -34,6 +34,8 @@ namespace KDAV {
 class DavPrincipalSearchJobPrivate : public DavJobBasePrivate
 {
 public:
+    void buildReportQuery(QDomDocument &query) const;
+
     DavUrl mUrl;
     DavPrincipalSearchJob::FilterType mType;
     QString mFilter;
@@ -204,7 +206,7 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
         }
 
         QDomDocument principalPropertySearchQuery;
-        buildReportQuery(principalPropertySearchQuery);
+        d->buildReportQuery(principalPropertySearchQuery);
         KIO::DavJob *reportJob = DavManager::self()->createReportJob(url, principalPropertySearchQuery);
         reportJob->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
         connect(reportJob, &KIO::DavJob::result, this, &DavPrincipalSearchJob::principalPropertySearchFinished);
@@ -340,9 +342,8 @@ QVector< DavPrincipalSearchJob::Result > DavPrincipalSearchJob::results() const
     return d->mResults;
 }
 
-void DavPrincipalSearchJob::buildReportQuery(QDomDocument &query)
+void DavPrincipalSearchJobPrivate::buildReportQuery(QDomDocument &query) const
 {
-    Q_D(DavPrincipalSearchJob);
     /*
      * Build a document like the following, where XXX will
      * be replaced by the properties the user want to fetch:
@@ -370,10 +371,10 @@ void DavPrincipalSearchJob::buildReportQuery(QDomDocument &query)
     QDomElement prop = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
     propertySearch.appendChild(prop);
 
-    if (d->mType == DisplayName) {
+    if (mType == DavPrincipalSearchJob::DisplayName) {
         QDomElement displayName = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("displayname"));
         prop.appendChild(displayName);
-    } else if (d->mType == EmailAddress) {
+    } else if (mType == DavPrincipalSearchJob::EmailAddress) {
         QDomElement calendarUserAddressSet = query.createElementNS(QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("calendar-user-address-set"));
         prop.appendChild(calendarUserAddressSet);
         //QDomElement hrefElement = query.createElementNS( "DAV:", "href" );
@@ -383,14 +384,14 @@ void DavPrincipalSearchJob::buildReportQuery(QDomDocument &query)
     QDomElement match = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("match"));
     propertySearch.appendChild(match);
 
-    QDomText propFilter = query.createTextNode(d->mFilter);
+    QDomText propFilter = query.createTextNode(mFilter);
     match.appendChild(propFilter);
 
     prop = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
     principalPropertySearch.appendChild(prop);
 
     typedef QPair<QString, QString> PropertyPair;
-    for (const PropertyPair &fetchProperty : qAsConst(d->mFetchProperties)) {
+    for (const PropertyPair &fetchProperty : qAsConst(mFetchProperties)) {
         QDomElement elem = query.createElementNS(fetchProperty.first, fetchProperty.second);
         prop.appendChild(elem);
     }
