@@ -17,6 +17,7 @@
 */
 
 #include "utils.h"
+#include "utils_p.h"
 
 #include "enums.h"
 

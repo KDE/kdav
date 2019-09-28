@@ -18,6 +18,7 @@
 
 #include "caldavprotocol_p.h"
 #include "common/utils.h"
+#include "common/utils_p.h"
 
 #include <QStringList>
 #include <QUrl>

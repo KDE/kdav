@@ -24,6 +24,7 @@
 #include "daverror.h"
 #include "protocolinfo.h"
 #include "utils.h"
+#include "utils_p.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>

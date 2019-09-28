@@ -23,6 +23,7 @@
 #include "davprincipalhomesetsfetchjob.h"
 #include "davprotocolbase_p.h"
 #include "utils.h"
+#include "utils_p.h"
 #include "daverror.h"
 
 #include "libkdav_debug.h"

@@ -47,21 +47,6 @@ Protocol KPIMKDAV_EXPORT protocolByName(const QString &name);
 Q_REQUIRED_RESULT QDomElement KPIMKDAV_EXPORT firstChildElementNS(const QDomElement &parent, const QString &namespaceUri, const QString &tagName);
 
 /**
- * Returns the next sibling element of @p element that has the given @p tagName and is part of the @p namespaceUri.
- */
-Q_REQUIRED_RESULT QDomElement KPIMKDAV_EXPORT nextSiblingElementNS(const QDomElement &element, const QString &namespaceUri, const QString &tagName);
-
-/**
- * Extracts privileges from @p element. The <privilege/> tags are expected to be first level children of @p element.
- */
-Q_REQUIRED_RESULT Privileges KPIMKDAV_EXPORT extractPrivileges(const QDomElement &element);
-
-/**
- * Parses a single <privilege/> tag and returns the final Privileges.
- */
-Q_REQUIRED_RESULT Privileges KPIMKDAV_EXPORT parsePrivilege(const QDomElement &element);
-
-/**
  * Creates a unique identifier that can be used as a file name to upload the dav item
  */
 Q_REQUIRED_RESULT QString KPIMKDAV_EXPORT createUniqueId();
