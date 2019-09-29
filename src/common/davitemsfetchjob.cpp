@@ -22,7 +22,6 @@
 
 #include "davmanager_p.h"
 #include "davmultigetprotocol_p.h"
-#include "utils.h"
 #include "utils_p.h"
 #include "daverror.h"
 
