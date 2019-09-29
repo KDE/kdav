@@ -21,7 +21,7 @@
 #include "davmanager_p.h"
 
 #include "daverror.h"
-#include "utils.h"
+#include "utils_p.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>

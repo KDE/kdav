@@ -16,7 +16,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <KDAV/Utils>
 #include <KDAV/DavCollectionDeleteJob>
 #include <KDAV/DavCollectionModifyJob>
 #include <KDAV/DavCollectionsFetchJob>

@@ -16,7 +16,6 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#include "utils.h"
 #include "utils_p.h"
 #include "protocolinfo.h"
 
@@ -121,28 +120,4 @@ Privileges Utils::parsePrivilege(const QDomElement &element)
     }
 
     return final;
-}
-
-QLatin1String Utils::protocolName(Protocol protocol)
-{
-    return ProtocolInfo::protocolName(protocol);
-}
-
-Protocol Utils::protocolByName(const QString &name)
-{
-    return ProtocolInfo::protocolByName(name);
-}
-
-QString Utils::createUniqueId()
-{
-    const qint64 time = QDateTime::currentMSecsSinceEpoch() / 1000;
-    const int r = qrand() % 1000;
-    const QString id = QLatin1Char('R') + QString::number(r);
-    const QString uid = QString::number(time) + QLatin1Char('.') + id;
-    return uid;
-}
-
-QString Utils::contactsMimeType(Protocol protocol)
-{
-    return ProtocolInfo::contactsMimeType(protocol);
 }

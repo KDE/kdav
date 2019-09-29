@@ -60,7 +60,6 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavPrincipalHomesetsFetchJob
     DavPrincipalSearchJob
     DavUrl
-    Utils
     Enums
     EtagCache
     ProtocolInfo
