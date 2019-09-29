@@ -32,14 +32,16 @@ namespace KDAV {
 namespace Utils {
 /**
  * Returns the untranslated name of the given DAV @p protocol dialect.
+ * @deprecated use ProtocolInfo::protocolName
  */
-Q_REQUIRED_RESULT QLatin1String KPIMKDAV_EXPORT protocolName(Protocol protocol);
+Q_REQUIRED_RESULT QLatin1String KPIMKDAV_DEPRECATED_EXPORT protocolName(Protocol protocol);
 
 /**
  * Returns the protocol matching the given name. This is the opposite of
  * Utils::protocolName().
+ * @deprecated use ProtocolInfo::protocolByName
  */
-Protocol KPIMKDAV_EXPORT protocolByName(const QString &name);
+Protocol KPIMKDAV_DEPRECATED_EXPORT protocolByName(const QString &name);
 
 /**
  * Returns the first child element of @p parent that has the given @p tagName and is part of the @p namespaceUri.
@@ -53,8 +55,9 @@ Q_REQUIRED_RESULT QString KPIMKDAV_EXPORT createUniqueId();
 
 /**
  * Returns the mimetype that shall be used for contact DAV resources using @p protocol.
+ * @deprecated use ProtocolInfo::contactsMimeType
  */
-Q_REQUIRED_RESULT QString KPIMKDAV_EXPORT contactsMimeType(Protocol protocol);
+Q_REQUIRED_RESULT QString KPIMKDAV_DEPRECATED_EXPORT contactsMimeType(Protocol protocol);
 }
 }
 

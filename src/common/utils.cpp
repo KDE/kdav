@@ -18,6 +18,7 @@
 
 #include "utils.h"
 #include "utils_p.h"
+#include "protocolinfo.h"
 
 #include "enums.h"
 
@@ -124,38 +125,12 @@ Privileges Utils::parsePrivilege(const QDomElement &element)
 
 QLatin1String Utils::protocolName(Protocol protocol)
 {
-    QLatin1String protocolName("");
-
-    switch (protocol) {
-    case KDAV::CalDav:
-        protocolName = QLatin1String("CalDav");
-        break;
-    case KDAV::CardDav:
-        protocolName = QLatin1String("CardDav");
-        break;
-    case KDAV::GroupDav:
-        protocolName = QLatin1String("GroupDav");
-        break;
-    }
-
-    return protocolName;
+    return ProtocolInfo::protocolName(protocol);
 }
 
 Protocol Utils::protocolByName(const QString &name)
 {
-    Protocol protocol = KDAV::CalDav;
-
-    if (name == QLatin1String("CalDav")) {
-        protocol = KDAV::CalDav;
-    } else if (name == QLatin1String("CardDav")) {
-        protocol = KDAV::CardDav;
-    } else if (name == QLatin1String("GroupDav")) {
-        protocol = KDAV::GroupDav;
-    } else {
-        qCCritical(KDAV_LOG) << "Unexpected protocol name : " << name;
-    }
-
-    return protocol;
+    return ProtocolInfo::protocolByName(name);
 }
 
 QString Utils::createUniqueId()
@@ -169,13 +144,5 @@ QString Utils::createUniqueId()
 
 QString Utils::contactsMimeType(Protocol protocol)
 {
-    QString ret;
-
-    if (protocol == KDAV::CardDav) {
-        ret = QStringLiteral("text/vcard");
-    } else if (protocol == KDAV::GroupDav) {
-        ret = QStringLiteral("text/x-vcard");
-    }
-
-    return ret;
+    return ProtocolInfo::contactsMimeType(protocol);
 }
