@@ -22,6 +22,7 @@
 #include "protocols/carddavprotocol_p.h"
 #include "protocols/groupdavprotocol_p.h"
 
+#include <kio_version.h>
 #include <KIO/DavJob>
 
 #include "libkdav_debug.h"
@@ -44,12 +45,14 @@ KIO::DavJob *DavManager::createPropFindJob(const QUrl &url, const QDomDocument &
 {
     KIO::DavJob *job = KIO::davPropFind(url, document, depth, KIO::HideProgressInfo | KIO::DefaultFlags);
 
+#if KIO_VERSION < QT_VERSION_CHECK(5, 63, 0)
     // workaround needed, Depth: header doesn't seem to be correctly added
     const QString header = QLatin1String("Content-Type: text/xml\r\nDepth: ") + depth;
     job->addMetaData(QStringLiteral("customHTTPHeader"), header);
+#endif
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-    job->setProperty("extraDavDepth", QVariant::fromValue(depth));
+    job->setProperty("davDepth", QVariant::fromValue(depth));
 
     return job;
 }
@@ -58,12 +61,14 @@ KIO::DavJob *DavManager::createReportJob(const QUrl &url, const QDomDocument &do
 {
     KIO::DavJob *job = KIO::davReport(url, document.toString(), depth, KIO::HideProgressInfo | KIO::DefaultFlags);
 
+#if KIO_VERSION < QT_VERSION_CHECK(5, 63, 0)
     // workaround needed, Depth: header doesn't seem to be correctly added
     const QString header = QLatin1String("Content-Type: text/xml\r\nDepth: ") + depth;
     job->addMetaData(QStringLiteral("customHTTPHeader"), header);
+#endif
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-    job->setProperty("extraDavDepth", QVariant::fromValue(depth));
+    job->setProperty("davDepth", QVariant::fromValue(depth));
 
     return job;
 }
