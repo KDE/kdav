@@ -95,7 +95,7 @@ private:
      */
     DavManager();
 
-    std::unique_ptr<DavProtocolBase> mProtocols[PROTOCOL_COUNT];
+    std::unique_ptr<DavProtocolBase> mProtocols[3];
 };
 }
 
