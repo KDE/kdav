@@ -25,13 +25,13 @@ using namespace KDAV;
 
 DavJobBase::DavJobBase(QObject *parent)
     : KJob(parent)
-    , d_ptr(std::unique_ptr<DavJobBasePrivate>(new DavJobBasePrivate()))
+    , d_ptr(new DavJobBasePrivate())
 {
 }
 
 DavJobBase::DavJobBase(DavJobBasePrivate *dd, QObject *parent)
     : KJob(parent)
-    , d_ptr(std::unique_ptr<DavJobBasePrivate>(dd))
+    , d_ptr(dd)
 {
 }
 

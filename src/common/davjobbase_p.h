@@ -33,10 +33,4 @@ public:
     QString mInternalErrorText;
 };
 
-template <typename T>
-static inline typename std::unique_ptr<T>::pointer qGetPtrHelper(const std::unique_ptr<T> &p)
-{
-    return p.get();
-}
-
 #endif

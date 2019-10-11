@@ -19,11 +19,11 @@
 #ifndef KDAV_DAVJOBBASE_H
 #define KDAV_DAVJOBBASE_H
 
-#include <memory>
-
 #include "kpimkdav_export.h"
 
 #include <KJob>
+
+#include <QScopedPointer>
 
 class DavJobBasePrivate;
 
@@ -97,7 +97,7 @@ protected:
     void setDavError(const Error &error);
 
     explicit DavJobBase(DavJobBasePrivate *dd, QObject *parent = nullptr);
-    std::unique_ptr<DavJobBasePrivate> d_ptr;
+    QScopedPointer<DavJobBasePrivate> d_ptr;
 private:
     Q_DECLARE_PRIVATE(DavJobBase)
 };
