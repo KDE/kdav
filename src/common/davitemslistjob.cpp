@@ -258,7 +258,7 @@ void DavItemsListJob::davJobFinished(KJob *job)
 
     QSet<QString> removed = d->mEtagCache->urls().toSet();
     removed.subtract(d->mSeenUrls);
-    d->mDeletedItems = removed.toList();
+    d->mDeletedItems = removed.values();
 
     if (--d->mSubJobCount == 0) {
         emitResult();
