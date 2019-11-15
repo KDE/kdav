@@ -89,5 +89,5 @@ QStringList EtagCache::urls() const
 
 QStringList EtagCache::changedRemoteIds() const
 {
-    return d->mChangedRemoteIds.toList();
+    return d->mChangedRemoteIds.values();
 }
