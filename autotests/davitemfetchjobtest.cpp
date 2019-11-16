@@ -22,6 +22,12 @@
 
 #include <QTest>
 
+void DavItemFetchJobTest::initTestCase()
+{
+    // To avoid a runtime dependency on klauncher
+    qputenv("KDE_FORK_SLAVES", "yes");
+}
+
 void DavItemFetchJobTest::runSuccessfullTest()
 {
     FakeServer fakeServer;
