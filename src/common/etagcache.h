@@ -18,7 +18,7 @@
 #ifndef KDAV_ETAGCACHE_H
 #define KDAV_ETAGCACHE_H
 
-#include "kpimkdav_export.h"
+#include "kdav_export.h"
 
 #include <QObject>
 #include <QStringList>
@@ -36,7 +36,7 @@ class EtagCachePrivate;
  * out which items have been changed in the backend and have to
  * be refetched on the next call of ResourceBase::retrieveItems()
  */
-class KPIMKDAV_EXPORT EtagCache : public QObject
+class KDAV_EXPORT EtagCache : public QObject
 {
     Q_OBJECT
 

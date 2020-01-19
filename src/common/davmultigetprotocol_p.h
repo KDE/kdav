@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVMULTIGETPROTOCOL_H
 #define KDAV_DAVMULTIGETPROTOCOL_H
 
-#include "kpimkdav_export.h"
+#include "kdav_export.h"
 
 #include "davprotocolbase_p.h"
 

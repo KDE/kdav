@@ -8,9 +8,9 @@ portingAid: false
 deprecated: false
 release: false
 libraries:
- - qmake: PimKDAV
-   cmake: "KPimKDAV"
-cmakename: KPimKDAV
+ - qmake: KDAV
+   cmake: "KF5DAV"
+cmakename: KF5DAV
 
 public_lib: true
 group: kdepim

@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVITEMMODIFYJOB_H
 #define KDAV_DAVITEMMODIFYJOB_H
 
-#include "kpimkdav_export.h"
+#include "kdav_export.h"
 
 #include "davitem.h"
 #include "davjobbase.h"
@@ -30,7 +30,7 @@ class DavItemModifyJobPrivate;
 /**
  * @short A job that modifies a DAV item on the DAV server.
  */
-class KPIMKDAV_EXPORT DavItemModifyJob : public DavJobBase
+class KDAV_EXPORT DavItemModifyJob : public DavJobBase
 {
     Q_OBJECT
 

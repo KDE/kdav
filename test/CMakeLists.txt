@@ -9,7 +9,7 @@ add_executable(testserver ${testserver_SRCS})
 
 target_link_libraries(testserver
     Qt5::Core
-    KPim::KDAV
+    KF5::DAV
     Qt5::Xml
     )
 
