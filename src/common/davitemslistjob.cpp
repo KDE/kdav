@@ -256,7 +256,12 @@ void DavItemsListJob::davJobFinished(KJob *job)
         }
     }
 
-    QSet<QString> removed = d->mEtagCache->urls().toSet();
+    const auto etagCacheUrls = d->mEtagCache->urls();
+#if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
+    QSet<QString> removed = etagCacheUrls.toSet();
+#else
+    QSet<QString> removed(etagCacheUrls.begin(), etagCacheUrls.end());
+#endif
     removed.subtract(d->mSeenUrls);
     d->mDeletedItems = removed.values();
 
