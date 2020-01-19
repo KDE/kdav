@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVCOLLECTIONMODIFYJOB_H
 #define KDAV_DAVCOLLECTIONMODIFYJOB_H
 
-#include "kpimkdav_export.h"
+#include "kdav_export.h"
 
 #include "davjobbase.h"
 #include "davurl.h"
@@ -34,7 +34,7 @@ class DavCollectionModifyJobPrivate;
  * This job is used to modify a property of a DAV collection
  * on the DAV server.
  */
-class KPIMKDAV_EXPORT DavCollectionModifyJob : public DavJobBase
+class KDAV_EXPORT DavCollectionModifyJob : public DavJobBase
 {
     Q_OBJECT
 

@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVURL_H
 #define KDAV_DAVURL_H
 
-#include "kpimkdav_export.h"
+#include "kdav_export.h"
 
 #include "enums.h"
 
@@ -31,7 +31,7 @@ class DavUrlPrivate;
 /**
  * @short A helper class to combine url and protocol of a DAV url.
  */
-class KPIMKDAV_EXPORT DavUrl
+class KDAV_EXPORT DavUrl
 {
 public:
     /**
@@ -84,8 +84,8 @@ private:
     QSharedDataPointer<DavUrlPrivate> d;
 };
 
-KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavUrl &url);
-KPIMKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavUrl &url);
+KDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavUrl &url);
+KDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavUrl &url);
 }
 
 Q_DECLARE_TYPEINFO(KDAV::DavUrl, Q_MOVABLE_TYPE);
