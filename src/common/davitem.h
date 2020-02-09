@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVITEM_H
 #define KDAV_DAVITEM_H
 
-#include "kdav_export.h"
+#include "kpimkdav_export.h"
 
 #include <QByteArray>
 #include <QDataStream>
@@ -42,7 +42,7 @@ namespace KDAV {
  * @note While the DAV RFC names them DAV resource we call them items
  *       to comply to Akonadi terminology.
  */
-class KDAV_EXPORT DavItem
+class KPIMKDAV_EXPORT DavItem
 {
 public:
     /**
@@ -114,8 +114,8 @@ private:
     QSharedDataPointer<DavItemPrivate> d;
 };
 
-KDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);
-KDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavItem &item);
+KPIMKDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);
+KPIMKDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavItem &item);
 }
 
 Q_DECLARE_TYPEINFO(KDAV::DavItem, Q_MOVABLE_TYPE);

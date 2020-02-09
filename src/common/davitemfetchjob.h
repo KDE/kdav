@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVITEMFETCHJOB_H
 #define KDAV_DAVITEMFETCHJOB_H
 
-#include "kdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davitem.h"
 #include "davjobbase.h"
@@ -30,7 +30,7 @@ class DavItemFetchJobPrivate;
 /**
  * @short A job that fetches a DAV item from the DAV server.
  */
-class KDAV_EXPORT DavItemFetchJob : public DavJobBase
+class KPIMKDAV_EXPORT DavItemFetchJob : public DavJobBase
 {
     Q_OBJECT
 

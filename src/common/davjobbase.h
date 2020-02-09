@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVJOBBASE_H
 #define KDAV_DAVJOBBASE_H
 
-#include "kdav_export.h"
+#include "kpimkdav_export.h"
 
 #include <KJob>
 
@@ -32,7 +32,7 @@ class Error;
 /**
  * @short base class for the jobs used by the resource.
  */
-class KDAV_EXPORT DavJobBase : public KJob
+class KPIMKDAV_EXPORT DavJobBase : public KJob
 {
     Q_OBJECT
 

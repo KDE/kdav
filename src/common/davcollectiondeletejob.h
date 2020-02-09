@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVCOLLECTIONDELETEJOB_H
 #define KDAV_DAVCOLLECTIONDELETEJOB_H
 
-#include "kdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davjobbase.h"
 #include "davurl.h"
@@ -33,7 +33,7 @@ class DavCollectionDeleteJobPrivate;
  *
  * This job is used to delete a DAV collection at a certain URL.
  */
-class KDAV_EXPORT DavCollectionDeleteJob : public DavJobBase
+class KPIMKDAV_EXPORT DavCollectionDeleteJob : public DavJobBase
 {
     Q_OBJECT
 

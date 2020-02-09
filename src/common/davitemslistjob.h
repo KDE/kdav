@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVITEMSLISTJOB_H
 #define KDAV_DAVITEMSLISTJOB_H
 
-#include "kdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davitem.h"
 #include "davjobbase.h"
@@ -36,7 +36,7 @@ class DavItemsListJobPrivate;
 /**
  * @short A job that lists all DAV items inside a DAV collection.
  */
-class KDAV_EXPORT DavItemsListJob : public DavJobBase
+class KPIMKDAV_EXPORT DavItemsListJob : public DavJobBase
 {
     Q_OBJECT
 

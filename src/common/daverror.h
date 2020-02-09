@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVERROR_H
 #define KDAV_DAVERROR_H
 
-#include "kdav_export.h"
+#include "kpimkdav_export.h"
 
 #include <KJob>
 
@@ -49,7 +49,7 @@ enum ErrorNumber {
 class ErrorPrivate;
 
 /** DAV operation error. */
-class KDAV_EXPORT Error
+class KPIMKDAV_EXPORT Error
 {
 public:
     explicit Error();

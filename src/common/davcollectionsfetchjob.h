@@ -18,7 +18,7 @@
 #ifndef KDAV_DAVCOLLECTIONSFETCHJOB_H
 #define KDAV_DAVCOLLECTIONSFETCHJOB_H
 
-#include "kdav_export.h"
+#include "kpimkdav_export.h"
 
 #include "davcollection.h"
 #include "davjobbase.h"
@@ -35,7 +35,7 @@ class DavCollectionsFetchJobPrivate;
  * This job is used to fetch all DAV collection that are available
  * under a certain DAV url.
  */
-class KDAV_EXPORT DavCollectionsFetchJob : public DavJobBase
+class KPIMKDAV_EXPORT DavCollectionsFetchJob : public DavJobBase
 {
     Q_OBJECT
 
