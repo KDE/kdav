@@ -83,7 +83,13 @@ install(FILES
     )
 
 
-ecm_qt_declare_logging_category(libkdav_SRCS HEADER libkdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav)
+if (ECM_VERSION VERSION_LESS "5.68.0")
+    ecm_qt_declare_logging_category(libkdav_SRCS HEADER libkdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav)
+else()
+    ecm_qt_declare_logging_category(libkdav_SRCS HEADER libkdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav
+        DESCRIPTION "KDAV" EXPORT KDAV)
+endif()
+
 
 add_library(KF5DAV
    ${libkdav_SRCS}
@@ -128,3 +134,6 @@ install(FILES
     )
 
 target_include_directories(KF5DAV INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/KF5/KDAV/;${KDE_INSTALL_INCLUDEDIR}/KF5/kdav;${KDE_INSTALL_INCLUDEDIR}/KF5>")
+if (NOT ECM_VERSION VERSION_LESS "5.68.0")
+   ecm_qt_install_logging_categories(EXPORT KDAV FILE kdav.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
+endif()
