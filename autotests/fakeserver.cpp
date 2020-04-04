@@ -17,23 +17,26 @@
 #include <QTest>
 
 FakeServer::FakeServer(int port, QObject *parent)
-    : QThread(parent)
+    : QObject(parent)
+    , m_thread(new QThread)
     , m_port(port)
 {
-    moveToThread(this);
+    moveToThread(m_thread);
 }
 
 FakeServer::~FakeServer()
 {
-    quit();
-    wait();
+    QMetaObject::invokeMethod(this, &FakeServer::cleanup);
+    m_thread->quit();
+    m_thread->wait();
+    delete m_thread;
 }
 
 void FakeServer::startAndWait()
 {
-    start();
-    // this will block until the event queue starts
-    QMetaObject::invokeMethod(this, &FakeServer::started, Qt::BlockingQueuedConnection);
+    m_thread->start();
+    // this will block until the init code happens and the event queue starts
+    QMetaObject::invokeMethod(this, &FakeServer::init, Qt::BlockingQueuedConnection);
 }
 
 void FakeServer::dataAvailable()
@@ -43,14 +46,12 @@ void FakeServer::dataAvailable()
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
     Q_ASSERT(socket != nullptr);
 
-    int scenarioNumber = m_clientSockets.indexOf(socket);
-
-    if (scenarioNumber >= m_scenarios.size()) {
-        qWarning() << "There is no scenario for socket" << scenarioNumber << ", we got more connections than expected";
+    int scenarioNumber = -1;
+    readClientPart(socket, &scenarioNumber);
+    if (scenarioNumber >= 0) {
+        Q_ASSERT(scenarioNumber < m_scenarios.count());
+        writeServerPart(socket, scenarioNumber);
     }
-
-    readClientPart(scenarioNumber);
-    writeServerPart(scenarioNumber);
 }
 
 void FakeServer::newConnection()
@@ -61,7 +62,7 @@ void FakeServer::newConnection()
     connect(m_clientSockets.last(), &QTcpSocket::readyRead, this, &FakeServer::dataAvailable);
 }
 
-void FakeServer::run()
+void FakeServer::init()
 {
     m_tcpServer = new QTcpServer();
 
@@ -70,17 +71,12 @@ void FakeServer::run()
     }
 
     connect(m_tcpServer, &QTcpServer::newConnection, this, &FakeServer::newConnection);
-
-    exec();
-
-    qDeleteAll(m_clientSockets);
-
-    delete m_tcpServer;
 }
 
-void FakeServer::started()
+void FakeServer::cleanup()
 {
-    // do nothing: this is a dummy slot used by startAndWait()
+    qDeleteAll(m_clientSockets);
+    delete m_tcpServer;
 }
 
 void FakeServer::setScenario(const QList<QByteArray> &scenario)
@@ -138,10 +134,9 @@ bool FakeServer::isAllScenarioDone() const
     return true;
 }
 
-void FakeServer::writeServerPart(int scenarioNumber)
+void FakeServer::writeServerPart(QTcpSocket *clientSocket, int scenarioNumber)
 {
     QList<QByteArray> scenario = m_scenarios[scenarioNumber];
-    QTcpSocket *clientSocket = m_clientSockets[scenarioNumber];
 
     while (!scenario.isEmpty() &&
             scenario.first().startsWith("S: ")) {
@@ -177,12 +172,19 @@ void FakeServer::writeServerPart(int scenarioNumber)
     m_scenarios[scenarioNumber] = scenario;
 }
 
-void FakeServer::readClientPart(int scenarioNumber)
+void FakeServer::readClientPart(QTcpSocket *socket, int *scenarioNumber)
 {
-    QList<QByteArray> scenario = m_scenarios[scenarioNumber];
-    QTcpSocket *socket = m_clientSockets[scenarioNumber];
     QByteArray line = socket->readLine();
     qDebug() << "Read client request" << line;
+    const auto it = std::find_if(m_scenarios.begin(), m_scenarios.end(), [&](const QList<QByteArray> &scenario) {
+        return !scenario.isEmpty() && scenario.at(0).mid(3) + "\r\n" == line;
+    });
+    if (it == m_scenarios.end()) {
+        qWarning() << "No server response available for" << line;
+        QFAIL("Unexpected request");
+        return;
+    }
+    QList<QByteArray> scenario = *it;
     QVector<QByteArray> header;
 
     while (line != "\r\n") {
@@ -211,7 +213,9 @@ void FakeServer::readClientPart(int scenarioNumber)
         QVERIFY(scenario.first().startsWith("S: "));
     }
 
-    m_scenarios[scenarioNumber] = scenario;
+    *it = scenario;
+    *scenarioNumber = std::distance(m_scenarios.begin(), it);
+    QVERIFY(*scenarioNumber < m_scenarios.count());
 }
 
 int FakeServer::port() const

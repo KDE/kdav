@@ -76,7 +76,7 @@ Q_DECLARE_METATYPE(QList<QByteArray>)
  * @endcode
  */
 
-class FakeServer : public QThread
+class FakeServer : public QObject
 {
     Q_OBJECT
 
@@ -93,15 +93,6 @@ public:
      * You should use this instead of start() to avoid race conditions.
      */
     void startAndWait();
-
-    /**
-     * Starts the fake server
-     *
-     * You should not call this directly.  Use start() instead.
-     *
-     * @reimp
-     */
-    void run() override;
 
     /**
      * Removes any previously-added scenarios, and adds a new one
@@ -168,16 +159,18 @@ public:
 private Q_SLOTS:
     void newConnection();
     void dataAvailable();
-    void started();
+    void init();
+    void cleanup();
 
 private:
-    void writeServerPart(int scenarioNumber);
-    void readClientPart(int scenarioNumber);
+    void writeServerPart(QTcpSocket *clientSocket, int scenarioNumber);
+    void readClientPart(QTcpSocket *socket, int *scenarioNumber);
 
     QList< QList<QByteArray> > m_scenarios;
-    QTcpServer *m_tcpServer;
+    QTcpServer *m_tcpServer = nullptr;
     mutable QMutex m_mutex;
     QList<QTcpSocket *> m_clientSockets;
+    QThread *m_thread;
     int m_port;
 };
 
