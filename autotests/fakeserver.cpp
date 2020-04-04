@@ -16,9 +16,9 @@
 #include <QFile>
 #include <QTest>
 
-FakeServer::FakeServer(QObject *parent)
+FakeServer::FakeServer(int port, QObject *parent)
     : QThread(parent)
-    , m_port(5989)
+    , m_port(port)
 {
     moveToThread(this);
 }

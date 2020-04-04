@@ -23,7 +23,7 @@ void DavCollectionsMultiFetchJobTest::initTestCase()
 
 void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
 {
-    FakeServer fakeServer;
+    FakeServer fakeServer(5990);
     QUrl url(QStringLiteral("http://localhost/caldav"));
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl1(url, KDAV::CalDav);
