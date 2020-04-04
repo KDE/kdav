@@ -16,6 +16,7 @@ class DavCollectionsMultiFetchJobTest : public QObject
 private Q_SLOTS:
     void initTestCase();
     void runSuccessfullTest();
+    void shouldFailOnError();
 };
 
 #endif

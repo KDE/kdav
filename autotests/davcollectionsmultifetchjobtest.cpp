@@ -45,7 +45,6 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-carddav-collections.txt"));
     fakeServer.startAndWait();
     job->exec();
-    fakeServer.quit();
 
     QVERIFY(fakeServer.isAllScenarioDone());
     QCOMPARE(job->error(), 0);
@@ -75,6 +74,28 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
     QCOMPARE(int(spy.at(1).at(0).value<KDAV::Protocol>()), int(KDAV::CardDav));
     QCOMPARE(spy.at(1).at(1).toString(), addressbook.url().url().toString());
     QCOMPARE(spy.at(1).at(2).toString(), url2.toString());
+}
+
+void DavCollectionsMultiFetchJobTest::shouldFailOnError()
+{
+    FakeServer fakeServer(5990);
+    QUrl url(QStringLiteral("http://localhost/caldav"));
+    url.setPort(fakeServer.port());
+    KDAV::DavUrl davUrl1(url, KDAV::CalDav);
+    QUrl urlError(url);
+    urlError.setPath(QStringLiteral("/does_not_exist"));
+    KDAV::DavUrl davUrlError(urlError, KDAV::CalDav);
+
+    auto job = new KDAV::DavCollectionsMultiFetchJob({davUrl1, davUrlError});
+
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-caldav.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-caldav-collections.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-error.txt"));
+    fakeServer.startAndWait();
+    job->exec();
+
+    QVERIFY(fakeServer.isAllScenarioDone());
+    QCOMPARE(job->error(), 300);
 }
 
 QTEST_MAIN(DavCollectionsMultiFetchJobTest)

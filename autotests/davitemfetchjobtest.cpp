@@ -33,7 +33,6 @@ void DavItemFetchJobTest::runSuccessfullTest()
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemfetchjob.txt"));
     fakeServer.startAndWait();
     job->exec();
-    fakeServer.quit();
 
     QVERIFY(fakeServer.isAllScenarioDone());
     QCOMPARE(job->error(), 0);
