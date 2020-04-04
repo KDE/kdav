@@ -26,23 +26,17 @@ QString ProtocolInfo::principalHomeSetNS(KDAV::Protocol protocol)
     return DavManager::davProtocol(protocol)->principalHomeSetNS();
 }
 
-QLatin1String ProtocolInfo::protocolName(KDAV::Protocol protocol)
+QString ProtocolInfo::protocolName(KDAV::Protocol protocol)
 {
-    QLatin1String protocolName("");
-
     switch (protocol) {
     case KDAV::CalDav:
-        protocolName = QLatin1String("CalDav");
-        break;
+        return QStringLiteral("CalDav");
     case KDAV::CardDav:
-        protocolName = QLatin1String("CardDav");
-        break;
+        return QStringLiteral("CardDav");
     case KDAV::GroupDav:
-        protocolName = QLatin1String("GroupDav");
-        break;
+        return QStringLiteral("GroupDav");
     }
-
-    return protocolName;
+    return {};
 }
 
 KDAV::Protocol ProtocolInfo::protocolByName(const QString &name)

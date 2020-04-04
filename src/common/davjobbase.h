@@ -11,7 +11,7 @@
 
 #include <KJob>
 
-#include <QScopedPointer>
+#include <memory>
 
 class DavJobBasePrivate;
 
@@ -77,15 +77,15 @@ protected:
      *
      * @param code The code to set, should be a valid HTTP response code or zero.
      */
-    void setLatestResponseCode(int code);
+    Q_DECL_HIDDEN void setLatestResponseCode(int code);
 
-    void setJobErrorText(const QString &errorText);
-    void setJobError(int jobErrorCode);
-    void setErrorTextFromDavError();
-    void setDavError(const Error &error);
+    Q_DECL_HIDDEN void setJobErrorText(const QString &errorText);
+    Q_DECL_HIDDEN void setJobError(int jobErrorCode);
+    Q_DECL_HIDDEN void setErrorTextFromDavError();
+    Q_DECL_HIDDEN void setDavError(const Error &error);
 
-    explicit DavJobBase(DavJobBasePrivate *dd, QObject *parent = nullptr);
-    QScopedPointer<DavJobBasePrivate> d_ptr;
+    Q_DECL_HIDDEN explicit DavJobBase(DavJobBasePrivate *dd, QObject *parent = nullptr);
+    std::unique_ptr<DavJobBasePrivate> d_ptr;
 private:
     Q_DECLARE_PRIVATE(DavJobBase)
 };
