@@ -45,6 +45,10 @@ void FakeServer::dataAvailable()
 
     int scenarioNumber = m_clientSockets.indexOf(socket);
 
+    if (scenarioNumber >= m_scenarios.size()) {
+        qWarning() << "There is no scenario for socket" << scenarioNumber << ", we got more connections than expected";
+    }
+
     readClientPart(scenarioNumber);
     writeServerPart(scenarioNumber);
 }
@@ -178,10 +182,16 @@ void FakeServer::readClientPart(int scenarioNumber)
     QList<QByteArray> scenario = m_scenarios[scenarioNumber];
     QTcpSocket *socket = m_clientSockets[scenarioNumber];
     QByteArray line = socket->readLine();
+    qDebug() << "Read client request" << line;
     QVector<QByteArray> header;
 
-    while(line != "\r\n") {
+    while (line != "\r\n") {
         header << line;
+        if (socket->bytesAvailable() == 0 && !socket->waitForReadyRead()) {
+            qDebug() << header;
+            QFAIL("could not read all headers");
+            return;
+        }
         line = socket->readLine();
     }
 
@@ -190,7 +200,8 @@ void FakeServer::readClientPart(int scenarioNumber)
         QByteArray expected = scenario.takeFirst().mid(3) + "\r\n";
 
         if (!header.contains(expected)) {
-            qWarning() << expected << "not found in header";
+            qWarning() << expected << "not found in header. Here's what we got:";
+            qWarning() << header;
             QVERIFY(false);
             break;
         }

@@ -19,6 +19,12 @@ ecm_add_test(davurltest.cpp
     LINK_LIBRARIES KF5::DAV Qt5::Test Qt5::Core
 )
 
+ecm_add_test(davcollectionsmultifetchjobtest.cpp fakeserver.cpp
+    TEST_NAME davcollectionsmultifetchjobtest
+    NAME_PREFIX "kdav-"
+    LINK_LIBRARIES KF5::DAV Qt5::Test Qt5::Core Qt5::Network
+)
+
 ecm_add_test(davitemfetchjobtest.cpp fakeserver.cpp
     TEST_NAME davitemfetchjob
     NAME_PREFIX "kdav-"

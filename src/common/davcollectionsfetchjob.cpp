@@ -98,7 +98,7 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
     }
 
     const QStringList homeSets = davJob->homeSets();
-    qCDebug(KDAV_LOG) << "Found " << homeSets.size() << " homesets";
+    qCDebug(KDAV_LOG) << "Found" << homeSets.size() << "homesets";
     qCDebug(KDAV_LOG) << homeSets;
 
     if (homeSets.isEmpty()) {
