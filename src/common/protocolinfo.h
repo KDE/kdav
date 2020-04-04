@@ -37,7 +37,7 @@ namespace ProtocolInfo
     /**
      * Returns the untranslated name of the given DAV @p protocol dialect.
      */
-    KDAV_EXPORT Q_REQUIRED_RESULT QLatin1String protocolName(KDAV::Protocol protocol);
+    KDAV_EXPORT Q_REQUIRED_RESULT QString protocolName(KDAV::Protocol protocol);
 
     /**
      * Returns the protocol matching the given name. This is the opposite of
