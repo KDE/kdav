@@ -21,7 +21,7 @@ void DavItemFetchJobTest::initTestCase()
 
 void DavItemFetchJobTest::runSuccessfullTest()
 {
-    FakeServer fakeServer;
+    FakeServer fakeServer(5989);
     QUrl url(QStringLiteral("http://localhost/item"));
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);

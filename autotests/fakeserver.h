@@ -81,7 +81,10 @@ class FakeServer : public QThread
     Q_OBJECT
 
 public:
-    FakeServer(QObject *parent = nullptr);
+    /**
+     * Each unittest should use a different port so that they can be run in parallel
+     */
+    FakeServer(int port = 5989, QObject *parent = nullptr);
     ~FakeServer();
 
     /**
