@@ -9,9 +9,11 @@
 
 #include <KDAV/DavCollectionsMultiFetchJob>
 
+#include <QSignalSpy>
 #include <QTest>
 
 using KDAV::DavCollection;
+Q_DECLARE_METATYPE(KDAV::Protocol)
 
 void DavCollectionsMultiFetchJobTest::initTestCase()
 {
@@ -19,6 +21,8 @@ void DavCollectionsMultiFetchJobTest::initTestCase()
     qputenv("KDE_FORK_SLAVES", "yes");
     // To let ctest exit, we shouldn't start kio_http_cache_cleaner
     qputenv("KIO_DISABLE_CACHE_CLEANER", "yes");
+
+    qRegisterMetaType<KDAV::Protocol>();
 }
 
 void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
@@ -32,7 +36,8 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
     KDAV::DavUrl davUrl2(url2, KDAV::CardDav);
 
     auto job = new KDAV::DavCollectionsMultiFetchJob({davUrl1, davUrl2});
-    // TODO QSignalSpy spy(job, &KDAV::DavCollectionsMultiFetchJob::collectionDiscovered);
+
+    QSignalSpy spy(job, &KDAV::DavCollectionsMultiFetchJob::collectionDiscovered);
 
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-caldav.txt"));
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-caldav-collections.txt"));
@@ -61,6 +66,15 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
     QCOMPARE(addressbook.url().url().path(), QStringLiteral("/carddav.php/test1.user/home/"));
     QCOMPARE(addressbook.CTag(), QStringLiteral("3145"));
     QCOMPARE(addressbook.privileges(), KDAV::All);
+
+    QCOMPARE(spy.count(), 2);
+    QCOMPARE(int(spy.at(0).at(0).value<KDAV::Protocol>()), int(KDAV::CalDav));
+    QCOMPARE(spy.at(0).at(1).toString(), calendar.url().url().toString());
+    QCOMPARE(spy.at(0).at(2).toString(), url.toString());
+
+    QCOMPARE(int(spy.at(1).at(0).value<KDAV::Protocol>()), int(KDAV::CardDav));
+    QCOMPARE(spy.at(1).at(1).toString(), addressbook.url().url().toString());
+    QCOMPARE(spy.at(1).at(2).toString(), url2.toString());
 }
 
 QTEST_MAIN(DavCollectionsMultiFetchJobTest)
