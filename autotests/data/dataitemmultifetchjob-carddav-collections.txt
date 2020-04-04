@@ -1,0 +1,24 @@
+C: PROPFIND /carddav/dfaure%40example.com/ HTTP/1.1
+S: HTTP/1.1 207 Multi-Status
+S: Date: Wed, 04 Jan 2017 18:26:48 GMT
+S: Last-Modified: Wed, 04 Jan 2017 18:26:47 GMT
+S: DAV: 1, 3, extended-mkcol, access-control, calendarserver-principal-property-search, calendar-access, calendar-proxy, calendar-schedule, calendar-auto-schedule, addressbook, 2
+S: Content-Type: application/xml; charset=utf-8
+D: <?xml version="1.0" encoding="utf-8" ?>
+D: <multistatus xmlns="DAV:" xmlns:C="urn:ietf:params:xml:ns:carddav">
+D:   <response xmlns="DAV:">
+D:    <href xmlns="DAV:">/carddav.php/test1.user/home/</href>
+D:    <propstat xmlns="DAV:">
+D:      <prop xmlns="DAV:">
+D:        <resourcetype xmlns="DAV:">
+D:          <collection xmlns="DAV:"/>
+D:          <C:addressbook xmlns:C="urn:ietf:params:xml:ns:carddav"/>
+D:        </resourcetype>
+D:        <displayname xmlns="DAV:">My Address Book</displayname>
+D:        <getctag xmlns="http://calendarserver.org/ns/">3145</getctag>
+D:      </prop>
+D:      <status xmlns="DAV:">HTTP/1.1 200 OK</status>
+D:    </propstat>
+D:   </response>
+D: </multistatus>
+X
