@@ -12,7 +12,7 @@
 #include "davcollection.h"
 #include "davurl.h"
 
-#include <KJob>
+#include <KCompositeJob>
 
 #include <memory>
 
@@ -28,7 +28,7 @@ class DavCollectionsMultiFetchJobPrivate;
  * @note This class just combines multiple calls of DavCollectionsFetchJob
  *       into one job.
  */
-class KDAV_EXPORT DavCollectionsMultiFetchJob : public KJob
+class KDAV_EXPORT DavCollectionsMultiFetchJob : public KCompositeJob
 {
     Q_OBJECT
 
@@ -62,7 +62,7 @@ Q_SIGNALS:
     void collectionDiscovered(KDAV::Protocol protocol, const QString &collectionUrl, const QString &configuredUrl);
 
 private:
-    void davJobFinished(KJob *);
+    void slotResult(KJob *) override;
 
     const std::unique_ptr<DavCollectionsMultiFetchJobPrivate> d;
 };
