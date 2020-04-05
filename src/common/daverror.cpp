@@ -37,9 +37,11 @@ Error::Error(ErrorNumber errNo, int responseCode, const QString &errorText, int 
     d->mJobErrorCode = jobErrorCode;
 }
 
-Error::Error(const Error&) = default;
+Error::Error(const Error &) = default;
+Error::Error(Error &&) = default;
 Error::~Error() = default;
-Error& Error::operator=(const Error&) = default;
+Error &Error::operator=(const Error &) = default;
+Error &Error::operator=(Error &&) = default;
 
 ErrorNumber Error::errorNumber() const
 {

@@ -43,9 +43,11 @@ class KDAV_EXPORT Error
 public:
     explicit Error();
     explicit Error(ErrorNumber errNo, int responseCode, const QString &errorText, int jobErrorCode);
-    Error(const Error&);
+    Error(const Error &);
+    Error(Error &&);
     ~Error();
-    Error& operator=(const Error&);
+    Error &operator=(const Error &);
+    Error &operator=(Error &&);
 
     Q_REQUIRED_RESULT ErrorNumber errorNumber() const;
     Q_REQUIRED_RESULT int responseCode() const;

@@ -66,7 +66,9 @@ public:
     DavCollection(const DavUrl &url, const QString &displayName, ContentTypes contentTypes);
 
     DavCollection(const DavCollection &other);
+    DavCollection(DavCollection &&);
     DavCollection &operator=(const DavCollection &other);
+    DavCollection &operator=(DavCollection &&);
 
     ~DavCollection();
 

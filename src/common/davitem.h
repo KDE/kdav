@@ -55,7 +55,9 @@ public:
     DavItem(const DavUrl &url, const QString &contentType, const QByteArray &data, const QString &etag);
 
     DavItem(const DavItem &other);
+    DavItem(DavItem &&);
     DavItem &operator=(const DavItem &other);
+    DavItem &operator=(DavItem &&);
 
     ~DavItem();
 

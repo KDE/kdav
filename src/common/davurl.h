@@ -32,9 +32,11 @@ public:
      * Creates an empty DAV url.
      */
     DavUrl();
-    DavUrl(const DavUrl&);
+    DavUrl(const DavUrl &);
+    DavUrl(DavUrl &&);
     ~DavUrl();
-    DavUrl& operator=(const DavUrl&);
+    DavUrl &operator=(const DavUrl &);
+    DavUrl &operator=(DavUrl &&);
 
     /**
      * Creates a new DAV url.

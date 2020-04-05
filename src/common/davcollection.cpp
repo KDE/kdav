@@ -38,7 +38,9 @@ DavCollection::DavCollection(const DavUrl &url, const QString &displayName, Cont
 }
 
 DavCollection::DavCollection(const DavCollection &other) = default;
+DavCollection::DavCollection(DavCollection &&) = default;
 DavCollection &DavCollection::operator=(const DavCollection &other) = default;
+DavCollection &DavCollection::operator=(DavCollection &&) = default;
 DavCollection::~DavCollection() = default;
 
 void DavCollection::setCTag(const QString &ctag)

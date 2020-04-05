@@ -34,7 +34,9 @@ DavItem::DavItem(const DavUrl &url, const QString &contentType, const QByteArray
 }
 
 DavItem::DavItem(const DavItem &other) = default;
+DavItem::DavItem(DavItem &&) = default;
 DavItem &DavItem::operator=(const DavItem &other) = default;
+DavItem &DavItem::operator=(DavItem &&) = default;
 DavItem::~DavItem() = default;
 
 void DavItem::setUrl(const DavUrl &url)
