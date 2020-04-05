@@ -22,6 +22,21 @@ namespace KDAV {
 class DavPrincipalHomeSetsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
+    void davJobFinished(KJob *job);
+    /**
+     * Start the fetch process.
+     *
+     * There may be two rounds necessary if the first request
+     * does not returns the home sets, but only the current-user-principal
+     * or the principal-URL. The bool flag is here to prevent requesting
+     * those last two on each request, as they are only fetched in
+     * the first round.
+     *
+     * @param fetchHomeSetsOnly If set to true the request will not include
+     *        the current-user-principal and principal-URL props.
+     */
+    void fetchHomeSets(bool fetchHomeSetsOnly);
+
     DavUrl mUrl;
     QStringList mHomeSets;
 };
@@ -36,12 +51,12 @@ DavPrincipalHomeSetsFetchJob::DavPrincipalHomeSetsFetchJob(const DavUrl &url, QO
 
 void DavPrincipalHomeSetsFetchJob::start()
 {
-    fetchHomeSets(false);
+    Q_D(DavPrincipalHomeSetsFetchJob);
+    d->fetchHomeSets(false);
 }
 
-void DavPrincipalHomeSetsFetchJob::fetchHomeSets(bool homeSetsOnly)
+void DavPrincipalHomeSetsFetchJobPrivate::fetchHomeSets(bool homeSetsOnly)
 {
-    Q_D(DavPrincipalHomeSetsFetchJob);
     QDomDocument document;
 
     QDomElement propfindElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("propfind"));
@@ -50,8 +65,8 @@ void DavPrincipalHomeSetsFetchJob::fetchHomeSets(bool homeSetsOnly)
     QDomElement propElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
     propfindElement.appendChild(propElement);
 
-    const QString homeSet = ProtocolInfo::principalHomeSet(d->mUrl.protocol());
-    const QString homeSetNS = ProtocolInfo::principalHomeSetNS(d->mUrl.protocol());
+    const QString homeSet = ProtocolInfo::principalHomeSet(mUrl.protocol());
+    const QString homeSetNS = ProtocolInfo::principalHomeSetNS(mUrl.protocol());
     propElement.appendChild(document.createElementNS(homeSetNS, homeSet));
 
     if (!homeSetsOnly) {
@@ -59,9 +74,9 @@ void DavPrincipalHomeSetsFetchJob::fetchHomeSets(bool homeSetsOnly)
         propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("principal-URL")));
     }
 
-    KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), document, QStringLiteral("0"));
+    KIO::DavJob *job = DavManager::self()->createPropFindJob(mUrl.url(), document, QStringLiteral("0"));
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, &DavPrincipalHomeSetsFetchJob::davJobFinished);
+    QObject::connect(job, &KIO::DavJob::result, q_ptr, [this](KJob *job) { davJobFinished(job); });
 }
 
 QStringList DavPrincipalHomeSetsFetchJob::homeSets() const
@@ -70,9 +85,8 @@ QStringList DavPrincipalHomeSetsFetchJob::homeSets() const
     return d->mHomeSets;
 }
 
-void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
+void DavPrincipalHomeSetsFetchJobPrivate::davJobFinished(KJob *job)
 {
-    Q_D(DavPrincipalHomeSetsFetchJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
@@ -88,11 +102,11 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
             err = davJob->errorText();
         }
 
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        d->setJobErrorText(davJob->errorText());
-        d->setJobError(davJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
 
         emitResult();
         return;
@@ -140,8 +154,8 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
      *  </multistatus>
      */
 
-    const QString homeSet = ProtocolInfo::principalHomeSet(d->mUrl.protocol());
-    const QString homeSetNS = ProtocolInfo::principalHomeSetNS(d->mUrl.protocol());
+    const QString homeSet = ProtocolInfo::principalHomeSet(mUrl.protocol());
+    const QString homeSetNS = ProtocolInfo::principalHomeSetNS(mUrl.protocol());
     QString nextRoundHref; // The content of the href element that will be used if no homeset was found.
     // This is either given by current-user-principal or by principal-URL.
 
@@ -178,8 +192,8 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
 
             while (!hrefElement.isNull()) {
                 const QString href = hrefElement.text();
-                if (!d->mHomeSets.contains(href)) {
-                    d->mHomeSets << href;
+                if (!mHomeSets.contains(href)) {
+                    mHomeSets << href;
                 }
 
                 hrefElement = Utils::nextSiblingElementNS(hrefElement, QStringLiteral("DAV:"), QStringLiteral("href"));
@@ -209,10 +223,10 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
      * If we have homesets, we're done here and can notify the caller.
      * Else we must ensure that we have an href for the next round.
      */
-    if (!d->mHomeSets.isEmpty() || nextRoundHref.isEmpty()) {
+    if (!mHomeSets.isEmpty() || nextRoundHref.isEmpty()) {
         emitResult();
     } else {
-        QUrl nextRoundUrl(d->mUrl.url());
+        QUrl nextRoundUrl(mUrl.url());
 
         if (nextRoundHref.startsWith(QLatin1Char('/'))) {
             // nextRoundHref is only a path, use request url to complete
@@ -220,11 +234,11 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
         } else {
             // href is a complete url
             nextRoundUrl = QUrl::fromUserInput(nextRoundHref);
-            nextRoundUrl.setUserName(d->mUrl.url().userName());
-            nextRoundUrl.setPassword(d->mUrl.url().password());
+            nextRoundUrl.setUserName(mUrl.url().userName());
+            nextRoundUrl.setPassword(mUrl.url().password());
         }
 
-        d->mUrl.setUrl(nextRoundUrl);
+        mUrl.setUrl(nextRoundUrl);
         // And one more round, fetching only homesets
         fetchHomeSets(true);
     }

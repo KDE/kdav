@@ -46,21 +46,6 @@ public:
     Q_REQUIRED_RESULT QStringList homeSets() const;
 
 private:
-    void davJobFinished(KJob *);
-    /**
-     * Start the fetch process.
-     *
-     * There may be two rounds necessary if the first request
-     * does not returns the home sets, but only the current-user-principal
-     * or the principal-URL. The bool flag is here to prevent requesting
-     * those last two on each request, as they are only fetched in
-     * the first round.
-     *
-     * @param fetchHomeSetsOnly If set to true the request will not include
-     *        the current-user-principal and principal-URL props.
-     */
-    void fetchHomeSets(bool fetchHomeSetsOnly);
-
     Q_DECLARE_PRIVATE(DavPrincipalHomeSetsFetchJob)
 };
 }

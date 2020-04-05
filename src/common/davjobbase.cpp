@@ -15,14 +15,14 @@ DavJobBase::DavJobBase(QObject *parent)
     : KJob(parent)
     , d_ptr(new DavJobBasePrivate())
 {
-    d_ptr->q = this;
+    d_ptr->q_ptr = this;
 }
 
 DavJobBase::DavJobBase(DavJobBasePrivate *dd, QObject *parent)
     : KJob(parent)
     , d_ptr(dd)
 {
-    d_ptr->q = this;
+    d_ptr->q_ptr = this;
 }
 
 DavJobBase::~DavJobBase() = default;
@@ -100,13 +100,28 @@ void DavJobBasePrivate::setJobError(int jobErrorCode)
 
 void DavJobBasePrivate::setErrorTextFromDavError()
 {
-    q->setErrorText(q->davError().errorText());
+    q_ptr->setErrorText(q_ptr->davError().errorText());
 }
 
 void DavJobBasePrivate::setDavError(const Error &error)
 {
-    q->setError(error.errorNumber());
+    q_ptr->setError(error.errorNumber());
     setLatestResponseCode(error.responseCode());
     setJobErrorText(error.internalErrorText());
     setJobError(error.jobErrorCode());
+}
+
+void DavJobBasePrivate::setError(int errorCode)
+{
+    q_ptr->setError(errorCode);
+}
+
+void DavJobBasePrivate::setErrorText(const QString &errorText)
+{
+    q_ptr->setErrorText(errorText);
+}
+
+void DavJobBasePrivate::emitResult()
+{
+    q_ptr->emitResult();
 }

@@ -34,7 +34,12 @@ public:
     void setErrorTextFromDavError();
     void setDavError(const Error &error);
 
-    DavJobBase *q = nullptr;
+    // forwarded protected KJob API, so we can use this from subclasses of this
+    void setError(int errorCode);
+    void setErrorText(const QString &errorText);
+    void emitResult();
+
+    DavJobBase *q_ptr = nullptr;
     int mLatestResponseCode = 0;
     int mJobErrorCode = 0;
     QString mInternalErrorText;

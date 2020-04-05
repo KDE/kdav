@@ -27,9 +27,16 @@ namespace KDAV {
 class DavCollectionsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
+    void principalFetchFinished(KJob *job);
+    void collectionsFetchFinished(KJob *job);
+    void doCollectionsFetch(const QUrl &url);
+    void subjobFinished();
+
     DavUrl mUrl;
     DavCollection::List mCollections;
     uint mSubJobCount = 0;
+
+    Q_DECLARE_PUBLIC(DavCollectionsFetchJob)
 };
 }
 
@@ -45,10 +52,10 @@ void DavCollectionsFetchJob::start()
     Q_D(DavCollectionsFetchJob);
     if (DavManager::davProtocol(d->mUrl.protocol())->supportsPrincipals()) {
         DavPrincipalHomeSetsFetchJob *job = new DavPrincipalHomeSetsFetchJob(d->mUrl);
-        connect(job, &DavPrincipalHomeSetsFetchJob::result, this, &DavCollectionsFetchJob::principalFetchFinished);
+        connect(job, &DavPrincipalHomeSetsFetchJob::result, this, [d](KJob *job) { d->principalFetchFinished(job); });
         job->start();
     } else {
-        doCollectionsFetch(d->mUrl.url());
+        d->doCollectionsFetch(d->mUrl.url());
     }
 }
 
@@ -64,21 +71,19 @@ DavUrl DavCollectionsFetchJob::davUrl() const
     return d->mUrl;
 }
 
-void DavCollectionsFetchJob::doCollectionsFetch(const QUrl &url)
+void DavCollectionsFetchJobPrivate::doCollectionsFetch(const QUrl &url)
 {
-    Q_D(DavCollectionsFetchJob);
-    ++d->mSubJobCount;
+    ++mSubJobCount;
 
-    const QDomDocument collectionQuery = DavManager::davProtocol(d->mUrl.protocol())->collectionsQuery()->buildQuery();
+    const QDomDocument collectionQuery = DavManager::davProtocol(mUrl.protocol())->collectionsQuery()->buildQuery();
 
     KIO::DavJob *job = DavManager::self()->createPropFindJob(url, collectionQuery);
-    connect(job, &KIO::DavJob::result, this, &DavCollectionsFetchJob::collectionsFetchFinished);
+    QObject::connect(job, &KIO::DavJob::result, q_ptr, [this](KJob *job) { collectionsFetchFinished(job); });
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
 }
 
-void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
+void DavCollectionsFetchJobPrivate::principalFetchFinished(KJob *job)
 {
-    Q_D(DavCollectionsFetchJob);
     const DavPrincipalHomeSetsFetchJob *davJob = qobject_cast<DavPrincipalHomeSetsFetchJob *>(job);
 
     if (davJob->error()) {
@@ -86,11 +91,11 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
             // If we have a HTTP response code then this may mean that
             // the URL was not a principal URL. Retry as if it were a calendar URL.
             qCDebug(KDAV_LOG) << job->errorText();
-            doCollectionsFetch(d->mUrl.url());
+            doCollectionsFetch(mUrl.url());
         } else {
             // Just give up here.
-            d->setDavError(davJob->davError());
-            d->setErrorTextFromDavError();
+            setDavError(davJob->davError());
+            setErrorTextFromDavError();
             emitResult();
         }
 
@@ -103,12 +108,12 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
 
     if (homeSets.isEmpty()) {
         // Same as above, retry as if it were a calendar URL.
-        doCollectionsFetch(d->mUrl.url());
+        doCollectionsFetch(mUrl.url());
         return;
     }
 
     for (const QString &homeSet : homeSets) {
-        QUrl url = d->mUrl.url();
+        QUrl url = mUrl.url();
 
         if (homeSet.startsWith(QLatin1Char('/'))) {
             // homeSet is only a path, use request url to complete
@@ -125,9 +130,9 @@ void DavCollectionsFetchJob::principalFetchFinished(KJob *job)
     }
 }
 
-void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
+void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
 {
-    Q_D(DavCollectionsFetchJob);
+    Q_Q(DavCollectionsFetchJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
@@ -136,23 +141,23 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        if (davJob->url() != d->mUrl.url()) {
+        if (davJob->url() != mUrl.url()) {
             // Retry as if the initial URL was a calendar URL.
             // We can end up here when retrieving a homeset on
             // which a PROPFIND resulted in an error
-            doCollectionsFetch(d->mUrl.url());
-            --d->mSubJobCount;
+            doCollectionsFetch(mUrl.url());
+            --mSubJobCount;
             return;
         }
 
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        d->setJobErrorText(davJob->errorText());
-        d->setJobError(davJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
     } else {
         // For use in the collectionDiscovered() signal
-        QUrl _jobUrl = d->mUrl.url();
+        QUrl _jobUrl = mUrl.url();
         _jobUrl.setUserInfo(QString());
         const QString jobUrl = _jobUrl.toDisplayString();
 
@@ -160,7 +165,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
         QDomElement rootElement = davJob->response().documentElement();
         if (rootElement.tagName().compare(QLatin1String("multistatus"), Qt::CaseInsensitive) != 0) {
             setError(ERR_COLLECTIONFETCH);
-            d->setErrorTextFromDavError();
+            setErrorTextFromDavError();
             subjobFinished();
             return;
         }
@@ -172,15 +177,15 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
         QXmlQuery xquery;
         if (!xquery.setFocus(&buffer)) {
             setError(ERR_COLLECTIONFETCH_XQUERY_SETFOCUS);
-            d->setErrorTextFromDavError();
+            setErrorTextFromDavError();
             subjobFinished();
             return;
         }
 
-        xquery.setQuery(DavManager::davProtocol(d->mUrl.protocol())->collectionsXQuery());
+        xquery.setQuery(DavManager::davProtocol(mUrl.protocol())->collectionsXQuery());
         if (!xquery.isValid()) {
             setError(ERR_COLLECTIONFETCH_XQUERY_INVALID);
-            d->setErrorTextFromDavError();
+            setErrorTextFromDavError();
             subjobFinished();
             return;
         }
@@ -193,12 +198,12 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
         QDomDocument document;
         if (!document.setContent(responsesStr, true)) {
             setError(ERR_COLLECTIONFETCH);
-            d->setErrorTextFromDavError();
+            setErrorTextFromDavError();
             subjobFinished();
             return;
         }
 
-        if (!error()) {
+        if (!q->error()) {
             /*
              * Extract information from a document like the following:
              *
@@ -280,7 +285,7 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
 
                 // don't add this resource if it has already been detected
                 bool alreadySeen = false;
-                for (const DavCollection &seen : qAsConst(d->mCollections)) {
+                for (const DavCollection &seen : qAsConst(mCollections)) {
                     if (seen.url().toDisplayString() == url.toDisplayString()) {
                         alreadySeen = true;
                     }
@@ -320,11 +325,11 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 }
 
                 // extract allowed content types
-                const DavCollection::ContentTypes contentTypes = DavManager::davProtocol(d->mUrl.protocol())->collectionContentTypes(propstatElement);
+                const DavCollection::ContentTypes contentTypes = DavManager::davProtocol(mUrl.protocol())->collectionContentTypes(propstatElement);
 
                 auto _url = url;
-                _url.setUserInfo(d->mUrl.url().userInfo());
-                DavCollection collection(DavUrl(_url, d->mUrl.protocol()), displayName, contentTypes);
+                _url.setUserInfo(mUrl.url().userInfo());
+                DavCollection collection(DavUrl(_url, mUrl.protocol()), displayName, contentTypes);
 
                 collection.setCTag(CTag);
                 if (color.isValid()) {
@@ -342,8 +347,8 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
                 }
 
                 qCDebug(KDAV_LOG) << url.toDisplayString() << "PRIVS: " << collection.privileges();
-                d->mCollections << collection;
-                Q_EMIT collectionDiscovered(d->mUrl.protocol(), url.toDisplayString(), jobUrl);
+                mCollections << collection;
+                Q_EMIT q->collectionDiscovered(mUrl.protocol(), url.toDisplayString(), jobUrl);
 
                 responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
             }
@@ -353,10 +358,9 @@ void DavCollectionsFetchJob::collectionsFetchFinished(KJob *job)
     subjobFinished();
 }
 
-void DavCollectionsFetchJob::subjobFinished()
+void DavCollectionsFetchJobPrivate::subjobFinished()
 {
-    Q_D(DavCollectionsFetchJob);
-    if (--d->mSubJobCount == 0) {
+    if (--mSubJobCount == 0) {
         emitResult();
     }
 }

@@ -62,11 +62,6 @@ Q_SIGNALS:
     void collectionDiscovered(KDAV::Protocol protocol, const QString &collectionUrl, const QString &configuredUrl);
 
 private:
-    void principalFetchFinished(KJob *);
-    void collectionsFetchFinished(KJob *);
-    void doCollectionsFetch(const QUrl &url);
-    void subjobFinished();
-
     Q_DECLARE_PRIVATE(DavCollectionsFetchJob)
 };
 }

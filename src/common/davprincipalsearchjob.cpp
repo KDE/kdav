@@ -23,6 +23,8 @@ class DavPrincipalSearchJobPrivate : public DavJobBasePrivate
 {
 public:
     void buildReportQuery(QDomDocument &query) const;
+    void principalCollectionSetSearchFinished(KJob *job);
+    void principalPropertySearchFinished(KJob *job);
 
     DavUrl mUrl;
     DavPrincipalSearchJob::FilterType mType;
@@ -86,13 +88,12 @@ void DavPrincipalSearchJob::start()
 
     KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), query);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, &DavPrincipalSearchJob::principalCollectionSetSearchFinished);
+    connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->principalCollectionSetSearchFinished(job); });
     job->start();
 }
 
-void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
+void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(KJob *job)
 {
-    Q_D(DavPrincipalSearchJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
@@ -100,11 +101,11 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
                              : responseCodeStr.toInt();
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        d->setJobErrorText(davJob->errorText());
-        d->setJobError(davJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
 
         emitResult();
         return;
@@ -181,7 +182,7 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
         QDomElement hrefElement = hrefNodes.at(i).toElement();
         QString href = hrefElement.text();
 
-        QUrl url = d->mUrl.url();
+        QUrl url = mUrl.url();
         if (href.startsWith(QLatin1Char('/'))) {
             // href is only a path, use request url to complete
             url.setPath(href, QUrl::TolerantMode);
@@ -194,24 +195,23 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
         }
 
         QDomDocument principalPropertySearchQuery;
-        d->buildReportQuery(principalPropertySearchQuery);
+        buildReportQuery(principalPropertySearchQuery);
         KIO::DavJob *reportJob = DavManager::self()->createReportJob(url, principalPropertySearchQuery);
         reportJob->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-        connect(reportJob, &KIO::DavJob::result, this, &DavPrincipalSearchJob::principalPropertySearchFinished);
-        ++d->mPrincipalPropertySearchSubJobCount;
+        QObject::connect(reportJob, &KIO::DavJob::result, q_ptr, [this](KJob *job) { principalPropertySearchFinished(job); });
+        ++mPrincipalPropertySearchSubJobCount;
         reportJob->start();
     }
 }
 
-void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
+void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
 {
-    Q_D(DavPrincipalSearchJob);
-    --d->mPrincipalPropertySearchSubJobCount;
+    --mPrincipalPropertySearchSubJobCount;
 
-    if (job->error() && !d->mPrincipalPropertySearchSubJobSuccessful) {
+    if (job->error() && !mPrincipalPropertySearchSubJobSuccessful) {
         setError(job->error());
         setErrorText(job->errorText());
-        if (d->mPrincipalPropertySearchSubJobCount == 0) {
+        if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
         return;
@@ -221,33 +221,33 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
 
     const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
-    if (responseCode > 499 && responseCode < 600 && !d->mPrincipalPropertySearchSubJobSuccessful) {
+    if (responseCode > 499 && responseCode < 600 && !mPrincipalPropertySearchSubJobSuccessful) {
         // Server-side error, unrecoverable
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_SERVER_UNRECOVERABLE);
-        d->setJobErrorText(davJob->errorText());
-        d->setJobError(davJob->error());
-        d->setErrorTextFromDavError();
-        if (d->mPrincipalPropertySearchSubJobCount == 0) {
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
+        if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
         return;
-    } else if (responseCode > 399 && responseCode < 500 && !d->mPrincipalPropertySearchSubJobSuccessful) {
-        d->setLatestResponseCode(responseCode);
+    } else if (responseCode > 399 && responseCode < 500 && !mPrincipalPropertySearchSubJobSuccessful) {
+        setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        d->setJobErrorText(davJob->errorText());
-        d->setJobError(davJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
 
-        if (d->mPrincipalPropertySearchSubJobCount == 0) {
+        if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
         return;
     }
 
-    if (!d->mPrincipalPropertySearchSubJobSuccessful) {
+    if (!mPrincipalPropertySearchSubJobSuccessful) {
         setError(0);   // nope, everything went fine
-        d->mPrincipalPropertySearchSubJobSuccessful = true;
+        mPrincipalPropertySearchSubJobSuccessful = true;
     }
 
     /*
@@ -270,7 +270,7 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
     if (responseElement.isNull()) {
-        if (d->mPrincipalPropertySearchSubJobCount == 0) {
+        if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
         return;
@@ -291,7 +291,7 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
     }
 
     if (propstatElement.isNull()) {
-        if (d->mPrincipalPropertySearchSubJobCount == 0) {
+        if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
         return;
@@ -299,7 +299,7 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
 
     QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
     if (propElement.isNull()) {
-        if (d->mPrincipalPropertySearchSubJobCount == 0) {
+        if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
         return;
@@ -307,19 +307,19 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
 
     // All requested properties are now under propElement, so let's find them
     typedef QPair<QString, QString> PropertyPair;
-    for (const PropertyPair &fetchProperty : qAsConst(d->mFetchProperties)) {
+    for (const PropertyPair &fetchProperty : qAsConst(mFetchProperties)) {
         QDomNodeList fetchNodes = propElement.elementsByTagNameNS(fetchProperty.first, fetchProperty.second);
         for (int i = 0; i < fetchNodes.size(); ++i) {
             QDomElement fetchElement = fetchNodes.at(i).toElement();
-            Result result;
+            DavPrincipalSearchJob::Result result;
             result.propertyNamespace = fetchProperty.first;
             result.property = fetchProperty.second;
             result.value = fetchElement.text();
-            d->mResults << result;
+            mResults << result;
         }
     }
 
-    if (d->mPrincipalPropertySearchSubJobCount == 0) {
+    if (mPrincipalPropertySearchSubJobCount == 0) {
         emitResult();
     }
 }

@@ -43,7 +43,6 @@ public:
     Q_REQUIRED_RESULT DavItem item() const;
 
 private:
-    void davJobFinished(KJob *);
     Q_DECLARE_PRIVATE(DavItemFetchJob)
 };
 }

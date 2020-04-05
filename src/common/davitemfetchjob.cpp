@@ -18,6 +18,8 @@ namespace KDAV {
 class DavItemFetchJobPrivate : public DavJobBasePrivate
 {
 public:
+    void davJobFinished(KJob *job);
+
     DavUrl mUrl;
     DavItem mItem;
 };
@@ -56,7 +58,7 @@ void DavItemFetchJob::start()
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
 
-    connect(job, &KIO::StoredTransferJob::result, this, &DavItemFetchJob::davJobFinished);
+    connect(job, &KIO::StoredTransferJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
 }
 
 DavItem DavItemFetchJob::item() const
@@ -65,27 +67,26 @@ DavItem DavItemFetchJob::item() const
     return d->mItem;
 }
 
-void DavItemFetchJob::davJobFinished(KJob *job)
+void DavItemFetchJobPrivate::davJobFinished(KJob *job)
 {
-    Q_D(DavItemFetchJob);
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
     const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
                              ? 0
                              : responseCodeStr.toInt();
 
-    d->setLatestResponseCode(responseCode);
+    setLatestResponseCode(responseCode);
 
     if (storedJob->error()) {
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        d->setJobErrorText(storedJob->errorText());
-        d->setJobError(storedJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(storedJob->errorText());
+        setJobError(storedJob->error());
+        setErrorTextFromDavError();
     } else {
-        d->mItem.setData(storedJob->data());
-        d->mItem.setContentType(storedJob->queryMetaData(QStringLiteral("content-type")));
-        d->mItem.setEtag(etagFromHeaders(storedJob->queryMetaData(QStringLiteral("HTTP-Headers"))));
+        mItem.setData(storedJob->data());
+        mItem.setContentType(storedJob->queryMetaData(QStringLiteral("content-type")));
+        mItem.setEtag(etagFromHeaders(storedJob->queryMetaData(QStringLiteral("HTTP-Headers"))));
     }
 
     emitResult();

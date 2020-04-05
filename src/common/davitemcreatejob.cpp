@@ -22,8 +22,13 @@ namespace KDAV {
 class DavItemCreateJobPrivate : public DavJobBasePrivate
 {
 public:
+    void davJobFinished(KJob *job);
+    void itemRefreshed(KJob *job);
+
     DavItem mItem;
     int mRedirectCount = 0;
+
+    Q_DECLARE_PUBLIC(DavItemCreateJob)
 };
 }
 
@@ -49,7 +54,7 @@ void DavItemCreateJob::start()
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
     job->setRedirectionHandlingEnabled(false);
 
-    connect(job, &KIO::StoredTransferJob::result, this, &DavItemCreateJob::davJobFinished);
+    connect(job, &KIO::StoredTransferJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
 }
 
 DavItem DavItemCreateJob::item() const
@@ -64,20 +69,20 @@ QUrl DavItemCreateJob::itemUrl() const
     return d->mItem.url().url();
 }
 
-void DavItemCreateJob::davJobFinished(KJob *job)
+void DavItemCreateJobPrivate::davJobFinished(KJob *job)
 {
-    Q_D(DavItemCreateJob);
+    Q_Q(DavItemCreateJob);
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
     const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
                              ? 0
                              : responseCodeStr.toInt();
     if (storedJob->error()) {
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_ITEMCREATE);
-        d->setJobErrorText(storedJob->errorText());
-        d->setJobError(storedJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(storedJob->errorText());
+        setJobError(storedJob->error());
+        setErrorTextFromDavError();
 
         emitResult();
         return;
@@ -103,36 +108,35 @@ void DavItemCreateJob::davJobFinished(KJob *job)
     }
 
     if (responseCode == 301 || responseCode == 302 || responseCode == 307 || responseCode == 308) {
-        if (d->mRedirectCount > 4) {
-            d->setLatestResponseCode(responseCode);
-            setError(UserDefinedError + responseCode);
+        if (mRedirectCount > 4) {
+            setLatestResponseCode(responseCode);
+            setError(DavItemCreateJob::UserDefinedError + responseCode);
             emitResult();
         } else {
             QUrl _itemUrl(url);
-            _itemUrl.setUserInfo(itemUrl().userInfo());
-            d->mItem.setUrl(DavUrl(_itemUrl, d->mItem.url().protocol()));
+            _itemUrl.setUserInfo(q->itemUrl().userInfo());
+            mItem.setUrl(DavUrl(_itemUrl, mItem.url().protocol()));
 
-            ++d->mRedirectCount;
-            start();
+            ++mRedirectCount;
+            q->start();
         }
 
         return;
     }
 
-    url.setUserInfo(itemUrl().userInfo());
-    d->mItem.setUrl(DavUrl(url, d->mItem.url().protocol()));
+    url.setUserInfo(q->itemUrl().userInfo());
+    mItem.setUrl(DavUrl(url, mItem.url().protocol()));
 
-    DavItemFetchJob *fetchJob = new DavItemFetchJob(d->mItem);
-    connect(fetchJob, &DavItemFetchJob::result, this, &DavItemCreateJob::itemRefreshed);
+    DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
+    QObject::connect(fetchJob, &DavItemFetchJob::result, q, [this](KJob *job) { itemRefreshed(job); });
     fetchJob->start();
 }
 
-void DavItemCreateJob::itemRefreshed(KJob *job)
+void DavItemCreateJobPrivate::itemRefreshed(KJob *job)
 {
-    Q_D(DavItemCreateJob);
     if (!job->error()) {
         DavItemFetchJob *fetchJob = qobject_cast<DavItemFetchJob *>(job);
-        d->mItem.setEtag(fetchJob->item().etag());
+        mItem.setEtag(fetchJob->item().etag());
     }
     emitResult();
 }

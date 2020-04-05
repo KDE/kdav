@@ -87,9 +87,6 @@ public:
     Q_REQUIRED_RESULT QVector<Result> results() const;
 
 private:
-    void principalCollectionSetSearchFinished(KJob *job);
-    void principalPropertySearchFinished(KJob *job);
-
     Q_DECLARE_PRIVATE(DavPrincipalSearchJob)
 };
 }

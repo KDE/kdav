@@ -46,9 +46,6 @@ public:
     Q_REQUIRED_RESULT QUrl itemUrl() const;
 
 private:
-    void davJobFinished(KJob *);
-    void itemRefreshed(KJob *);
-
     Q_DECLARE_PRIVATE(DavItemCreateJob)
 };
 }

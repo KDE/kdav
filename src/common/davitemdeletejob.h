@@ -48,9 +48,6 @@ public:
     Q_REQUIRED_RESULT int freshResponseCode() const;
 
 private:
-    void davJobFinished(KJob *);
-    void conflictingItemFetched(KJob *);
-
     Q_DECLARE_PRIVATE(DavItemDeleteJob)
 };
 }

@@ -79,7 +79,6 @@ public:
     Q_REQUIRED_RESULT QStringList deletedItems() const;
 
 private:
-    void davJobFinished(KJob *);
     Q_DECLARE_PRIVATE(DavItemsListJob)
 };
 }

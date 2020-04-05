@@ -25,6 +25,8 @@ namespace KDAV {
 class DavItemsListJobPrivate : public DavJobBasePrivate
 {
 public:
+    void davJobFinished(KJob *job);
+
     DavUrl mUrl;
     std::shared_ptr<EtagCache> mEtagCache;
     QStringList mMimeTypes;
@@ -87,13 +89,13 @@ void DavItemsListJob::start()
                 job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
                 job->setProperty("davType", QStringLiteral("report"));
                 job->setProperty("itemsMimeType", mimeType);
-                connect(job, &KIO::DavJob::result, this, &DavItemsListJob::davJobFinished);
+                connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
             } else {
                 KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), props);
                 job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
                 job->setProperty("davType", QStringLiteral("propFind"));
                 job->setProperty("itemsMimeType", mimeType);
-                connect(job, &KIO::DavJob::result, this, &DavItemsListJob::davJobFinished);
+                connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
             }
         }
     }
@@ -123,9 +125,8 @@ QStringList DavItemsListJob::deletedItems() const
     return d->mDeletedItems;
 }
 
-void DavItemsListJob::davJobFinished(KJob *job)
+void DavItemsListJobPrivate::davJobFinished(KJob *job)
 {
-    Q_D(DavItemsListJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).isEmpty()
                              ? 0
@@ -133,11 +134,11 @@ void DavItemsListJob::davJobFinished(KJob *job)
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        d->setJobErrorText(davJob->errorText());
-        d->setJobError(davJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
     } else {
         /*
          * Extract data from a document like the following:
@@ -220,41 +221,41 @@ void DavItemsListJob::davJobFinished(KJob *job)
             }
 
             QString itemUrl = url.toDisplayString();
-            if (d->mSeenUrls.contains(itemUrl)) {
+            if (mSeenUrls.contains(itemUrl)) {
                 responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
                 continue;
             }
 
-            d->mSeenUrls << itemUrl;
+            mSeenUrls << itemUrl;
             auto _url = url;
-            _url.setUserInfo(d->mUrl.url().userInfo());
-            item.setUrl(DavUrl(_url, d->mUrl.protocol()));
+            _url.setUserInfo(mUrl.url().userInfo());
+            item.setUrl(DavUrl(_url, mUrl.protocol()));
 
             // extract etag
             const QDomElement getetagElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("getetag"));
 
             item.setEtag(getetagElement.text());
 
-            d->mItems << item;
+            mItems << item;
 
-            if (d->mEtagCache->etagChanged(itemUrl, item.etag())) {
-                d->mChangedItems << item;
+            if (mEtagCache->etagChanged(itemUrl, item.etag())) {
+                mChangedItems << item;
             }
 
             responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
         }
     }
 
-    const auto etagCacheUrls = d->mEtagCache->urls();
+    const auto etagCacheUrls = mEtagCache->urls();
 #if QT_VERSION < QT_VERSION_CHECK(5, 14, 0)
     QSet<QString> removed = etagCacheUrls.toSet();
 #else
     QSet<QString> removed(etagCacheUrls.begin(), etagCacheUrls.end());
 #endif
-    removed.subtract(d->mSeenUrls);
-    d->mDeletedItems = removed.values();
+    removed.subtract(mSeenUrls);
+    mDeletedItems = removed.values();
 
-    if (--d->mSubJobCount == 0) {
+    if (--mSubJobCount == 0) {
         emitResult();
     }
 }

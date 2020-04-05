@@ -18,9 +18,15 @@ namespace KDAV {
 class DavItemModifyJobPrivate : public DavJobBasePrivate
 {
 public:
+    void davJobFinished(KJob *job);
+    void itemRefreshed(KJob *job);
+    void conflictingItemFetched(KJob *job);
+
     DavItem mItem;
     DavItem mFreshItem;
     int mFreshResponseCode = 0;
+
+    Q_DECLARE_PUBLIC(DavItemModifyJob)
 };
 }
 
@@ -45,7 +51,7 @@ void DavItemModifyJob::start()
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
 
-    connect(job, &KIO::StoredTransferJob::result, this, &DavItemModifyJob::davJobFinished);
+    connect(job, &KIO::StoredTransferJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
 }
 
 DavItem DavItemModifyJob::item() const
@@ -72,9 +78,9 @@ QUrl DavItemModifyJob::itemUrl() const
     return d->mItem.url().url();
 }
 
-void DavItemModifyJob::davJobFinished(KJob *job)
+void DavItemModifyJobPrivate::davJobFinished(KJob *job)
 {
-    Q_D(DavItemModifyJob);
+    Q_Q(DavItemModifyJob);
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
 
     if (storedJob->error()) {
@@ -82,15 +88,15 @@ void DavItemModifyJob::davJobFinished(KJob *job)
                                  ? 0
                                  : storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_ITEMMODIFY);
-        d->setJobErrorText(storedJob->errorText());
-        d->setJobError(storedJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(storedJob->errorText());
+        setJobError(storedJob->error());
+        setErrorTextFromDavError();
 
-        if (hasConflict()) {
-            DavItemFetchJob *fetchJob = new DavItemFetchJob(d->mItem);
-            connect(fetchJob, &DavItemFetchJob::result, this, &DavItemModifyJob::conflictingItemFetched);
+        if (q->hasConflict()) {
+            DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
+            QObject::connect(fetchJob, &DavItemFetchJob::result, q, [this](KJob *job) { conflictingItemFetched(job); });
             fetchJob->start();
         } else {
             emitResult();
@@ -118,34 +124,32 @@ void DavItemModifyJob::davJobFinished(KJob *job)
         url = QUrl::fromUserInput(location);
     }
 
-    url.setUserInfo(itemUrl().userInfo());
-    d->mItem.setUrl(DavUrl(url, d->mItem.url().protocol()));
+    url.setUserInfo(q->itemUrl().userInfo());
+    mItem.setUrl(DavUrl(url, mItem.url().protocol()));
 
-    DavItemFetchJob *fetchJob = new DavItemFetchJob(d->mItem);
-    connect(fetchJob, &DavItemFetchJob::result, this, &DavItemModifyJob::itemRefreshed);
+    DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
+    QObject::connect(fetchJob, &DavItemFetchJob::result, q, [this](KJob *job) { itemRefreshed(job); });
     fetchJob->start();
 }
 
-void DavItemModifyJob::itemRefreshed(KJob *job)
+void DavItemModifyJobPrivate::itemRefreshed(KJob *job)
 {
-    Q_D(DavItemModifyJob);
     if (!job->error()) {
         DavItemFetchJob *fetchJob = qobject_cast<DavItemFetchJob *>(job);
-        d->mItem.setEtag(fetchJob->item().etag());
+        mItem.setEtag(fetchJob->item().etag());
     } else {
-        d->mItem.setEtag(QString());
+        mItem.setEtag(QString());
     }
     emitResult();
 }
 
-void DavItemModifyJob::conflictingItemFetched(KJob *job)
+void DavItemModifyJobPrivate::conflictingItemFetched(KJob *job)
 {
-    Q_D(DavItemModifyJob);
     DavItemFetchJob *fetchJob = qobject_cast<DavItemFetchJob *>(job);
-    d->mFreshResponseCode = fetchJob->latestResponseCode();
+    mFreshResponseCode = fetchJob->latestResponseCode();
 
     if (!job->error()) {
-        d->mFreshItem = fetchJob->item();
+        mFreshItem = fetchJob->item();
     }
 
     emitResult();

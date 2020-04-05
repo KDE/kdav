@@ -24,6 +24,8 @@ namespace KDAV {
 class DavItemsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
+    void davJobFinished(KJob *job);
+
     DavUrl mCollectionUrl;
     QStringList mUrls;
     QMap<QString, DavItem> mItems;
@@ -53,7 +55,7 @@ void DavItemsFetchJob::start()
     const QDomDocument report = protocol->itemsReportQuery(d->mUrls)->buildQuery();
     KIO::DavJob *job = DavManager::self()->createReportJob(d->mCollectionUrl.url(), report, QStringLiteral("0"));
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, &DavItemsFetchJob::davJobFinished);
+    connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
 }
 
 DavItem::List DavItemsFetchJob::items() const
@@ -73,9 +75,8 @@ DavItem DavItemsFetchJob::item(const QString &url) const
     return d->mItems.value(url);
 }
 
-void DavItemsFetchJob::davJobFinished(KJob *job)
+void DavItemsFetchJobPrivate::davJobFinished(KJob *job)
 {
-    Q_D(DavItemsFetchJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
@@ -84,18 +85,18 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        d->setJobErrorText(davJob->errorText());
-        d->setJobError(davJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
 
         emitResult();
         return;
     }
 
     const DavMultigetProtocol *protocol
-        = static_cast<const DavMultigetProtocol *>(DavManager::davProtocol(d->mCollectionUrl.protocol()));
+        = static_cast<const DavMultigetProtocol *>(DavManager::davProtocol(mCollectionUrl.protocol()));
 
     const QDomDocument document = davJob->response();
     const QDomElement documentElement = document.documentElement();
@@ -135,8 +136,8 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
         }
 
         auto _url = url;
-        _url.setUserInfo(d->mCollectionUrl.url().userInfo());
-        item.setUrl(DavUrl(_url, d->mCollectionUrl.protocol()));
+        _url.setUserInfo(mCollectionUrl.url().userInfo());
+        item.setUrl(DavUrl(_url, mCollectionUrl.protocol()));
 
         // extract etag
         const QDomElement getetagElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("getetag"));
@@ -160,7 +161,7 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
 
         item.setData(data);
 
-        d->mItems.insert(item.url().toDisplayString(), item);
+        mItems.insert(item.url().toDisplayString(), item);
         responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
     }
 

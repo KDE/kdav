@@ -59,7 +59,6 @@ public:
     void start() override;
 
 private:
-    void davJobFinished(KJob *job);
     Q_DECLARE_PRIVATE(DavCollectionModifyJob)
 };
 }

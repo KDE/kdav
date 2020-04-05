@@ -18,6 +18,8 @@ namespace KDAV {
 class DavCollectionDeleteJobPrivate : public DavJobBasePrivate
 {
 public:
+    void davJobFinished(KJob *job);
+
     DavUrl mUrl;
 };
 }
@@ -37,12 +39,11 @@ void DavCollectionDeleteJob::start()
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
 
-    connect(job, &KIO::DeleteJob::result, this, &DavCollectionDeleteJob::davJobFinished);
+    connect(job, &KIO::DeleteJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
 }
 
-void DavCollectionDeleteJob::davJobFinished(KJob *job)
+void DavCollectionDeleteJobPrivate::davJobFinished(KJob *job)
 {
-    Q_D(DavCollectionDeleteJob);
     KIO::DeleteJob *deleteJob = qobject_cast<KIO::DeleteJob *>(job);
 
     if (deleteJob->error() && deleteJob->error() != KIO::ERR_NO_CONTENT) {
@@ -50,11 +51,11 @@ void DavCollectionDeleteJob::davJobFinished(KJob *job)
                                  ? 0
                                  : deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONDELETE);
-        d->setJobErrorText(deleteJob->errorText());
-        d->setJobError(deleteJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(deleteJob->errorText());
+        setJobError(deleteJob->error());
+        setErrorTextFromDavError();
     }
 
     emitResult();

@@ -20,6 +20,8 @@ namespace KDAV {
 class DavCollectionModifyJobPrivate : public DavJobBasePrivate
 {
 public:
+    void davJobFinished(KJob *job);
+
     DavUrl mUrl;
     QDomDocument mQuery;
 
@@ -106,12 +108,11 @@ void DavCollectionModifyJob::start()
 
     KIO::DavJob *job = DavManager::self()->createPropPatchJob(d->mUrl.url(), mQuery);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, &DavCollectionModifyJob::davJobFinished);
+    connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
 }
 
-void DavCollectionModifyJob::davJobFinished(KJob *job)
+void DavCollectionModifyJobPrivate::davJobFinished(KJob *job)
 {
-    Q_D(DavCollectionModifyJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
     const int responseCode = responseCodeStr.isEmpty()
@@ -120,11 +121,11 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        d->setLatestResponseCode(responseCode);
+        setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONMODIFY);
-        d->setJobErrorText(davJob->errorText());
-        d->setJobError(davJob->error());
-        d->setErrorTextFromDavError();
+        setJobErrorText(davJob->errorText());
+        setJobError(davJob->error());
+        setErrorTextFromDavError();
         emitResult();
         return;
     }
@@ -156,9 +157,9 @@ void DavCollectionModifyJob::davJobFinished(KJob *job)
         // Trying to get more information about the error
         const QDomElement responseDescriptionElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("responsedescription"));
         if (!responseDescriptionElement.isNull()) {
-            d->setJobErrorText(responseDescriptionElement.text());
+            setJobErrorText(responseDescriptionElement.text());
         }
-        d->setErrorTextFromDavError();
+        setErrorTextFromDavError();
     }
 
     emitResult();

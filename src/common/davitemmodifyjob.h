@@ -55,10 +55,6 @@ public:
     Q_REQUIRED_RESULT int freshResponseCode() const;
 
 private:
-    void davJobFinished(KJob *);
-    void itemRefreshed(KJob *);
-    void conflictingItemFetched(KJob *);
-
     Q_DECLARE_PRIVATE(DavItemModifyJob)
 };
 }

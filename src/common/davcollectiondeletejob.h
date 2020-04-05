@@ -40,9 +40,6 @@ public:
      */
     void start() override;
 
-private Q_SLOTS:
-    void davJobFinished(KJob *);
-
 private:
     Q_DECLARE_PRIVATE(DavCollectionDeleteJob)
 };
