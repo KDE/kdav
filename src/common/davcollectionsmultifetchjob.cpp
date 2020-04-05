@@ -14,33 +14,31 @@ namespace KDAV {
 class DavCollectionsMultiFetchJobPrivate
 {
 public:
-    DavUrl::List mUrls;
     DavCollection::List mCollections;
-    int mSubJobCount = -1;
 };
 }
 
 DavCollectionsMultiFetchJob::DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent)
-    : KJob(parent)
+    : KCompositeJob(parent)
     , d(new DavCollectionsMultiFetchJobPrivate)
 {
-    d->mUrls = urls;
-    d->mSubJobCount = urls.size();
+    for (const DavUrl &url : qAsConst(urls)) {
+        DavCollectionsFetchJob *job = new DavCollectionsFetchJob(url, this);
+        connect(job, &DavCollectionsFetchJob::collectionDiscovered, this, &DavCollectionsMultiFetchJob::collectionDiscovered);
+        addSubjob(job);
+    }
 }
 
 DavCollectionsMultiFetchJob::~DavCollectionsMultiFetchJob() = default;
 
 void DavCollectionsMultiFetchJob::start()
 {
-    if (d->mUrls.isEmpty()) {
+    if (!hasSubjobs()) {
         emitResult();
-    }
-
-    for (const DavUrl &url : qAsConst(d->mUrls)) {
-        DavCollectionsFetchJob *job = new DavCollectionsFetchJob(url, this);
-        connect(job, &DavCollectionsFetchJob::result, this, &DavCollectionsMultiFetchJob::davJobFinished);
-        connect(job, &DavCollectionsFetchJob::collectionDiscovered, this, &DavCollectionsMultiFetchJob::collectionDiscovered);
-        job->start();
+    } else {
+        for (KJob *job : subjobs()) {
+            job->start();
+        }
     }
 }
 
@@ -49,18 +47,23 @@ DavCollection::List DavCollectionsMultiFetchJob::collections() const
     return d->mCollections;
 }
 
-void DavCollectionsMultiFetchJob::davJobFinished(KJob *job)
+void DavCollectionsMultiFetchJob::slotResult(KJob *job)
 {
-    DavCollectionsFetchJob *fetchJob = qobject_cast<DavCollectionsFetchJob *>(job);
+    // If we use KCompositeJob::slotResult(job) we end up with behaviour that's very
+    // hard to unittest: the valid URLs might or might not get processed.
+    // Let's wait until all subjobs are done before emitting result.
 
-    if (job->error()) {
+    if (job->error() && !error()) {
+        // Store error only if first error
         setError(job->error());
         setErrorText(job->errorText());
-    } else {
+    }
+    if (!job->error()) {
+        DavCollectionsFetchJob *fetchJob = qobject_cast<DavCollectionsFetchJob *>(job);
         d->mCollections << fetchJob->collections();
     }
-
-    if (--d->mSubJobCount == 0) {
+    removeSubjob(job);
+    if (!hasSubjobs()) {
         emitResult();
     }
 }
