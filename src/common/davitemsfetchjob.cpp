@@ -45,7 +45,7 @@ void DavItemsFetchJob::start()
         = dynamic_cast<const DavMultigetProtocol *>(DavManager::davProtocol(d->mCollectionUrl.protocol()));
     if (!protocol) {
         setError(ERR_NO_MULTIGET);
-        setErrorTextFromDavError();
+        d->setErrorTextFromDavError();
         emitResult();
         return;
     }
@@ -84,11 +84,11 @@ void DavItemsFetchJob::davJobFinished(KJob *job)
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        setLatestResponseCode(responseCode);
+        d->setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
-        setErrorTextFromDavError();
+        d->setJobErrorText(davJob->errorText());
+        d->setJobError(davJob->error());
+        d->setErrorTextFromDavError();
 
         emitResult();
         return;

@@ -13,9 +13,9 @@
 
 #include <memory>
 
-class DavJobBasePrivate;
-
 namespace KDAV {
+
+class DavJobBasePrivate;
 class Error;
 
 /**
@@ -69,23 +69,9 @@ public:
     Q_REQUIRED_RESULT Error davError() const;
 
 protected:
-    /**
-     * Sets the latest response code received.
-     *
-     * Only really useful in case of error, though success codes can
-     * also be set.
-     *
-     * @param code The code to set, should be a valid HTTP response code or zero.
-     */
-    Q_DECL_HIDDEN void setLatestResponseCode(int code);
-
-    Q_DECL_HIDDEN void setJobErrorText(const QString &errorText);
-    Q_DECL_HIDDEN void setJobError(int jobErrorCode);
-    Q_DECL_HIDDEN void setErrorTextFromDavError();
-    Q_DECL_HIDDEN void setDavError(const Error &error);
-
     Q_DECL_HIDDEN explicit DavJobBase(DavJobBasePrivate *dd, QObject *parent = nullptr);
     std::unique_ptr<DavJobBasePrivate> d_ptr;
+
 private:
     Q_DECLARE_PRIVATE(DavJobBase)
 };

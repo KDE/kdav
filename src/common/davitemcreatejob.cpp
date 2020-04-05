@@ -73,11 +73,11 @@ void DavItemCreateJob::davJobFinished(KJob *job)
                              ? 0
                              : responseCodeStr.toInt();
     if (storedJob->error()) {
-        setLatestResponseCode(responseCode);
+        d->setLatestResponseCode(responseCode);
         setError(ERR_ITEMCREATE);
-        setJobErrorText(storedJob->errorText());
-        setJobError(storedJob->error());
-        setErrorTextFromDavError();
+        d->setJobErrorText(storedJob->errorText());
+        d->setJobError(storedJob->error());
+        d->setErrorTextFromDavError();
 
         emitResult();
         return;
@@ -104,7 +104,7 @@ void DavItemCreateJob::davJobFinished(KJob *job)
 
     if (responseCode == 301 || responseCode == 302 || responseCode == 307 || responseCode == 308) {
         if (d->mRedirectCount > 4) {
-            setLatestResponseCode(responseCode);
+            d->setLatestResponseCode(responseCode);
             setError(UserDefinedError + responseCode);
             emitResult();
         } else {

@@ -100,11 +100,11 @@ void DavPrincipalSearchJob::principalCollectionSetSearchFinished(KJob *job)
                              : responseCodeStr.toInt();
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        setLatestResponseCode(responseCode);
+        d->setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
-        setErrorTextFromDavError();
+        d->setJobErrorText(davJob->errorText());
+        d->setJobError(davJob->error());
+        d->setErrorTextFromDavError();
 
         emitResult();
         return;
@@ -223,21 +223,21 @@ void DavPrincipalSearchJob::principalPropertySearchFinished(KJob *job)
 
     if (responseCode > 499 && responseCode < 600 && !d->mPrincipalPropertySearchSubJobSuccessful) {
         // Server-side error, unrecoverable
-        setLatestResponseCode(responseCode);
+        d->setLatestResponseCode(responseCode);
         setError(ERR_SERVER_UNRECOVERABLE);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
-        setErrorTextFromDavError();
+        d->setJobErrorText(davJob->errorText());
+        d->setJobError(davJob->error());
+        d->setErrorTextFromDavError();
         if (d->mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
         return;
     } else if (responseCode > 399 && responseCode < 500 && !d->mPrincipalPropertySearchSubJobSuccessful) {
-        setLatestResponseCode(responseCode);
+        d->setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
-        setErrorTextFromDavError();
+        d->setJobErrorText(davJob->errorText());
+        d->setJobError(davJob->error());
+        d->setErrorTextFromDavError();
 
         if (d->mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();

@@ -15,12 +15,14 @@ DavJobBase::DavJobBase(QObject *parent)
     : KJob(parent)
     , d_ptr(new DavJobBasePrivate())
 {
+    d_ptr->q = this;
 }
 
 DavJobBase::DavJobBase(DavJobBasePrivate *dd, QObject *parent)
     : KJob(parent)
     , d_ptr(dd)
 {
+    d_ptr->q = this;
 }
 
 DavJobBase::~DavJobBase() = default;
@@ -76,9 +78,9 @@ bool DavJobBase::hasConflict() const
     return latestResponseCode() == 412;
 }
 
-void DavJobBase::setLatestResponseCode(int code)
+void DavJobBasePrivate::setLatestResponseCode(int code)
 {
-    d_ptr->mLatestResponseCode = code;
+    mLatestResponseCode = code;
 }
 
 Error DavJobBase::davError() const
@@ -86,24 +88,24 @@ Error DavJobBase::davError() const
     return Error(static_cast<KDAV::ErrorNumber>(error()), d_ptr->mLatestResponseCode, d_ptr->mInternalErrorText, d_ptr->mJobErrorCode);
 }
 
-void DavJobBase::setJobErrorText(const QString &errorText)
+void DavJobBasePrivate::setJobErrorText(const QString &errorText)
 {
-    d_ptr->mInternalErrorText = errorText;
+    mInternalErrorText = errorText;
 }
 
-void DavJobBase::setJobError(int jobErrorCode)
+void DavJobBasePrivate::setJobError(int jobErrorCode)
 {
-    d_ptr->mJobErrorCode = jobErrorCode;
+    mJobErrorCode = jobErrorCode;
 }
 
-void DavJobBase::setErrorTextFromDavError()
+void DavJobBasePrivate::setErrorTextFromDavError()
 {
-    setErrorText(davError().errorText());
+    q->setErrorText(q->davError().errorText());
 }
 
-void DavJobBase::setDavError(const Error &error)
+void DavJobBasePrivate::setDavError(const Error &error)
 {
-    setError(error.errorNumber());
+    q->setError(error.errorNumber());
     setLatestResponseCode(error.responseCode());
     setJobErrorText(error.internalErrorText());
     setJobError(error.jobErrorCode());

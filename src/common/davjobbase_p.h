@@ -11,14 +11,35 @@
 
 #include <memory>
 
+namespace KDAV {
+class DavJobBase;
+
 class DavJobBasePrivate
 {
 public:
     virtual ~DavJobBasePrivate() = default;
 
+    /**
+     * Sets the latest response code received.
+     *
+     * Only really useful in case of error, though success codes can
+     * also be set.
+     *
+     * @param code The code to set, should be a valid HTTP response code or zero.
+     */
+    void setLatestResponseCode(int code);
+
+    void setJobErrorText(const QString &errorText);
+    void setJobError(int jobErrorCode);
+    void setErrorTextFromDavError();
+    void setDavError(const Error &error);
+
+    DavJobBase *q = nullptr;
     int mLatestResponseCode = 0;
     int mJobErrorCode = 0;
     QString mInternalErrorText;
 };
+
+}
 
 #endif

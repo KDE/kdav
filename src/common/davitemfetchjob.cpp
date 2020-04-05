@@ -74,14 +74,14 @@ void DavItemFetchJob::davJobFinished(KJob *job)
                              ? 0
                              : responseCodeStr.toInt();
 
-    setLatestResponseCode(responseCode);
+    d->setLatestResponseCode(responseCode);
 
     if (storedJob->error()) {
-        setLatestResponseCode(responseCode);
+        d->setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(storedJob->errorText());
-        setJobError(storedJob->error());
-        setErrorTextFromDavError();
+        d->setJobErrorText(storedJob->errorText());
+        d->setJobError(storedJob->error());
+        d->setErrorTextFromDavError();
     } else {
         d->mItem.setData(storedJob->data());
         d->mItem.setContentType(storedJob->queryMetaData(QStringLiteral("content-type")));

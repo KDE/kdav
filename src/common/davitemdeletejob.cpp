@@ -68,11 +68,11 @@ void DavItemDeleteJob::davJobFinished(KJob *job)
                                  : deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
         if (responseCode != 404 && responseCode != 410) {
-            setLatestResponseCode(responseCode);
+            d->setLatestResponseCode(responseCode);
             setError(ERR_ITEMDELETE);
-            setJobErrorText(deleteJob->errorText());
-            setJobError(deleteJob->error());
-            setErrorTextFromDavError();
+            d->setJobErrorText(deleteJob->errorText());
+            d->setJobError(deleteJob->error());
+            d->setErrorTextFromDavError();
         }
 
         if (hasConflict()) {

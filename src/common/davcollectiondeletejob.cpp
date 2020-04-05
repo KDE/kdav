@@ -42,6 +42,7 @@ void DavCollectionDeleteJob::start()
 
 void DavCollectionDeleteJob::davJobFinished(KJob *job)
 {
+    Q_D(DavCollectionDeleteJob);
     KIO::DeleteJob *deleteJob = qobject_cast<KIO::DeleteJob *>(job);
 
     if (deleteJob->error() && deleteJob->error() != KIO::ERR_NO_CONTENT) {
@@ -49,11 +50,11 @@ void DavCollectionDeleteJob::davJobFinished(KJob *job)
                                  ? 0
                                  : deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
-        setLatestResponseCode(responseCode);
+        d->setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONDELETE);
-        setJobErrorText(deleteJob->errorText());
-        setJobError(deleteJob->error());
-        setErrorTextFromDavError();
+        d->setJobErrorText(deleteJob->errorText());
+        d->setJobError(deleteJob->error());
+        d->setErrorTextFromDavError();
     }
 
     emitResult();

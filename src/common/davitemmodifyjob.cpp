@@ -82,11 +82,11 @@ void DavItemModifyJob::davJobFinished(KJob *job)
                                  ? 0
                                  : storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
-        setLatestResponseCode(responseCode);
+        d->setLatestResponseCode(responseCode);
         setError(ERR_ITEMMODIFY);
-        setJobErrorText(storedJob->errorText());
-        setJobError(storedJob->error());
-        setErrorTextFromDavError();
+        d->setJobErrorText(storedJob->errorText());
+        d->setJobError(storedJob->error());
+        d->setErrorTextFromDavError();
 
         if (hasConflict()) {
             DavItemFetchJob *fetchJob = new DavItemFetchJob(d->mItem);

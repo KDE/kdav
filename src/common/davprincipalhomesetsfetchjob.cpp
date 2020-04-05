@@ -88,11 +88,11 @@ void DavPrincipalHomeSetsFetchJob::davJobFinished(KJob *job)
             err = davJob->errorText();
         }
 
-        setLatestResponseCode(responseCode);
+        d->setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
-        setErrorTextFromDavError();
+        d->setJobErrorText(davJob->errorText());
+        d->setJobError(davJob->error());
+        d->setErrorTextFromDavError();
 
         emitResult();
         return;
