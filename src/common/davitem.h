@@ -93,11 +93,13 @@ public:
 
     /**
      * Sets the @p etag of the item.
+     * @see https://tools.ietf.org/html/rfc4918#section-8.6
      */
     void setEtag(const QString &etag);
 
     /**
      * Returns the etag of the item.
+     * @see https://tools.ietf.org/html/rfc4918#section-8.6
      */
     Q_REQUIRED_RESULT QString etag() const;
 

@@ -74,12 +74,14 @@ public:
 
     /**
      * Sets this collection CTag.
+     * @see https://github.com/apple/ccs-calendarserver/blob/master/doc/Extensions/caldav-ctag.txt
      */
     void setCTag(const QString &ctag);
 
     /**
      * Returns this collection CTag. The returned value will be empty
      * if no CTag was found.
+     * @see https://github.com/apple/ccs-calendarserver/blob/master/doc/Extensions/caldav-ctag.txt
      */
     Q_REQUIRED_RESULT QString CTag() const;
 
