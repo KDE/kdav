@@ -34,7 +34,7 @@ find_package(KF5 ${KF5_MIN_VERSION} REQUIRED CoreAddons KIO I18n)
 # setup lib
 
 if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
-   add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050e00)
+   add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f00)
    add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x054600)
 endif()
 
