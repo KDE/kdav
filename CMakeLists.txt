@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
-set(PIM_VERSION "5.14.41")
 
-project(libkdav VERSION ${PIM_VERSION})
+set(KF5_VERSION "5.72.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.71.0") # handled by release scripts
 
-set(LIBKDAV_VERSION ${PIM_VERSION})
+project(libkdav VERSION ${KF5_VERSION})
 
-set(KF5_MIN_VERSION "5.71.0")
-
-find_package(ECM ${KF5_MIN_VERSION} CONFIG REQUIRED)
+find_package(ECM 5.71.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(KDEInstallDirs)
@@ -25,11 +23,10 @@ include(ECMInstallIcons)
 include(ECMQtDeclareLoggingCategory)
 
 
-set(QT_REQUIRED_VERSION "5.13.0")
+set(REQUIRED_QT_VERSION 5.12.0)
+find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui XmlPatterns Test)
 
-find_package(Qt5 ${QT_REQUIRED_VERSION} CONFIG REQUIRED Core Gui XmlPatterns Test)
-
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED CoreAddons KIO I18n)
+find_package(KF5 ${KF5_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
 
 # setup lib
 
@@ -43,7 +40,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 
-ecm_setup_version(${LIBKDAV_VERSION} VARIABLE_PREFIX KDAV
+ecm_setup_version(PROJECT VARIABLE_PREFIX KDAV
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdav_version.h"
     PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5DAVConfigVersion.cmake"
     SOVERSION 5
