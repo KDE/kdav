@@ -41,7 +41,7 @@ namespace ProtocolInfo
 
     /**
      * Returns the protocol matching the given name. This is the opposite of
-     * Utils::protocolName().
+     * ProtocolInfo::protocolName().
      */
     KDAV_EXPORT Q_REQUIRED_RESULT KDAV::Protocol protocolByName(const QString &name);
 
