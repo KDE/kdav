@@ -49,7 +49,7 @@ public:
     /**
      * Returns a preconfigured DAV PROPFIND job.
      *
-     * @param url The target url of the job.
+     * @param url The target URL of the job.
      * @param document The query XML document.
      * @param depth The Depth: value to send in the HTTP request
      */
@@ -58,7 +58,7 @@ public:
     /**
      * Returns a preconfigured DAV REPORT job.
      *
-     * @param url The target url of the job.
+     * @param url The target URL of the job.
      * @param document The query XML document.
      * @param depth The Depth: value to send in the HTTP request
      */
@@ -67,7 +67,7 @@ public:
     /**
      * Returns a preconfigured DAV PROPPATCH job.
      *
-     * @param url The target url of the job.
+     * @param url The target URL of the job.
      * @param document The query XML document.
      */
     KIO::DavJob *createPropPatchJob(const QUrl &url, const QDomDocument &document) const;

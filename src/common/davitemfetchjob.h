@@ -27,7 +27,7 @@ class KDAV_EXPORT DavItemFetchJob : public DavJobBase
 
 public:
     /**
-     * Creates a new dav item fetch job.
+     * Creates a new DAV item fetch job.
      *
      * @param item The item that shall be fetched.
      * @param parent The parent object.

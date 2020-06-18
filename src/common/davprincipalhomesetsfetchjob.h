@@ -30,9 +30,9 @@ class KDAV_EXPORT DavPrincipalHomeSetsFetchJob : public DavJobBase
 
 public:
     /**
-     * Creates a new dav principals home sets fetch job.
+     * Creates a new DAV principals home sets fetch job.
      *
-     * @param url The DAV url of the DAV principal.
+     * @param url The DAV URL of the DAV principal.
      * @param parent The parent object.
      */
     explicit DavPrincipalHomeSetsFetchJob(const DavUrl &url, QObject *parent = nullptr);

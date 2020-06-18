@@ -13,7 +13,7 @@
 
 namespace KDAV {
 /**
- * @short Base class for protocols that implement multiget capabilities
+ * @short Base class for protocols that implement MULTIGET capabilities
  */
 class DavMultigetProtocol : public DavProtocolBase
 {

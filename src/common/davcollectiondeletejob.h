@@ -32,7 +32,7 @@ public:
     /**
      * Creates a new DAV collection delete job.
      *
-     * @param url The dav url of the collection to delete
+     * @param url The DAV URL of the collection to delete
      * @param parent The parent object.
      */
     explicit DavCollectionDeleteJob(const DavUrl &url, QObject *parent = nullptr);

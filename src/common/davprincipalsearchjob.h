@@ -56,7 +56,7 @@ public:
     };
 
     /**
-     * Creates a new dav principal search job
+     * Creates a new DAV principal search job
      *
      * @param url The URL to use in the REPORT query.
      * @param type The type that the filter will match.

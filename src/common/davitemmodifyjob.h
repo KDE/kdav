@@ -27,7 +27,7 @@ class KDAV_EXPORT DavItemModifyJob : public DavJobBase
 
 public:
     /**
-     * Creates a new dav item modify job.
+     * Creates a new DAV item modify job.
      *
      * @param item The item that shall be modified.
      * @param parent The parent object.

@@ -25,7 +25,7 @@ class DavCollectionsMultiFetchJobPrivate;
  * @short A job that fetches all DAV collection.
  *
  * This job is used to fetch all DAV collection that are available
- * under a certain list of DAV urls.
+ * under a certain list of DAV URLs.
  *
  * @note This class just combines multiple calls of DavCollectionsFetchJob
  *       into one job.
@@ -36,9 +36,9 @@ class KDAV_EXPORT DavCollectionsMultiFetchJob : public KCompositeJob
 
 public:
     /**
-     * Creates a new dav collections multi fetch job.
+     * Creates a new DAV collections multi fetch job.
      *
-     * @param urls The list of DAV urls whose sub collections shall be fetched.
+     * @param urls The list of DAV URLs whose sub collections shall be fetched.
      * @param parent The parent object.
      */
     explicit DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent = nullptr);

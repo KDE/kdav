@@ -27,7 +27,7 @@ class KDAV_EXPORT DavItemCreateJob : public DavJobBase
 
 public:
     /**
-     * Creates a new dav item create job.
+     * Creates a new DAV item create job.
      *
      * @param item The item that shall be created.
      * @param parent The parent object.
@@ -40,7 +40,7 @@ public:
     void start() override;
 
     /**
-     * Returns the created DAV item including the correct identifier url
+     * Returns the created DAV item including the correct identifier URL
      * and current etag information.
      */
     Q_REQUIRED_RESULT DavItem item() const;

@@ -61,7 +61,7 @@ public:
     /**
      * Creates a new DAV collection.
      *
-     * @param url The url that identifies the collection.
+     * @param url The URL that identifies the collection.
      * @param displayName The display name of the collection.
      * @param contentTypes The possible content types of the collection.
      */
@@ -93,7 +93,7 @@ public:
     void setUrl(const DavUrl &url);
 
     /**
-     * Returns the url that identifies the collection.
+     * Returns the URL that identifies the collection.
      */
     Q_REQUIRED_RESULT DavUrl url() const;
 

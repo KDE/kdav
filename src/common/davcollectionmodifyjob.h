@@ -31,9 +31,9 @@ class KDAV_EXPORT DavCollectionModifyJob : public DavJobBase
 
 public:
     /**
-     * Creates a new dav collection modify job.
+     * Creates a new DAV collection modify job.
      *
-     * @param url The DAV url that identifies the collection.
+     * @param url The DAV URL that identifies the collection.
      * @param parent The parent object.
      */
     explicit DavCollectionModifyJob(const DavUrl &url, QObject *parent = nullptr);

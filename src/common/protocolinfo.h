@@ -21,10 +21,10 @@ namespace ProtocolInfo
     /**
      * Returns whether the @p protocol dialect supports the MULTIGET command.
      *
-     * If MULTIGET is supported, the content of all dav resources
+     * If MULTIGET is supported, the content of all DAV resources
      * can be fetched in ResourceBase::retrieveItems() already and
      * there is no need to call ResourceBase::retrieveItem() for every single
-     * dav resource.
+     * DAV resource.
      */
     KDAV_EXPORT Q_REQUIRED_RESULT bool useMultiget(KDAV::Protocol protocol);
 

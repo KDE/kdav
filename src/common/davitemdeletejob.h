@@ -27,7 +27,7 @@ class KDAV_EXPORT DavItemDeleteJob : public DavJobBase
 
 public:
     /**
-     * Creates a new dav item delete job.
+     * Creates a new DAV item delete job.
      *
      * @param item The item that shall be deleted.
      * @param parent The parent object.

@@ -33,9 +33,9 @@ class KDAV_EXPORT DavItemsListJob : public DavJobBase
 
 public:
     /**
-     * Creates a new dav items list job.
+     * Creates a new DAV items list job.
      *
-     * @param url The url of the DAV collection.
+     * @param url The URL of the DAV collection.
      * @param parent The parent object.
      */
     DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent = nullptr);
@@ -65,7 +65,7 @@ public:
     void start() override;
 
     /**
-     * Returns the list of items seen including identifier url and etag information.
+     * Returns the list of items seen including identifier URL and etag information.
      */
     Q_REQUIRED_RESULT DavItem::List items() const;
 

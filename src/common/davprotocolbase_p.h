@@ -52,12 +52,12 @@ class DavProtocolBase
 {
 public:
     /**
-     * Destroys the dav protocol base.
+     * Destroys the DAV protocol base.
      */
     virtual ~DavProtocolBase();
 
     /**
-     * Returns whether the dav protocol dialect supports principal
+     * Returns whether the DAV protocol dialect supports principal
      * queries. If true, it must return the home set it provides
      * access to with principalHomeSet() and the home set namespace
      * with principalHomeSetNS();
@@ -65,19 +65,19 @@ public:
     virtual bool supportsPrincipals() const = 0;
 
     /**
-     * Returns whether the dav protocol dialect supports the REPORT
+     * Returns whether the DAV protocol dialect supports the REPORT
      * command to query all resources of a collection.
      * If not, PROPFIND command will be used instead.
      */
     virtual bool useReport() const = 0;
 
     /**
-     * Returns whether the dav protocol dialect supports the MULTIGET command.
+     * Returns whether the DAV protocol dialect supports the MULTIGET command.
      *
-     * If MULTIGET is supported, the content of all dav resources
+     * If MULTIGET is supported, the content of all DAV resources
      * can be fetched in ResourceBase::retrieveItems() already and
      * there is no need to call ResourceBase::retrieveItem() for every single
-     * dav resource.
+     * DAV resource.
      *
      * Protocols that have MULTIGET capabilities must inherit from
      * DavMultigetProtocol instead of this class.

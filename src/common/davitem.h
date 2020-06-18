@@ -49,7 +49,7 @@ public:
     /**
      * Creates a new DAV item.
      *
-     * @param url The url that identifies the item.
+     * @param url The URL that identifies the item.
      * @param contentType The content type of the item.
      * @param data The actual raw content data of the item.
      * @param etag The etag of the item.
@@ -69,7 +69,7 @@ public:
     void setUrl(const DavUrl &url);
 
     /**
-     * Returns the url that identifies the item.
+     * Returns the URL that identifies the item.
      */
     Q_REQUIRED_RESULT DavUrl url() const;
 

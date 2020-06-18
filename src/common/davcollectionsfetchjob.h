@@ -24,7 +24,7 @@ class DavCollectionsFetchJobPrivate;
  * @short A job that fetches all DAV collection.
  *
  * This job is used to fetch all DAV collection that are available
- * under a certain DAV url.
+ * under a certain DAV URL.
  */
 class KDAV_EXPORT DavCollectionsFetchJob : public DavJobBase
 {
@@ -32,9 +32,9 @@ class KDAV_EXPORT DavCollectionsFetchJob : public DavJobBase
 
 public:
     /**
-     * Creates a new dav collections fetch job.
+     * Creates a new DAV collections fetch job.
      *
-     * @param url The DAV url of the DAV collection whose sub collections shall be fetched.
+     * @param url The DAV URL of the DAV collection whose sub collections shall be fetched.
      * @param parent The parent object.
      */
     explicit DavCollectionsFetchJob(const DavUrl &url, QObject *parent = nullptr);
