@@ -65,7 +65,7 @@ public:
     void start() override;
 
     /**
-     * Returns the list of items seen including identifier URL and etag information.
+     * Returns the list of items seen including identifier URL and ETag information.
      */
     Q_REQUIRED_RESULT DavItem::List items() const;
 
@@ -76,7 +76,7 @@ public:
 
     /**
      * Returns the list of items URLs that were not seen in the backend.
-     * As this is based on the etag cache this may contain dependent items.
+     * As this is based on the ETag cache this may contain dependent items.
      */
     Q_REQUIRED_RESULT QStringList deletedItems() const;
 

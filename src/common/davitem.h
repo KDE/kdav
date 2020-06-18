@@ -52,7 +52,7 @@ public:
      * @param url The URL that identifies the item.
      * @param contentType The content type of the item.
      * @param data The actual raw content data of the item.
-     * @param etag The etag of the item.
+     * @param etag The ETag of the item.
      */
     DavItem(const DavUrl &url, const QString &contentType, const QByteArray &data, const QString &etag);
 
@@ -100,7 +100,7 @@ public:
     void setEtag(const QString &etag);
 
     /**
-     * Returns the etag of the item.
+     * Returns the ETag of the item.
      * @see https://tools.ietf.org/html/rfc4918#section-8.6
      */
     Q_REQUIRED_RESULT QString etag() const;

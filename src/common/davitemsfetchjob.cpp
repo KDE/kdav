@@ -139,7 +139,7 @@ void DavItemsFetchJobPrivate::davJobFinished(KJob *job)
         _url.setUserInfo(mCollectionUrl.url().userInfo());
         item.setUrl(DavUrl(_url, mCollectionUrl.protocol()));
 
-        // extract etag
+        // extract ETag
         const QDomElement getetagElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("getetag"));
         item.setEtag(getetagElement.text());
 

@@ -20,9 +20,9 @@ class EtagCachePrivate;
 /**
  * @class EtagCache etagcache.h <KDAV/EtagCache>
  *
- * @short A helper class to cache etags.
+ * @short A helper class to cache ETags.
  *
- * The EtagCache caches the remote ids and etags of all items
+ * The EtagCache caches the remote ids and ETags of all items
  * in a given collection. This cache is needed to find
  * out which items have been changed in the backend and have to
  * be refetched on the next call of ResourceBase::retrieveItems()
@@ -33,7 +33,7 @@ class KDAV_EXPORT EtagCache : public QObject
 
 public:
     /**
-     * Creates a new etag cache and populates it with the ETags
+     * Creates a new ETag cache and populates it with the ETags
      * of items found in @p collection.
      */
     explicit EtagCache(QObject *parent = nullptr);

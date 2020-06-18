@@ -41,7 +41,7 @@ public:
 
     /**
      * Returns the created DAV item including the correct identifier URL
-     * and current etag information.
+     * and current ETag information.
      */
     Q_REQUIRED_RESULT DavItem item() const;
 

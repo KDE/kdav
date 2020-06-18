@@ -40,7 +40,7 @@ public:
     void start() override;
 
     /**
-     * Returns the fetched item including current etag information.
+     * Returns the fetched item including current ETag information.
      */
     Q_REQUIRED_RESULT DavItem item() const;
 
