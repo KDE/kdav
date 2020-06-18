@@ -9,6 +9,9 @@
 
 #include <QFlags>
 
+/**
+ * The KDAV namespace.
+ */
 namespace KDAV {
 /**
  * Describes the DAV protocol dialect.
