@@ -131,3 +131,29 @@ install(FILES
 
 target_include_directories(KF5DAV INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR}/KF5/KDAV/;${KDE_INSTALL_INCLUDEDIR}/KF5/kdav;${KDE_INSTALL_INCLUDEDIR}/KF5>")
 ecm_qt_install_logging_categories(EXPORT KDAV FILE kdav.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
+
+if (BUILD_QCH)
+    ecm_add_qch(
+        KF5DAV_QCH
+        NAME KDAV
+        BASE_NAME KF5DAV
+        VERSION ${KF5_VERSION}
+        ORG_DOMAIN org.kde
+        SOURCES # using only public headers, to cover only public API
+            ${KDAV_HEADERS}
+        MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
+        LINK_QCHS
+            Qt5Gui_QCH
+            KF5CoreAddons_QCH
+        INCLUDE_DIRS
+            ${CMAKE_CURRENT_BINARY_DIR}
+        BLANK_MACROS
+            KDAV_EXPORT
+            KDAV_DEPRECATED_EXPORT
+            KDAV_DEPRECATED
+            "KDAV_DEPRECATED_VERSION(x, y, t)"
+        TAGFILE_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
+        QCH_INSTALL_DESTINATION ${KDE_INSTALL_QTQCHDIR}
+        COMPONENT Devel
+    )
+endif()

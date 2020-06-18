@@ -18,6 +18,7 @@ include(GenerateExportHeader)
 include(ECMGenerateHeaders)
 include(ECMGeneratePriFile)
 include(FeatureSummary)
+include(ECMAddQch)
 include(ECMAddTests)
 include(ECMInstallIcons)
 include(ECMQtDeclareLoggingCategory)
@@ -38,6 +39,8 @@ add_definitions(-DQT_NO_KEYWORDS)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
+add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KDAV
@@ -46,7 +49,23 @@ ecm_setup_version(PROJECT VARIABLE_PREFIX KDAV
     SOVERSION 5
     )
 
+add_subdirectory(src)
+if(BUILD_TESTING)
+    add_subdirectory(autotests)
+    add_subdirectory(test)
+endif()
+
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5DAV")
+
+if (BUILD_QCH)
+    ecm_install_qch_export(
+        TARGETS KF5DAV_QCH
+        FILE KF5DAVQchTargets.cmake
+        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
+        COMPONENT Devel
+    )
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5DAVQchTargets.cmake\")")
+endif()
 
 configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/KF5DAVConfig.cmake.in"
@@ -68,12 +87,6 @@ install(FILES
     DESTINATION ${KDE_INSTALL_INCLUDEDIR}/KF5 COMPONENT Devel
     )
 
-
-add_subdirectory(src)
-if(BUILD_TESTING)
-    add_subdirectory(autotests)
-    add_subdirectory(test)
-endif()
 
 feature_summary(WHAT ALL
                 INCLUDE_QUIET_PACKAGES
