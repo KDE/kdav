@@ -17,6 +17,8 @@ namespace KDAV {
 class DavItemCreateJobPrivate;
 
 /**
+ * @class DavItemCreateJob davitemcreatejob.h <KDAV/DavItemCreateJob>
+ *
  * @short A job to create a DAV item on the DAV server.
  */
 class KDAV_EXPORT DavItemCreateJob : public DavJobBase

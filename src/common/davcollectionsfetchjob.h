@@ -19,6 +19,8 @@ namespace KDAV {
 class DavCollectionsFetchJobPrivate;
 
 /**
+ * @class DavCollectionsFetchJob davcollectionsfetchjob.h <KDAV/DavCollectionsFetchJob>
+ *
  * @short A job that fetches all DAV collection.
  *
  * This job is used to fetch all DAV collection that are available

@@ -25,6 +25,8 @@ class DavUrl;
 
 namespace KDAV {
 /**
+ * @class DavCollection davcollection.h <KDAV/DavCollection>
+ *
  * @short A helper class to store information about DAV collection.
  *
  * This class is used as container to transfer information about DAV

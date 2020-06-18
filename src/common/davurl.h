@@ -18,6 +18,8 @@
 namespace KDAV {
 class DavUrlPrivate;
 /**
+ * @class DavUrl davurl.h <KDAV/DavUrl>
+ *
  * @short A helper class to combine url and protocol of a DAV url.
  */
 class KDAV_EXPORT DavUrl

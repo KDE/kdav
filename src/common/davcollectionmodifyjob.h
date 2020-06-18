@@ -18,6 +18,8 @@ namespace KDAV {
 class DavCollectionModifyJobPrivate;
 
 /**
+ * @class DavCollectionModifyJob davcollectionmodifyjob.h <KDAV/DavCollectionModifyJob>
+ *
  * @short A job that modifies a DAV collection.
  *
  * This job is used to modify a property of a DAV collection

@@ -18,6 +18,8 @@ namespace KDAV {
 class DavCollectionDeleteJobPrivate;
 
 /**
+ * @class DavCollectionDeleteJob davcollectiondeletejob.h <KDAV/DavCollectionDeleteJob>
+ *
  * @short A job that deletes a DAV collection.
  *
  * This job is used to delete a DAV collection at a certain URL.

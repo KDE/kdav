@@ -17,6 +17,8 @@ namespace KDAV {
 class DavItemDeleteJobPrivate;
 
 /**
+ * @class DavItemDeleteJob davitemdeletejob.h <KDAV/DavItemDeleteJob>
+ *
  * @short A job to delete a DAV item on the DAV server.
  */
 class KDAV_EXPORT DavItemDeleteJob : public DavJobBase

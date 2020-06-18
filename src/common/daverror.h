@@ -37,7 +37,11 @@ enum ErrorNumber {
 
 class ErrorPrivate;
 
-/** DAV operation error. */
+/**
+ * @class Error daverror.h <KDAV/DavError>
+ *
+ * DAV operation error.
+ */
 class KDAV_EXPORT Error
 {
 public:

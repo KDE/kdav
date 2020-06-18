@@ -18,6 +18,8 @@ namespace KDAV {
 class EtagCachePrivate;
 
 /**
+ * @class EtagCache etagcache.h <KDAV/EtagCache>
+ *
  * @short A helper class to cache etags.
  *
  * The EtagCache caches the remote ids and etags of all items
