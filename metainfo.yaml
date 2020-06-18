@@ -9,7 +9,7 @@ deprecated: false
 release: false
 libraries:
  - qmake: KDAV
-   cmake: "KF5DAV"
+   cmake: "KF5::DAV"
 cmakename: KF5DAV
 
 public_lib: true
