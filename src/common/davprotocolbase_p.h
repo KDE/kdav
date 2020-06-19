@@ -75,8 +75,8 @@ public:
      * Returns whether the DAV protocol dialect supports the MULTIGET command.
      *
      * If MULTIGET is supported, the content of all DAV resources
-     * can be fetched in ResourceBase::retrieveItems() already and
-     * there is no need to call ResourceBase::retrieveItem() for every single
+     * can be fetched in Akonadi::ResourceBase::retrieveItems() already and
+     * there is no need to call Akonadi::ResourceBase::retrieveItem() for every single
      * DAV resource.
      *
      * Protocols that have MULTIGET capabilities must inherit from

@@ -25,7 +25,7 @@ class EtagCachePrivate;
  * The EtagCache caches the remote ids and ETags of all items
  * in a given collection. This cache is needed to find
  * out which items have been changed in the backend and have to
- * be refetched on the next call of ResourceBase::retrieveItems()
+ * be refetched on the next call of Akonadi::ResourceBase::retrieveItems()
  */
 class KDAV_EXPORT EtagCache : public QObject
 {
