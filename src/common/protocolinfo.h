@@ -10,7 +10,6 @@
 #include "kdav_export.h"
 #include "enums.h"
 
-class QLatin1String;
 
 namespace KDAV
 {
