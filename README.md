@@ -2,7 +2,7 @@
 
 ## What's this?
 
-This is an DAV protocol implemention with KJobs.
+This is an DAV protocol implementation with KJobs.
 
 Calendars and todos are supported, using either GroupDAV
 or CalDAV, and contacts are supported using GroupDAV or
