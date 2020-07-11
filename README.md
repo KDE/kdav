@@ -1,6 +1,6 @@
 # KDAV
 
-## What's this?
+## Introduction
 
 This is an DAV protocol implementation with KJobs.
 
