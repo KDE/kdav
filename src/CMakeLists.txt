@@ -83,8 +83,14 @@ install(FILES
     )
 
 
-ecm_qt_declare_logging_category(libkdav_SRCS HEADER libkdav_debug.h IDENTIFIER KDAV_LOG CATEGORY_NAME org.kde.pim.kdav
-        DESCRIPTION "KDAV" EXPORT KDAV)
+ecm_qt_declare_logging_category(libkdav_SRCS
+    HEADER libkdav_debug.h
+    IDENTIFIER KDAV_LOG
+    CATEGORY_NAME kf.dav
+    OLD_CATEGORY_NAMES org.kde.pim.kdav
+    DESCRIPTION "KDAV"
+    EXPORT KDAV
+)
 
 
 add_library(KF5DAV
