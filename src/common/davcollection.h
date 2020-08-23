@@ -141,9 +141,11 @@ public:
 private:
     QSharedDataPointer<DavCollectionPrivate> d;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(DavCollection::ContentTypes)
+
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(KDAV::DavCollection::ContentTypes)
 Q_DECLARE_TYPEINFO(KDAV::DavCollection, Q_MOVABLE_TYPE);
 
 #endif
