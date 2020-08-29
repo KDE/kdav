@@ -13,7 +13,6 @@
 #include "davmanager_p.h"
 #include "davprotocolbase_p.h"
 
-#include <QDateTime>
 #include <QString>
 
 #include "libkdav_debug.h"

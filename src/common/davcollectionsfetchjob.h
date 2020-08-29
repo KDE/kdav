@@ -13,7 +13,6 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <KJob>
 
 namespace KDAV {
 class DavCollectionsFetchJobPrivate;

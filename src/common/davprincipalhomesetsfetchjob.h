@@ -12,7 +12,6 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <KJob>
 
 #include <QStringList>
 

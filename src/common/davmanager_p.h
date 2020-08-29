@@ -9,7 +9,6 @@
 
 #include "enums.h"
 
-#include <QMap>
 #include <QString>
 
 #include <memory>

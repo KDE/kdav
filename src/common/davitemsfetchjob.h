@@ -16,7 +16,6 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <QMap>
 #include <QStringList>
 
 namespace KDAV {

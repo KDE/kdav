@@ -12,11 +12,8 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-#include <QList>
-#include <QPair>
 #include <QString>
 
-#include <KJob>
 
 namespace KDAV {
 class DavPrincipalSearchJobPrivate;
