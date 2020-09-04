@@ -1,6 +1,7 @@
 maintainer:
 fancyname: KDAV
-description: The KDav library 
+description: An DAV protocol implementation with KJobs
+tier: 3
 type: functional
 platforms:
     - name: All
