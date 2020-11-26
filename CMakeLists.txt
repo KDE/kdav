@@ -24,7 +24,7 @@ include(ECMInstallIcons)
 include(ECMQtDeclareLoggingCategory)
 
 
-set(REQUIRED_QT_VERSION 5.12.0)
+set(REQUIRED_QT_VERSION 5.13.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui XmlPatterns Test)
 
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
