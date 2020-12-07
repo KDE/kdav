@@ -17,12 +17,6 @@ void DavItemFetchJobTest::initTestCase()
     qputenv("KDE_FORK_SLAVES", "yes");
     // To let ctest exit, we shouldn't start kio_http_cache_cleaner
     qputenv("KIO_DISABLE_CACHE_CLEANER", "yes");
-#ifdef Q_OS_WIN
-    // CI debugging
-    qDebug() << "QT_PLUGIN_PATH=" << qgetenv("QT_PLUGIN_PATH");
-    qDebug() << "QCoreApplication::libraryPaths()=" << QCoreApplication::libraryPaths();
-#endif
-
 }
 
 void DavItemFetchJobTest::runSuccessfullTest()
