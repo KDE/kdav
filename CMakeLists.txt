@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 
 set(KF5_VERSION "5.79.0") # handled by release scripts
-set(KF5_DEP_VERSION "5.78.0") # handled by release scripts
+set(KF5_DEP_VERSION "5.79.0") # handled by release scripts
 
 project(libkdav VERSION ${KF5_VERSION})
 
-find_package(ECM 5.78.0 CONFIG REQUIRED)
+find_package(ECM 5.79.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(KDEInstallDirs)
