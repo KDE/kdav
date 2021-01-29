@@ -143,7 +143,7 @@ if (BUILD_QCH)
         KF5DAV_QCH
         NAME KDAV
         BASE_NAME KF5DAV
-        VERSION ${KF5_VERSION}
+        VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
             ${KDAV_HEADERS}

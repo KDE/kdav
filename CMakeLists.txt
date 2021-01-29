@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(KF5_VERSION "5.79.0") # handled by release scripts
-set(KF5_DEP_VERSION "5.79.0") # handled by release scripts
+set(KF_VERSION "5.79.0") # handled by release scripts
+set(KF_DEP_VERSION "5.79.0") # handled by release scripts
 
-project(libkdav VERSION ${KF5_VERSION})
+project(libkdav VERSION ${KF_VERSION})
 
 find_package(ECM 5.79.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
@@ -27,7 +27,7 @@ include(ECMQtDeclareLoggingCategory)
 set(REQUIRED_QT_VERSION 5.14.0)
 find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui XmlPatterns Test)
 
-find_package(KF5 ${KF5_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
+find_package(KF5 ${KF_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
 
 # setup lib
 
