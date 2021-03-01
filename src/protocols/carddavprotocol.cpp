@@ -140,9 +140,11 @@ XMLQueryBuilder::Ptr CarddavProtocol::collectionsQuery() const
 
 QString CarddavProtocol::collectionsXQuery() const
 {
+    // clang-format off
     const QString query(QStringLiteral("//*[local-name()='addressbook' and namespace-uri()='urn:ietf:params:xml:ns:carddav']/ancestor::*[local-name()='response' and namespace-uri()='DAV:']"));
 
     return query;
+    // clang-format on
 }
 
 QVector<XMLQueryBuilder::Ptr> CarddavProtocol::itemsQueries() const

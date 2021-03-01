@@ -92,8 +92,7 @@ QString Error::errorText() const
         } else {
             err = i18n("HTTP error");
         }
-        result = i18n("There was a problem with the request.\n"
-                      "%1 (%2).", err, d->mResponseCode);
+        result = i18n("There was a problem with the request.\n%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_NO_MULTIGET:
         result = i18n("Protocol for the collection does not support MULTIGET");
@@ -102,8 +101,7 @@ QString Error::errorText() const
         result = i18n("The server encountered an error that prevented it from completing your request: %1 (%2)", err, d->mResponseCode);
         break;
     case ERR_COLLECTIONDELETE:
-        result = i18n("There was a problem with the request. The collection has not been deleted from the server.\n"
-                      "%1 (%2).", err, d->mResponseCode);
+        result = i18n("There was a problem with the request. The collection has not been deleted from the server.\n%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_COLLECTIONFETCH:
         result = i18n("Invalid responses from backend");
@@ -128,16 +126,13 @@ QString Error::errorText() const
         }
         break;
     case ERR_ITEMCREATE:
-        result = i18n("There was a problem with the request. The item has not been created on the server.\n"
-                      "%1 (%2).", err, d->mResponseCode);
+        result = i18n("There was a problem with the request. The item has not been created on the server.\n%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_ITEMDELETE:
-        result = i18n("There was a problem with the request. The item has not been deleted from the server.\n"
-                      "%1 (%2).", err, d->mResponseCode);
+        result = i18n("There was a problem with the request. The item has not been deleted from the server.\n%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_ITEMMODIFY:
-        result = i18n("There was a problem with the request. The item was not modified on the server.\n"
-                      "%1 (%2).", err, d->mResponseCode);
+        result = i18n("There was a problem with the request. The item was not modified on the server.\n%1 (%2).", err, d->mResponseCode);
         break;
     case ERR_ITEMLIST:
     {

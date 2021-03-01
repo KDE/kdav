@@ -301,14 +301,18 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
                 const QString displayName = displaynameElement.text();
 
                 // Extract CTag
-                const QDomElement CTagElement = Utils::firstChildElementNS(propElement, QStringLiteral("http://calendarserver.org/ns/"), QStringLiteral("getctag"));
+                const QDomElement CTagElement = Utils::firstChildElementNS(propElement, //
+                                                                           QStringLiteral("http://calendarserver.org/ns/"),
+                                                                           QStringLiteral("getctag"));
                 QString CTag;
                 if (!CTagElement.isNull()) {
                     CTag = CTagElement.text();
                 }
 
                 // extract calendar color if provided
-                const QDomElement colorElement = Utils::firstChildElementNS(propElement, QStringLiteral("http://apple.com/ns/ical/"), QStringLiteral("calendar-color"));
+                const QDomElement colorElement = Utils::firstChildElementNS(propElement, //
+                                                                            QStringLiteral("http://apple.com/ns/ical/"),
+                                                                            QStringLiteral("calendar-color"));
                 QColor color;
                 if (!colorElement.isNull()) {
                     QString colorValue = colorElement.text();
@@ -337,7 +341,9 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
                 }
 
                 // extract privileges
-                const QDomElement currentPrivsElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("current-user-privilege-set"));
+                const QDomElement currentPrivsElement = Utils::firstChildElementNS(propElement, //
+                                                                                   QStringLiteral("DAV:"),
+                                                                                   QStringLiteral("current-user-privilege-set"));
                 if (currentPrivsElement.isNull()) {
                     // Assume that we have all privileges
                     collection.setPrivileges(KDAV::All);

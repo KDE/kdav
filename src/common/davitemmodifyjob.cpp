@@ -84,9 +84,9 @@ void DavItemModifyJobPrivate::davJobFinished(KJob *job)
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
 
     if (storedJob->error()) {
-        const int responseCode = storedJob->queryMetaData(QStringLiteral("responsecode")).isEmpty()
-                                 ? 0
-                                 : storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+        const int responseCode = storedJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() //
+            ? 0
+            : storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
         setLatestResponseCode(responseCode);
         setError(ERR_ITEMMODIFY);

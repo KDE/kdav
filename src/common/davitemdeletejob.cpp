@@ -65,9 +65,9 @@ void DavItemDeleteJobPrivate::davJobFinished(KJob *job)
     KIO::DeleteJob *deleteJob = qobject_cast<KIO::DeleteJob *>(job);
 
     if (deleteJob->error() && deleteJob->error() != KIO::ERR_NO_CONTENT) {
-        const int responseCode = deleteJob->queryMetaData(QStringLiteral("responsecode")).isEmpty()
-                                 ? 0
-                                 : deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+        const int responseCode = deleteJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() //
+            ? 0
+            : deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
 
         if (responseCode != 404 && responseCode != 410) {
             setLatestResponseCode(responseCode);

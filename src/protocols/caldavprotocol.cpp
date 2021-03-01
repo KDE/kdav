@@ -311,9 +311,11 @@ XMLQueryBuilder::Ptr CaldavProtocol::collectionsQuery() const
 
 QString CaldavProtocol::collectionsXQuery() const
 {
+    // clang-format off
     //const QString query( "//*[local-name()='calendar' and namespace-uri()='urn:ietf:params:xml:ns:caldav']/ancestor::*[local-name()='prop' and namespace-uri()='DAV:']/*[local-name()='supported-calendar-component-set' and namespace-uri()='urn:ietf:params:xml:ns:caldav']/*[local-name()='comp' and namespace-uri()='urn:ietf:params:xml:ns:caldav' and (@name='VTODO' or @name='VEVENT')]/ancestor::*[local-name()='response' and namespace-uri()='DAV:']" );
     const QString query(QStringLiteral(
                             "//*[local-name()='calendar' and namespace-uri()='urn:ietf:params:xml:ns:caldav']/ancestor::*[local-name()='prop' and namespace-uri()='DAV:']/ancestor::*[local-name()='response' and namespace-uri()='DAV:']"));
+    // clang-format on
 
     return query;
 }
@@ -369,7 +371,9 @@ DavCollection::ContentTypes CaldavProtocol::collectionContentTypes(const QDomEle
      */
 
     const QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
-    const QDomElement supportedcomponentElement = Utils::firstChildElementNS(propElement, QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("supported-calendar-component-set"));
+    const QDomElement supportedcomponentElement = Utils::firstChildElementNS(propElement, //
+                                                                             QStringLiteral("urn:ietf:params:xml:ns:caldav"),
+                                                                             QStringLiteral("supported-calendar-component-set"));
 
     DavCollection::ContentTypes contentTypes;
     QDomElement compElement = Utils::firstChildElementNS(supportedcomponentElement, QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("comp"));
