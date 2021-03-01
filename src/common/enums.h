@@ -37,7 +37,7 @@ enum Privilege {
     WriteAcl = 0x80,
     Bind = 0x100,
     Unbind = 0x200,
-    All = 0x400
+    All = 0x400,
 };
 Q_DECLARE_FLAGS(Privileges, Privilege)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Privileges)

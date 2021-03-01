@@ -40,7 +40,7 @@ public:
      */
     enum FilterType {
         DisplayName,
-        EmailAddress
+        EmailAddress,
     };
 
     /**
