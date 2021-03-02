@@ -12,8 +12,8 @@
 
 // Qt
 #include <QDebug>
-#include <QTcpServer>
 #include <QFile>
+#include <QTcpServer>
 #include <QTest>
 
 FakeServer::FakeServer(int port, QObject *parent)
@@ -138,8 +138,7 @@ void FakeServer::writeServerPart(QTcpSocket *clientSocket, int scenarioNumber)
 {
     QList<QByteArray> scenario = m_scenarios[scenarioNumber];
 
-    while (!scenario.isEmpty() &&
-            scenario.first().startsWith("S: ")) {
+    while (!scenario.isEmpty() && scenario.first().startsWith("S: ")) {
         QByteArray rule = scenario.takeFirst();
 
         QByteArray payload = rule.mid(3);
@@ -148,8 +147,7 @@ void FakeServer::writeServerPart(QTcpSocket *clientSocket, int scenarioNumber)
 
     QByteArray data;
 
-    while (!scenario.isEmpty() &&
-            scenario.first().startsWith("D: ")) {
+    while (!scenario.isEmpty() && scenario.first().startsWith("D: ")) {
         QByteArray rule = scenario.takeFirst();
 
         QByteArray payload = rule.mid(3);
@@ -159,8 +157,7 @@ void FakeServer::writeServerPart(QTcpSocket *clientSocket, int scenarioNumber)
     clientSocket->write(QStringLiteral("Content-Length: %1\r\n\r\n").arg(data.length()).toLatin1());
     clientSocket->write(data);
 
-    if (!scenario.isEmpty() &&
-            scenario.first().startsWith("X")) {
+    if (!scenario.isEmpty() && scenario.first().startsWith("X")) {
         scenario.takeFirst();
         clientSocket->close();
     }
@@ -197,8 +194,7 @@ void FakeServer::readClientPart(QTcpSocket *socket, int *scenarioNumber)
         line = socket->readLine();
     }
 
-    while (!scenario.isEmpty() &&
-            scenario.first().startsWith("C: ")) {
+    while (!scenario.isEmpty() && scenario.first().startsWith("C: ")) {
         QByteArray expected = scenario.takeFirst().mid(3) + "\r\n";
 
         if (!header.contains(expected)) {

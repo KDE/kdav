@@ -16,8 +16,8 @@
 
 #include <QStringList>
 
-
-namespace KDAV {
+namespace KDAV
+{
 class EtagCache;
 class DavUrl;
 class DavItemsListJobPrivate;

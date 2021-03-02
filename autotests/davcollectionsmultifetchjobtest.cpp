@@ -39,10 +39,10 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
 
     QSignalSpy spy(job, &KDAV::DavCollectionsMultiFetchJob::collectionDiscovered);
 
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-caldav.txt"));
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-caldav-collections.txt"));
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-carddav.txt"));
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-carddav-collections.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-caldav.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-caldav-collections.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-carddav.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-carddav-collections.txt"));
     fakeServer.startAndWait();
     job->exec();
 
@@ -88,9 +88,9 @@ void DavCollectionsMultiFetchJobTest::shouldFailOnError()
 
     auto job = new KDAV::DavCollectionsMultiFetchJob({davUrl1, davUrlError});
 
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-caldav.txt"));
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-caldav-collections.txt"));
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemmultifetchjob-error.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-caldav.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-caldav-collections.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-error.txt"));
     fakeServer.startAndWait();
     job->exec();
 

@@ -11,7 +11,8 @@
 
 #include <memory>
 
-namespace KDAV {
+namespace KDAV
+{
 class DavJobBase;
 
 class DavJobBasePrivate

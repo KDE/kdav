@@ -30,7 +30,7 @@ void DavItemFetchJobTest::runSuccessfullTest()
 
     auto job = new KDAV::DavItemFetchJob(item);
 
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR)+QStringLiteral("/dataitemfetchjob.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemfetchjob.txt"));
     fakeServer.startAndWait();
     job->exec();
 
@@ -42,11 +42,13 @@ void DavItemFetchJobTest::runSuccessfullTest()
     QCOMPARE(item.contentType(), QString());
 
     item = job->item();
-    QByteArray data("BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject 2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John2 Doe\r\nN:Doe;John2;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john2.doe@example.com\r\nREV;VALUE=DATE-TIME:20170104T182647Z\r\nEND:VCARD\r\n");
+    QByteArray data(
+        "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject "
+        "2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John2 "
+        "Doe\r\nN:Doe;John2;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john2.doe@example.com\r\nREV;VALUE=DATE-TIME:20170104T182647Z\r\nEND:VCARD\r\n");
     QCOMPARE(item.data(), data);
     QCOMPARE(item.etag(), QStringLiteral("7a33141f192d904d-47"));
     QCOMPARE(item.contentType(), QStringLiteral("text/x-vcard"));
-
 }
 
 QTEST_MAIN(DavItemFetchJobTest)

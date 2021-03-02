@@ -11,7 +11,8 @@
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class EtagCachePrivate
 {
 public:
@@ -39,7 +40,7 @@ void EtagCache::setEtag(const QString &remoteId, const QString &etag)
 
 void EtagCache::setEtagInternal(const QString &remoteId, const QString &etag)
 {
-    d->mCache[ remoteId ] = etag;
+    d->mCache[remoteId] = etag;
 }
 
 bool EtagCache::contains(const QString &remoteId) const

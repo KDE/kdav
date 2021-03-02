@@ -10,10 +10,10 @@
 #ifndef FAKESERVER_H
 #define FAKESERVER_H
 
-#include <QTcpSocket>
-#include <QTcpServer>
-#include <QThread>
 #include <QMutex>
+#include <QTcpServer>
+#include <QTcpSocket>
+#include <QThread>
 
 Q_DECLARE_METATYPE(QList<QByteArray>)
 
@@ -166,7 +166,7 @@ private:
     void writeServerPart(QTcpSocket *clientSocket, int scenarioNumber);
     void readClientPart(QTcpSocket *socket, int *scenarioNumber);
 
-    QList< QList<QByteArray> > m_scenarios;
+    QList<QList<QByteArray>> m_scenarios;
     QTcpServer *m_tcpServer = nullptr;
     mutable QMutex m_mutex;
     QList<QTcpSocket *> m_clientSockets;

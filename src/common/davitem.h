@@ -17,11 +17,13 @@
 
 class DavItemPrivate;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavUrl;
 }
 
-namespace KDAV {
+namespace KDAV
+{
 /**
  * @class DavItem davitem.h <KDAV/DavItem>
  *

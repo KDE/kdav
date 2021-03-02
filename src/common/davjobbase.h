@@ -13,8 +13,8 @@
 
 #include <memory>
 
-namespace KDAV {
-
+namespace KDAV
+{
 class DavJobBasePrivate;
 class Error;
 

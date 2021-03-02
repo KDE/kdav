@@ -10,7 +10,8 @@
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavCollectionsMultiFetchJobPrivate
 {
 public:

@@ -14,8 +14,8 @@
 
 #include "libkdav_debug.h"
 
-#include <QUrl>
 #include <QDomDocument>
+#include <QUrl>
 
 using namespace KDAV;
 

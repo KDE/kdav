@@ -12,8 +12,8 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-
-namespace KDAV {
+namespace KDAV
+{
 class DavCollectionModifyJobPrivate;
 
 /**

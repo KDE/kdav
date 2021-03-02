@@ -10,17 +10,18 @@
 #include "davitemsfetchjob.h"
 #include "davjobbase_p.h"
 
+#include "daverror.h"
 #include "davmanager_p.h"
 #include "davmultigetprotocol_p.h"
 #include "utils_p.h"
-#include "daverror.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavItemsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -43,8 +44,7 @@ DavItemsFetchJob::DavItemsFetchJob(const DavUrl &collectionUrl, const QStringLis
 void DavItemsFetchJob::start()
 {
     Q_D(DavItemsFetchJob);
-    const DavMultigetProtocol *protocol
-        = dynamic_cast<const DavMultigetProtocol *>(DavManager::davProtocol(d->mCollectionUrl.protocol()));
+    const DavMultigetProtocol *protocol = dynamic_cast<const DavMultigetProtocol *>(DavManager::davProtocol(d->mCollectionUrl.protocol()));
     if (!protocol) {
         setError(ERR_NO_MULTIGET);
         d->setErrorTextFromDavError();
@@ -55,7 +55,9 @@ void DavItemsFetchJob::start()
     const QDomDocument report = protocol->itemsReportQuery(d->mUrls)->buildQuery();
     KIO::DavJob *job = DavManager::self()->createReportJob(d->mCollectionUrl.url(), report, QStringLiteral("0"));
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
+    connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
+        d->davJobFinished(job);
+    });
 }
 
 DavItem::List DavItemsFetchJob::items() const
@@ -79,9 +81,7 @@ void DavItemsFetchJobPrivate::davJobFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty()
-                             ? 0
-                             : responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
@@ -95,8 +95,7 @@ void DavItemsFetchJobPrivate::davJobFinished(KJob *job)
         return;
     }
 
-    const DavMultigetProtocol *protocol
-        = static_cast<const DavMultigetProtocol *>(DavManager::davProtocol(mCollectionUrl.protocol()));
+    const DavMultigetProtocol *protocol = static_cast<const DavMultigetProtocol *>(DavManager::davProtocol(mCollectionUrl.protocol()));
 
     const QDomDocument document = davJob->response();
     const QDomElement documentElement = document.documentElement();
@@ -144,9 +143,7 @@ void DavItemsFetchJobPrivate::davJobFinished(KJob *job)
         item.setEtag(getetagElement.text());
 
         // extract content
-        const QDomElement dataElement = Utils::firstChildElementNS(propElement,
-                                                                   protocol->responseNamespace(),
-                                                                   protocol->dataTagName());
+        const QDomElement dataElement = Utils::firstChildElementNS(propElement, protocol->responseNamespace(), protocol->dataTagName());
 
         if (dataElement.isNull()) {
             responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));

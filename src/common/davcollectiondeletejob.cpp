@@ -14,7 +14,8 @@
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavCollectionDeleteJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -39,7 +40,9 @@ void DavCollectionDeleteJob::start()
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
 
-    connect(job, &KIO::DeleteJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
+    connect(job, &KIO::DeleteJob::result, this, [d](KJob *job) {
+        d->davJobFinished(job);
+    });
 }
 
 void DavCollectionDeleteJobPrivate::davJobFinished(KJob *job)

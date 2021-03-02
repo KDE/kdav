@@ -4,8 +4,8 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include "utils_p.h"
 #include "protocolinfo.h"
+#include "utils_p.h"
 
 #include "enums.h"
 

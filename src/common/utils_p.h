@@ -11,8 +11,10 @@
 
 #include <QDomElement>
 
-namespace KDAV {
-namespace Utils {
+namespace KDAV
+{
+namespace Utils
+{
 /**
  * Returns the first child element of @p parent that has the given @p tagName and is part of the @p namespaceUri.
  */
@@ -37,4 +39,3 @@ Q_REQUIRED_RESULT Privileges parsePrivilege(const QDomElement &element);
 }
 
 #endif
-

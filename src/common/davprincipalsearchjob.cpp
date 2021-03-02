@@ -7,18 +7,19 @@
 #include "davprincipalsearchjob.h"
 #include "davjobbase_p.h"
 
+#include "daverror.h"
 #include "davmanager_p.h"
 #include "utils_p.h"
-#include "daverror.h"
 
-#include <KIO/Job>
 #include <KIO/DavJob>
+#include <KIO/Job>
 
 #include <QUrl>
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavPrincipalSearchJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -31,7 +32,7 @@ public:
     QString mFilter;
     int mPrincipalPropertySearchSubJobCount = 0;
     bool mPrincipalPropertySearchSubJobSuccessful = false;
-    QList< QPair<QString, QString> > mFetchProperties;
+    QList<QPair<QString, QString>> mFetchProperties;
     QVector<DavPrincipalSearchJob::Result> mResults;
 };
 }
@@ -88,7 +89,9 @@ void DavPrincipalSearchJob::start()
 
     KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), query);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->principalCollectionSetSearchFinished(job); });
+    connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
+        d->principalCollectionSetSearchFinished(job);
+    });
     job->start();
 }
 
@@ -96,9 +99,7 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(KJob *jo
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty()
-                             ? 0
-                             : responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
@@ -198,7 +199,9 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(KJob *jo
         buildReportQuery(principalPropertySearchQuery);
         KIO::DavJob *reportJob = DavManager::self()->createReportJob(url, principalPropertySearchQuery);
         reportJob->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-        QObject::connect(reportJob, &KIO::DavJob::result, q_ptr, [this](KJob *job) { principalPropertySearchFinished(job); });
+        QObject::connect(reportJob, &KIO::DavJob::result, q_ptr, [this](KJob *job) {
+            principalPropertySearchFinished(job);
+        });
         ++mPrincipalPropertySearchSubJobCount;
         reportJob->start();
     }
@@ -246,7 +249,7 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
     }
 
     if (!mPrincipalPropertySearchSubJobSuccessful) {
-        setError(0);   // nope, everything went fine
+        setError(0); // nope, everything went fine
         mPrincipalPropertySearchSubJobSuccessful = true;
     }
 
@@ -263,7 +266,7 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
      *       <D:status>HTTP/1.1 200 OK</D:status>
      *     </D:propstat>
      * </D:multistatus>
-    */
+     */
 
     const QDomDocument document = davJob->response();
     const QDomElement documentElement = document.documentElement();
@@ -324,7 +327,7 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
     }
 }
 
-QVector< DavPrincipalSearchJob::Result > DavPrincipalSearchJob::results() const
+QVector<DavPrincipalSearchJob::Result> DavPrincipalSearchJob::results() const
 {
     Q_D(const DavPrincipalSearchJob);
     return d->mResults;
@@ -363,10 +366,11 @@ void DavPrincipalSearchJobPrivate::buildReportQuery(QDomDocument &query) const
         QDomElement displayName = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("displayname"));
         prop.appendChild(displayName);
     } else if (mType == DavPrincipalSearchJob::EmailAddress) {
-        QDomElement calendarUserAddressSet = query.createElementNS(QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("calendar-user-address-set"));
+        QDomElement calendarUserAddressSet =
+            query.createElementNS(QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("calendar-user-address-set"));
         prop.appendChild(calendarUserAddressSet);
-        //QDomElement hrefElement = query.createElementNS( "DAV:", "href" );
-        //prop.appendChild( hrefElement );
+        // QDomElement hrefElement = query.createElementNS( "DAV:", "href" );
+        // prop.appendChild( hrefElement );
     }
 
     QDomElement match = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("match"));

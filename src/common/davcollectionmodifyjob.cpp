@@ -16,7 +16,8 @@
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavCollectionModifyJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -108,16 +109,16 @@ void DavCollectionModifyJob::start()
 
     KIO::DavJob *job = DavManager::self()->createPropPatchJob(d->mUrl.url(), mQuery);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
+    connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
+        d->davJobFinished(job);
+    });
 }
 
 void DavCollectionModifyJobPrivate::davJobFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty()
-                             ? 0
-                             : responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
@@ -155,7 +156,8 @@ void DavCollectionModifyJobPrivate::davJobFinished(KJob *job)
         setError(ERR_COLLECTIONMODIFY_RESPONSE);
 
         // Trying to get more information about the error
-        const QDomElement responseDescriptionElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("responsedescription"));
+        const QDomElement responseDescriptionElement =
+            Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("responsedescription"));
         if (!responseDescriptionElement.isNull()) {
             setJobErrorText(responseDescriptionElement.text());
         }

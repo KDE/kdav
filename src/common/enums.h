@@ -12,14 +12,15 @@
 /**
  * The KDAV namespace.
  */
-namespace KDAV {
+namespace KDAV
+{
 /**
  * Describes the DAV protocol dialect.
  */
 enum Protocol {
-    CalDav = 0,   ///< The CalDav protocol as defined in https://devguide.calconnect.org/CalDAV
-    CardDav,      ///< The CardDav protocol as defined in https://devguide.calconnect.org/CardDAV
-    GroupDav,     ///< The GroupDav protocol as defined in http://www.groupdav.org
+    CalDav = 0, ///< The CalDav protocol as defined in https://devguide.calconnect.org/CalDAV
+    CardDav, ///< The CardDav protocol as defined in https://devguide.calconnect.org/CardDAV
+    GroupDav, ///< The GroupDav protocol as defined in http://www.groupdav.org
 };
 
 /**

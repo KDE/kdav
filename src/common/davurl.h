@@ -15,7 +15,8 @@
 #include <QUrl>
 #include <QVector>
 
-namespace KDAV {
+namespace KDAV
+{
 class DavUrlPrivate;
 /**
  * @class DavUrl davurl.h <KDAV/DavUrl>

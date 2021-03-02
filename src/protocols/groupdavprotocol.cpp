@@ -89,8 +89,9 @@ XMLQueryBuilder::Ptr GroupdavProtocol::collectionsQuery() const
 
 QString GroupdavProtocol::collectionsXQuery() const
 {
-    const QString query(QStringLiteral(
-                            "//*[(local-name()='vevent-collection' or local-name()='vtodo-collection' or local-name()='vcard-collection') and namespace-uri()='http://groupdav.org/']/ancestor::*[local-name()='response' and namespace-uri()='DAV:']"));
+    const QString query(
+        QStringLiteral("//*[(local-name()='vevent-collection' or local-name()='vtodo-collection' or local-name()='vcard-collection') and "
+                       "namespace-uri()='http://groupdav.org/']/ancestor::*[local-name()='response' and namespace-uri()='DAV:']"));
 
     return query;
 }

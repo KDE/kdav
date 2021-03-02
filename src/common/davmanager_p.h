@@ -13,7 +13,8 @@
 
 #include <memory>
 
-namespace KIO {
+namespace KIO
+{
 class DavJob;
 }
 
@@ -22,7 +23,8 @@ class QUrl;
 class QDomDocument;
 
 /** CalDav/CardDav protocol implementation. */
-namespace KDAV {
+namespace KDAV
+{
 class DavProtocolBase;
 
 /**

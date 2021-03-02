@@ -7,10 +7,10 @@
 #include "davitemslistjobtest.h"
 #include "fakeserver.h"
 
+#include <KDAV/DavError>
 #include <KDAV/DavItemsListJob>
 #include <KDAV/DavUrl>
 #include <KDAV/EtagCache>
-#include <KDAV/DavError>
 
 #include <QTest>
 
@@ -28,7 +28,6 @@ void DavItemsListJobTest::noMatchingMimetype()
 
     QCOMPARE(job->error(), static_cast<int>(KDAV::ErrorNumber::ERR_ITEMLIST_NOMIMETYPE));
     QCOMPARE(job->errorText(), error.errorText());
-
 }
 
 QTEST_MAIN(DavItemsListJobTest)

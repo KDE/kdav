@@ -18,7 +18,8 @@
 
 #include <QStringList>
 
-namespace KDAV {
+namespace KDAV
+{
 class DavItemsFetchJobPrivate;
 
 /**

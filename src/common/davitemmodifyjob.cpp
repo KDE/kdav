@@ -7,14 +7,15 @@
 #include "davitemmodifyjob.h"
 #include "davjobbase_p.h"
 
+#include "daverror.h"
 #include "davitemfetchjob.h"
 #include "davmanager_p.h"
-#include "daverror.h"
 
 #include <KIO/Job>
 
 using namespace KDAV;
-namespace KDAV {
+namespace KDAV
+{
 class DavItemModifyJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -51,7 +52,9 @@ void DavItemModifyJob::start()
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
 
-    connect(job, &KIO::StoredTransferJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
+    connect(job, &KIO::StoredTransferJob::result, this, [d](KJob *job) {
+        d->davJobFinished(job);
+    });
 }
 
 DavItem DavItemModifyJob::item() const
@@ -96,7 +99,9 @@ void DavItemModifyJobPrivate::davJobFinished(KJob *job)
 
         if (q->hasConflict()) {
             DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
-            QObject::connect(fetchJob, &DavItemFetchJob::result, q, [this](KJob *job) { conflictingItemFetched(job); });
+            QObject::connect(fetchJob, &DavItemFetchJob::result, q, [this](KJob *job) {
+                conflictingItemFetched(job);
+            });
             fetchJob->start();
         } else {
             emitResult();
@@ -128,7 +133,9 @@ void DavItemModifyJobPrivate::davJobFinished(KJob *job)
     mItem.setUrl(DavUrl(url, mItem.url().protocol()));
 
     DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
-    QObject::connect(fetchJob, &DavItemFetchJob::result, q, [this](KJob *job) { itemRefreshed(job); });
+    QObject::connect(fetchJob, &DavItemFetchJob::result, q, [this](KJob *job) {
+        itemRefreshed(job);
+    });
     fetchJob->start();
 }
 

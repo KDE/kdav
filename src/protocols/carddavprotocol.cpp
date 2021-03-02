@@ -6,9 +6,9 @@
 
 #include "carddavprotocol_p.h"
 
+#include <QDomDocument>
 #include <QStringList>
 #include <QUrl>
-#include <QDomDocument>
 
 using namespace KDAV;
 

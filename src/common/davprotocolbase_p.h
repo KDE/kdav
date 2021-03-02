@@ -11,12 +11,13 @@
 
 #include "davcollection.h"
 
-#include <QMap>
 #include <QDomDocument>
+#include <QMap>
 #include <QSharedPointer>
 #include <QVariant>
 
-namespace KDAV {
+namespace KDAV
+{
 /**
  * @short Base class for XML query builders
  */

@@ -14,7 +14,8 @@
 
 #include <memory>
 
-namespace KDAV {
+namespace KDAV
+{
 class EtagCachePrivate;
 
 /**

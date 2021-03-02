@@ -7,23 +7,24 @@
 #include "davcollectionsfetchjob.h"
 #include "davjobbase_p.h"
 
+#include "daverror.h"
 #include "davmanager_p.h"
 #include "davprincipalhomesetsfetchjob.h"
 #include "davprotocolbase_p.h"
 #include "utils_p.h"
-#include "daverror.h"
 
 #include "libkdav_debug.h"
 #include <KIO/DavJob>
 #include <KIO/Job>
 
-#include <QColor>
 #include <QBuffer>
+#include <QColor>
 #include <QtXmlPatterns/QXmlQuery>
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavCollectionsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -52,7 +53,9 @@ void DavCollectionsFetchJob::start()
     Q_D(DavCollectionsFetchJob);
     if (DavManager::davProtocol(d->mUrl.protocol())->supportsPrincipals()) {
         DavPrincipalHomeSetsFetchJob *job = new DavPrincipalHomeSetsFetchJob(d->mUrl);
-        connect(job, &DavPrincipalHomeSetsFetchJob::result, this, [d](KJob *job) { d->principalFetchFinished(job); });
+        connect(job, &DavPrincipalHomeSetsFetchJob::result, this, [d](KJob *job) {
+            d->principalFetchFinished(job);
+        });
         job->start();
     } else {
         d->doCollectionsFetch(d->mUrl.url());
@@ -78,7 +81,9 @@ void DavCollectionsFetchJobPrivate::doCollectionsFetch(const QUrl &url)
     const QDomDocument collectionQuery = DavManager::davProtocol(mUrl.protocol())->collectionsQuery()->buildQuery();
 
     KIO::DavJob *job = DavManager::self()->createPropFindJob(url, collectionQuery);
-    QObject::connect(job, &KIO::DavJob::result, q_ptr, [this](KJob *job) { collectionsFetchFinished(job); });
+    QObject::connect(job, &KIO::DavJob::result, q_ptr, [this](KJob *job) {
+        collectionsFetchFinished(job);
+    });
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
 }
 
@@ -135,9 +140,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
     Q_Q(DavCollectionsFetchJob);
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty()
-                             ? 0
-                             : responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {

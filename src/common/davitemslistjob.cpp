@@ -11,8 +11,8 @@
 #include "davmanager_p.h"
 #include "davprotocolbase_p.h"
 #include "davurl.h"
-#include "utils_p.h"
 #include "etagcache.h"
+#include "utils_p.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
@@ -21,7 +21,8 @@
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavItemsListJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -89,13 +90,17 @@ void DavItemsListJob::start()
                 job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
                 job->setProperty("davType", QStringLiteral("report"));
                 job->setProperty("itemsMimeType", mimeType);
-                connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
+                connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
+                    d->davJobFinished(job);
+                });
             } else {
                 KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), props);
                 job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
                 job->setProperty("davType", QStringLiteral("propFind"));
                 job->setProperty("itemsMimeType", mimeType);
-                connect(job, &KIO::DavJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
+                connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
+                    d->davJobFinished(job);
+                });
             }
         }
     }

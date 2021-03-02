@@ -14,15 +14,16 @@
 #include <QSharedDataPointer>
 #include <QString>
 
-namespace KDAV {
+namespace KDAV
+{
 /** DAV operation error codes. */
 enum ErrorNumber {
     NO_ERR = 0,
-    ERR_PROBLEM_WITH_REQUEST = KJob::UserDefinedError + 200,        //it would be better to request KIO about uts UserDefinedError space.
+    ERR_PROBLEM_WITH_REQUEST = KJob::UserDefinedError + 200, // it would be better to request KIO about uts UserDefinedError space.
     ERR_NO_MULTIGET,
     ERR_SERVER_UNRECOVERABLE,
     ERR_COLLECTIONDELETE = ERR_PROBLEM_WITH_REQUEST + 10,
-    ERR_COLLECTIONFETCH = ERR_PROBLEM_WITH_REQUEST  + 20,
+    ERR_COLLECTIONFETCH = ERR_PROBLEM_WITH_REQUEST + 20,
     ERR_COLLECTIONFETCH_XQUERY_SETFOCUS,
     ERR_COLLECTIONFETCH_XQUERY_INVALID,
     ERR_COLLECTIONMODIFY = ERR_PROBLEM_WITH_REQUEST + 30,

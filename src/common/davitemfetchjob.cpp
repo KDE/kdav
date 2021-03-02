@@ -7,14 +7,15 @@
 #include "davitemfetchjob.h"
 #include "davjobbase_p.h"
 
-#include "davmanager_p.h"
 #include "daverror.h"
+#include "davmanager_p.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
 
 using namespace KDAV;
-namespace KDAV {
+namespace KDAV
+{
 class DavItemFetchJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -58,7 +59,9 @@ void DavItemFetchJob::start()
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
 
-    connect(job, &KIO::StoredTransferJob::result, this, [d](KJob *job) { d->davJobFinished(job); });
+    connect(job, &KIO::StoredTransferJob::result, this, [d](KJob *job) {
+        d->davJobFinished(job);
+    });
 }
 
 DavItem DavItemFetchJob::item() const
@@ -71,9 +74,7 @@ void DavItemFetchJobPrivate::davJobFinished(KJob *job)
 {
     KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
     const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty()
-                             ? 0
-                             : responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
 
     setLatestResponseCode(responseCode);
 

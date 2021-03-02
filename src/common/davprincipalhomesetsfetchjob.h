@@ -12,10 +12,10 @@
 #include "davjobbase.h"
 #include "davurl.h"
 
-
 #include <QStringList>
 
-namespace KDAV {
+namespace KDAV
+{
 class DavPrincipalHomeSetsFetchJobPrivate;
 
 /**

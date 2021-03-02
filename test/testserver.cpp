@@ -7,17 +7,17 @@
 #include <KDAV/DavCollectionDeleteJob>
 #include <KDAV/DavCollectionModifyJob>
 #include <KDAV/DavCollectionsFetchJob>
-#include <KDAV/DavItemFetchJob>
 #include <KDAV/DavItemCreateJob>
-#include <KDAV/DavItemsFetchJob>
-#include <KDAV/DavItemModifyJob>
 #include <KDAV/DavItemDeleteJob>
+#include <KDAV/DavItemFetchJob>
+#include <KDAV/DavItemModifyJob>
+#include <KDAV/DavItemsFetchJob>
 #include <KDAV/DavItemsListJob>
 #include <KDAV/EtagCache>
 
+#include <QCoreApplication>
 #include <QDebug>
 #include <QStringList>
-#include <QCoreApplication>
 
 int main(int argc, char **argv)
 {
@@ -37,7 +37,7 @@ int main(int argc, char **argv)
         auto collectionUrl = collection.url();
         std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
         int anz = -1;
-        //Get all items in a collection add them to cache and make sure, that afterward no item is changed
+        // Get all items in a collection add them to cache and make sure, that afterward no item is changed
         {
             auto itemListJob = new KDAV::DavItemsListJob(collectionUrl, cache);
             itemListJob->exec();
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 
                 auto itemsFetchJob = new KDAV::DavItemsFetchJob(collectionUrl, QStringList() << item.url().toDisplayString());
                 itemsFetchJob->exec();
-                if (itemsFetchJob->item(item.url().toDisplayString()).contentType() != fetchedItem.contentType()) {       //itemsfetchjob do not get contentType
+                if (itemsFetchJob->item(item.url().toDisplayString()).contentType() != fetchedItem.contentType()) { // itemsfetchjob do not get contentType
                     qDebug() << "Fetched same item but got different contentType:" << itemsFetchJob->item(item.url().toDisplayString()).contentType();
                 }
 
@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 
                 cache->setEtag(item.url().toDisplayString(), item.etag());
             }
-            cache->setEtag(QStringLiteral("invalid"),QStringLiteral("invalid"));
+            cache->setEtag(QStringLiteral("invalid"), QStringLiteral("invalid"));
         }
         {
             qDebug() << "second run: (should be empty).";
@@ -106,28 +106,37 @@ int main(int argc, char **argv)
         }
     }
 
-    //create element with "wrong put url" test if we get the correct url back
+    // create element with "wrong put url" test if we get the correct url back
     {
         QUrl url(QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/xxx.vcf"));
         url.setUserInfo(mainUrl.userInfo());
         KDAV::DavUrl testItemUrl(url, KDAV::CardDav);
-        QByteArray data = "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject 2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John Doe\r\nN:Doe;John;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john.doe@example.com\r\nREV;VALUE=DATE-TIME:20161221T145611Z\r\nEND:VCARD\r\n";
+        QByteArray data =
+            "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject "
+            "2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John "
+            "Doe\r\nN:Doe;John;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john.doe@example.com\r\nREV;VALUE=DATE-TIME:20161221T145611Z\r\nEND:VCARD\r\n";
         KDAV::DavItem item(testItemUrl, QStringLiteral("text/x-vcard"), data, QString());
         auto createJob = new KDAV::DavItemCreateJob(item);
         createJob->exec();
         if (createJob->error()) {
             qDebug() << createJob->errorString();
         }
-        if (createJob->item().url().toDisplayString() != QLatin1String("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf")) {
+        if (createJob->item().url().toDisplayString()
+            != QLatin1String(
+                "https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf")) {
             qDebug() << "unexpected url" << createJob->item().url().url();
         }
     }
 
     {
-        QUrl url(QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf"));
+        QUrl url(QStringLiteral(
+            "https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf"));
         url.setUserInfo(mainUrl.userInfo());
         KDAV::DavUrl testItemUrl(url, KDAV::CardDav);
-        QByteArray data = "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject 2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John2 Doe\r\nN:Doe;John2;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john2.doe@example.com\r\nREV;VALUE=DATE-TIME:20161221T145611Z\r\nEND:VCARD\r\n";
+        QByteArray data =
+            "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject "
+            "2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John2 "
+            "Doe\r\nN:Doe;John2;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john2.doe@example.com\r\nREV;VALUE=DATE-TIME:20161221T145611Z\r\nEND:VCARD\r\n";
         KDAV::DavItem item(testItemUrl, QStringLiteral("text/x-vcard"), data, QString());
         auto modifyJob = new KDAV::DavItemModifyJob(item);
         modifyJob->exec();
@@ -137,10 +146,14 @@ int main(int argc, char **argv)
     }
 
     {
-        QUrl url(QStringLiteral("https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf"));
+        QUrl url(QStringLiteral(
+            "https://apps.kolabnow.com/addressbooks/test1%40kolab.org/9290e784-c876-412f-8385-be292d64b2c6/12345678-1234-1234-1234-123456789abc.vcf"));
         url.setUserInfo(mainUrl.userInfo());
         KDAV::DavUrl testItemUrl(url, KDAV::CardDav);
-        QByteArray data = "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject 2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John2 Doe\r\nN:Doe;John2;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john2.doe@example.com\r\nREV;VALUE=DATE-TIME:20161221T145611Z\r\nEND:VCARD\r\n";
+        QByteArray data =
+            "BEGIN:VCARD\r\nVERSION:3.0\r\nPRODID:-//Kolab//iRony DAV Server 0.3.1//Sabre//Sabre VObject "
+            "2.1.7//EN\r\nUID:12345678-1234-1234-1234-123456789abc\r\nFN:John2 "
+            "Doe\r\nN:Doe;John2;;;\r\nEMAIL;TYPE=INTERNET;TYPE=HOME:john2.doe@example.com\r\nREV;VALUE=DATE-TIME:20161221T145611Z\r\nEND:VCARD\r\n";
         KDAV::DavItem item(testItemUrl, QStringLiteral("text/x-vcard"), data, QString());
         auto deleteJob = new KDAV::DavItemDeleteJob(item);
         deleteJob->exec();

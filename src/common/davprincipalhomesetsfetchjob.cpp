@@ -7,9 +7,9 @@
 #include "davprincipalhomesetsfetchjob.h"
 #include "davjobbase_p.h"
 
+#include "daverror.h"
 #include "davmanager_p.h"
 #include "davprotocolbase_p.h"
-#include "daverror.h"
 #include "protocolinfo.h"
 #include "utils_p.h"
 
@@ -18,7 +18,8 @@
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavPrincipalHomeSetsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -76,7 +77,9 @@ void DavPrincipalHomeSetsFetchJobPrivate::fetchHomeSets(bool homeSetsOnly)
 
     KIO::DavJob *job = DavManager::self()->createPropFindJob(mUrl.url(), document, QStringLiteral("0"));
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    QObject::connect(job, &KIO::DavJob::result, q_ptr, [this](KJob *job) { davJobFinished(job); });
+    QObject::connect(job, &KIO::DavJob::result, q_ptr, [this](KJob *job) {
+        davJobFinished(job);
+    });
 }
 
 QStringList DavPrincipalHomeSetsFetchJob::homeSets() const
@@ -89,9 +92,7 @@ void DavPrincipalHomeSetsFetchJobPrivate::davJobFinished(KJob *job)
 {
     KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
     const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty()
-                             ? 0
-                             : responseCodeStr.toInt();
+    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
 
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {

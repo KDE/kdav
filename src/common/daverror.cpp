@@ -12,7 +12,8 @@
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class ErrorPrivate : public QSharedData
 {
 public:
@@ -113,8 +114,11 @@ QString Error::errorText() const
         result = i18n("Invalid XQuery submitted by DAV implementation");
         break;
     case ERR_COLLECTIONMODIFY:
-        result = i18n("There was a problem with the request. The collection has not been modified on the server.\n"
-                      "%1 (%2).", err, d->mResponseCode);
+        result = i18n(
+            "There was a problem with the request. The collection has not been modified on the server.\n"
+            "%1 (%2).",
+            err,
+            d->mResponseCode);
         break;
     case ERR_COLLECTIONMODIFY_NO_PROPERITES:
         result = i18n("No properties to change or remove");
@@ -134,8 +138,7 @@ QString Error::errorText() const
     case ERR_ITEMMODIFY:
         result = i18n("There was a problem with the request. The item was not modified on the server.\n%1 (%2).", err, d->mResponseCode);
         break;
-    case ERR_ITEMLIST:
-    {
+    case ERR_ITEMLIST: {
         result = i18n("There was a problem with the request.");
         break;
     };

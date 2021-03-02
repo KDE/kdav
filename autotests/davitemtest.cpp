@@ -22,7 +22,6 @@ void DavItemTest::createEmpty()
     QCOMPARE(davItem.etag(), QString());
 }
 
-
 void DavItemTest::storeTest()
 {
     QUrl url(QStringLiteral("test://me:pw@test"));
@@ -64,7 +63,7 @@ void DavItemTest::copyTest()
     QCOMPARE(davItemCopy1.contentType(), davItem.contentType());
     QCOMPARE(davItemCopy1.data(), davItem.data());
     QCOMPARE(davItemCopy1.etag(), davItem.etag());
- 
+
     KDAV::DavItem davItemCopy2;
     davItemCopy2 = davItem;
     QCOMPARE(davItemCopy2.url().protocol(), davItem.url().protocol());

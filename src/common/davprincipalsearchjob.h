@@ -14,8 +14,8 @@
 
 #include <QString>
 
-
-namespace KDAV {
+namespace KDAV
+{
 class DavPrincipalSearchJobPrivate;
 
 /**

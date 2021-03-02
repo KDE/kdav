@@ -7,16 +7,17 @@
 #include "davitemdeletejob.h"
 #include "davjobbase_p.h"
 
+#include "daverror.h"
 #include "davitemfetchjob.h"
 #include "davmanager_p.h"
-#include "daverror.h"
 
 #include <KIO/DeleteJob>
 #include <KIO/Job>
 
 using namespace KDAV;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavItemDeleteJobPrivate : public DavJobBasePrivate
 {
 public:
@@ -45,7 +46,9 @@ void DavItemDeleteJob::start()
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
 
-    connect(job, &KIO::DeleteJob::result, this, [d](KJob* job) { d->davJobFinished(job); });
+    connect(job, &KIO::DeleteJob::result, this, [d](KJob *job) {
+        d->davJobFinished(job);
+    });
 }
 
 DavItem DavItemDeleteJob::freshItem() const
@@ -79,7 +82,9 @@ void DavItemDeleteJobPrivate::davJobFinished(KJob *job)
 
         if (q_ptr->hasConflict()) {
             DavItemFetchJob *fetchJob = new DavItemFetchJob(mItem);
-            QObject::connect(fetchJob, &DavItemFetchJob::result, q_ptr, [this](KJob *job) { conflictingItemFetched(job); });
+            QObject::connect(fetchJob, &DavItemFetchJob::result, q_ptr, [this](KJob *job) {
+                conflictingItemFetched(job);
+            });
             fetchJob->start();
             return;
         }

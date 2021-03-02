@@ -19,11 +19,13 @@ class QColor;
 
 class DavCollectionPrivate;
 
-namespace KDAV {
+namespace KDAV
+{
 class DavUrl;
 }
 
-namespace KDAV {
+namespace KDAV
+{
 /**
  * @class DavCollection davcollection.h <KDAV/DavCollection>
  *
@@ -44,11 +46,11 @@ public:
      * Describes the possible content type of the DAV collection.
      */
     enum ContentType {
-        Events = 1,    ///< The collection can contain event DAV resources.
-        Todos = 2,     ///< The collection can contain todo DAV resources.
-        Contacts = 4,  ///< The collection can contain contact DAV resources.
-        FreeBusy = 8,  ///< The collection can contain free/busy information.
-        Journal = 16,  ///< The collection can contain journal DAV resources.
+        Events = 1, ///< The collection can contain event DAV resources.
+        Todos = 2, ///< The collection can contain todo DAV resources.
+        Contacts = 4, ///< The collection can contain contact DAV resources.
+        FreeBusy = 8, ///< The collection can contain free/busy information.
+        Journal = 16, ///< The collection can contain journal DAV resources.
         Calendar = 32, ///< The collection can contain anything calendar-related.
     };
     Q_DECLARE_FLAGS(ContentTypes, ContentType)
