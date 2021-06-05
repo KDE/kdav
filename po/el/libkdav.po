@@ -1,0 +1,165 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kdav package.
+#
+# Stelios <sstavra@gmail.com>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdav\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-03-09 02:40+0100\n"
+"PO-Revision-Date: 2020-09-13 16:21+0300\n"
+"Last-Translator: Stelios <sstavra@gmail.com>\n"
+"Language-Team: Greek <kde-i18n-el@kde.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 20.04.2\n"
+
+#: common/daverror.cpp:88
+#, kde-format
+msgid "Invalid username/password"
+msgstr "Μη έγκυρα όνομα χρήστη ή κωδικός πρόσβασης"
+
+#: common/daverror.cpp:90
+#, kde-format
+msgid "Access forbidden"
+msgstr "Η πρόσβαση απαγορεύεται"
+
+#: common/daverror.cpp:92
+#, kde-format
+msgid "Resource not found"
+msgstr "Ο πόρος δε βρέθηκε"
+
+#: common/daverror.cpp:94
+#, kde-format
+msgid "HTTP error"
+msgstr "HTTP σφάλμα"
+
+#: common/daverror.cpp:96
+#, kde-format
+msgid ""
+"There was a problem with the request.\n"
+"%1 (%2)."
+msgstr ""
+"Παρουσιάστηκε κάποιο πρόβλημα με την αίτηση.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:99
+#, kde-format
+msgid "Protocol for the collection does not support MULTIGET"
+msgstr "Το πρωτόκολλο για τη συλλογή δεν υποστηρίζει MULTIGET"
+
+#: common/daverror.cpp:102
+#, kde-format
+msgid ""
+"The server encountered an error that prevented it from completing your "
+"request: %1 (%2)"
+msgstr ""
+"Ο εξυπηρετητής αντιμετώπισε κάποιο σφάλμα που τον εμπόδισε να ολοκληρώσει "
+"την αίτησή σας: %1 (%2)"
+
+#: common/daverror.cpp:105
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been deleted "
+"from the server.\n"
+"%1 (%2)."
+msgstr ""
+"Υπήρξε πρόβλημα με την αίτηση. Η συλλογή δεν έχει διαγραφεί από τον "
+"εξυπηρετητή.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:108
+#, kde-format
+msgid "Invalid responses from backend"
+msgstr "Μη έγκυρες αποκρίσεις από το σύστημα υποστήριξης"
+
+#: common/daverror.cpp:111
+#, kde-format
+msgid "Error setting focus for XQuery"
+msgstr "Σφάλμα ρύθμισης της εστίασης για το XQuery"
+
+#: common/daverror.cpp:114
+#, kde-format
+msgid "Invalid XQuery submitted by DAV implementation"
+msgstr "Μη έγκυρο XQuery υποβλήθηκε από DAV υλοποίηση"
+
+#: common/daverror.cpp:118
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been modified "
+"on the server.\n"
+"%1 (%2)."
+msgstr ""
+"Υπήρξε πρόβλημα με την αίτηση. Η συλλογή δεν έχει τροποποιηθεί στον "
+"εξυπηρετητή.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:124
+#, kde-format
+msgid "No properties to change or remove"
+msgstr "Δεν υπάρχουν ιδιότητες για αλλαγή ή διαγραφή"
+
+#: common/daverror.cpp:127
+#, kde-format
+msgid "There was an error when modifying the properties"
+msgstr "Παρουσιάστηκε σφάλμα κατά την τροποποίηση των ιδιοτήτων"
+
+#: common/daverror.cpp:129
+#, kde-format
+msgid ""
+"\n"
+"The server returned more information:\n"
+"%1"
+msgstr ""
+"\n"
+"Ο εξυπηρετητής επίστρεψε και άλλη πληροφορία:\n"
+"%1"
+
+#: common/daverror.cpp:133
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been created on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Υπήρξε πρόβλημα με την αίτηση. Το αντικείμενο δεν έχει δημιουργηθεί στον "
+"εξυπηρετητή.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:136
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been deleted from the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Υπήρξε πρόβλημα με την αίτηση. Το αντικείμενο δεν έχει διαγραφεί από τον "
+"εξυπηρετητή.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:139
+#, kde-format
+msgid ""
+"There was a problem with the request. The item was not modified on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Υπήρξε πρόβλημα με την αίτηση. Το αντικείμενο δεν έχει τροποποιηθεί στον "
+"εξυπηρετητή.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:142
+#, kde-format
+msgid "There was a problem with the request."
+msgstr "Υπήρξε πρόβλημα με την αίτηση."
+
+#: common/daverror.cpp:146
+#, kde-format
+msgid ""
+"There was a problem with the request. The requested MIME types are not "
+"supported."
+msgstr ""
+"Υπήρξε πρόβλημα με την αίτηση. Οι αιτούμενοι τύποι MIME δεν υποστηρίζονται."

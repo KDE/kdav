@@ -1,0 +1,161 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kdepim-runtime package.
+# Sergiu Bivol <sergiu@cip.md>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdepim-runtime\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-03-09 02:40+0100\n"
+"PO-Revision-Date: 2020-09-27 12:44+0100\n"
+"Last-Translator: Sergiu Bivol <sergiu@cip.md>\n"
+"Language-Team: Romanian\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Lokalize 19.12.3\n"
+
+#: common/daverror.cpp:88
+#, kde-format
+msgid "Invalid username/password"
+msgstr "Utilizator/parolă nevalide"
+
+#: common/daverror.cpp:90
+#, kde-format
+msgid "Access forbidden"
+msgstr "Acces interzis"
+
+#: common/daverror.cpp:92
+#, kde-format
+msgid "Resource not found"
+msgstr "Resursa nu a fost găsită"
+
+#: common/daverror.cpp:94
+#, kde-format
+msgid "HTTP error"
+msgstr "Eroare HTTP"
+
+#: common/daverror.cpp:96
+#, kde-format
+msgid ""
+"There was a problem with the request.\n"
+"%1 (%2)."
+msgstr ""
+"A apărut o problemă cu cererea.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:99
+#, kde-format
+msgid "Protocol for the collection does not support MULTIGET"
+msgstr "Protocolul pentru colecție nu susține MULTIGET"
+
+#: common/daverror.cpp:102
+#, kde-format
+msgid ""
+"The server encountered an error that prevented it from completing your "
+"request: %1 (%2)"
+msgstr ""
+"Serverul a întâmpinat o eroare ce l-a împiedicat să vă completeze cererea: "
+"%1 (%2)"
+
+#: common/daverror.cpp:105
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been deleted "
+"from the server.\n"
+"%1 (%2)."
+msgstr ""
+"A apărut o problemă cu cererea. Colecția nu a fost ștearsă de pe server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:108
+#, kde-format
+msgid "Invalid responses from backend"
+msgstr "Răspunsuri nevalide de la platformă"
+
+#: common/daverror.cpp:111
+#, kde-format
+msgid "Error setting focus for XQuery"
+msgstr "Eroare la stabilirea focalizării pentru XQuery"
+
+#: common/daverror.cpp:114
+#, kde-format
+msgid "Invalid XQuery submitted by DAV implementation"
+msgstr "XQuery nevalid transmis de implementarea DAV"
+
+#: common/daverror.cpp:118
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been modified "
+"on the server.\n"
+"%1 (%2)."
+msgstr ""
+"A apărut o problemă cu cererea. Colecția nu a fost modificată pe server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:124
+#, kde-format
+msgid "No properties to change or remove"
+msgstr "Nu sunt proprietăți de schimbat sau eliminat"
+
+#: common/daverror.cpp:127
+#, kde-format
+msgid "There was an error when modifying the properties"
+msgstr "A apărut o eroare la modificarea proprietăților"
+
+#: common/daverror.cpp:129
+#, kde-format
+msgid ""
+"\n"
+"The server returned more information:\n"
+"%1"
+msgstr ""
+"\n"
+"Serverul a întors mai multă informație:\n"
+"%1"
+
+#: common/daverror.cpp:133
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been created on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"A apărut o problemă cu cererea. Elementul nu a fost creat pe server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:136
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been deleted from the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"A apărut o problemă cu cererea. Elementul nu a fost șters de pe server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:139
+#, kde-format
+msgid ""
+"There was a problem with the request. The item was not modified on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"A apărut o problemă cu cererea. Elementul nu a fost modificat pe server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:142
+#, kde-format
+msgid "There was a problem with the request."
+msgstr "A apărut o problemă cu cererea."
+
+#: common/daverror.cpp:146
+#, kde-format
+msgid ""
+"There was a problem with the request. The requested MIME types are not "
+"supported."
+msgstr ""
+"A apărut o problemă cu cererea. Tipurile MIME cerute nu sunt susținute."
