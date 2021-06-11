@@ -6,7 +6,6 @@
 
 #include "davurl.h"
 
-#include "enums.h"
 
 using namespace KDAV;
 

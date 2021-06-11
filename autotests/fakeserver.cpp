@@ -13,7 +13,6 @@
 // Qt
 #include <QDebug>
 #include <QFile>
-#include <QTcpServer>
 #include <QTest>
 
 FakeServer::FakeServer(int port, QObject *parent)
