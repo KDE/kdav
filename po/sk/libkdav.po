@@ -1,0 +1,159 @@
+# translation of libkdav.po to Slovak
+# Roman Paholík <wizzardsk@gmail.com>, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: libkdav\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-03-09 02:40+0100\n"
+"PO-Revision-Date: 2017-12-03 21:41+0100\n"
+"Last-Translator: Roman Paholik <wizzardsk@gmail.com>\n"
+"Language-Team: Slovak <kde-sk@linux.sk>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 2.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: common/daverror.cpp:88
+#, kde-format
+msgid "Invalid username/password"
+msgstr "Neplatné užívateľské meno/heslo"
+
+#: common/daverror.cpp:90
+#, kde-format
+msgid "Access forbidden"
+msgstr "Prístup zamietnutý"
+
+#: common/daverror.cpp:92
+#, kde-format
+msgid "Resource not found"
+msgstr "Zdroj nenájdený"
+
+#: common/daverror.cpp:94
+#, kde-format
+msgid "HTTP error"
+msgstr "HTTP chyba"
+
+#: common/daverror.cpp:96
+#, kde-format
+msgid ""
+"There was a problem with the request.\n"
+"%1 (%2)."
+msgstr ""
+"Bol problém s požiadavkou.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:99
+#, kde-format
+msgid "Protocol for the collection does not support MULTIGET"
+msgstr "Protokol pre kolekciu nepodporuje MULTIGET"
+
+#: common/daverror.cpp:102
+#, kde-format
+msgid ""
+"The server encountered an error that prevented it from completing your "
+"request: %1 (%2)"
+msgstr ""
+"Nastala chyba servera, ktorá znemožnila vykonať vašu požiadavku: %1 (%2)"
+
+#: common/daverror.cpp:105
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been deleted "
+"from the server.\n"
+"%1 (%2)."
+msgstr ""
+"Nastala chyba s požiadavkou. Kolekcia nebola vymazaná zo servera.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:108
+#, kde-format
+msgid "Invalid responses from backend"
+msgstr "Neplatná odpoveď z backendu"
+
+#: common/daverror.cpp:111
+#, kde-format
+msgid "Error setting focus for XQuery"
+msgstr "Chyba nastavenia zamerania na XQuery"
+
+#: common/daverror.cpp:114
+#, kde-format
+msgid "Invalid XQuery submitted by DAV implementation"
+msgstr "Neplatná XQuery poslaná implementáciou DAV"
+
+#: common/daverror.cpp:118
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been modified "
+"on the server.\n"
+"%1 (%2)."
+msgstr ""
+"Nastala chyba s požiadavkou. Položka nebola zmenená na serveri.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:124
+#, kde-format
+msgid "No properties to change or remove"
+msgstr "Žiadne vlastnosti na zmenu alebo odstránenie"
+
+#: common/daverror.cpp:127
+#, kde-format
+msgid "There was an error when modifying the properties"
+msgstr "Nastala chyba počas zmeny vlastností"
+
+#: common/daverror.cpp:129
+#, kde-format
+msgid ""
+"\n"
+"The server returned more information:\n"
+"%1"
+msgstr ""
+"\n"
+"Server vrátil viac informácií:\n"
+"%1"
+
+#: common/daverror.cpp:133
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been created on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Nastala chyba s požiadavkou. Položka nebola vytvorená na serveri.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:136
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been deleted from the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Nastala chyba s požiadavkou. Položka nebola vymazaná zo servera.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:139
+#, kde-format
+msgid ""
+"There was a problem with the request. The item was not modified on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Nastala chyba s požiadavkou. Položka nebola zmenená na serveri.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:142
+#, kde-format
+msgid "There was a problem with the request."
+msgstr "Bol problém s požiadavkou."
+
+#: common/daverror.cpp:146
+#, fuzzy, kde-format
+#| msgid ""
+#| "There was a problem with the request. The requested mimetypes are not "
+#| "supported."
+msgid ""
+"There was a problem with the request. The requested MIME types are not "
+"supported."
+msgstr "Nastal problém s požiadavkou. Požadované mime typy nie sú podporované."
