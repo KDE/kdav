@@ -86,7 +86,7 @@ void DavItemsListJob::start()
         if (d->mMimeTypes.isEmpty() || d->mMimeTypes.contains(mimeType)) {
             ++d->mSubJobCount;
             if (protocol->useReport()) {
-                KIO::DavJob *job = DavManager::self()->createReportJob(d->mUrl.url(), props);
+                KIO::DavJob *job = DavManager::self()->createReportJob(d->mUrl.url(), props.toString());
                 job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
                 job->setProperty("davType", QStringLiteral("report"));
                 job->setProperty("itemsMimeType", mimeType);
@@ -94,7 +94,7 @@ void DavItemsListJob::start()
                     d->davJobFinished(job);
                 });
             } else {
-                KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), props);
+                KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), props.toString());
                 job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
                 job->setProperty("davType", QStringLiteral("propFind"));
                 job->setProperty("itemsMimeType", mimeType);

@@ -14,7 +14,6 @@
 
 #include "libkdav_debug.h"
 
-#include <QDomDocument>
 #include <QUrl>
 
 using namespace KDAV;
@@ -28,7 +27,7 @@ DavManager *DavManager::self()
     return &sSelf;
 }
 
-KIO::DavJob *DavManager::createPropFindJob(const QUrl &url, const QDomDocument &document, const QString &depth) const
+KIO::DavJob *DavManager::createPropFindJob(const QUrl &url, const QString &document, const QString &depth) const
 {
     KIO::DavJob *job = KIO::davPropFind(url, document, depth, KIO::HideProgressInfo | KIO::DefaultFlags);
 
@@ -39,9 +38,9 @@ KIO::DavJob *DavManager::createPropFindJob(const QUrl &url, const QDomDocument &
     return job;
 }
 
-KIO::DavJob *DavManager::createReportJob(const QUrl &url, const QDomDocument &document, const QString &depth) const
+KIO::DavJob *DavManager::createReportJob(const QUrl &url, const QString &document, const QString &depth) const
 {
-    KIO::DavJob *job = KIO::davReport(url, document.toString(), depth, KIO::HideProgressInfo | KIO::DefaultFlags);
+    KIO::DavJob *job = KIO::davReport(url, document, depth, KIO::HideProgressInfo | KIO::DefaultFlags);
 
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
@@ -50,7 +49,7 @@ KIO::DavJob *DavManager::createReportJob(const QUrl &url, const QDomDocument &do
     return job;
 }
 
-KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QDomDocument &document) const
+KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QString &document) const
 {
     KIO::DavJob *job = KIO::davPropPatch(url, document, KIO::HideProgressInfo | KIO::DefaultFlags);
     const QString header = QStringLiteral("Content-Type: text/xml");

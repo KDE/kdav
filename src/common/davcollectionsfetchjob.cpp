@@ -80,7 +80,7 @@ void DavCollectionsFetchJobPrivate::doCollectionsFetch(const QUrl &url)
 
     const QDomDocument collectionQuery = DavManager::davProtocol(mUrl.protocol())->collectionsQuery()->buildQuery();
 
-    KIO::DavJob *job = DavManager::self()->createPropFindJob(url, collectionQuery);
+    KIO::DavJob *job = DavManager::self()->createPropFindJob(url, collectionQuery.toString());
     QObject::connect(job, &KIO::DavJob::result, q_ptr, [this](KJob *job) {
         collectionsFetchFinished(job);
     });

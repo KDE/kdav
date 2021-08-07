@@ -33,7 +33,7 @@ find_package(KF5 ${KF_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
 # setup lib
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f00)
-add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055100)
+add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055400)
 
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")

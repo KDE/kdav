@@ -87,7 +87,7 @@ void DavPrincipalSearchJob::start()
     QDomElement principalCollectionSet = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("principal-collection-set"));
     prop.appendChild(principalCollectionSet);
 
-    KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), query);
+    KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), query.toString());
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
         d->principalCollectionSetSearchFinished(job);
@@ -197,7 +197,7 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(KJob *jo
 
         QDomDocument principalPropertySearchQuery;
         buildReportQuery(principalPropertySearchQuery);
-        KIO::DavJob *reportJob = DavManager::self()->createReportJob(url, principalPropertySearchQuery);
+        KIO::DavJob *reportJob = DavManager::self()->createReportJob(url, principalPropertySearchQuery.toString());
         reportJob->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
         QObject::connect(reportJob, &KIO::DavJob::result, q_ptr, [this](KJob *job) {
             principalPropertySearchFinished(job);
