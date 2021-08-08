@@ -17,7 +17,7 @@
 #include <KIO/DavJob>
 #include <KIO/Job>
 
-#include <QSet>
+#include <set>
 
 using namespace KDAV;
 
@@ -34,7 +34,7 @@ public:
     QString mRangeStart;
     QString mRangeEnd;
     DavItem::List mItems;
-    QSet<QString> mSeenUrls; // to prevent events duplication with some servers
+    std::set<QString> mSeenUrls; // to prevent events duplication with some servers
     DavItem::List mChangedItems;
     QStringList mDeletedItems;
     uint mSubJobCount = 0;
@@ -225,13 +225,13 @@ void DavItemsListJobPrivate::davJobFinished(KJob *job)
                 url = QUrl::fromUserInput(href);
             }
 
-            QString itemUrl = url.toDisplayString();
-            if (mSeenUrls.contains(itemUrl)) {
+            const QString itemUrl = url.toDisplayString();
+            const auto [it, isInserted] = mSeenUrls.insert(itemUrl);
+            if (!isInserted) {
                 responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
                 continue;
             }
 
-            mSeenUrls << itemUrl;
             auto _url = url;
             _url.setUserInfo(mUrl.url().userInfo());
             item.setUrl(DavUrl(_url, mUrl.protocol()));
@@ -251,10 +251,15 @@ void DavItemsListJobPrivate::davJobFinished(KJob *job)
         }
     }
 
-    const auto etagCacheUrls = mEtagCache->urls();
-    QSet<QString> removed(etagCacheUrls.begin(), etagCacheUrls.end());
-    removed.subtract(mSeenUrls);
-    mDeletedItems = removed.values();
+    mDeletedItems.clear();
+
+    const auto map = mEtagCache->etagCacheMap();
+    for (auto it = map.cbegin(); it != map.cend(); ++it) {
+        const QString remoteId = it.key();
+        if (mSeenUrls.find(remoteId) == mSeenUrls.cend()) {
+            mDeletedItems.append(remoteId);
+        }
+    }
 
     if (--mSubJobCount == 0) {
         emitResult();

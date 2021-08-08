@@ -92,6 +92,12 @@ protected:
 
 private:
     const std::unique_ptr<EtagCachePrivate> d;
+
+    friend class DavItemsListJobPrivate;
+    // @internal
+    // Returns a map of remote Id and corresponding etag string key/value pairs.
+    // Only used by DavItemsListJobPrivate
+    Q_DECL_HIDDEN QMap<QString, QString> etagCacheMap() const;
 };
 }
 

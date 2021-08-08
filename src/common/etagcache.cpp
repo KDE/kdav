@@ -33,9 +33,7 @@ void EtagCache::setEtag(const QString &remoteId, const QString &etag)
 {
     setEtagInternal(remoteId, etag);
 
-    if (d->mChangedRemoteIds.contains(remoteId)) {
-        d->mChangedRemoteIds.remove(remoteId);
-    }
+    d->mChangedRemoteIds.remove(remoteId);
 }
 
 void EtagCache::setEtagInternal(const QString &remoteId, const QString &etag)
@@ -70,6 +68,11 @@ void EtagCache::removeEtag(const QString &remoteId)
 {
     d->mChangedRemoteIds.remove(remoteId);
     d->mCache.remove(remoteId);
+}
+
+QMap<QString, QString> EtagCache::etagCacheMap() const
+{
+    return d->mCache;
 }
 
 QStringList EtagCache::urls() const
