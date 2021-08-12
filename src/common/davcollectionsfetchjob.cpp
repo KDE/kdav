@@ -165,7 +165,9 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
         const QString jobUrl = _jobUrl.toDisplayString();
 
         // Validate that we got a valid PROPFIND response
-        QDomElement rootElement = davJob->response().documentElement();
+        QDomDocument response;
+        response.setContent(davJob->responseData(), true);
+        QDomElement rootElement = response.documentElement();
         if (rootElement.tagName().compare(QLatin1String("multistatus"), Qt::CaseInsensitive) != 0) {
             setError(ERR_COLLECTIONFETCH);
             setErrorTextFromDavError();
@@ -173,7 +175,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
             return;
         }
 
-        QByteArray resp(davJob->response().toByteArray());
+        QByteArray resp = davJob->responseData();
         QBuffer buffer(&resp);
         buffer.open(QIODevice::ReadOnly);
 

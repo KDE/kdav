@@ -139,7 +139,8 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(KJob *jo
      * </D:multistatus>
      */
 
-    QDomDocument document = davJob->response();
+    QDomDocument document;
+    document.setContent(davJob->responseData(), true);
     QDomElement documentElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
@@ -268,7 +269,8 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
      * </D:multistatus>
      */
 
-    const QDomDocument document = davJob->response();
+    QDomDocument document;
+    document.setContent(davJob->responseData(), true);
     const QDomElement documentElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));

@@ -131,7 +131,8 @@ void DavCollectionModifyJobPrivate::davJobFinished(KJob *job)
         return;
     }
 
-    const QDomDocument response = davJob->response();
+    QDomDocument response;
+    response.setContent(davJob->responseData(), true);
     QDomElement responseElement = Utils::firstChildElementNS(response.documentElement(), QStringLiteral("DAV:"), QStringLiteral("response"));
 
     bool hasError = false;

@@ -160,7 +160,8 @@ void DavPrincipalHomeSetsFetchJobPrivate::davJobFinished(KJob *job)
     QString nextRoundHref; // The content of the href element that will be used if no homeset was found.
     // This is either given by current-user-principal or by principal-URL.
 
-    const QDomDocument document = davJob->response();
+    QDomDocument document;
+    document.setContent(davJob->responseData(), true);
     const QDomElement multistatusElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(multistatusElement, QStringLiteral("DAV:"), QStringLiteral("response"));
