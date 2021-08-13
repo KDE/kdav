@@ -44,7 +44,8 @@ void DavUrlTest::setTest()
 
 void DavUrlTest::serializeTest()
 {
-    KDAV::DavUrl davUrl1, davUrl2;
+    KDAV::DavUrl davUrl1;
+    KDAV::DavUrl davUrl2;
 
     QUrl url(QStringLiteral("test://me:pw@test"));
     davUrl1.setProtocol(KDAV::CardDav);

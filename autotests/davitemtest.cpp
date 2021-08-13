@@ -75,7 +75,8 @@ void DavItemTest::copyTest()
 
 void DavItemTest::serializeTest()
 {
-    KDAV::DavItem davItem1, davItem2;
+    KDAV::DavItem davItem1;
+    KDAV::DavItem davItem2;
 
     QUrl url(QStringLiteral("test://me:pw@test"));
     KDAV::DavUrl davUrl(url, KDAV::CardDav);

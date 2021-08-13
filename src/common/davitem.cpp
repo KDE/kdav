@@ -91,7 +91,8 @@ QDataStream &KDAV::operator<<(QDataStream &stream, const DavItem &item)
 
 QDataStream &KDAV::operator>>(QDataStream &stream, DavItem &item)
 {
-    QString contentType, etag;
+    QString contentType;
+    QString etag;
     DavUrl url;
     QByteArray data;
 
