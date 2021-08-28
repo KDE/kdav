@@ -90,7 +90,7 @@ void DavCollectionModifyJob::start()
         QDomElement propElement = mQuery.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
         setElement.appendChild(propElement);
 
-        for (const QDomElement &element : qAsConst(d->mSetProperties)) {
+        for (const QDomElement &element : std::as_const(d->mSetProperties)) {
             propElement.appendChild(element);
         }
     }
@@ -102,7 +102,7 @@ void DavCollectionModifyJob::start()
         QDomElement propElement = mQuery.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
         removeElement.appendChild(propElement);
 
-        for (const QDomElement &element : qAsConst(d->mSetProperties)) {
+        for (const QDomElement &element : std::as_const(d->mSetProperties)) {
             propElement.appendChild(element);
         }
     }

@@ -23,7 +23,7 @@ DavCollectionsMultiFetchJob::DavCollectionsMultiFetchJob(const DavUrl::List &url
     : KCompositeJob(parent)
     , d(new DavCollectionsMultiFetchJobPrivate)
 {
-    for (const DavUrl &url : qAsConst(urls)) {
+    for (const DavUrl &url : std::as_const(urls)) {
         DavCollectionsFetchJob *job = new DavCollectionsFetchJob(url, this);
         connect(job, &DavCollectionsFetchJob::collectionDiscovered, this, &DavCollectionsMultiFetchJob::collectionDiscovered);
         addSubjob(job);

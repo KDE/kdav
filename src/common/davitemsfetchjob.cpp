@@ -65,7 +65,7 @@ DavItem::List DavItemsFetchJob::items() const
     Q_D(const DavItemsFetchJob);
     DavItem::List values;
     values.reserve(d->mItems.size());
-    for (const auto &value : qAsConst(d->mItems)) {
+    for (const auto &value : std::as_const(d->mItems)) {
         values << value;
     }
     return values;

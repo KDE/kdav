@@ -290,7 +290,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
 
                 // don't add this resource if it has already been detected
                 bool alreadySeen = false;
-                for (const DavCollection &seen : qAsConst(mCollections)) {
+                for (const DavCollection &seen : std::as_const(mCollections)) {
                     if (seen.url().toDisplayString() == url.toDisplayString()) {
                         alreadySeen = true;
                     }
