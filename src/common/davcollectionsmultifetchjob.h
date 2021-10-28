@@ -43,7 +43,7 @@ public:
      * @param parent The parent object.
      */
     explicit DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent = nullptr);
-    ~DavCollectionsMultiFetchJob();
+    ~DavCollectionsMultiFetchJob() override;
 
     /**
      * Starts the job.

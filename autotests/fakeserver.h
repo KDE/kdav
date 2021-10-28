@@ -85,7 +85,7 @@ public:
      * Each unittest should use a different port so that they can be run in parallel
      */
     FakeServer(int port = 5989, QObject *parent = nullptr);
-    ~FakeServer();
+    ~FakeServer() override;
 
     /**
      * Starts the server and waits for it to be ready

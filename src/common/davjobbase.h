@@ -29,7 +29,7 @@ class KDAV_EXPORT DavJobBase : public KJob
 
 public:
     explicit DavJobBase(QObject *parent = nullptr);
-    ~DavJobBase();
+    ~DavJobBase() override;
 
     /**
      * Get the latest response code.

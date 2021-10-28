@@ -38,7 +38,7 @@ public:
      * of items found in @p collection.
      */
     explicit EtagCache(QObject *parent = nullptr);
-    ~EtagCache();
+    ~EtagCache() override;
 
     /**
      * Sets the ETag for the remote ID. If the remote ID is marked as

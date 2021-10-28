@@ -22,7 +22,7 @@ public:
     /**
      * Destroys the DAV protocol
      */
-    virtual ~DavMultigetProtocol();
+    ~DavMultigetProtocol() override;
 
     /**
      * Returns the XML document that represents a MULTIGET DAV query to
