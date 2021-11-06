@@ -1,0 +1,158 @@
+# translation of akonadi_davgroupware_resource.po to Italian
+#
+# Vincenzo Reale <smart2128vr@gmail.com>, 2009, 2010.
+# Nicola Ruggero <nicola@nxnt.org>, 2010, 2011.
+# Luigi Toscano <luigi.toscano@tiscali.it>, 2012, 2013, 2014, 2015, 2016, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: akonadi_davgroupware_resource\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-03-09 02:40+0100\n"
+"PO-Revision-Date: 2017-12-14 21:04+0100\n"
+"Last-Translator: Luigi Toscano <luigi.toscano@tiscali.it>\n"
+"Language-Team: Italian <kde-i18n-it@kde.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 2.0\n"
+
+#: common/daverror.cpp:88
+#, kde-format
+msgid "Invalid username/password"
+msgstr "Username o password non validi"
+
+#: common/daverror.cpp:90
+#, kde-format
+msgid "Access forbidden"
+msgstr "Accesso vietato"
+
+#: common/daverror.cpp:92
+#, kde-format
+msgid "Resource not found"
+msgstr "Risorsa non trovata"
+
+#: common/daverror.cpp:94
+#, kde-format
+msgid "HTTP error"
+msgstr "Errore HTTP"
+
+#: common/daverror.cpp:96
+#, kde-format
+msgid ""
+"There was a problem with the request.\n"
+"%1 (%2)."
+msgstr ""
+"Problema con la richiesta.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:99
+#, kde-format
+msgid "Protocol for the collection does not support MULTIGET"
+msgstr "Il protocollo della collezione non supporta MULTIGET"
+
+#: common/daverror.cpp:102
+#, kde-format
+msgid ""
+"The server encountered an error that prevented it from completing your "
+"request: %1 (%2)"
+msgstr "Errore nel server. Impossibile completare la richiesta: %1 (%2)"
+
+#: common/daverror.cpp:105
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been deleted "
+"from the server.\n"
+"%1 (%2)."
+msgstr ""
+"Problema con la richiesta. La collezione non è stata eliminata dal server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:108
+#, kde-format
+msgid "Invalid responses from backend"
+msgstr "Risposta non valida dal backend"
+
+#: common/daverror.cpp:111
+#, kde-format
+msgid "Error setting focus for XQuery"
+msgstr "Errore impostando il fuoco su XQuery"
+
+#: common/daverror.cpp:114
+#, kde-format
+msgid "Invalid XQuery submitted by DAV implementation"
+msgstr "XQuery non valida inviata dall'implementazione DAV"
+
+#: common/daverror.cpp:118
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been modified "
+"on the server.\n"
+"%1 (%2)."
+msgstr ""
+"Problema con la richiesta. La collezione non è stata modificata sul server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:124
+#, kde-format
+msgid "No properties to change or remove"
+msgstr "Nessuna proprietà da cambiare o rimuovere"
+
+#: common/daverror.cpp:127
+#, kde-format
+msgid "There was an error when modifying the properties"
+msgstr "Errore nella modifica delle proprietà"
+
+#: common/daverror.cpp:129
+#, kde-format
+msgid ""
+"\n"
+"The server returned more information:\n"
+"%1"
+msgstr ""
+"\n"
+"Il server ha fornito ulteriori informazioni:\n"
+"%1"
+
+#: common/daverror.cpp:133
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been created on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Problema con la richiesta. L'elemento non è stato creato sul server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:136
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been deleted from the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Problema con la richiesta. L'elemento non è stato eliminato dal server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:139
+#, kde-format
+msgid ""
+"There was a problem with the request. The item was not modified on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Problema con la richiesta. L'elemento non è stato modificato sul server.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:142
+#, kde-format
+msgid "There was a problem with the request."
+msgstr "Problema con la richiesta."
+
+#: common/daverror.cpp:146
+#, kde-format
+msgid ""
+"There was a problem with the request. The requested MIME types are not "
+"supported."
+msgstr "Problema con la richiesta. I tipi MIME richiesti non sono supportati."
