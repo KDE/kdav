@@ -7,38 +7,66 @@ include_directories(
 ########### next target ###############
 
 set(libkdav_SRCS
- common/davjobbase.cpp
- common/davcollection.cpp
- common/davcollectiondeletejob.cpp
- common/davcollectionsfetchjob.cpp
- common/davcollectionmodifyjob.cpp
- common/davcollectionsmultifetchjob.cpp
- common/davprotocolbase.cpp
- common/daverror.cpp
- common/davitem.cpp
- common/davitemcreatejob.cpp
- common/davitemdeletejob.cpp
- common/davitemfetchjob.cpp
- common/davitemmodifyjob.cpp
- common/davitemsfetchjob.cpp
- common/davitemslistjob.cpp
- common/davmanager.cpp
- common/davmultigetprotocol.cpp
- common/davprincipalhomesetsfetchjob.cpp
- common/davprincipalsearchjob.cpp
- common/protocolinfo.cpp
- common/davurl.cpp
- common/utils.cpp
- common/etagcache.cpp
+    common/davcollection.cpp
+    common/davcollectiondeletejob.cpp
+    common/davcollectiondeletejob.h
+    common/davcollection.h
+    common/davcollectionmodifyjob.cpp
+    common/davcollectionmodifyjob.h
+    common/davcollectionsfetchjob.cpp
+    common/davcollectionsfetchjob.h
+    common/davcollectionsmultifetchjob.cpp
+    common/davcollectionsmultifetchjob.h
+    common/daverror.cpp
+    common/daverror.h
+    common/davitem.cpp
+    common/davitemcreatejob.cpp
+    common/davitemcreatejob.h
+    common/davitemdeletejob.cpp
+    common/davitemdeletejob.h
+    common/davitemfetchjob.cpp
+    common/davitemfetchjob.h
+    common/davitem.h
+    common/davitemmodifyjob.cpp
+    common/davitemmodifyjob.h
+    common/davitemsfetchjob.cpp
+    common/davitemsfetchjob.h
+    common/davitemslistjob.cpp
+    common/davitemslistjob.h
+    common/davjobbase.cpp
+    common/davjobbase.h
+    common/davjobbase_p.h
+    common/davmanager.cpp
+    common/davmanager_p.h
+    common/davmultigetprotocol.cpp
+    common/davmultigetprotocol_p.h
+    common/davprincipalhomesetsfetchjob.cpp
+    common/davprincipalhomesetsfetchjob.h
+    common/davprincipalsearchjob.cpp
+    common/davprincipalsearchjob.h
+    common/davprotocolbase.cpp
+    common/davprotocolbase_p.h
+    common/davurl.cpp
+    common/davurl.h
+    common/enums.h
+    common/etagcache.cpp
+    common/etagcache.h
+    common/protocolinfo.cpp
+    common/protocolinfo.h
+    common/utils.cpp
+    common/utils_p.h
 
- protocols/groupdavprotocol.cpp
+    protocols/groupdavprotocol.cpp
+    protocols/groupdavprotocol_p.h
 
- #KContacts
- protocols/carddavprotocol.cpp
+    #KContacts
+    protocols/carddavprotocol.cpp
+    protocols/carddavprotocol_p.h
 
- #KCalCore
- protocols/caldavprotocol.cpp
-)
+    #KCalCore
+    protocols/caldavprotocol.cpp
+    protocols/caldavprotocol_p.h
+    )
 
 
 ecm_generate_headers(KDAV_Camelcase_HEADERS
