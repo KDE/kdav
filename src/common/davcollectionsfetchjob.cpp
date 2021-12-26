@@ -19,7 +19,6 @@
 
 #include <QBuffer>
 #include <QColor>
-#include <QtXmlPatterns/QXmlQuery>
 
 using namespace KDAV;
 
@@ -176,32 +175,8 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
         }
 
         QByteArray resp = davJob->responseData();
-        QBuffer buffer(&resp);
-        buffer.open(QIODevice::ReadOnly);
-
-        QXmlQuery xquery;
-        if (!xquery.setFocus(&buffer)) {
-            setError(ERR_COLLECTIONFETCH_XQUERY_SETFOCUS);
-            setErrorTextFromDavError();
-            subjobFinished();
-            return;
-        }
-
-        xquery.setQuery(DavManager::davProtocol(mUrl.protocol())->collectionsXQuery());
-        if (!xquery.isValid()) {
-            setError(ERR_COLLECTIONFETCH_XQUERY_INVALID);
-            setErrorTextFromDavError();
-            subjobFinished();
-            return;
-        }
-
-        QString responsesStr;
-        xquery.evaluateTo(&responsesStr);
-        responsesStr.prepend(QLatin1String("<responses>"));
-        responsesStr.append(QLatin1String("</responses>"));
-
         QDomDocument document;
-        if (!document.setContent(responsesStr, true)) {
+        if (!document.setContent(resp, true)) {
             setError(ERR_COLLECTIONFETCH);
             setErrorTextFromDavError();
             subjobFinished();
@@ -302,6 +277,10 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
 
                 // extract display name
                 const QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
+                if (!DavManager::davProtocol(mUrl.protocol())->containsCollection(propElement)) {
+                    responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
+                    continue;
+                }
                 const QDomElement displaynameElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("displayname"));
                 const QString displayName = displaynameElement.text();
 

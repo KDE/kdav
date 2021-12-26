@@ -19,7 +19,7 @@ public:
     Q_REQUIRED_RESULT QString principalHomeSet() const override;
     Q_REQUIRED_RESULT QString principalHomeSetNS() const override;
     Q_REQUIRED_RESULT KDAV::XMLQueryBuilder::Ptr collectionsQuery() const override;
-    Q_REQUIRED_RESULT QString collectionsXQuery() const override;
+    Q_REQUIRED_RESULT bool containsCollection(const QDomElement &propElem) const override;
     Q_REQUIRED_RESULT QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const override;
     Q_REQUIRED_RESULT KDAV::XMLQueryBuilder::Ptr itemsReportQuery(const QStringList &urls) const override;
     Q_REQUIRED_RESULT QString responseNamespace() const override;

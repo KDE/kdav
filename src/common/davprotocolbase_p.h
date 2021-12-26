@@ -102,10 +102,10 @@ public:
     virtual XMLQueryBuilder::Ptr collectionsQuery() const = 0;
 
     /**
-     * Returns the XQuery string that filters out the relevant XML elements
-     * from the result returned by the query that is provided by collectionQuery().
+     * Returns @c true if the given <prop> element of a multistatus response contains a
+     * valid collection for this protocol.
      */
-    virtual QString collectionsXQuery() const = 0;
+    virtual bool containsCollection(const QDomElement &propElem) const = 0;
 
     /**
      * Returns a list of XML documents that represent DAV queries to

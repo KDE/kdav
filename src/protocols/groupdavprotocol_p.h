@@ -17,7 +17,7 @@ public:
     Q_REQUIRED_RESULT bool useReport() const override;
     Q_REQUIRED_RESULT bool useMultiget() const override;
     Q_REQUIRED_RESULT KDAV::XMLQueryBuilder::Ptr collectionsQuery() const override;
-    Q_REQUIRED_RESULT QString collectionsXQuery() const override;
+    Q_REQUIRED_RESULT bool containsCollection(const QDomElement &propElem) const override;
     Q_REQUIRED_RESULT QVector<KDAV::XMLQueryBuilder::Ptr> itemsQueries() const override;
 
     Q_REQUIRED_RESULT KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const override;

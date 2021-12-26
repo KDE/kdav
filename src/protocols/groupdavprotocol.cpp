@@ -87,13 +87,11 @@ XMLQueryBuilder::Ptr GroupdavProtocol::collectionsQuery() const
     return XMLQueryBuilder::Ptr(new GroupdavCollectionQueryBuilder());
 }
 
-QString GroupdavProtocol::collectionsXQuery() const
+bool GroupdavProtocol::containsCollection(const QDomElement &propElem) const
 {
-    const QString query(
-        QStringLiteral("//*[(local-name()='vevent-collection' or local-name()='vtodo-collection' or local-name()='vcard-collection') and "
-                       "namespace-uri()='http://groupdav.org/']/ancestor::*[local-name()='response' and namespace-uri()='DAV:']"));
-
-    return query;
+    return !propElem.elementsByTagNameNS(QStringLiteral("http://groupdav.org/"), QStringLiteral("vevent-collection")).isEmpty()
+        || !propElem.elementsByTagNameNS(QStringLiteral("http://groupdav.org/"), QStringLiteral("vtodo-collection")).isEmpty()
+        || !propElem.elementsByTagNameNS(QStringLiteral("http://groupdav.org/"), QStringLiteral("vcard-collection")).isEmpty();
 }
 
 QVector<XMLQueryBuilder::Ptr> GroupdavProtocol::itemsQueries() const

@@ -135,7 +135,6 @@ PUBLIC
 PRIVATE
     Qt5::Xml
     Qt5::Gui
-    Qt5::XmlPatterns
     KF5::KIOCore
     KF5::I18n
     )
