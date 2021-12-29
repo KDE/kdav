@@ -133,8 +133,8 @@ target_link_libraries(KF5DAV
 PUBLIC
     KF5::CoreAddons
 PRIVATE
-    Qt5::Xml
-    Qt5::Gui
+    Qt${QT_MAJOR_VERSION}::Xml
+    Qt${QT_MAJOR_VERSION}::Gui
     KF5::KIOCore
     KF5::I18n
     )
