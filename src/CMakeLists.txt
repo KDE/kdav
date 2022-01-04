@@ -4,6 +4,9 @@ include_directories(
    protocols/
 )
 
+# KF6 FIXME: add module name to complete header visibility protection -> ${KDE_INSTALL_INCLUDEDIR_KF}/KDAV
+set(KDAV_INSTALL_INCLUDEDIR "${KDE_INSTALL_INCLUDEDIR_KF}")
+
 ########### next target ###############
 
 set(libkdav_SRCS
@@ -98,7 +101,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
 
 install(FILES
     ${KDAV_Camelcase_HEADERS}
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDAV
+    DESTINATION ${KDAV_INSTALL_INCLUDEDIR}/KDAV # for C++ namespace KDAV
     COMPONENT Devel
     )
 
@@ -106,7 +109,7 @@ install(FILES
     ${KDAV_HEADERS}
     ${CMAKE_CURRENT_BINARY_DIR}/kdav_export.h
 
-    DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/kdav
+    DESTINATION ${KDAV_INSTALL_INCLUDEDIR}/kdav # for C++ namespace KDAV
     COMPONENT Devel
     )
 
@@ -154,7 +157,7 @@ install(TARGETS
 
 ecm_generate_pri_file(BASE_NAME kdav
     LIB_NAME KF5DAV
-    FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDE_INSTALL_INCLUDEDIR_KF}
+    FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDAV_INSTALL_INCLUDEDIR}
     )
 
 install(FILES
@@ -162,8 +165,14 @@ install(FILES
     DESTINATION ${ECM_MKSPECS_INSTALL_DIR}
     )
 
-# ${KDE_INSTALL_INCLUDEDIR_KF} is added by KF5_INSTALL_TARGETS_DEFAULT_ARGS, so no need to add explicitly
-target_include_directories(KF5DAV INTERFACE "$<INSTALL_INTERFACE:${KDE_INSTALL_INCLUDEDIR_KF}/KDAV/;${KDE_INSTALL_INCLUDEDIR_KF}/kdav>")
+# KF6 FIXME: remove includes paths into C++ namespace prefix subdirs /KDAV & /kdav,
+# instead just point to module root include path KDAV_INSTALL_INCLUDEDIR
+# -> target_include_directories(KF5DAV INTERFACE "$<INSTALL_INTERFACE:${KDAV_INSTALL_INCLUDEDIR}>")
+# Consumers should only use includes with C++ namespace, like <kdav/foo.h> or <KDAV/Foo>,
+# as unnamespaced <foo.h> and <Foo> might clash with other (local) headers
+# For KF5 the current module root include path ${KDE_INSTALL_INCLUDEDIR_KF} is added by KF5_INSTALL_TARGETS_DEFAULT_ARGS, so not added explicitly here
+target_include_directories(KF5DAV INTERFACE "$<INSTALL_INTERFACE:${KDAV_INSTALL_INCLUDEDIR}/KDAV/;${KDAV_INSTALL_INCLUDEDIR}/kdav>")
+
 ecm_qt_install_logging_categories(EXPORT KDAV FILE kdav.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 if (BUILD_QCH)
