@@ -147,7 +147,6 @@ install(TARGETS
     KF5DAV
     EXPORT KF5DAVTargets
     ${KF5_INSTALL_TARGETS_DEFAULT_ARGS}
-    ${LIBRARY_NAMELINK}
     )
 
 ecm_generate_pri_file(BASE_NAME kdav
