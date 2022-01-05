@@ -151,6 +151,7 @@ install(TARGETS
 
 ecm_generate_pri_file(BASE_NAME kdav
     LIB_NAME KF5DAV
+    DEPS "KCoreAddons"
     FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDAV_INSTALL_INCLUDEDIR}
     )
 
