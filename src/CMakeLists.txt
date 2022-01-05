@@ -1,15 +1,18 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"libkdav\")
-include_directories(
-   common/
-   protocols/
-)
 
 # KF6 FIXME: add module name to complete header visibility protection -> ${KDE_INSTALL_INCLUDEDIR_KF}/KDAV
 set(KDAV_INSTALL_INCLUDEDIR "${KDE_INSTALL_INCLUDEDIR_KF}")
 
-########### next target ###############
+add_library(KF5DAV)
+add_library(KF5::DAV ALIAS KF5DAV)
 
-set(libkdav_SRCS
+set_target_properties(KF5DAV PROPERTIES
+    VERSION     ${KDAV_VERSION}
+    SOVERSION   ${KDAV_SOVERSION}
+    EXPORT_NAME DAV
+)
+
+target_sources(KF5DAV PRIVATE
     common/davcollection.cpp
     common/davcollectiondeletejob.cpp
     common/davcollectiondeletejob.h
@@ -113,8 +116,7 @@ install(FILES
     COMPONENT Devel
     )
 
-
-ecm_qt_declare_logging_category(libkdav_SRCS
+ecm_qt_declare_logging_category(KF5DAV
     HEADER libkdav_debug.h
     IDENTIFIER KDAV_LOG
     CATEGORY_NAME kf.dav
@@ -123,14 +125,12 @@ ecm_qt_declare_logging_category(libkdav_SRCS
     EXPORT KDAV
 )
 
-
-add_library(KF5DAV
-   ${libkdav_SRCS}
-   )
-
 generate_export_header(KF5DAV BASE_NAME kdav)
 
-add_library(KF5::DAV ALIAS KF5DAV)
+target_include_directories(KF5DAV PRIVATE
+   common
+   protocols
+)
 
 target_link_libraries(KF5DAV
 PUBLIC
@@ -142,11 +142,6 @@ PRIVATE
     KF5::I18n
     )
 
-set_target_properties(KF5DAV PROPERTIES
-    VERSION ${KDAV_VERSION}
-    SOVERSION ${KDAV_SOVERSION}
-    EXPORT_NAME DAV
-    )
 
 install(TARGETS
     KF5DAV
