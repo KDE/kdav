@@ -1,7 +1,6 @@
 add_definitions(-DTRANSLATION_DOMAIN=\"libkdav\")
 
-# KF6 FIXME: add module name to complete header visibility protection -> ${KDE_INSTALL_INCLUDEDIR_KF}/KDAV
-set(KDAV_INSTALL_INCLUDEDIR "${KDE_INSTALL_INCLUDEDIR_KF}")
+set(KDAV_INSTALL_INCLUDEDIR "${KDE_INSTALL_INCLUDEDIR_KF}/KDAV")
 
 add_library(KF5DAV)
 add_library(KF5::DAV ALIAS KF5DAV)
@@ -160,13 +159,7 @@ install(FILES
     DESTINATION ${ECM_MKSPECS_INSTALL_DIR}
     )
 
-# KF6 FIXME: remove includes paths into C++ namespace prefix subdirs /KDAV & /kdav,
-# instead just point to module root include path KDAV_INSTALL_INCLUDEDIR
-# -> target_include_directories(KF5DAV INTERFACE "$<INSTALL_INTERFACE:${KDAV_INSTALL_INCLUDEDIR}>")
-# Consumers should only use includes with C++ namespace, like <kdav/foo.h> or <KDAV/Foo>,
-# as unnamespaced <foo.h> and <Foo> might clash with other (local) headers
-# For KF5 the current module root include path ${KDE_INSTALL_INCLUDEDIR_KF} is added by KF5_INSTALL_TARGETS_DEFAULT_ARGS, so not added explicitly here
-target_include_directories(KF5DAV INTERFACE "$<INSTALL_INTERFACE:${KDAV_INSTALL_INCLUDEDIR}/KDAV/;${KDAV_INSTALL_INCLUDEDIR}/kdav>")
+target_include_directories(KF5DAV INTERFACE "$<INSTALL_INTERFACE:${KDAV_INSTALL_INCLUDEDIR}>")
 
 ecm_qt_install_logging_categories(EXPORT KDAV FILE kdav.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
