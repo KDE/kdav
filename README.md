@@ -50,3 +50,7 @@ not listed here.
 * Google calendar
   https://www.google.com/calendar/dav/<CALENDAR_ID>/events
   - CalDAV working.
+
+* iCloud
+  https://caldav.icloud.com/
+  - CalDAV working ([App-specific password required](https://support.apple.com/en-us/HT204397)).
