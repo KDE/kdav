@@ -199,7 +199,7 @@ void DavItemsListJobPrivate::davJobFinished(KJob *job)
 
             // check whether it is a DAV collection ...
             const QDomElement resourcetypeElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("resourcetype"));
-            if (!responseElement.isNull()) {
+            if (!resourcetypeElement.isNull()) {
                 const QDomElement collectionElement = Utils::firstChildElementNS(resourcetypeElement, QStringLiteral("DAV:"), QStringLiteral("collection"));
                 if (!collectionElement.isNull()) {
                     responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
