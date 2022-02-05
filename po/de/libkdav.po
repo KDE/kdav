@@ -1,0 +1,168 @@
+# Burkhard Lück <lueck@hube-lueck.de>, 2009, 2011, 2013, 2014, 2015, 2017, 2018, 2020, 2021.
+# Frederik Schwarzer <schwarzer@kde.org>, 2010, 2011, 2016, 2020.
+# Panagiotis Papadopoulos <pano_90@gmx.net>, 2010.
+# Peter Rüthemann <peter.ruethemann@gmx.ch>, 2010.
+# Torbjörn Klatt <opensource@torbjoern-klatt.de>, 2011.
+# Rolf Eike Beer <kde@opensource.sf-tec.de>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: akonadi_davgroupware_resource\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-03-09 02:40+0100\n"
+"PO-Revision-Date: 2021-05-31 15:13+0200\n"
+"Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: common/daverror.cpp:88
+#, kde-format
+msgid "Invalid username/password"
+msgstr "Ungültiger Benutzername/Passwort"
+
+#: common/daverror.cpp:90
+#, kde-format
+msgid "Access forbidden"
+msgstr "Zugriff unzulässig"
+
+#: common/daverror.cpp:92
+#, kde-format
+msgid "Resource not found"
+msgstr "Die Ressource wurde nicht gefunden"
+
+#: common/daverror.cpp:94
+#, kde-format
+msgid "HTTP error"
+msgstr "HTTP-Fehler"
+
+#: common/daverror.cpp:96
+#, kde-format
+msgid ""
+"There was a problem with the request.\n"
+"%1 (%2)."
+msgstr ""
+"Bei der Abfrage ist ein Problem aufgetreten\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:99
+#, kde-format
+msgid "Protocol for the collection does not support MULTIGET"
+msgstr "Das Protokoll für die Sammlung unterstützt MULTIGET nicht."
+
+#: common/daverror.cpp:102
+#, kde-format
+msgid ""
+"The server encountered an error that prevented it from completing your "
+"request: %1 (%2)"
+msgstr ""
+"Der Server hat einen Fehler festgestellt, der die Fertigstellung Ihrer "
+"Abfrage verhindert: %1 (%2)"
+
+#: common/daverror.cpp:105
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been deleted "
+"from the server.\n"
+"%1 (%2)."
+msgstr ""
+"Bei der Abfrage ist ein Problem aufgetreten. Die Sammlung wurde nicht vom "
+"Server gelöscht.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:108
+#, kde-format
+msgid "Invalid responses from backend"
+msgstr "Ungültige Antwort des Treibers"
+
+#: common/daverror.cpp:111
+#, kde-format
+msgid "Error setting focus for XQuery"
+msgstr "Fehler beim Bestimmen des Fokus für XQuery"
+
+#: common/daverror.cpp:114
+#, kde-format
+msgid "Invalid XQuery submitted by DAV implementation"
+msgstr "DAV-Implementation hat ungültige XQuery übermittelt"
+
+#: common/daverror.cpp:118
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been modified "
+"on the server.\n"
+"%1 (%2)."
+msgstr ""
+"Bei der Abfrage ist ein Problem aufgetreten. Die Sammlung wurde auf dem "
+"Server nicht verändert.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:124
+#, kde-format
+msgid "No properties to change or remove"
+msgstr ""
+"Keine Eigenschaften vorhanden, die verändert oder gelöscht werden können."
+
+#: common/daverror.cpp:127
+#, kde-format
+msgid "There was an error when modifying the properties"
+msgstr "Problem beim Anpassen der Eigenschaften"
+
+#: common/daverror.cpp:129
+#, kde-format
+msgid ""
+"\n"
+"The server returned more information:\n"
+"%1"
+msgstr ""
+"\n"
+"Der Server hat weitere Informationen zurückgegeben:\n"
+"%1"
+
+#: common/daverror.cpp:133
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been created on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Bei der Abfrage ist ein Problem aufgetreten. Der Eintrag wurde auf dem "
+"Server nicht erstellt\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:136
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been deleted from the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Bei der Abfrage ist ein Problem aufgetreten. Der Eintrag wurde nicht vom "
+"Server gelöscht\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:139
+#, kde-format
+msgid ""
+"There was a problem with the request. The item was not modified on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Bei der Abfrage ist ein Problem aufgetreten. Der Eintrag wurde auf dem "
+"Server nicht verändert\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:142
+#, kde-format
+msgid "There was a problem with the request."
+msgstr "Bei der Abfrage ist ein Problem aufgetreten"
+
+#: common/daverror.cpp:146
+#, kde-format
+msgid ""
+"There was a problem with the request. The requested MIME types are not "
+"supported."
+msgstr ""
+"Bei der Abfrage ist ein Problem aufgetreten. Die angeforderte MIME-Typen "
+"werden nicht unterstützt."
