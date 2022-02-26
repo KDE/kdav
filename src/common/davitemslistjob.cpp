@@ -70,7 +70,7 @@ void DavItemsListJob::start()
     const DavProtocolBase *protocol = DavManager::davProtocol(d->mUrl.protocol());
     Q_ASSERT(protocol);
 
-    const QVector queries = protocol->itemsQueries();
+    const auto queries = protocol->itemsQueries();
     for (XMLQueryBuilder::Ptr builder : queries) {
         if (!d->mRangeStart.isEmpty()) {
             builder->setParameter(QStringLiteral("start"), d->mRangeStart);

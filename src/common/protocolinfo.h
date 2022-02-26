@@ -23,29 +23,29 @@ namespace ProtocolInfo
  * there is no need to call Akonadi::ResourceBase::retrieveItem() for every single
  * DAV resource.
  */
-KDAV_EXPORT Q_REQUIRED_RESULT bool useMultiget(KDAV::Protocol protocol);
+Q_REQUIRED_RESULT KDAV_EXPORT bool useMultiget(KDAV::Protocol protocol);
 
 /** Returns the principal home set of @p protocol. */
-KDAV_EXPORT Q_REQUIRED_RESULT QString principalHomeSet(KDAV::Protocol protocol);
+Q_REQUIRED_RESULT KDAV_EXPORT QString principalHomeSet(KDAV::Protocol protocol);
 
 /** Returns the principal home set namespace of @p protocol. */
-KDAV_EXPORT Q_REQUIRED_RESULT QString principalHomeSetNS(KDAV::Protocol protocol);
+Q_REQUIRED_RESULT KDAV_EXPORT QString principalHomeSetNS(KDAV::Protocol protocol);
 
 /**
  * Returns the untranslated name of the given DAV @p protocol dialect.
  */
-KDAV_EXPORT Q_REQUIRED_RESULT QString protocolName(KDAV::Protocol protocol);
+Q_REQUIRED_RESULT KDAV_EXPORT QString protocolName(KDAV::Protocol protocol);
 
 /**
  * Returns the protocol matching the given name. This is the opposite of
  * ProtocolInfo::protocolName().
  */
-KDAV_EXPORT Q_REQUIRED_RESULT KDAV::Protocol protocolByName(const QString &name);
+Q_REQUIRED_RESULT KDAV_EXPORT KDAV::Protocol protocolByName(const QString &name);
 
 /**
  * Returns the mimetype that shall be used for contact DAV resources using @p protocol.
  */
-KDAV_EXPORT Q_REQUIRED_RESULT QString contactsMimeType(KDAV::Protocol protocol);
+Q_REQUIRED_RESULT KDAV_EXPORT QString contactsMimeType(KDAV::Protocol protocol);
 }
 
 }
