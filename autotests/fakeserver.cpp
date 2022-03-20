@@ -96,7 +96,7 @@ void FakeServer::addScenario(const QList<QByteArray> &scenario)
 void FakeServer::addScenarioFromFile(const QString &fileName)
 {
     QFile file(fileName);
-    file.open(QFile::ReadOnly);
+    file.open(QIODevice::ReadOnly | QIODevice::Text);
 
     QList<QByteArray> scenario;
 
