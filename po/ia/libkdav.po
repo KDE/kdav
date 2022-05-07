@@ -1,0 +1,166 @@
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kdav package.
+#
+# giovanni <g.sora@tiscali.it>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: kdav\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2021-03-09 02:40+0100\n"
+"PO-Revision-Date: 2020-02-12 14:05+0100\n"
+"Last-Translator: giovanni <g.sora@tiscali.it>\n"
+"Language-Team: Interlingua <kde-i18n-it@kde.org>\n"
+"Language: ia\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Lokalize 18.12.3\n"
+
+#: common/daverror.cpp:88
+#, kde-format
+msgid "Invalid username/password"
+msgstr "Invalide nomine de usator / contrasigno"
+
+#: common/daverror.cpp:90
+#, kde-format
+msgid "Access forbidden"
+msgstr "Accesso prohibite"
+
+#: common/daverror.cpp:92
+#, kde-format
+msgid "Resource not found"
+msgstr "Il non trovava ressource"
+
+#: common/daverror.cpp:94
+#, kde-format
+msgid "HTTP error"
+msgstr "Error HTTP"
+
+#: common/daverror.cpp:96
+#, kde-format
+msgid ""
+"There was a problem with the request.\n"
+"%1 (%2)."
+msgstr ""
+"Il habeva un problema con le requesta.\n"
+" %1(%2)."
+
+#: common/daverror.cpp:99
+#, kde-format
+msgid "Protocol for the collection does not support MULTIGET"
+msgstr "Le protocollo pro le collection non supporta MULTIGET"
+
+#: common/daverror.cpp:102
+#, kde-format
+msgid ""
+"The server encountered an error that prevented it from completing your "
+"request: %1 (%2)"
+msgstr ""
+"Le servitor incontrava un error que impediva ex completar tu requesta: %1 "
+"(%2)"
+
+#: common/daverror.cpp:105
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been deleted "
+"from the server.\n"
+"%1 (%2)."
+msgstr ""
+"Il habeva un problema con le requesta. Le collection non ha essite delite ex "
+"le servitor.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:108
+#, kde-format
+msgid "Invalid responses from backend"
+msgstr "Responsas invalide ex retro-administration"
+
+#: common/daverror.cpp:111
+#, kde-format
+msgid "Error setting focus for XQuery"
+msgstr "Error durante que il fixava foco per XQuery"
+
+#: common/daverror.cpp:114
+#, kde-format
+msgid "Invalid XQuery submitted by DAV implementation"
+msgstr "XQuery invalide submittite per implementation de DAV"
+
+#: common/daverror.cpp:118
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been modified "
+"on the server.\n"
+"%1 (%2)."
+msgstr ""
+"Il habeva un problema con le requesta. Le collection non ha essite "
+"modificate sur le servitor \n"
+" %1 (%2)"
+
+#: common/daverror.cpp:124
+#, kde-format
+msgid "No properties to change or remove"
+msgstr "Nulle proprietates de modificar o remover"
+
+#: common/daverror.cpp:127
+#, kde-format
+msgid "There was an error when modifying the properties"
+msgstr "Il haveba un error durante que on modificava le proprietates"
+
+#: common/daverror.cpp:129
+#, kde-format
+msgid ""
+"\n"
+"The server returned more information:\n"
+"%1"
+msgstr ""
+"\n"
+"Le servitor retornava plure de information:\n"
+"%1"
+
+#: common/daverror.cpp:133
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been created on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Il habeva un problema con le requesta. Le elemento non ha essite create sur "
+"le servitor.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:136
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been deleted from the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Il habeva un problema con le requesta. Le elemento non ha essite delite ex "
+"le servitor.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:139
+#, kde-format
+msgid ""
+"There was a problem with the request. The item was not modified on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"Il habeva un problema con le requesta. Le elemento non esseva modificate sur "
+"le servitor.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:142
+#, kde-format
+msgid "There was a problem with the request."
+msgstr "Il habeva un problema con le requesta."
+
+#: common/daverror.cpp:146
+#, kde-format
+msgid ""
+"There was a problem with the request. The requested MIME types are not "
+"supported."
+msgstr ""
+"Il habeva un problema con le requesta. Le requirite typos MIME non es "
+"supportate."
