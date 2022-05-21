@@ -13,8 +13,8 @@
 
 #include <QDomDocument>
 #include <QMap>
-#include <QSharedPointer>
 #include <QVariant>
+#include <memory>
 
 namespace KDAV
 {
@@ -24,7 +24,7 @@ namespace KDAV
 class XMLQueryBuilder
 {
 public:
-    typedef QSharedPointer<XMLQueryBuilder> Ptr;
+    typedef std::shared_ptr<XMLQueryBuilder> Ptr;
 
     virtual ~XMLQueryBuilder();
 
