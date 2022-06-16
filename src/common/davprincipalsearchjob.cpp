@@ -32,7 +32,11 @@ public:
     QString mFilter;
     int mPrincipalPropertySearchSubJobCount = 0;
     bool mPrincipalPropertySearchSubJobSuccessful = false;
-    QList<QPair<QString, QString>> mFetchProperties;
+    struct PropertyInfo {
+        QString propNS;
+        QString propName;
+    };
+    std::vector<PropertyInfo> mFetchProperties;
     QVector<DavPrincipalSearchJob::Result> mResults;
 };
 }
@@ -49,12 +53,7 @@ DavPrincipalSearchJob::DavPrincipalSearchJob(const DavUrl &url, DavPrincipalSear
 void DavPrincipalSearchJob::fetchProperty(const QString &name, const QString &ns)
 {
     Q_D(DavPrincipalSearchJob);
-    QString propNamespace = ns;
-    if (propNamespace.isEmpty()) {
-        propNamespace = QStringLiteral("DAV:");
-    }
-
-    d->mFetchProperties << QPair<QString, QString>(propNamespace, name);
+    d->mFetchProperties.push_back({!ns.isEmpty() ? ns : QStringLiteral("DAV:"), name});
 }
 
 DavUrl DavPrincipalSearchJob::davUrl() const
@@ -311,16 +310,12 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
     }
 
     // All requested properties are now under propElement, so let's find them
-    typedef QPair<QString, QString> PropertyPair;
-    for (const PropertyPair &fetchProperty : std::as_const(mFetchProperties)) {
-        QDomNodeList fetchNodes = propElement.elementsByTagNameNS(fetchProperty.first, fetchProperty.second);
+    for (const auto &[propNS, propName] : mFetchProperties) {
+        const QDomNodeList fetchNodes = propElement.elementsByTagNameNS(propNS, propName);
+        mResults.reserve(mResults.size() + fetchNodes.size());
         for (int i = 0; i < fetchNodes.size(); ++i) {
-            QDomElement fetchElement = fetchNodes.at(i).toElement();
-            DavPrincipalSearchJob::Result result;
-            result.propertyNamespace = fetchProperty.first;
-            result.property = fetchProperty.second;
-            result.value = fetchElement.text();
-            mResults << result;
+            const QDomElement fetchElement = fetchNodes.at(i).toElement();
+            mResults.push_back({propNS, propName, fetchElement.text()});
         }
     }
 
@@ -384,9 +379,8 @@ void DavPrincipalSearchJobPrivate::buildReportQuery(QDomDocument &query) const
     prop = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
     principalPropertySearch.appendChild(prop);
 
-    typedef QPair<QString, QString> PropertyPair;
-    for (const PropertyPair &fetchProperty : std::as_const(mFetchProperties)) {
-        QDomElement elem = query.createElementNS(fetchProperty.first, fetchProperty.second);
+    for (const auto &[propNS, propName] : mFetchProperties) {
+        QDomElement elem = query.createElementNS(propNS, propName);
         prop.appendChild(elem);
     }
 }
