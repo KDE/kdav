@@ -67,7 +67,7 @@ int Error::responseCode() const
 QString KDAV::Error::translatedJobError() const
 {
     QString err;
-    if (d->mJobErrorCode > 0 && d->mJobErrorCode != KIO::ERR_SLAVE_DEFINED) {
+    if (d->mJobErrorCode > 0 && d->mJobErrorCode != KIO::ERR_WORKER_DEFINED) {
         err = KIO::buildErrorString(d->mJobErrorCode, d->mErrorText);
     } else {
         err = d->mErrorText;

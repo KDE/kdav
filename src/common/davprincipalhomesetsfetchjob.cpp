@@ -97,7 +97,7 @@ void DavPrincipalHomeSetsFetchJobPrivate::davJobFinished(KJob *job)
     // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
     if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
         QString err;
-        if (davJob->error() && davJob->error() != KIO::ERR_SLAVE_DEFINED) {
+        if (davJob->error() && davJob->error() != KIO::ERR_WORKER_DEFINED) {
             err = KIO::buildErrorString(davJob->error(), davJob->errorText());
         } else {
             err = davJob->errorText();
