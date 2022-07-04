@@ -51,15 +51,20 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
 
     const KDAV::DavCollection::List collections = job->collections();
     QCOMPARE(collections.count(), 2);
+    int calDavIdx = 0;
+    int cardDavIdx = 1;
+    if (collections.at(0).contentTypes() == DavCollection::Contacts) { // put things in a defined order
+        std::swap(calDavIdx, cardDavIdx);
+    }
 
-    const KDAV::DavCollection calendar = collections.at(0);
+    const KDAV::DavCollection calendar = collections.at(calDavIdx);
     QCOMPARE(calendar.displayName(), QStringLiteral("Test1 User"));
     QCOMPARE(calendar.contentTypes(), DavCollection::Events | DavCollection::Todos | DavCollection::FreeBusy | DavCollection::Journal);
     QCOMPARE(calendar.url().url().path(), QStringLiteral("/caldav.php/test1.user/home/"));
     QCOMPARE(calendar.CTag(), QStringLiteral("12345"));
     QCOMPARE(calendar.privileges(), KDAV::Read);
 
-    const KDAV::DavCollection addressbook = collections.at(1);
+    const KDAV::DavCollection addressbook = collections.at(cardDavIdx);
     QCOMPARE(addressbook.displayName(), QStringLiteral("My Address Book"));
     QCOMPARE(addressbook.contentTypes(), DavCollection::Contacts);
     QCOMPARE(addressbook.url().url().path(), QStringLiteral("/carddav.php/test1.user/home/"));
@@ -67,13 +72,13 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
     QCOMPARE(addressbook.privileges(), KDAV::All);
 
     QCOMPARE(spy.count(), 2);
-    QCOMPARE(int(spy.at(0).at(0).value<KDAV::Protocol>()), int(KDAV::CalDav));
-    QCOMPARE(spy.at(0).at(1).toString(), calendar.url().url().toString());
-    QCOMPARE(spy.at(0).at(2).toString(), url.toString());
+    QCOMPARE(int(spy.at(calDavIdx).at(0).value<KDAV::Protocol>()), int(KDAV::CalDav));
+    QCOMPARE(spy.at(calDavIdx).at(1).toString(), calendar.url().url().toString());
+    QCOMPARE(spy.at(calDavIdx).at(2).toString(), url.toString());
 
-    QCOMPARE(int(spy.at(1).at(0).value<KDAV::Protocol>()), int(KDAV::CardDav));
-    QCOMPARE(spy.at(1).at(1).toString(), addressbook.url().url().toString());
-    QCOMPARE(spy.at(1).at(2).toString(), url2.toString());
+    QCOMPARE(int(spy.at(cardDavIdx).at(0).value<KDAV::Protocol>()), int(KDAV::CardDav));
+    QCOMPARE(spy.at(cardDavIdx).at(1).toString(), addressbook.url().url().toString());
+    QCOMPARE(spy.at(cardDavIdx).at(2).toString(), url2.toString());
 }
 
 void DavCollectionsMultiFetchJobTest::shouldFailOnError()
