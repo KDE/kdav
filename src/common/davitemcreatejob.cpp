@@ -9,12 +9,9 @@
 
 #include "daverror.h"
 #include "davitemfetchjob.h"
-#include "davmanager_p.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>
-
-#include "libkdav_debug.h"
 
 using namespace KDAV;
 

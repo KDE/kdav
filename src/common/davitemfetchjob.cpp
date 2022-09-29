@@ -8,7 +8,6 @@
 #include "davjobbase_p.h"
 
 #include "daverror.h"
-#include "davmanager_p.h"
 
 #include <KIO/DavJob>
 #include <KIO/Job>

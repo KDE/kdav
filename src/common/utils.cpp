@@ -4,18 +4,11 @@
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
 
-#include "protocolinfo.h"
 #include "utils_p.h"
 
 #include "enums.h"
 
-#include "davitem.h"
-#include "davmanager_p.h"
-#include "davprotocolbase_p.h"
-
 #include <QString>
-
-#include "libkdav_debug.h"
 
 using namespace KDAV;
 

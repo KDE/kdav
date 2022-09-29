@@ -9,7 +9,6 @@
 
 #include "daverror.h"
 #include "davitemfetchjob.h"
-#include "davmanager_p.h"
 
 #include <KIO/Job>
 
