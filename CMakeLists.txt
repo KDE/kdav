@@ -29,7 +29,7 @@ include(ECMDeprecationSettings)
 set(REQUIRED_QT_VERSION 6.4.0)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui Test)
 
-find_package(KF5 ${KF_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
+find_package(KF6 ${KF_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
 
 # setup lib
 
@@ -43,8 +43,8 @@ ecm_set_disabled_deprecation_versions(
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KDAV
     VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdav_version.h"
-    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5DAVConfigVersion.cmake"
-    SOVERSION 5
+    PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6DAVConfigVersion.cmake"
+    SOVERSION 6
     )
 
 ki18n_install(po)
@@ -55,32 +55,32 @@ if(BUILD_TESTING)
     add_subdirectory(test)
 endif()
 
-set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF5DAV")
+set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6DAV")
 
 if (BUILD_QCH)
     ecm_install_qch_export(
-        TARGETS KF5DAV_QCH
-        FILE KF5DAVQchTargets.cmake
+        TARGETS KF6DAV_QCH
+        FILE KF6DAVQchTargets.cmake
         DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
         COMPONENT Devel
     )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF5DAVQchTargets.cmake\")")
+    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6DAVQchTargets.cmake\")")
 endif()
 
 configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/KF5DAVConfig.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/KF5DAVConfig.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/KF6DAVConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF6DAVConfig.cmake"
     INSTALL_DESTINATION  ${CMAKECONFIG_INSTALL_DIR}
     )
 
 install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/KF5DAVConfig.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/KF5DAVConfigVersion.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF6DAVConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/KF6DAVConfigVersion.cmake"
     DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
     COMPONENT Devel
     )
 
-install(EXPORT KF5DAVTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5DAVTargets.cmake NAMESPACE KF5::)
+install(EXPORT KF6DAVTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF6DAVTargets.cmake NAMESPACE KF6::)
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/kdav_version.h

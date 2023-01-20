@@ -5,7 +5,7 @@ add_executable(testserver testserver.cpp)
 
 target_link_libraries(testserver
     Qt${QT_MAJOR_VERSION}::Core
-    KF5::DAV
+    KF6::DAV
     Qt${QT_MAJOR_VERSION}::Xml
     )
 

@@ -2,16 +2,16 @@ add_definitions(-DTRANSLATION_DOMAIN=\"libkdav\")
 
 set(KDAV_INSTALL_INCLUDEDIR "${KDE_INSTALL_INCLUDEDIR_KF}/KDAV")
 
-add_library(KF5DAV)
-add_library(KF5::DAV ALIAS KF5DAV)
+add_library(KF6DAV)
+add_library(KF6::DAV ALIAS KF6DAV)
 
-set_target_properties(KF5DAV PROPERTIES
+set_target_properties(KF6DAV PROPERTIES
     VERSION     ${KDAV_VERSION}
     SOVERSION   ${KDAV_SOVERSION}
     EXPORT_NAME DAV
 )
 
-target_sources(KF5DAV PRIVATE
+target_sources(KF6DAV PRIVATE
     common/davcollection.cpp
     common/davcollectiondeletejob.cpp
     common/davcollectiondeletejob.h
@@ -115,7 +115,7 @@ install(FILES
     COMPONENT Devel
     )
 
-ecm_qt_declare_logging_category(KF5DAV
+ecm_qt_declare_logging_category(KF6DAV
     HEADER libkdav_debug.h
     IDENTIFIER KDAV_LOG
     CATEGORY_NAME kf.dav
@@ -124,32 +124,32 @@ ecm_qt_declare_logging_category(KF5DAV
     EXPORT KDAV
 )
 
-generate_export_header(KF5DAV BASE_NAME kdav)
+generate_export_header(KF6DAV BASE_NAME kdav)
 
-target_include_directories(KF5DAV PRIVATE
+target_include_directories(KF6DAV PRIVATE
    common
    protocols
 )
 
-target_link_libraries(KF5DAV
+target_link_libraries(KF6DAV
 PUBLIC
-    KF5::CoreAddons
+    KF6::CoreAddons
 PRIVATE
     Qt${QT_MAJOR_VERSION}::Xml
     Qt${QT_MAJOR_VERSION}::Gui
-    KF5::KIOCore
-    KF5::I18n
+    KF6::KIOCore
+    KF6::I18n
     )
 
 
 install(TARGETS
-    KF5DAV
-    EXPORT KF5DAVTargets
+    KF6DAV
+    EXPORT KF6DAVTargets
     ${KF_INSTALL_TARGETS_DEFAULT_ARGS}
     )
 
 ecm_generate_pri_file(BASE_NAME KDAV
-    LIB_NAME KF5DAV
+    LIB_NAME KF6DAV
     DEPS "KCoreAddons"
     FILENAME_VAR PRI_FILENAME INCLUDE_INSTALL_DIR ${KDAV_INSTALL_INCLUDEDIR}
     )
@@ -159,15 +159,15 @@ install(FILES
     DESTINATION ${ECM_MKSPECS_INSTALL_DIR}
     )
 
-target_include_directories(KF5DAV INTERFACE "$<INSTALL_INTERFACE:${KDAV_INSTALL_INCLUDEDIR}>")
+target_include_directories(KF6DAV INTERFACE "$<INSTALL_INTERFACE:${KDAV_INSTALL_INCLUDEDIR}>")
 
 ecm_qt_install_logging_categories(EXPORT KDAV FILE kdav.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
 if (BUILD_QCH)
     ecm_add_qch(
-        KF5DAV_QCH
+        KF6DAV_QCH
         NAME KDAV
-        BASE_NAME KF5DAV
+        BASE_NAME KF6DAV
         VERSION ${KF_VERSION}
         ORG_DOMAIN org.kde
         SOURCES # using only public headers, to cover only public API
@@ -175,7 +175,7 @@ if (BUILD_QCH)
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
             Qt5Gui_QCH
-            KF5CoreAddons_QCH
+            KF6CoreAddons_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
         BLANK_MACROS

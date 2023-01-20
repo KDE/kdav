@@ -10,8 +10,8 @@ deprecated: false
 release: true
 libraries:
  - qmake: KDAV
-   cmake: "KF5::DAV"
-cmakename: KF5DAV
+   cmake: "KF6::DAV"
+cmakename: KF6DAV
 
 public_lib: true
 group: Frameworks
