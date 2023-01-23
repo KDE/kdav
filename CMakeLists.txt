@@ -27,7 +27,7 @@ include(ECMDeprecationSettings)
 
 
 set(REQUIRED_QT_VERSION 6.4.0)
-find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui Test)
+find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui Test)
 
 find_package(KF6 ${KF_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
 

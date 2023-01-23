@@ -135,8 +135,8 @@ target_link_libraries(KF6DAV
 PUBLIC
     KF6::CoreAddons
 PRIVATE
-    Qt${QT_MAJOR_VERSION}::Xml
-    Qt${QT_MAJOR_VERSION}::Gui
+    Qt6::Xml
+    Qt6::Gui
     KF6::KIOCore
     KF6::I18n
     )
@@ -174,7 +174,7 @@ if (BUILD_QCH)
             ${KDAV_HEADERS}
         MD_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md"
         LINK_QCHS
-            Qt5Gui_QCH
+            Qt6Gui_QCH
             KF6CoreAddons_QCH
         INCLUDE_DIRS
             ${CMAKE_CURRENT_BINARY_DIR}
