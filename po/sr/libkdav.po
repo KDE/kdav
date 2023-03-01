@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libkdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2020-04-06 03:29+0200\n"
+"POT-Creation-Date: 2021-03-09 02:40+0100\n"
 "PO-Revision-Date: 2017-12-17 18:01+0100\n"
 "Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -18,27 +18,27 @@ msgstr ""
 "X-Text-Markup: kde4\n"
 "X-Environment: kde\n"
 
-#: common/daverror.cpp:87
+#: common/daverror.cpp:88
 #, kde-format
 msgid "Invalid username/password"
 msgstr "Лоше корисничко име или лозинка"
 
-#: common/daverror.cpp:89
+#: common/daverror.cpp:90
 #, kde-format
 msgid "Access forbidden"
 msgstr "Приступ забрањен"
 
-#: common/daverror.cpp:91
+#: common/daverror.cpp:92
 #, kde-format
 msgid "Resource not found"
 msgstr "Ресурс није нађен"
 
-#: common/daverror.cpp:93
+#: common/daverror.cpp:94
 #, kde-format
 msgid "HTTP error"
 msgstr "ХТТП грешка"
 
-#: common/daverror.cpp:95
+#: common/daverror.cpp:96
 #, kde-format
 msgid ""
 "There was a problem with the request.\n"
@@ -70,17 +70,17 @@ msgstr ""
 "Дошло је до проблема са захтевом. Збирка није обрисана са сервера.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:109
+#: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "Неисправни одговори из позадине."
 
-#: common/daverror.cpp:112
+#: common/daverror.cpp:111
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "Грешка у постављању фокуса за икс‑упит."
 
-#: common/daverror.cpp:115
+#: common/daverror.cpp:114
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "Изведба ДАВ‑а предала је лош икс‑упит."
@@ -95,17 +95,17 @@ msgstr ""
 "Дошло је до проблема са захтевом. Збирка није измењена на серверу.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:122
+#: common/daverror.cpp:124
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "Нема својстава за мењање или уклањање."
 
-#: common/daverror.cpp:125
+#: common/daverror.cpp:127
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "Грешка при мењању својстава."
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:129
 #, kde-format
 msgid ""
 "\n"
@@ -116,7 +116,7 @@ msgstr ""
 "Сервер је вратио још података:\n"
 "%1"
 
-#: common/daverror.cpp:131
+#: common/daverror.cpp:133
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -126,7 +126,7 @@ msgstr ""
 "Дошло је до проблема са захтевом. Ставка није створена на серверу.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:135
+#: common/daverror.cpp:136
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -146,12 +146,12 @@ msgstr ""
 "Дошло је до проблема са захтевом, ставка није измењена на серверу.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:144
+#: common/daverror.cpp:142
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "Дошло је до проблема са захтевом."
 
-#: common/daverror.cpp:148
+#: common/daverror.cpp:146
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
