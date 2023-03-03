@@ -143,9 +143,9 @@ bool CarddavProtocol::containsCollection(const QDomElement &propElem) const
     return !propElem.elementsByTagNameNS(QStringLiteral("urn:ietf:params:xml:ns:carddav"), QStringLiteral("addressbook")).isEmpty();
 }
 
-QVector<XMLQueryBuilder::Ptr> CarddavProtocol::itemsQueries() const
+QList<XMLQueryBuilder::Ptr> CarddavProtocol::itemsQueries() const
 {
-    QVector<XMLQueryBuilder::Ptr> ret;
+    QList<XMLQueryBuilder::Ptr> ret;
     ret << XMLQueryBuilder::Ptr(new CarddavListItemsQueryBuilder());
     return ret;
 }

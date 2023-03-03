@@ -11,9 +11,9 @@
 
 #include "enums.h"
 
+#include <QList>
 #include <QSharedDataPointer>
 #include <QUrl>
-#include <QVector>
 
 namespace KDAV
 {
@@ -29,7 +29,7 @@ public:
     /**
      * Defines a list of DAV URL objects.
      */
-    typedef QVector<DavUrl> List;
+    typedef QList<DavUrl> List;
 
     /**
      * Creates an empty DAV URL.

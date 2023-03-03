@@ -94,9 +94,9 @@ bool GroupdavProtocol::containsCollection(const QDomElement &propElem) const
         || !propElem.elementsByTagNameNS(QStringLiteral("http://groupdav.org/"), QStringLiteral("vcard-collection")).isEmpty();
 }
 
-QVector<XMLQueryBuilder::Ptr> GroupdavProtocol::itemsQueries() const
+QList<XMLQueryBuilder::Ptr> GroupdavProtocol::itemsQueries() const
 {
-    QVector<XMLQueryBuilder::Ptr> ret;
+    QList<XMLQueryBuilder::Ptr> ret;
     ret << XMLQueryBuilder::Ptr(new GroupdavItemQueryBuilder());
     return ret;
 }

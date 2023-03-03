@@ -11,9 +11,9 @@
 
 #include <QByteArray>
 #include <QDataStream>
+#include <QList>
 #include <QSharedDataPointer>
 #include <QString>
-#include <QVector>
 
 class DavItemPrivate;
 
@@ -41,7 +41,7 @@ public:
     /**
      * Defines a list of DAV item objects.
      */
-    typedef QVector<DavItem> List;
+    typedef QList<DavItem> List;
 
     /**
      * Creates an empty DAV item.

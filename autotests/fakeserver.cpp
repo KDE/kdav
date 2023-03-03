@@ -181,7 +181,7 @@ void FakeServer::readClientPart(QTcpSocket *socket, int *scenarioNumber)
         return;
     }
     QList<QByteArray> scenario = *it;
-    QVector<QByteArray> header;
+    QList<QByteArray> header;
 
     while (line != "\r\n") {
         header << line;

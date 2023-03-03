@@ -83,7 +83,7 @@ public:
     /**
      * Get the job results.
      */
-    Q_REQUIRED_RESULT QVector<Result> results() const;
+    Q_REQUIRED_RESULT QList<Result> results() const;
 
 private:
     Q_DECLARE_PRIVATE(DavPrincipalSearchJob)

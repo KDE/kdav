@@ -111,7 +111,7 @@ public:
      * Returns a list of XML documents that represent DAV queries to
      * list all available DAV resources inside a specific DAV collection.
      */
-    virtual QVector<XMLQueryBuilder::Ptr> itemsQueries() const = 0;
+    virtual QList<XMLQueryBuilder::Ptr> itemsQueries() const = 0;
 
     /**
      * Returns the possible content types for the collection that

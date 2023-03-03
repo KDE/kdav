@@ -11,9 +11,9 @@
 
 #include "enums.h"
 
+#include <QList>
 #include <QSharedDataPointer>
 #include <QString>
-#include <QVector>
 
 class QColor;
 
@@ -40,7 +40,7 @@ public:
     /**
      * Defines a list of DAV collection objects.
      */
-    typedef QVector<DavCollection> List;
+    typedef QList<DavCollection> List;
 
     /**
      * Describes the possible content type of the DAV collection.

@@ -37,7 +37,7 @@ public:
         QString propName;
     };
     std::vector<PropertyInfo> mFetchProperties;
-    QVector<DavPrincipalSearchJob::Result> mResults;
+    QList<DavPrincipalSearchJob::Result> mResults;
 };
 }
 
@@ -324,7 +324,7 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
     }
 }
 
-QVector<DavPrincipalSearchJob::Result> DavPrincipalSearchJob::results() const
+QList<DavPrincipalSearchJob::Result> DavPrincipalSearchJob::results() const
 {
     Q_D(const DavPrincipalSearchJob);
     return d->mResults;

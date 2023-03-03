@@ -26,8 +26,8 @@ public:
     DavUrl mUrl;
     QDomDocument mQuery;
 
-    QVector<QDomElement> mSetProperties;
-    QVector<QDomElement> mRemoveProperties;
+    QList<QDomElement> mSetProperties;
+    QList<QDomElement> mRemoveProperties;
 };
 }
 

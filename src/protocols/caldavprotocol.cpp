@@ -314,9 +314,9 @@ bool CaldavProtocol::containsCollection(const QDomElement &propElem) const
     return !propElem.elementsByTagNameNS(QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("calendar")).isEmpty();
 }
 
-QVector<XMLQueryBuilder::Ptr> CaldavProtocol::itemsQueries() const
+QList<XMLQueryBuilder::Ptr> CaldavProtocol::itemsQueries() const
 {
-    QVector<XMLQueryBuilder::Ptr> ret;
+    QList<XMLQueryBuilder::Ptr> ret;
     ret << XMLQueryBuilder::Ptr(new CaldavListEventQueryBuilder());
     ret << XMLQueryBuilder::Ptr(new CaldavListTodoQueryBuilder());
     ret << XMLQueryBuilder::Ptr(new CaldavListJournalQueryBuilder());
