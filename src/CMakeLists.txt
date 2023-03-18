@@ -1,4 +1,4 @@
-add_definitions(-DTRANSLATION_DOMAIN=\"libkdav\")
+add_definitions(-DTRANSLATION_DOMAIN=\"libkdav6\")
 
 set(KDAV_INSTALL_INCLUDEDIR "${KDE_INSTALL_INCLUDEDIR_KF}/KDAV")
 
