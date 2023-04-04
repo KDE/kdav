@@ -15,7 +15,7 @@ include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
 include(CMakeFindDependencyMacro)
 include(ECMSetupVersion)
-include(GenerateExportHeader)
+include(ECMGenerateExportHeader)
 include(ECMGenerateHeaders)
 include(ECMGeneratePriFile)
 include(FeatureSummary)

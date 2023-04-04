@@ -124,7 +124,13 @@ ecm_qt_declare_logging_category(KF6DAV
     EXPORT KDAV
 )
 
-generate_export_header(KF6DAV BASE_NAME kdav)
+ecm_generate_export_header(KF6DAV
+    BASE_NAME kdav
+    GROUP_BASE_NAME KF
+    VERSION ${KF_VERSION}
+    USE_VERSION_HEADER
+    DEPRECATED_BASE_VERSION 0
+)
 
 target_include_directories(KF6DAV PRIVATE
    common
