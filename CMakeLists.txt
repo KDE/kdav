@@ -41,8 +41,9 @@ ecm_set_disabled_deprecation_versions(
     KF 5.102
 )
 
+set(kdav_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kdav_version.h")
 ecm_setup_version(PROJECT VARIABLE_PREFIX KDAV
-    VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kdav_version.h"
+    VERSION_HEADER "${kdav_version_header}"
     PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF6DAVConfigVersion.cmake"
     SOVERSION 6
     )
@@ -83,7 +84,7 @@ install(FILES
 install(EXPORT KF6DAVTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF6DAVTargets.cmake NAMESPACE KF6::)
 
 install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/kdav_version.h
+    ${kdav_version_header}
     DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KDAV COMPONENT Devel
     )
 
