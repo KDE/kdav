@@ -97,3 +97,5 @@ void DavCollectionTest::copyTest()
 }
 
 QTEST_MAIN(DavCollectionTest)
+
+#include "moc_davcollectiontest.cpp"

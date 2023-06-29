@@ -84,3 +84,5 @@ QStringList EtagCache::changedRemoteIds() const
 {
     return d->mChangedRemoteIds.values();
 }
+
+#include "moc_etagcache.cpp"

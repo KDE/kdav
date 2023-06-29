@@ -101,3 +101,5 @@ void DavItemTest::serializeTest()
 }
 
 QTEST_MAIN(DavItemTest)
+
+#include "moc_davitemtest.cpp"

@@ -68,3 +68,5 @@ void DavCollectionsMultiFetchJob::slotResult(KJob *job)
         emitResult();
     }
 }
+
+#include "moc_davcollectionsmultifetchjob.cpp"

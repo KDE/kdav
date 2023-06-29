@@ -104,3 +104,5 @@ void DavItemDeleteJobPrivate::conflictingItemFetched(KJob *job)
 
     emitResult();
 }
+
+#include "moc_davitemdeletejob.cpp"

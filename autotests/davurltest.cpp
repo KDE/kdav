@@ -63,3 +63,5 @@ void DavUrlTest::serializeTest()
 }
 
 QTEST_MAIN(DavUrlTest)
+
+#include "moc_davurltest.cpp"

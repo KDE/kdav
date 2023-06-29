@@ -167,3 +167,5 @@ void DavCollectionModifyJobPrivate::davJobFinished(KJob *job)
 
     emitResult();
 }
+
+#include "moc_davcollectionmodifyjob.cpp"

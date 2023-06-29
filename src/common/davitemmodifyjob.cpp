@@ -160,3 +160,5 @@ void DavItemModifyJobPrivate::conflictingItemFetched(KJob *job)
 
     emitResult();
 }
+
+#include "moc_davitemmodifyjob.cpp"

@@ -102,3 +102,5 @@ void DavCollectionsMultiFetchJobTest::shouldFailOnError()
 }
 
 QTEST_MAIN(DavCollectionsMultiFetchJobTest)
+
+#include "moc_davcollectionsmultifetchjobtest.cpp"

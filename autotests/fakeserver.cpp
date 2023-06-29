@@ -217,3 +217,5 @@ int FakeServer::port() const
 {
     return m_port;
 }
+
+#include "moc_fakeserver.cpp"

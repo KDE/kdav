@@ -245,3 +245,5 @@ void DavPrincipalHomeSetsFetchJobPrivate::davJobFinished(KJob *job)
         fetchHomeSets(true);
     }
 }
+
+#include "moc_davprincipalhomesetsfetchjob.cpp"

@@ -354,3 +354,5 @@ void DavCollectionsFetchJobPrivate::subjobFinished()
         emitResult();
     }
 }
+
+#include "moc_davcollectionsfetchjob.cpp"
