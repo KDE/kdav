@@ -50,3 +50,5 @@ void DavItemFetchJobTest::runSuccessfullTest()
 }
 
 QTEST_MAIN(DavItemFetchJobTest)
+
+#include "moc_davitemfetchjobtest.cpp"

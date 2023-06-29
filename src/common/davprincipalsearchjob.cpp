@@ -384,3 +384,5 @@ void DavPrincipalSearchJobPrivate::buildReportQuery(QDomDocument &query) const
         prop.appendChild(elem);
     }
 }
+
+#include "moc_davprincipalsearchjob.cpp"

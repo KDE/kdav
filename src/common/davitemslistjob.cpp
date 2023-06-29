@@ -265,3 +265,5 @@ void DavItemsListJobPrivate::davJobFinished(KJob *job)
         emitResult();
     }
 }
+
+#include "moc_davitemslistjob.cpp"

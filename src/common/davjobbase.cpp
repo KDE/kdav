@@ -125,3 +125,5 @@ void DavJobBasePrivate::emitResult()
 {
     q_ptr->emitResult();
 }
+
+#include "moc_davjobbase.cpp"

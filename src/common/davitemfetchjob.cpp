@@ -91,3 +91,5 @@ void DavItemFetchJobPrivate::davJobFinished(KJob *job)
 
     emitResult();
 }
+
+#include "moc_davitemfetchjob.cpp"

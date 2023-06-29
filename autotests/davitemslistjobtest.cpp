@@ -31,3 +31,5 @@ void DavItemsListJobTest::noMatchingMimetype()
 }
 
 QTEST_MAIN(DavItemsListJobTest)
+
+#include "moc_davitemslistjobtest.cpp"

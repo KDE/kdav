@@ -140,3 +140,5 @@ void DavItemCreateJobPrivate::itemRefreshed(KJob *job)
     }
     emitResult();
 }
+
+#include "moc_davitemcreatejob.cpp"
