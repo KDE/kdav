@@ -15,8 +15,6 @@
 #include <QTcpSocket>
 #include <QThread>
 
-Q_DECLARE_METATYPE(QList<QByteArray>)
-
 /**
  * Pretends to be an DAV server for the purposes of unit tests.
  *
