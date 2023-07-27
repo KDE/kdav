@@ -90,5 +90,5 @@ private:
 };
 }
 
-Q_DECLARE_TYPEINFO(KDAV::DavPrincipalSearchJob::Result, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(KDAV::DavPrincipalSearchJob::Result, Q_RELOCATABLE_TYPE);
 #endif

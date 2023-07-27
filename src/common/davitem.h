@@ -115,6 +115,6 @@ KDAV_EXPORT QDataStream &operator<<(QDataStream &out, const DavItem &item);
 KDAV_EXPORT QDataStream &operator>>(QDataStream &in, DavItem &item);
 }
 
-Q_DECLARE_TYPEINFO(KDAV::DavItem, Q_MOVABLE_TYPE);
+Q_DECLARE_TYPEINFO(KDAV::DavItem, Q_RELOCATABLE_TYPE);
 
 #endif
