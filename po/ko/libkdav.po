@@ -30,7 +30,7 @@ msgstr "접근 거부됨"
 #: common/daverror.cpp:92
 #, kde-format
 msgid "Resource not found"
-msgstr "자원을 찾을 수 없음"
+msgstr "리소스를 찾을 수 없음"
 
 #: common/daverror.cpp:94
 #, kde-format
