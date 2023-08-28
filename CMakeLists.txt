@@ -58,7 +58,7 @@ endif()
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6DAV")
 
-if (BUILD_QCH)
+if(BUILD_QCH)
     ecm_install_qch_export(
         TARGETS KF6DAV_QCH
         FILE KF6DAVQchTargets.cmake

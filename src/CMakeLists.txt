@@ -133,8 +133,8 @@ ecm_generate_export_header(KF6DAV
 )
 
 target_include_directories(KF6DAV PRIVATE
-   common
-   protocols
+    common
+    protocols
 )
 
 target_link_libraries(KF6DAV
@@ -169,7 +169,7 @@ target_include_directories(KF6DAV INTERFACE "$<INSTALL_INTERFACE:${KDAV_INSTALL_
 
 ecm_qt_install_logging_categories(EXPORT KDAV FILE kdav.categories DESTINATION ${KDE_INSTALL_LOGGINGCATEGORIESDIR})
 
-if (BUILD_QCH)
+if(BUILD_QCH)
     ecm_add_qch(
         KF6DAV_QCH
         NAME KDAV
