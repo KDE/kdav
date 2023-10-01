@@ -9,8 +9,7 @@ portingAid: false
 deprecated: false
 release: true
 libraries:
- - qmake: KDAV
-   cmake: "KF6::DAV"
+ - cmake: "KF6::DAV"
 cmakename: KF6DAV
 
 public_lib: true
