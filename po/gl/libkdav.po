@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-03-09 02:40+0100\n"
-"PO-Revision-Date: 2019-03-16 19:40+0100\n"
+"PO-Revision-Date: 2019-03-16 19:50+0100\n"
 "Last-Translator: Adrián Chaves (Gallaecio) <adrian@chaves.io>\n"
 "Language-Team: Galician <kde-i18n-doc@kde.org>\n"
 "Language: gl\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: common/daverror.cpp:88
 #, kde-format
 msgid "Invalid username/password"
-msgstr "O nome de usuario ou o contrasinal son incorrectos"
+msgstr "O nome de usuaria ou o contrasinal son incorrectos"
 
 #: common/daverror.cpp:90
 #, kde-format
