@@ -1,13 +1,13 @@
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the kdav package.
 #
-# Enol P. <enolp@softastur.org>, 2023.
+# SPDX-FileCopyrightText: 2023 Enol P. <enolp@softastur.org>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-03-09 02:40+0100\n"
-"PO-Revision-Date: 2023-05-03 23:37+0200\n"
+"PO-Revision-Date: 2023-10-24 22:15+0200\n"
 "Last-Translator: Enol P. <enolp@softastur.org>\n"
 "Language-Team: \n"
 "Language: ast\n"
@@ -15,27 +15,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 23.04.0\n"
+"X-Generator: Lokalize 23.08.2\n"
 
 #: common/daverror.cpp:88
 #, kde-format
 msgid "Invalid username/password"
-msgstr ""
+msgstr "El nome d'usuariu o la contraseña son inválidos"
 
 #: common/daverror.cpp:90
 #, kde-format
 msgid "Access forbidden"
-msgstr ""
+msgstr "Prohíbese l'accesu"
 
 #: common/daverror.cpp:92
 #, kde-format
 msgid "Resource not found"
-msgstr ""
+msgstr "Nun s'atopó'l recursu"
 
 #: common/daverror.cpp:94
 #, kde-format
 msgid "HTTP error"
-msgstr ""
+msgstr "Error de HTTP"
 
 #: common/daverror.cpp:96
 #, kde-format
@@ -43,11 +43,13 @@ msgid ""
 "There was a problem with the request.\n"
 "%1 (%2)."
 msgstr ""
+"Hebo un problema cola solicitú.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:99
 #, kde-format
 msgid "Protocol for the collection does not support MULTIGET"
-msgstr ""
+msgstr "El protocolu pa la coleición nun ye compatible con MULTIGET"
 
 #: common/daverror.cpp:102
 #, kde-format
@@ -55,6 +57,7 @@ msgid ""
 "The server encountered an error that prevented it from completing your "
 "request: %1 (%2)"
 msgstr ""
+"El sirividor atopó un error qu'impide completar la to solicitú: %1 (%2)"
 
 #: common/daverror.cpp:105
 #, kde-format
@@ -63,21 +66,23 @@ msgid ""
 "from the server.\n"
 "%1 (%2)."
 msgstr ""
+"Hebo un problema cola solicitú. La coleición nun se desanició nel sirvidor.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid responses from backend"
-msgstr ""
+msgstr "Hai rempuestes inválides del sirvidor"
 
 #: common/daverror.cpp:111
 #, kde-format
 msgid "Error setting focus for XQuery"
-msgstr ""
+msgstr "Prodúxose un error al configurar l'enfoque de XQuery"
 
 #: common/daverror.cpp:114
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
-msgstr ""
+msgstr "La implementación DAV unvió una XQuery inválida"
 
 #: common/daverror.cpp:118
 #, kde-format
@@ -86,16 +91,18 @@ msgid ""
 "on the server.\n"
 "%1 (%2)."
 msgstr ""
+"Hebo un problema cola solicitú. La coleición nun se modificó nel sirvidor.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:124
 #, kde-format
 msgid "No properties to change or remove"
-msgstr ""
+msgstr "Nun hai nenguna propiedá pa camudar o quitar"
 
 #: common/daverror.cpp:127
 #, kde-format
 msgid "There was an error when modifying the properties"
-msgstr ""
+msgstr "Hebo un error al modificar les propiedaes"
 
 #: common/daverror.cpp:129
 #, kde-format
@@ -104,6 +111,9 @@ msgid ""
 "The server returned more information:\n"
 "%1"
 msgstr ""
+"\n"
+"El sirvidor devolvió más información:\n"
+"%1"
 
 #: common/daverror.cpp:133
 #, kde-format
@@ -112,6 +122,8 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"Hebo un problema cola solicitú. L'elementu nun se creó nel sirvidor.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:136
 #, kde-format
@@ -120,6 +132,8 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"Hebo un problema cola solicitú. L'elementu nun se desanició nel sirvidor.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:139
 #, kde-format
@@ -128,11 +142,13 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"Hebo un problema cola solicitú. L'elementu nun se modificó nel sirvidor.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:142
 #, kde-format
 msgid "There was a problem with the request."
-msgstr ""
+msgstr "Hebo un problema cola solicitú."
 
 #: common/daverror.cpp:146
 #, kde-format
@@ -140,3 +156,5 @@ msgid ""
 "There was a problem with the request. The requested MIME types are not "
 "supported."
 msgstr ""
+"Hebo un problema cola solicitú. Los tipos MIME solicitaos nun son "
+"compatibles."
