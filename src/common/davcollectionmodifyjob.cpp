@@ -132,7 +132,7 @@ void DavCollectionModifyJobPrivate::davJobFinished(KJob *job)
     }
 
     QDomDocument response;
-    response.setContent(davJob->responseData(), true);
+    response.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
     QDomElement responseElement = Utils::firstChildElementNS(response.documentElement(), QStringLiteral("DAV:"), QStringLiteral("response"));
 
     bool hasError = false;

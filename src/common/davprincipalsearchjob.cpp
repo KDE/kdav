@@ -139,7 +139,7 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(KJob *jo
      */
 
     QDomDocument document;
-    document.setContent(davJob->responseData(), true);
+    document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
     QDomElement documentElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
@@ -269,7 +269,7 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
      */
 
     QDomDocument document;
-    document.setContent(davJob->responseData(), true);
+    document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
     const QDomElement documentElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));

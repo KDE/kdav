@@ -161,7 +161,7 @@ void DavPrincipalHomeSetsFetchJobPrivate::davJobFinished(KJob *job)
     // This is either given by current-user-principal or by principal-URL.
 
     QDomDocument document;
-    document.setContent(davJob->responseData(), true);
+    document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
     const QDomElement multistatusElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(multistatusElement, QStringLiteral("DAV:"), QStringLiteral("response"));

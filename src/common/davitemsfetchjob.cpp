@@ -98,7 +98,7 @@ void DavItemsFetchJobPrivate::davJobFinished(KJob *job)
     const DavMultigetProtocol *protocol = static_cast<const DavMultigetProtocol *>(DavManager::davProtocol(mCollectionUrl.protocol()));
 
     QDomDocument document;
-    document.setContent(davJob->responseData(), true);
+    document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
     const QDomElement documentElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));

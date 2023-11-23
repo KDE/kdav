@@ -165,7 +165,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
 
         // Validate that we got a valid PROPFIND response
         QDomDocument response;
-        response.setContent(davJob->responseData(), true);
+        response.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
         QDomElement rootElement = response.documentElement();
         if (rootElement.tagName().compare(QLatin1String("multistatus"), Qt::CaseInsensitive) != 0) {
             setError(ERR_COLLECTIONFETCH);
@@ -176,7 +176,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
 
         QByteArray resp = davJob->responseData();
         QDomDocument document;
-        if (!document.setContent(resp, true)) {
+        if (!document.setContent(resp, QDomDocument::ParseOption::UseNamespaceProcessing)) {
             setError(ERR_COLLECTIONFETCH);
             setErrorTextFromDavError();
             subjobFinished();

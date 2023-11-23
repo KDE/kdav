@@ -171,7 +171,7 @@ void DavItemsListJobPrivate::davJobFinished(KJob *job)
 
         const QString itemsMimeType = job->property("itemsMimeType").toString();
         QDomDocument document;
-        document.setContent(davJob->responseData(), true);
+        document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
         const QDomElement documentElement = document.documentElement();
 
         QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
