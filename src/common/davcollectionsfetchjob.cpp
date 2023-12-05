@@ -91,8 +91,8 @@ void DavCollectionsFetchJobPrivate::principalFetchFinished(KJob *job)
     const DavPrincipalHomeSetsFetchJob *davJob = qobject_cast<DavPrincipalHomeSetsFetchJob *>(job);
 
     if (davJob->error()) {
-        if (davJob->latestResponseCode()) {
-            // If we have a HTTP response code then this may mean that
+        if (davJob->canRetryLater()) {
+            // If we have a non-persistent HTTP error code then this may mean that
             // the URL was not a principal URL. Retry as if it were a calendar URL.
             qCDebug(KDAV_LOG) << job->errorText();
             doCollectionsFetch(mUrl.url());
