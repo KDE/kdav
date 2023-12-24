@@ -1,41 +1,41 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR This file is copyright:
+# Copyright (C) 2023 This file is copyright:
 # This file is distributed under the same license as the kdav package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# SPDX-FileCopyrightText: 2023 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Chinese <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2023-12-24 05:06+0900\n"
+"Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
+"Language-Team: Traditional Chinese <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Lokalize 23.08.4\n"
 
 #: common/daverror.cpp:88
 #, kde-format
 msgid "Invalid username/password"
-msgstr ""
+msgstr "無效的使用者名稱/密碼"
 
 #: common/daverror.cpp:90
 #, kde-format
 msgid "Access forbidden"
-msgstr ""
+msgstr "存取被拒"
 
 #: common/daverror.cpp:92
 #, kde-format
 msgid "Resource not found"
-msgstr ""
+msgstr "找不到資源"
 
 #: common/daverror.cpp:94
 #, kde-format
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP 錯誤"
 
 #: common/daverror.cpp:96
 #, kde-format
@@ -43,18 +43,20 @@ msgid ""
 "There was a problem with the request.\n"
 "%1 (%2)."
 msgstr ""
+"請求出錯。\n"
+"%1 (%2)。"
 
 #: common/daverror.cpp:99
 #, kde-format
 msgid "Protocol for the collection does not support MULTIGET"
-msgstr ""
+msgstr "收藏的協定不支援 MULTIGET"
 
 #: common/daverror.cpp:102
 #, kde-format
 msgid ""
 "The server encountered an error that prevented it from completing your "
 "request: %1 (%2)"
-msgstr ""
+msgstr "伺服器出錯而無法完成您的請求：%1 (%2)"
 
 #: common/daverror.cpp:105
 #, kde-format
@@ -63,21 +65,23 @@ msgid ""
 "from the server.\n"
 "%1 (%2)."
 msgstr ""
+"請求出錯。收藏沒有被從伺服器刪除。\n"
+"%1 (%2)。"
 
 #: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid responses from backend"
-msgstr ""
+msgstr "後端傳回無效的回應"
 
 #: common/daverror.cpp:111
 #, kde-format
 msgid "Error setting focus for XQuery"
-msgstr ""
+msgstr "設定 XQuery 的 focus 時出錯"
 
 #: common/daverror.cpp:114
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
-msgstr ""
+msgstr "DAV 實作提出了無效的 XQuery"
 
 #: common/daverror.cpp:118
 #, kde-format
@@ -86,16 +90,18 @@ msgid ""
 "on the server.\n"
 "%1 (%2)."
 msgstr ""
+"請求出錯。收藏沒有在伺服器上被變更。\n"
+"%1 (%2)。"
 
 #: common/daverror.cpp:124
 #, kde-format
 msgid "No properties to change or remove"
-msgstr ""
+msgstr "沒有要變更或移除的屬性"
 
 #: common/daverror.cpp:127
 #, kde-format
 msgid "There was an error when modifying the properties"
-msgstr ""
+msgstr "修改屬性時發生錯誤"
 
 #: common/daverror.cpp:129
 #, kde-format
@@ -104,6 +110,9 @@ msgid ""
 "The server returned more information:\n"
 "%1"
 msgstr ""
+"\n"
+"伺服器回傳了更多資訊：\n"
+"%1"
 
 #: common/daverror.cpp:133
 #, kde-format
@@ -112,6 +121,8 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"請求出錯。項目沒有在伺服器上被建立。\n"
+"%1 (%2)。"
 
 #: common/daverror.cpp:136
 #, kde-format
@@ -120,6 +131,8 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"請求出錯。項目沒有被從伺服器刪除。\n"
+"%1 (%2)。"
 
 #: common/daverror.cpp:139
 #, kde-format
@@ -128,15 +141,17 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"請求出錯。項目沒有在伺服器上被變更。\n"
+"%1 (%2)。"
 
 #: common/daverror.cpp:142
 #, kde-format
 msgid "There was a problem with the request."
-msgstr ""
+msgstr "請求出錯。"
 
 #: common/daverror.cpp:146
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
 "supported."
-msgstr ""
+msgstr "請求出錯。不支援請求的 MIME 類型。"
