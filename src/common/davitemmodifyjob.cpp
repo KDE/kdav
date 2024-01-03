@@ -10,7 +10,7 @@
 #include "daverror.h"
 #include "davitemfetchjob.h"
 
-#include <KIO/Job>
+#include <KIO/StoredTransferJob>
 
 using namespace KDAV;
 namespace KDAV
