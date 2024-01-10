@@ -5,7 +5,7 @@ set(KF_DEP_VERSION "5.248.0") # handled by release scripts
 
 project(libkdav VERSION ${KF_VERSION})
 
-find_package(ECM 5.240.0 CONFIG REQUIRED)
+find_package(ECM 5.248.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(KDEInstallDirs)
