@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-03-09 02:40+0100\n"
-"PO-Revision-Date: 2018-08-16 09:12+0200\n"
+"PO-Revision-Date: 2024-01-31 22:03+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
 "Language: lt\n"
@@ -17,26 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n"
 "%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: common/daverror.cpp:88
 #, kde-format
 msgid "Invalid username/password"
-msgstr ""
+msgstr "Neteisingas naudotojo vardas/slaptažodis"
 
 #: common/daverror.cpp:90
 #, kde-format
 msgid "Access forbidden"
-msgstr ""
+msgstr "Prieiga uždrausta"
 
 #: common/daverror.cpp:92
 #, kde-format
 msgid "Resource not found"
-msgstr ""
+msgstr "Išteklius nerastas"
 
 #: common/daverror.cpp:94
 #, kde-format
 msgid "HTTP error"
-msgstr ""
+msgstr "HTTP klaida"
 
 #: common/daverror.cpp:96
 #, kde-format
@@ -44,11 +45,13 @@ msgid ""
 "There was a problem with the request.\n"
 "%1 (%2)."
 msgstr ""
+"Buvo problemų su užklausa.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:99
 #, kde-format
 msgid "Protocol for the collection does not support MULTIGET"
-msgstr ""
+msgstr "Kolekcijos protokolas nepalaiko MULTIGET"
 
 #: common/daverror.cpp:102
 #, kde-format
@@ -56,6 +59,8 @@ msgid ""
 "The server encountered an error that prevented it from completing your "
 "request: %1 (%2)"
 msgstr ""
+"Serveris susidūrė su klaida, kuri neleido jam užbaigti jūsų užklausos: %1 "
+"(%2)"
 
 #: common/daverror.cpp:105
 #, kde-format
@@ -64,21 +69,23 @@ msgid ""
 "from the server.\n"
 "%1 (%2)."
 msgstr ""
+"Buvo problemų su užklausa. Kolekcija nebuvo ištrinta iš serverio.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid responses from backend"
-msgstr ""
+msgstr "Neteisingi atsakymai iš vidinės pusės"
 
 #: common/daverror.cpp:111
 #, kde-format
 msgid "Error setting focus for XQuery"
-msgstr ""
+msgstr "Klaida nustatant XQuery fokusavimą"
 
 #: common/daverror.cpp:114
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
-msgstr ""
+msgstr "DAV įgyvendinimas pateikė neteisingą XQuery"
 
 #: common/daverror.cpp:118
 #, kde-format
@@ -87,16 +94,18 @@ msgid ""
 "on the server.\n"
 "%1 (%2)."
 msgstr ""
+"Buvo problemų su užklausa. Kolekcija serveryje nebuvo modifikuota.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:124
 #, kde-format
 msgid "No properties to change or remove"
-msgstr ""
+msgstr "Nėra savybių, kurias keisti ar šalinti"
 
 #: common/daverror.cpp:127
 #, kde-format
 msgid "There was an error when modifying the properties"
-msgstr ""
+msgstr "Modifikuojant savybes atsirado klaida"
 
 #: common/daverror.cpp:129
 #, kde-format
@@ -105,6 +114,9 @@ msgid ""
 "The server returned more information:\n"
 "%1"
 msgstr ""
+"\n"
+"Serveris grąžino daugiau informacijos:\n"
+"%1"
 
 #: common/daverror.cpp:133
 #, kde-format
@@ -113,6 +125,8 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"Buvo problemų su užklausa. Elementas serveryje nebuvo sukurtas.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:136
 #, kde-format
@@ -121,6 +135,8 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"Buvo problemų su užklausa. Elementas nebuvo ištrintas iš serverio.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:139
 #, kde-format
@@ -129,15 +145,17 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"Buvo problemų su užklausa. Elementas serveryje nebuvo modifikuotas.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:142
 #, kde-format
 msgid "There was a problem with the request."
-msgstr ""
+msgstr "Buvo problemų su užklausa."
 
 #: common/daverror.cpp:146
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
 "supported."
-msgstr ""
+msgstr "Buvo problemų su užklausa. Užklausti MIME tipai yra nepalaikomi."
