@@ -1,13 +1,13 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
-# Shinjo Park <kde@peremen.name>, 2013, 2014, 2015, 2016, 2017, 2018, 2023.
+# SPDX-FileCopyrightText: 2013, 2014, 2015, 2016, 2017, 2018, 2023, 2024 Shinjo Park <kde@peremen.name>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2021-03-09 02:40+0100\n"
-"PO-Revision-Date: 2023-07-23 20:33+0200\n"
+"PO-Revision-Date: 2024-02-10 00:32+0100\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
@@ -15,12 +15,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 23.08.1\n"
 
 #: common/daverror.cpp:88
 #, kde-format
 msgid "Invalid username/password"
-msgstr "잘못된 사용자 이름 및 암호"
+msgstr "사용자 이름이나 암호가 잘못됨"
 
 #: common/daverror.cpp:90
 #, kde-format
