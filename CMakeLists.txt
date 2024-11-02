@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.16)
 
 set(KF_VERSION "6.8.0") # handled by release scripts
-set(KF_DEP_VERSION "6.7.0") # handled by release scripts
+set(KF_DEP_VERSION "6.8.0") # handled by release scripts
 
 project(libkdav VERSION ${KF_VERSION})
 
-find_package(ECM 6.7.0 CONFIG REQUIRED)
+find_package(ECM 6.8.0 CONFIG REQUIRED)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
 include(KDEInstallDirs)
