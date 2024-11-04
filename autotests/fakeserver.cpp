@@ -168,6 +168,32 @@ void FakeServer::writeServerPart(QTcpSocket *clientSocket, int scenarioNumber)
     m_scenarios[scenarioNumber] = scenario;
 }
 
+[[nodiscard]] static bool containsHeader(const QList<QByteArray> headers, const QByteArray &expected)
+{
+    auto idx = expected.indexOf(':');
+    if (idx < 0) {
+        return headers.contains(expected);
+    }
+
+    const auto expectedType = QByteArrayView(expected).left(idx + 1);
+    const auto expectedValue = QByteArrayView(expected).mid(idx);
+
+    for (const auto &header : headers) {
+        idx = header.indexOf(':');
+        if (idx < 0) {
+            continue;
+        }
+
+        const auto headerType = QByteArrayView(header).left(idx + 1);
+        const auto headerValue = QByteArrayView(header).mid(idx);
+        if (headerType.compare(expectedType, Qt::CaseInsensitive) == 0 && headerValue == expectedValue) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void FakeServer::readClientPart(QTcpSocket *socket, int *scenarioNumber)
 {
     QByteArray line = socket->readLine();
@@ -196,7 +222,7 @@ void FakeServer::readClientPart(QTcpSocket *socket, int *scenarioNumber)
     while (!scenario.isEmpty() && scenario.first().startsWith("C: ")) {
         QByteArray expected = scenario.takeFirst().mid(3) + "\r\n";
 
-        if (!header.contains(expected)) {
+        if (!containsHeader(header, expected)) {
             qWarning() << expected << "not found in header. Here's what we got:";
             qWarning() << header;
             QVERIFY(false);
