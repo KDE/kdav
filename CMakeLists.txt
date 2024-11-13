@@ -25,7 +25,7 @@ include(ECMQtDeclareLoggingCategory)
 include(ECMDeprecationSettings)
 
 
-set(REQUIRED_QT_VERSION 6.5.0)
+set(REQUIRED_QT_VERSION 6.6.0)
 find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui Test)
 
 find_package(KF6 ${KF_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
