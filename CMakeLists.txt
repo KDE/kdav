@@ -36,8 +36,8 @@ option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, 
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 ecm_set_disabled_deprecation_versions(
-    QT 6.5
-    KF 5.102
+    QT 6.8.0
+    KF 6.8.0
 )
 
 set(kdav_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kdav_version.h")
