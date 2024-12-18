@@ -16,7 +16,7 @@ namespace KDAV
 {
 class DavCollectionModifyJobPrivate;
 
-/**
+/*!
  * @class DavCollectionModifyJob davcollectionmodifyjob.h <KDAV/DavCollectionModifyJob>
  *
  * @short A job that modifies a DAV collection.
@@ -29,7 +29,7 @@ class KDAV_EXPORT DavCollectionModifyJob : public DavJobBase
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new DAV collection modify job.
      *
      * @param url The DAV URL that identifies the collection.
@@ -37,7 +37,7 @@ public:
      */
     explicit DavCollectionModifyJob(const DavUrl &url, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Sets the property that shall be modified by the job.
      *
      * @param property The name of the property.
@@ -46,7 +46,7 @@ public:
      */
     void setProperty(const QString &property, const QString &value, const QString &ns = QString());
 
-    /**
+    /*!
      * Sets the property that shall be removed by the job.
      *
      * @param property The name of the property.
@@ -54,7 +54,7 @@ public:
      */
     void removeProperty(const QString &property, const QString &ns);
 
-    /**
+    /*!
      * Starts the job.
      */
     void start() override;

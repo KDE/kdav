@@ -20,7 +20,7 @@ namespace KDAV
 {
 class DavCollectionsMultiFetchJobPrivate;
 
-/**
+/*!
  * @class DavCollectionsMultiFetchJob davcollectionsmultifetchjob.h <KDAV/DavCollectionsMultiFetchJob>
  *
  * @short A job that fetches all DAV collection.
@@ -36,7 +36,7 @@ class KDAV_EXPORT DavCollectionsMultiFetchJob : public KCompositeJob
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new DAV collections multi fetch job.
      *
      * @param urls The list of DAV URLs whose sub collections shall be fetched.
@@ -45,18 +45,18 @@ public:
     explicit DavCollectionsMultiFetchJob(const DavUrl::List &urls, QObject *parent = nullptr);
     ~DavCollectionsMultiFetchJob() override;
 
-    /**
+    /*!
      * Starts the job.
      */
     void start() override;
 
-    /**
+    /*!
      * Returns the list of fetched DAV collections.
      */
     Q_REQUIRED_RESULT DavCollection::List collections() const;
 
 Q_SIGNALS:
-    /**
+    /*!
      * This signal is emitted every time a new collection has been discovered.
      *
      * @param collectionUrl The URL of the discovered collection

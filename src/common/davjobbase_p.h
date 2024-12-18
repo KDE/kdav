@@ -20,7 +20,7 @@ class DavJobBasePrivate
 public:
     virtual ~DavJobBasePrivate() = default;
 
-    /**
+    /*!
      * Sets the latest response code received.
      *
      * Only really useful in case of error, though success codes can

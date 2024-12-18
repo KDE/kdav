@@ -20,12 +20,12 @@ class DavJob;
 
 class QUrl;
 
-/** CalDav/CardDav protocol implementation. */
+/*! CalDav/CardDav protocol implementation. */
 namespace KDAV
 {
 class DavProtocolBase;
 
-/**
+/*!
  * @short A factory class for handling DAV jobs.
  *
  * This class provides factory methods to create preconfigured
@@ -35,17 +35,17 @@ class DavProtocolBase;
 class DavManager
 {
 public:
-    /**
+    /*!
      * Destroys the DAV manager.
      */
     ~DavManager();
 
-    /**
+    /*!
      * Returns the global instance of the DAV manager.
      */
     static DavManager *self();
 
-    /**
+    /*!
      * Returns a preconfigured DAV PROPFIND job.
      *
      * @param url The target URL of the job.
@@ -54,7 +54,7 @@ public:
      */
     KIO::DavJob *createPropFindJob(const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
 
-    /**
+    /*!
      * Returns a preconfigured DAV REPORT job.
      *
      * @param url The target URL of the job.
@@ -63,7 +63,7 @@ public:
      */
     KIO::DavJob *createReportJob(const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
 
-    /**
+    /*!
      * Returns a preconfigured DAV PROPPATCH job.
      *
      * @param url The target URL of the job.
@@ -71,13 +71,13 @@ public:
      */
     KIO::DavJob *createPropPatchJob(const QUrl &url, const QString &document) const;
 
-    /**
+    /*!
      * Returns the DAV protocol dialect object for the given DAV @p protocol.
      */
     static const DavProtocolBase *davProtocol(Protocol protocol);
 
 private:
-    /**
+    /*!
      * Creates a new DAV manager.
      */
     DavManager();

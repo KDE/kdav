@@ -24,7 +24,7 @@ class DavPrincipalHomeSetsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
     void davJobFinished(KJob *job);
-    /**
+    /*!
      * Start the fetch process.
      *
      * There may be two rounds necessary if the first request

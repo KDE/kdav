@@ -18,7 +18,7 @@ namespace KDAV
 {
 class EtagCachePrivate;
 
-/**
+/*!
  * @class EtagCache etagcache.h <KDAV/EtagCache>
  *
  * @short A helper class to cache ETags.
@@ -33,59 +33,59 @@ class KDAV_EXPORT EtagCache : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new ETag cache and populates it with the ETags
      * of items found in @p collection.
      */
     explicit EtagCache(QObject *parent = nullptr);
     ~EtagCache() override;
 
-    /**
+    /*!
      * Sets the ETag for the remote ID. If the remote ID is marked as
      * changed (is contained in the return of changedRemoteIds), remove
      * it from the changed list.
      */
     void setEtag(const QString &remoteId, const QString &etag);
 
-    /**
+    /*!
      * Checks if the given item is in the cache
      */
     Q_REQUIRED_RESULT bool contains(const QString &remoteId) const;
 
-    /**
+    /*!
      * Check if the known ETag for the remote ID is equal to @p refEtag.
      */
     Q_REQUIRED_RESULT bool etagChanged(const QString &remoteId, const QString &refEtag) const;
 
-    /**
+    /*!
      * Mark an item as changed in the backend.
      */
     void markAsChanged(const QString &remoteId);
 
-    /**
+    /*!
      * Returns true if the remote ID is marked as changed (is contained in the
      * return of changedRemoteIds)
      */
     Q_REQUIRED_RESULT bool isOutOfDate(const QString &remoteId) const;
 
-    /**
+    /*!
      * Removes the entry for item with remote ID @p remoteId.
      */
     void removeEtag(const QString &remoteId);
 
-    /**
+    /*!
      * Returns the list of all items URLs.
      */
     Q_REQUIRED_RESULT QStringList urls() const;
 
-    /**
+    /*!
      * Returns the list of remote ids of items that have been changed
      * in the backend.
      */
     Q_REQUIRED_RESULT QStringList changedRemoteIds() const;
 
 protected:
-    /**
+    /*!
      * Sets the ETag for the remote ID.
      */
     void setEtagInternal(const QString &remoteId, const QString &etag);

@@ -15,7 +15,7 @@
 #include <QTcpSocket>
 #include <QThread>
 
-/**
+/*
  * Pretends to be an DAV server for the purposes of unit tests.
  *
  * FakeServer does not really understand the DAV protocol.  Instead,
@@ -79,20 +79,20 @@ class FakeServer : public QObject
     Q_OBJECT
 
 public:
-    /**
+    /*
      * Each unittest should use a different port so that they can be run in parallel
      */
     FakeServer(int port = 5989, QObject *parent = nullptr);
     ~FakeServer() override;
 
-    /**
+    /*
      * Starts the server and waits for it to be ready
      *
      * You should use this instead of start() to avoid race conditions.
      */
     void startAndWait();
 
-    /**
+    /*
      * Removes any previously-added scenarios, and adds a new one
      *
      * After this, there will only be one scenario, and so the fake
@@ -104,7 +104,7 @@ public:
      */
     void setScenario(const QList<QByteArray> &scenario);
 
-    /**
+    /*
      * Adds a new scenario
      *
      * Note that scenarios will be used in the order that clients
@@ -118,7 +118,7 @@ public:
      * @param scenario  the scenario as a list of messages
      */
     void addScenario(const QList<QByteArray> &scenario);
-    /**
+    /*
      * Adds a new scenario from a local file
      *
      * Note that scenarios will be used in the order that clients
@@ -136,20 +136,20 @@ public:
      */
     void addScenarioFromFile(const QString &fileName);
 
-    /**
+    /*
      * Checks whether a particular scenario has completed
      *
      * @param scenarioNumber  the number of the scenario to check,
      *                        in order of addition/client connection
      */
     bool isScenarioDone(int scenarioNumber) const;
-    /**
+    /*
      * Whether all the scenarios that were added to the fake
      * server have been completed.
      */
     bool isAllScenarioDone() const;
 
-    /**
+    /*
      * Returns the port where the fake server is listening.
      */
     int port() const;

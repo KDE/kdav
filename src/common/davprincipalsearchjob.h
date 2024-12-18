@@ -18,7 +18,7 @@ namespace KDAV
 {
 class DavPrincipalSearchJobPrivate;
 
-/**
+/*!
  * @class DavPrincipalSearchJob davprincipalsearchjob.h <KDAV/DavPrincipalSearchJob>
  *
  * @short A job that search a DAV principal on a server
@@ -33,7 +33,7 @@ class KDAV_EXPORT DavPrincipalSearchJob : public DavJobBase
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Types of search that are supported by this job.
      * DisplayName will match on the DAV displayname property.
      * EmailAddress will match on the CalDav calendar-user-address-set property.
@@ -43,7 +43,7 @@ public:
         EmailAddress,
     };
 
-    /**
+    /*!
      * Simple struct to hold the search job results
      */
     struct Result {
@@ -52,7 +52,7 @@ public:
         QString value;
     };
 
-    /**
+    /*!
      * Creates a new DAV principal search job
      *
      * @param url The URL to use in the REPORT query.
@@ -62,7 +62,7 @@ public:
      */
     explicit DavPrincipalSearchJob(const DavUrl &url, FilterType type, const QString &filter, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Add a new property to fetch from the server.
      *
      * @param name The name of the property.
@@ -70,17 +70,17 @@ public:
      */
     void fetchProperty(const QString &name, const QString &ns = QString());
 
-    /**
+    /*!
      * Starts the job
      */
     void start() override;
 
-    /**
+    /*!
      * Return the DavUrl used by this job
      */
     Q_REQUIRED_RESULT DavUrl davUrl() const;
 
-    /**
+    /*!
      * Get the job results.
      */
     Q_REQUIRED_RESULT QList<Result> results() const;

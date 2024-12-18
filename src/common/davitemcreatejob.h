@@ -17,7 +17,7 @@ namespace KDAV
 {
 class DavItemCreateJobPrivate;
 
-/**
+/*!
  * @class DavItemCreateJob davitemcreatejob.h <KDAV/DavItemCreateJob>
  *
  * @short A job to create a DAV item on the DAV server.
@@ -27,7 +27,7 @@ class KDAV_EXPORT DavItemCreateJob : public DavJobBase
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new DAV item create job.
      *
      * @param item The item that shall be created.
@@ -35,12 +35,12 @@ public:
      */
     explicit DavItemCreateJob(const DavItem &item, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Starts the job.
      */
     void start() override;
 
-    /**
+    /*!
      * Returns the created DAV item including the correct identifier URL
      * and current ETag information.
      */

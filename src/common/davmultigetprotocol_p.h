@@ -13,29 +13,29 @@
 
 namespace KDAV
 {
-/**
+/*!
  * @short Base class for protocols that implement MULTIGET capabilities
  */
 class DavMultigetProtocol : public DavProtocolBase
 {
 public:
-    /**
+    /*!
      * Destroys the DAV protocol
      */
     ~DavMultigetProtocol() override;
 
-    /**
+    /*!
      * Returns the XML document that represents a MULTIGET DAV query to
      * list all DAV resources with the given @p urls.
      */
     virtual XMLQueryBuilder::Ptr itemsReportQuery(const QStringList &urls) const = 0;
 
-    /**
+    /*!
      * Returns the namespace used by protocol-specific elements found in responses.
      */
     virtual QString responseNamespace() const = 0;
 
-    /**
+    /*!
      * Returns the tag name of data elements found in responses.
      */
     virtual QString dataTagName() const = 0;

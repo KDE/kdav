@@ -9,12 +9,12 @@
 
 #include <QFlags>
 
-/**
+/*!
  * The KDAV namespace.
  */
 namespace KDAV
 {
-/**
+/*!
  * Describes the DAV protocol dialect.
  */
 enum Protocol {
@@ -23,7 +23,7 @@ enum Protocol {
     GroupDav, ///< The GroupDav protocol as defined in http://www.groupdav.org
 };
 
-/**
+/*!
  * Describes the DAV privileges on a resource (see RFC3744)
  */
 enum Privilege {
