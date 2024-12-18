@@ -19,7 +19,9 @@ namespace KDAV
 class EtagCachePrivate;
 
 /*!
- * \class EtagCache etagcache.h <KDAV/EtagCache>
+ * \class KDAV::EtagCache
+ * \inheaderfile KDAV/EtagCache
+ * \inmodule KDAV
  *
  * \brief A helper class to cache ETags.
  *
@@ -34,8 +36,7 @@ class KDAV_EXPORT EtagCache : public QObject
 
 public:
     /*!
-     * Creates a new ETag cache and populates it with the ETags
-     * of items found in @p collection.
+     * Creates a new ETag cache.
      */
     explicit EtagCache(QObject *parent = nullptr);
     ~EtagCache() override;
@@ -53,7 +54,7 @@ public:
     Q_REQUIRED_RESULT bool contains(const QString &remoteId) const;
 
     /*!
-     * Check if the known ETag for the remote ID is equal to @p refEtag.
+     * Check if the known ETag for the remote ID is equal to \a refEtag.
      */
     Q_REQUIRED_RESULT bool etagChanged(const QString &remoteId, const QString &refEtag) const;
 
@@ -69,7 +70,7 @@ public:
     Q_REQUIRED_RESULT bool isOutOfDate(const QString &remoteId) const;
 
     /*!
-     * Removes the entry for item with remote ID @p remoteId.
+     * Removes the entry for item with remote ID \a remoteId.
      */
     void removeEtag(const QString &remoteId);
 

@@ -19,7 +19,9 @@ class DavJobBasePrivate;
 class Error;
 
 /*!
- * \class DavJobBase davjobbase.h <KDAV/DavJobBase>
+ * \class KDAV::DavJobBase
+ * \inheaderfile KDAV/DavJobBase
+ * \inmodule KDAV
  *
  * \brief base class for the jobs used by the resource.
  */
@@ -48,15 +50,17 @@ public:
      * at a temporary error.
      *
      * The HTTP response codes considered retryable are:
-     *   - 401
-     *   - 402
-     *   - 407
-     *   - 408
-     *   - 423
-     *   - 429
-     *   - 501 to 504, inclusive
-     *   - 507
-     *   - 511
+     * \list
+     * \li 401
+     * \li 402
+     * \li 407
+     * \li 408
+     * \li 423
+     * \li 429
+     * \li 501 to 504, inclusive
+     * \li 507
+     * \li 511
+     * \endlist
      */
     Q_REQUIRED_RESULT bool canRetryLater() const;
 

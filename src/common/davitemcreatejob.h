@@ -18,7 +18,9 @@ namespace KDAV
 class DavItemCreateJobPrivate;
 
 /*!
- * \class DavItemCreateJob davitemcreatejob.h <KDAV/DavItemCreateJob>
+ * \class KDAV::DavItemCreateJob
+ * \inheaderfile KDAV/DavItemCreateJob
+ * \inmodule KDAV
  *
  * \brief A job to create a DAV item on the DAV server.
  */
@@ -31,6 +33,7 @@ public:
      * Creates a new DAV item create job.
      *
      * \a item The item that shall be created.
+     *
      * \a parent The parent object.
      */
     explicit DavItemCreateJob(const DavItem &item, QObject *parent = nullptr);
@@ -46,6 +49,9 @@ public:
      */
     Q_REQUIRED_RESULT DavItem item() const;
 
+    /*!
+     *
+     */
     Q_REQUIRED_RESULT QUrl itemUrl() const;
 
 private:

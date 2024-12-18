@@ -18,7 +18,9 @@ namespace KDAV
 class DavItemModifyJobPrivate;
 
 /*!
- * \class DavItemModifyJob davitemmodifyjob.h <KDAV/DavItemModifyJob>
+ * \class KDAV::DavItemModifyJob
+ * \inheaderfile KDAV/DavItemModifyJob
+ * \inmodule KDAV
  *
  * \brief A job that modifies a DAV item on the DAV server.
  */
@@ -31,6 +33,7 @@ public:
      * Creates a new DAV item modify job.
      *
      * \a item The item that shall be modified.
+     *
      * \a parent The parent object.
      */
     explicit DavItemModifyJob(const DavItem &item, QObject *parent = nullptr);
@@ -45,6 +48,9 @@ public:
      */
     Q_REQUIRED_RESULT DavItem item() const;
 
+    /*!
+     *
+     */
     Q_REQUIRED_RESULT QUrl itemUrl() const;
 
     /*!

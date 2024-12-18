@@ -19,7 +19,9 @@ namespace KDAV
 {
 class DavUrlPrivate;
 /*!
- * \class DavUrl davurl.h <KDAV/DavUrl>
+ * \class KDAV::DavUrl
+ * \inheaderfile KDAV/DavUrl
+ * \inmodule KDAV
  *
  * \brief A helper class to combine URL and protocol of a DAV URL.
  */
@@ -45,12 +47,13 @@ public:
      * Creates a new DAV URL.
      *
      * \a url The URL that identifies the DAV object.
+     *
      * \a protocol The DAV protocol dialect that is used to retrieve the DAV object.
      */
     DavUrl(const QUrl &url, Protocol protocol);
 
     /*!
-     * Sets the @p url that identifies the DAV object.
+     * Sets the \a url that identifies the DAV object.
      */
     void setUrl(const QUrl &url);
 
@@ -65,7 +68,7 @@ public:
     Q_REQUIRED_RESULT QString toDisplayString() const;
 
     /*!
-     * Sets the DAV @p protocol dialect that is used to retrieve the DAV object.
+     * Sets the DAV \a protocol dialect that is used to retrieve the DAV object.
      */
     void setProtocol(Protocol protocol);
 

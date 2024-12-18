@@ -23,7 +23,9 @@ class DavUrl;
 class DavItemsListJobPrivate;
 
 /*!
- * \class DavItemsListJob davitemslistjob.h <KDAV/DavItemsListJob>
+ * \class KDAV::DavItemsListJob
+ * \inheaderfile KDAV/DavItemsListJob
+ * \inmodule KDAV
  *
  * \brief A job that lists all DAV items inside a DAV collection.
  */
@@ -36,6 +38,7 @@ public:
      * Creates a new DAV items list job.
      *
      * \a url The URL of the DAV collection.
+     *
      * \a parent The parent object.
      */
     DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent = nullptr);
@@ -55,6 +58,7 @@ public:
      * Sets the start and end time to list items for.
      *
      * \a start The range start, in format "date with UTC time"
+     *
      * \a end The range end, in format "date with UTC time"
      */
     void setTimeRange(const QString &start, const QString &end);

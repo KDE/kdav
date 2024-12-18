@@ -19,9 +19,11 @@ namespace KDAV
 class DavPrincipalSearchJobPrivate;
 
 /*!
- * \class DavPrincipalSearchJob davprincipalsearchjob.h <KDAV/DavPrincipalSearchJob>
+ * \class KDAV::DavPrincipalSearchJob
+ * \inheaderfile KDAV/DavPrincipalSearchJob
+ * \inmodule KDAV
  *
- * \brief A job that search a DAV principal on a server
+ * \brief A job that search a DAV principal on a server.
  *
  * This job is used to search a principal on a server
  * that implement the dav-property-search REPORT (RFC3744).
@@ -35,8 +37,8 @@ class KDAV_EXPORT DavPrincipalSearchJob : public DavJobBase
 public:
     /*!
      * Types of search that are supported by this job.
-     * DisplayName will match on the DAV displayname property.
-     * EmailAddress will match on the CalDav calendar-user-address-set property.
+     * \value DisplayName Will match on the DAV displayname property.
+     * \value EmailAddress Will match on the CalDav calendar-user-address-set property.
      */
     enum FilterType {
         DisplayName,
@@ -44,11 +46,21 @@ public:
     };
 
     /*!
+     * \inmodule KDAV
      * Simple struct to hold the search job results
      */
     struct Result {
+        /*!
+         * \variable KDAV::DavPrincipalSearchJob::Result::propertyNamespace
+         */
         QString propertyNamespace;
+        /*!
+         * \variable KDAV::DavPrincipalSearchJob::Result::property
+         */
         QString property;
+        /*!
+         * \variable KDAV::DavPrincipalSearchJob::Result::value
+         */
         QString value;
     };
 
@@ -56,8 +68,11 @@ public:
      * Creates a new DAV principal search job
      *
      * \a url The URL to use in the REPORT query.
+     *
      * \a type The type that the filter will match.
+     *
      * \a filter The filter that will be used to match the displayname attribute.
+     *
      * \a parent The parent object.
      */
     explicit DavPrincipalSearchJob(const DavUrl &url, FilterType type, const QString &filter, QObject *parent = nullptr);
@@ -66,6 +81,7 @@ public:
      * Add a new property to fetch from the server.
      *
      * \a name The name of the property.
+     *
      * \a ns The namespace of this property, defaults to 'DAV:'.
      */
     void fetchProperty(const QString &name, const QString &ns = QString());

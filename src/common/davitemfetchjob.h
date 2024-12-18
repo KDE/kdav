@@ -18,7 +18,9 @@ namespace KDAV
 class DavItemFetchJobPrivate;
 
 /*!
- * \class DavItemFetchJob davitemfetchjob.h <KDAV/DavItemFetchJob>
+ * \class KDAV::DavItemFetchJob
+ * \inheaderfile KDAV/DavItemFetchJob
+ * \inmodule KDAV
  *
  * \brief A job that fetches a DAV item from the DAV server.
  */
@@ -31,6 +33,7 @@ public:
      * Creates a new DAV item fetch job.
      *
      * \a item The item that shall be fetched.
+     *
      * \a parent The parent object.
      */
     explicit DavItemFetchJob(const DavItem &item, QObject *parent = nullptr);
