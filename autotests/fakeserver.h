@@ -115,7 +115,7 @@ public:
      *
      * @see addScenarioFromFile()
      *
-     * @param scenario  the scenario as a list of messages
+     * \a scenario  the scenario as a list of messages
      */
     void addScenario(const QList<QByteArray> &scenario);
     /*
@@ -129,7 +129,7 @@ public:
      *
      * @see addScenario()
      *
-     * @param fileName  the name of the file that contains the
+     * \a fileName  the name of the file that contains the
      *                  scenario; it will be split at line
      *                  boundaries, and excess whitespace will
      *                  be trimmed from the start and end of lines
@@ -139,7 +139,7 @@ public:
     /*
      * Checks whether a particular scenario has completed
      *
-     * @param scenarioNumber  the number of the scenario to check,
+     * \a scenarioNumber  the number of the scenario to check,
      *                        in order of addition/client connection
      */
     bool isScenarioDone(int scenarioNumber) const;

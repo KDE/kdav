@@ -23,7 +23,7 @@ class DavUrl;
 class DavItemsListJobPrivate;
 
 /*!
- * @class DavItemsListJob davitemslistjob.h <KDAV/DavItemsListJob>
+ * \class DavItemsListJob davitemslistjob.h <KDAV/DavItemsListJob>
  *
  * @short A job that lists all DAV items inside a DAV collection.
  */
@@ -35,8 +35,8 @@ public:
     /*!
      * Creates a new DAV items list job.
      *
-     * @param url The URL of the DAV collection.
-     * @param parent The parent object.
+     * \a url The URL of the DAV collection.
+     * \a parent The parent object.
      */
     DavItemsListJob(const DavUrl &url, const std::shared_ptr<EtagCache> &cache, QObject *parent = nullptr);
 
@@ -47,15 +47,15 @@ public:
      *
      * If no mime type is given then all will be requested.
      *
-     * @param types The list of mime types to include
+     * \a types The list of mime types to include
      */
     void setContentMimeTypes(const QStringList &types);
 
     /*!
      * Sets the start and end time to list items for.
      *
-     * @param start The range start, in format "date with UTC time"
-     * @param end The range end, in format "date with UTC time"
+     * \a start The range start, in format "date with UTC time"
+     * \a end The range end, in format "date with UTC time"
      */
     void setTimeRange(const QString &start, const QString &end);
 

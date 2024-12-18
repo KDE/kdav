@@ -25,7 +25,7 @@ class DavUrl;
 namespace KDAV
 {
 /*!
- * @class DavItem davitem.h <KDAV/DavItem>
+ * \class DavItem davitem.h <KDAV/DavItem>
  *
  * @short A helper class to store information about DAV resources.
  *
@@ -51,10 +51,10 @@ public:
     /*!
      * Creates a new DAV item.
      *
-     * @param url The URL that identifies the item.
-     * @param contentType The content type of the item.
-     * @param data The actual raw content data of the item.
-     * @param etag The ETag of the item.
+     * \a url The URL that identifies the item.
+     * \a contentType The content type of the item.
+     * \a data The actual raw content data of the item.
+     * \a etag The ETag of the item.
      */
     DavItem(const DavUrl &url, const QString &contentType, const QByteArray &data, const QString &etag);
 

@@ -39,7 +39,7 @@ enum ErrorNumber {
 class ErrorPrivate;
 
 /*!
- * @class Error daverror.h <KDAV/DavError>
+ * \class Error daverror.h <KDAV/DavError>
  *
  * DAV operation error.
  */

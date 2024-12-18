@@ -18,7 +18,7 @@ namespace KDAV
 class DavItemDeleteJobPrivate;
 
 /*!
- * @class DavItemDeleteJob davitemdeletejob.h <KDAV/DavItemDeleteJob>
+ * \class DavItemDeleteJob davitemdeletejob.h <KDAV/DavItemDeleteJob>
  *
  * @short A job to delete a DAV item on the DAV server.
  */
@@ -30,8 +30,8 @@ public:
     /*!
      * Creates a new DAV item delete job.
      *
-     * @param item The item that shall be deleted.
-     * @param parent The parent object.
+     * \a item The item that shall be deleted.
+     * \a parent The parent object.
      */
     explicit DavItemDeleteJob(const DavItem &item, QObject *parent = nullptr);
 

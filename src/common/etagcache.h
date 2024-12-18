@@ -19,7 +19,7 @@ namespace KDAV
 class EtagCachePrivate;
 
 /*!
- * @class EtagCache etagcache.h <KDAV/EtagCache>
+ * \class EtagCache etagcache.h <KDAV/EtagCache>
  *
  * @short A helper class to cache ETags.
  *
