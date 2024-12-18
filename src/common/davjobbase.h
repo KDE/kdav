@@ -18,7 +18,7 @@ namespace KDAV
 class DavJobBasePrivate;
 class Error;
 
-/**
+/*!
  * @class DavJobBase davjobbase.h <KDAV/DavJobBase>
  *
  * @short base class for the jobs used by the resource.
@@ -31,7 +31,7 @@ public:
     explicit DavJobBase(QObject *parent = nullptr);
     ~DavJobBase() override;
 
-    /**
+    /*!
      * Get the latest response code.
      *
      * If no response code has been set then 0 will be returned, but will
@@ -40,7 +40,7 @@ public:
      */
     Q_REQUIRED_RESULT int latestResponseCode() const;
 
-    /**
+    /*!
      * Check if the job can be retried later.
      *
      * This will return true for transient errors, i.e. if the response code
@@ -60,12 +60,12 @@ public:
      */
     Q_REQUIRED_RESULT bool canRetryLater() const;
 
-    /**
+    /*!
      * Check if the job failed because of a conflict
      */
     Q_REQUIRED_RESULT bool hasConflict() const;
 
-    /**
+    /*!
      * Returns a instance of the KDAV:Error to be able to translate the error
      */
     Q_REQUIRED_RESULT Error davError() const;

@@ -16,7 +16,7 @@
 
 namespace KDAV
 {
-/** DAV operation error codes. */
+/*! DAV operation error codes. */
 enum ErrorNumber {
     NO_ERR = 0,
     ERR_PROBLEM_WITH_REQUEST = KJob::UserDefinedError + 200, // it would be better to request KIO about uts UserDefinedError space.
@@ -38,7 +38,7 @@ enum ErrorNumber {
 
 class ErrorPrivate;
 
-/**
+/*!
  * @class Error daverror.h <KDAV/DavError>
  *
  * DAV operation error.
