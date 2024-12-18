@@ -18,7 +18,7 @@ namespace KDAV
 class DavItemModifyJobPrivate;
 
 /*!
- * @class DavItemModifyJob davitemmodifyjob.h <KDAV/DavItemModifyJob>
+ * \class DavItemModifyJob davitemmodifyjob.h <KDAV/DavItemModifyJob>
  *
  * @short A job that modifies a DAV item on the DAV server.
  */
@@ -30,8 +30,8 @@ public:
     /*!
      * Creates a new DAV item modify job.
      *
-     * @param item The item that shall be modified.
-     * @param parent The parent object.
+     * \a item The item that shall be modified.
+     * \a parent The parent object.
      */
     explicit DavItemModifyJob(const DavItem &item, QObject *parent = nullptr);
 

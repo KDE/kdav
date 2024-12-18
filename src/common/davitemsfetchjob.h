@@ -23,7 +23,7 @@ namespace KDAV
 class DavItemsFetchJobPrivate;
 
 /*!
- * @class DavItemsFetchJob davitemsfetchjob.h <KDAV/DavItemsFetchJob>
+ * \class DavItemsFetchJob davitemsfetchjob.h <KDAV/DavItemsFetchJob>
  *
  * @short A job that fetches a list of items from a DAV server using a MULTIGET query.
  */
@@ -35,9 +35,9 @@ public:
     /*!
      * Creates a new items fetch job.
      *
-     * @param collectionUrl The DAV collection on which to run the query
-     * @param urls The list of URLs to fetch
-     * @param parent The parent object
+     * \a collectionUrl The DAV collection on which to run the query
+     * \a urls The list of URLs to fetch
+     * \a parent The parent object
      */
     DavItemsFetchJob(const DavUrl &collectionUrl, const QStringList &urls, QObject *parent = nullptr);
 

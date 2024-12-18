@@ -27,9 +27,11 @@ class DavUrl;
 namespace KDAV
 {
 /*!
- * @class DavCollection davcollection.h <KDAV/DavCollection>
+ * \class KDAV::DavCollection
+ * \inheaderfile KDAV/DavCollection
+ * \inmodule KDAV
  *
- * @short A helper class to store information about DAV collection.
+ * \brief A helper class to store information about DAV collection.
  *
  * This class is used as container to transfer information about DAV
  * collections between the Akonadi resource and the DAV jobs.
@@ -44,14 +46,21 @@ public:
 
     /*!
      * Describes the possible content type of the DAV collection.
+     *
+     * Events The collection can contain event DAV resources.
+     * Todos The collection can contain todo DAV resources.
+     * Contacts The collection can contain contact DAV resources.
+     * FreeBusy The collection can contain free/busy information.
+     * Journal The collection can contain journal DAV resources.
+     * Calendar The collection can contain anything calendar-related.
      */
     enum ContentType {
-        Events = 1, ///< The collection can contain event DAV resources.
-        Todos = 2, ///< The collection can contain todo DAV resources.
-        Contacts = 4, ///< The collection can contain contact DAV resources.
-        FreeBusy = 8, ///< The collection can contain free/busy information.
-        Journal = 16, ///< The collection can contain journal DAV resources.
-        Calendar = 32, ///< The collection can contain anything calendar-related.
+        Events = 1,
+        Todos = 2,
+        Contacts = 4,
+        FreeBusy = 8,
+        Journal = 16,
+        Calendar = 32,
     };
     Q_DECLARE_FLAGS(ContentTypes, ContentType)
 
@@ -63,9 +72,11 @@ public:
     /*!
      * Creates a new DAV collection.
      *
-     * @param url The URL that identifies the collection.
-     * @param displayName The display name of the collection.
-     * @param contentTypes The possible content types of the collection.
+     * \a url The URL that identifies the collection.
+     *
+     * \a displayName The display name of the collection.
+     *
+     * \a contentTypes The possible content types of the collection.
      */
     DavCollection(const DavUrl &url, const QString &displayName, ContentTypes contentTypes);
 
@@ -78,19 +89,19 @@ public:
 
     /*!
      * Sets this collection CTag.
-     * @see https://github.com/apple/ccs-calendarserver/blob/master/doc/Extensions/caldav-ctag.txt
+     * \sa https://github.com/apple/ccs-calendarserver/blob/master/doc/Extensions/caldav-ctag.txt
      */
     void setCTag(const QString &ctag);
 
     /*!
      * Returns this collection CTag. The returned value will be empty
      * if no CTag was found.
-     * @see https://github.com/apple/ccs-calendarserver/blob/master/doc/Extensions/caldav-ctag.txt
+     * \sa https://github.com/apple/ccs-calendarserver/blob/master/doc/Extensions/caldav-ctag.txt
      */
     Q_REQUIRED_RESULT QString CTag() const;
 
     /*!
-     * Sets the @p url that identifies the collection.
+     * Sets the \a url that identifies the collection.
      */
     void setUrl(const DavUrl &url);
 
@@ -100,7 +111,7 @@ public:
     Q_REQUIRED_RESULT DavUrl url() const;
 
     /*!
-     * Sets the display @p name of the collection.
+     * Sets the display \a name of the collection.
      */
     void setDisplayName(const QString &name);
 
@@ -121,7 +132,7 @@ public:
     Q_REQUIRED_RESULT QColor color() const;
 
     /*!
-     * Sets the possible content @p types of the collection.
+     * Sets the possible content \a types of the collection.
      */
     void setContentTypes(ContentTypes types);
 

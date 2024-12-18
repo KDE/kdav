@@ -19,7 +19,7 @@ namespace KDAV
 class DavPrincipalSearchJobPrivate;
 
 /*!
- * @class DavPrincipalSearchJob davprincipalsearchjob.h <KDAV/DavPrincipalSearchJob>
+ * \class DavPrincipalSearchJob davprincipalsearchjob.h <KDAV/DavPrincipalSearchJob>
  *
  * @short A job that search a DAV principal on a server
  *
@@ -55,18 +55,18 @@ public:
     /*!
      * Creates a new DAV principal search job
      *
-     * @param url The URL to use in the REPORT query.
-     * @param type The type that the filter will match.
-     * @param filter The filter that will be used to match the displayname attribute.
-     * @param parent The parent object.
+     * \a url The URL to use in the REPORT query.
+     * \a type The type that the filter will match.
+     * \a filter The filter that will be used to match the displayname attribute.
+     * \a parent The parent object.
      */
     explicit DavPrincipalSearchJob(const DavUrl &url, FilterType type, const QString &filter, QObject *parent = nullptr);
 
     /*!
      * Add a new property to fetch from the server.
      *
-     * @param name The name of the property.
-     * @param ns The namespace of this property, defaults to 'DAV:'.
+     * \a name The name of the property.
+     * \a ns The namespace of this property, defaults to 'DAV:'.
      */
     void fetchProperty(const QString &name, const QString &ns = QString());
 
