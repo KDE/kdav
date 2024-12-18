@@ -47,7 +47,7 @@ public:
 
     /*!
      * \inmodule KDAV
-     * Simple struct to hold the search job results
+     * \brief Simple struct to hold the search job results
      */
     struct Result {
         /*!
