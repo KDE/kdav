@@ -21,7 +21,7 @@ class EtagCachePrivate;
 /*!
  * \class EtagCache etagcache.h <KDAV/EtagCache>
  *
- * @short A helper class to cache ETags.
+ * \brief A helper class to cache ETags.
  *
  * The EtagCache caches the remote ids and ETags of all items
  * in a given collection. This cache is needed to find

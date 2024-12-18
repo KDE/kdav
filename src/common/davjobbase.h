@@ -21,7 +21,7 @@ class Error;
 /*!
  * \class DavJobBase davjobbase.h <KDAV/DavJobBase>
  *
- * @short base class for the jobs used by the resource.
+ * \brief base class for the jobs used by the resource.
  */
 class KDAV_EXPORT DavJobBase : public KJob
 {

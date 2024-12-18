@@ -21,7 +21,7 @@ class DavPrincipalSearchJobPrivate;
 /*!
  * \class DavPrincipalSearchJob davprincipalsearchjob.h <KDAV/DavPrincipalSearchJob>
  *
- * @short A job that search a DAV principal on a server
+ * \brief A job that search a DAV principal on a server
  *
  * This job is used to search a principal on a server
  * that implement the dav-property-search REPORT (RFC3744).

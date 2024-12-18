@@ -21,7 +21,7 @@ class DavUrlPrivate;
 /*!
  * \class DavUrl davurl.h <KDAV/DavUrl>
  *
- * @short A helper class to combine URL and protocol of a DAV URL.
+ * \brief A helper class to combine URL and protocol of a DAV URL.
  */
 class KDAV_EXPORT DavUrl
 {

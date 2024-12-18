@@ -27,7 +27,7 @@ namespace KDAV
 /*!
  * \class DavItem davitem.h <KDAV/DavItem>
  *
- * @short A helper class to store information about DAV resources.
+ * \brief A helper class to store information about DAV resources.
  *
  * This class is used as container to transfer information about DAV
  * resources between the Akonadi resource and the DAV jobs.

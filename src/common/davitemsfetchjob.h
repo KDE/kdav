@@ -25,7 +25,7 @@ class DavItemsFetchJobPrivate;
 /*!
  * \class DavItemsFetchJob davitemsfetchjob.h <KDAV/DavItemsFetchJob>
  *
- * @short A job that fetches a list of items from a DAV server using a MULTIGET query.
+ * \brief A job that fetches a list of items from a DAV server using a MULTIGET query.
  */
 class KDAV_EXPORT DavItemsFetchJob : public DavJobBase
 {
