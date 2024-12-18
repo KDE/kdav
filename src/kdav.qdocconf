@@ -1,0 +1,30 @@
+include($KDE_DOCS/global/qt-module-defaults.qdocconf)
+
+project = KDAV
+description = DAV protocol implementation with KJobs
+
+documentationinheaders = true
+
+headerdirs += .
+sourcedirs += .
+
+outputformats = HTML
+
+depends += \
+    kde \
+    qtcore \
+    kcoreaddons
+
+qhp.projects            = KDAV
+
+qhp.KDAV.file                = kdav.qhp
+qhp.KDAV.namespace           = org.kde.kdav.$QT_VERSION_TAG
+qhp.KDAV.virtualFolder       = kdav
+qhp.KDAV.indexTitle          = KDAV
+qhp.KDAV.indexRoot           =
+
+qhp.KDAV.subprojects         = classes
+qhp.KDAV.subprojects.classes.title = C++ Classes
+qhp.KDAV.subprojects.classes.indexTitle = KDAV C++ Classes
+qhp.KDAV.subprojects.classes.selectors = class fake:headerfile
+qhp.KDAV.subprojects.classes.sortPages = true

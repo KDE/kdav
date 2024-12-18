@@ -17,35 +17,38 @@ namespace KDAV
 {
 class DavItemDeleteJobPrivate;
 
-/**
- * @class DavItemDeleteJob davitemdeletejob.h <KDAV/DavItemDeleteJob>
+/*!
+ * \class KDAV::DavItemDeleteJob
+ * \inheaderfile KDAV/DavItemDeleteJob
+ * \inmodule KDAV
  *
- * @short A job to delete a DAV item on the DAV server.
+ * \brief A job to delete a DAV item on the DAV server.
  */
 class KDAV_EXPORT DavItemDeleteJob : public DavJobBase
 {
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new DAV item delete job.
      *
-     * @param item The item that shall be deleted.
-     * @param parent The parent object.
+     * \a item The item that shall be deleted.
+     *
+     * \a parent The parent object.
      */
     explicit DavItemDeleteJob(const DavItem &item, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Starts the job.
      */
     void start() override;
 
-    /**
+    /*!
      * Returns the item that triggered the conflict, if any.
      */
     Q_REQUIRED_RESULT DavItem freshItem() const;
 
-    /**
+    /*!
      * Returns the response code we got when fetching the fresh item.
      */
     Q_REQUIRED_RESULT int freshResponseCode() const;

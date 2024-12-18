@@ -20,13 +20,13 @@ class DavJobBasePrivate
 public:
     virtual ~DavJobBasePrivate() = default;
 
-    /**
+    /*
      * Sets the latest response code received.
      *
      * Only really useful in case of error, though success codes can
      * also be set.
      *
-     * @param code The code to set, should be a valid HTTP response code or zero.
+     * code The code to set, should be a valid HTTP response code or zero.
      */
     void setLatestResponseCode(int code);
 

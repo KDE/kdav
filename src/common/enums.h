@@ -9,22 +9,43 @@
 
 #include <QFlags>
 
-/**
- * The KDAV namespace.
+/*!
+ * \namespace KDAV
+ * \inmodule KDAV
+ * \inheaderfile KDAV/Enums
+ * \brief The KDAV namespace.
  */
 namespace KDAV
 {
-/**
+/*!
  * Describes the DAV protocol dialect.
+ *
+ * \value CalDav The CalDav protocol as defined in https://devguide.calconnect.org/CalDAV
+ * \value CardDav The CardDav protocol as defined in https://devguide.calconnect.org/CardDAV
+ * \value GroupDav The GroupDav protocol as defined in http://www.groupdav.org
+ *
  */
 enum Protocol {
-    CalDav = 0, ///< The CalDav protocol as defined in https://devguide.calconnect.org/CalDAV
-    CardDav, ///< The CardDav protocol as defined in https://devguide.calconnect.org/CardDAV
-    GroupDav, ///< The GroupDav protocol as defined in http://www.groupdav.org
+    CalDav = 0,
+    CardDav,
+    GroupDav,
 };
 
-/**
+/*!
  * Describes the DAV privileges on a resource (see RFC3744)
+ *
+ * \value None
+ * \value Read
+ * \value Write
+ * \value WriteProperties
+ * \value WriteContent
+ * \value Unlock
+ * \value ReadAcl
+ * \value ReadCurrentUserPrivilegeSet
+ * \value WriteAcl
+ * \value Bind
+ * \value Unbind
+ * \value All
  */
 enum Privilege {
     None = 0x0,

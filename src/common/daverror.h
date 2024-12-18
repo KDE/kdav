@@ -16,7 +16,25 @@
 
 namespace KDAV
 {
-/** DAV operation error codes. */
+/*!
+ * DAV operation error codes.
+ * \value NO_ERR
+ * \value ERR_PROBLEM_WITH_REQUEST
+ * \value ERR_NO_MULTIGET
+ * \value ERR_SERVER_UNRECOVERABLE
+ * \value ERR_COLLECTIONDELETE
+ * \value ERR_COLLECTIONFETCH
+ * \value ERR_COLLECTIONFETCH_XQUERY_SETFOCUS
+ * \value ERR_COLLECTIONFETCH_XQUERY_INVALID
+ * \value ERR_COLLECTIONMODIFY
+ * \value ERR_COLLECTIONMODIFY_NO_PROPERITES
+ * \value ERR_COLLECTIONMODIFY_RESPONSE
+ * \value ERR_ITEMCREATE
+ * \value ERR_ITEMDELETE
+ * \value ERR_ITEMMODIFY
+ * \value ERR_ITEMLIST
+ * \value ERR_ITEMLIST_NOMIMETYPE
+ */
 enum ErrorNumber {
     NO_ERR = 0,
     ERR_PROBLEM_WITH_REQUEST = KJob::UserDefinedError + 200, // it would be better to request KIO about uts UserDefinedError space.
@@ -38,15 +56,24 @@ enum ErrorNumber {
 
 class ErrorPrivate;
 
-/**
- * @class Error daverror.h <KDAV/DavError>
+/*!
+ * \class KDAV::Error
+ * \inheaderfile KDAV/DavError
+ * \inmodule KDAV
  *
- * DAV operation error.
+ * \brief DAV operation error.
  */
 class KDAV_EXPORT Error
 {
 public:
+    /*!
+     *
+     */
     explicit Error();
+
+    /*!
+     *
+     */
     explicit Error(ErrorNumber errNo, int responseCode, const QString &errorText, int jobErrorCode);
     Error(const Error &);
     Error(Error &&);
@@ -54,11 +81,34 @@ public:
     Error &operator=(const Error &);
     Error &operator=(Error &&);
 
+    /*!
+     *
+     */
     Q_REQUIRED_RESULT ErrorNumber errorNumber() const;
+
+    /*!
+     *
+     */
     Q_REQUIRED_RESULT int responseCode() const;
+
+    /*!
+     *
+     */
     Q_REQUIRED_RESULT QString internalErrorText() const;
+
+    /*!
+     *
+     */
     Q_REQUIRED_RESULT int jobErrorCode() const;
+
+    /*!
+     *
+     */
     Q_REQUIRED_RESULT QString translatedJobError() const;
+
+    /*!
+     *
+     */
     Q_REQUIRED_RESULT QString errorText() const;
 
 private:

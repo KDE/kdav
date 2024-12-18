@@ -18,30 +18,33 @@ namespace KDAV
 {
 class DavPrincipalHomeSetsFetchJobPrivate;
 
-/**
- * @class DavPrincipalHomeSetsFetchJob davprincipalhomesetsfetchjob.h <KDAV/DavPrincipalHomeSetsFetchJob>
+/*!
+ * \class KDAV::DavPrincipalHomeSetsFetchJob
+ * \inheaderfile KDAV/DavPrincipalHomeSetsFetchJob
+ * \inmodule KDAV
  *
- * @short A job that fetches home sets for a principal.
+ * \brief A job that fetches home sets for a principal.
  */
 class KDAV_EXPORT DavPrincipalHomeSetsFetchJob : public DavJobBase
 {
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new DAV principals home sets fetch job.
      *
-     * @param url The DAV URL of the DAV principal.
-     * @param parent The parent object.
+     * \a url The DAV URL of the DAV principal.
+     *
+     * \a parent The parent object.
      */
     explicit DavPrincipalHomeSetsFetchJob(const DavUrl &url, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Starts the job.
      */
     void start() override;
 
-    /**
+    /*!
      * Returns the found home sets.
      */
     Q_REQUIRED_RESULT QStringList homeSets() const;

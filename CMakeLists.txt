@@ -18,11 +18,11 @@ include(ECMSetupVersion)
 include(ECMGenerateExportHeader)
 include(ECMGenerateHeaders)
 include(FeatureSummary)
-include(ECMAddQch)
 include(ECMAddTests)
 include(ECMInstallIcons)
 include(ECMQtDeclareLoggingCategory)
 include(ECMDeprecationSettings)
+include(ECMGenerateQDoc)
 
 
 set(REQUIRED_QT_VERSION 6.6.0)
@@ -31,9 +31,6 @@ find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui Test)
 find_package(KF6 ${KF_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
 
 # setup lib
-
-option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
-add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
 
 ecm_set_disabled_deprecation_versions(
     QT 6.8.0
@@ -56,16 +53,6 @@ if(BUILD_TESTING)
 endif()
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6DAV")
-
-if(BUILD_QCH)
-    ecm_install_qch_export(
-        TARGETS KF6DAV_QCH
-        FILE KF6DAVQchTargets.cmake
-        DESTINATION "${CMAKECONFIG_INSTALL_DIR}"
-        COMPONENT Devel
-    )
-    set(PACKAGE_INCLUDE_QCHTARGETS "include(\"\${CMAKE_CURRENT_LIST_DIR}/KF6DAVQchTargets.cmake\")")
-endif()
 
 configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/KF6DAVConfig.cmake.in"
