@@ -12,11 +12,17 @@
 
 namespace KDAV
 {
-/** Information about a DAV protocol. */
+/*!
+ * \namespace KDAV::ProtocolInfo
+ * \inheaderfile KDAV/ProtocolInfo
+ * \inmodule KDAV
+ *
+ * \brief Information about a DAV protocol.
+ */
 namespace ProtocolInfo
 {
-/**
- * Returns whether the @p protocol dialect supports the MULTIGET command.
+/*!
+ * Returns whether the \a protocol dialect supports the MULTIGET command.
  *
  * If MULTIGET is supported, the content of all DAV resources
  * can be fetched in Akonadi::ResourceBase::retrieveItems() already and
@@ -25,25 +31,25 @@ namespace ProtocolInfo
  */
 Q_REQUIRED_RESULT KDAV_EXPORT bool useMultiget(KDAV::Protocol protocol);
 
-/** Returns the principal home set of @p protocol. */
+/*! Returns the principal home set of \a protocol. */
 Q_REQUIRED_RESULT KDAV_EXPORT QString principalHomeSet(KDAV::Protocol protocol);
 
-/** Returns the principal home set namespace of @p protocol. */
+/*! Returns the principal home set namespace of \a protocol. */
 Q_REQUIRED_RESULT KDAV_EXPORT QString principalHomeSetNS(KDAV::Protocol protocol);
 
-/**
- * Returns the untranslated name of the given DAV @p protocol dialect.
+/*!
+ * Returns the untranslated name of the given DAV \a protocol dialect.
  */
 Q_REQUIRED_RESULT KDAV_EXPORT QString protocolName(KDAV::Protocol protocol);
 
-/**
+/*!
  * Returns the protocol matching the given name. This is the opposite of
  * ProtocolInfo::protocolName().
  */
 Q_REQUIRED_RESULT KDAV_EXPORT KDAV::Protocol protocolByName(const QString &name);
 
-/**
- * Returns the mimetype that shall be used for contact DAV resources using @p protocol.
+/*!
+ * Returns the mimetype that shall be used for contact DAV resources using \a protocol.
  */
 Q_REQUIRED_RESULT KDAV_EXPORT QString contactsMimeType(KDAV::Protocol protocol);
 }

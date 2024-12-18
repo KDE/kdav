@@ -18,8 +18,9 @@
 
 namespace KDAV
 {
-/**
- * @short Base class for XML query builders
+/*!
+ * \internal
+ * \brief Base class for XML query builders
  */
 class XMLQueryBuilder
 {
@@ -38,26 +39,27 @@ private:
     QMap<QString, QVariant> mParameters;
 };
 
-/**
- * @short Base class for various DAV groupware dialects.
+/*!
+ * \internal
+ * \brief Base class for various DAV groupware dialects.
  *
  * This class provides an interface to query the DAV dialect
  * specific features and abstract them.
  *
  * The functionality is implemented in:
- *   @li CaldavProtocol
- *   @li CarddavProtocol
- *   @li GroupdavProtocol
+ *   - CaldavProtocol
+ *   - CarddavProtocol
+ *   - GroupdavProtocol
  */
 class DavProtocolBase
 {
 public:
-    /**
+    /*!
      * Destroys the DAV protocol base.
      */
     virtual ~DavProtocolBase();
 
-    /**
+    /*!
      * Returns whether the DAV protocol dialect supports principal
      * queries. If true, it must return the home set it provides
      * access to with principalHomeSet() and the home set namespace
@@ -65,14 +67,14 @@ public:
      */
     virtual bool supportsPrincipals() const = 0;
 
-    /**
+    /*!
      * Returns whether the DAV protocol dialect supports the REPORT
      * command to query all resources of a collection.
      * If not, PROPFIND command will be used instead.
      */
     virtual bool useReport() const = 0;
 
-    /**
+    /*!
      * Returns whether the DAV protocol dialect supports the MULTIGET command.
      *
      * If MULTIGET is supported, the content of all DAV resources
@@ -85,35 +87,35 @@ public:
      */
     virtual bool useMultiget() const = 0;
 
-    /**
+    /*!
      * Returns the home set that this protocol supports.
      */
     virtual QString principalHomeSet() const;
 
-    /**
+    /*!
      * Returns the namespace of the home set.
      */
     virtual QString principalHomeSetNS() const;
 
-    /**
+    /*!
      * Returns the XML document that represents the DAV query to
      * list all available DAV collections.
      */
     virtual XMLQueryBuilder::Ptr collectionsQuery() const = 0;
 
-    /**
+    /*!
      * Returns @c true if the given <prop> element of a multistatus response contains a
      * valid collection for this protocol.
      */
     virtual bool containsCollection(const QDomElement &propElem) const = 0;
 
-    /**
+    /*!
      * Returns a list of XML documents that represent DAV queries to
      * list all available DAV resources inside a specific DAV collection.
      */
     virtual QList<XMLQueryBuilder::Ptr> itemsQueries() const = 0;
 
-    /**
+    /*!
      * Returns the possible content types for the collection that
      * is described by the passed @p propstat element of a PROPFIND result.
      */

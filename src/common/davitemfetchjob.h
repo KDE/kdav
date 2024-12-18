@@ -17,30 +17,33 @@ namespace KDAV
 {
 class DavItemFetchJobPrivate;
 
-/**
- * @class DavItemFetchJob davitemfetchjob.h <KDAV/DavItemFetchJob>
+/*!
+ * \class KDAV::DavItemFetchJob
+ * \inheaderfile KDAV/DavItemFetchJob
+ * \inmodule KDAV
  *
- * @short A job that fetches a DAV item from the DAV server.
+ * \brief A job that fetches a DAV item from the DAV server.
  */
 class KDAV_EXPORT DavItemFetchJob : public DavJobBase
 {
     Q_OBJECT
 
 public:
-    /**
+    /*!
      * Creates a new DAV item fetch job.
      *
-     * @param item The item that shall be fetched.
-     * @param parent The parent object.
+     * \a item The item that shall be fetched.
+     *
+     * \a parent The parent object.
      */
     explicit DavItemFetchJob(const DavItem &item, QObject *parent = nullptr);
 
-    /**
+    /*!
      * Starts the job.
      */
     void start() override;
 
-    /**
+    /*!
      * Returns the fetched item including current ETag information.
      */
     Q_REQUIRED_RESULT DavItem item() const;

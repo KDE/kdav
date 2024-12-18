@@ -1,0 +1,9 @@
+/*!
+    \module KDAV
+    \title KDAV C++ Classes
+    \ingroup modules
+    \cmakepackage KF6
+    \cmakecomponent DAV
+
+    \brief DAV protocol implementation with KJobs.
+*/

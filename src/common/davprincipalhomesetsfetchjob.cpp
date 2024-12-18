@@ -24,7 +24,7 @@ class DavPrincipalHomeSetsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
     void davJobFinished(KJob *job);
-    /**
+    /*
      * Start the fetch process.
      *
      * There may be two rounds necessary if the first request
@@ -33,7 +33,7 @@ public:
      * those last two on each request, as they are only fetched in
      * the first round.
      *
-     * @param fetchHomeSetsOnly If set to true the request will not include
+     * fetchHomeSetsOnly If set to true the request will not include
      *        the current-user-principal and principal-URL props.
      */
     void fetchHomeSets(bool fetchHomeSetsOnly);
