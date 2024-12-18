@@ -14,6 +14,7 @@
 namespace KDAV
 {
 /*!
+ * \internal
  * \brief Base class for protocols that implement MULTIGET capabilities
  */
 class DavMultigetProtocol : public DavProtocolBase
@@ -26,7 +27,7 @@ public:
 
     /*!
      * Returns the XML document that represents a MULTIGET DAV query to
-     * list all DAV resources with the given @p urls.
+     * list all DAV resources with the given \a urls.
      */
     virtual XMLQueryBuilder::Ptr itemsReportQuery(const QStringList &urls) const = 0;
 

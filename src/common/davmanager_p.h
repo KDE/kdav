@@ -20,12 +20,12 @@ class DavJob;
 
 class QUrl;
 
-/*! CalDav/CardDav protocol implementation. */
 namespace KDAV
 {
 class DavProtocolBase;
 
 /*!
+ * \internal
  * \brief A factory class for handling DAV jobs.
  *
  * This class provides factory methods to create preconfigured

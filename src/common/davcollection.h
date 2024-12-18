@@ -47,12 +47,12 @@ public:
     /*!
      * Describes the possible content type of the DAV collection.
      *
-     * Events The collection can contain event DAV resources.
-     * Todos The collection can contain todo DAV resources.
-     * Contacts The collection can contain contact DAV resources.
-     * FreeBusy The collection can contain free/busy information.
-     * Journal The collection can contain journal DAV resources.
-     * Calendar The collection can contain anything calendar-related.
+     * \value Events The collection can contain event DAV resources.
+     * \value Todos The collection can contain todo DAV resources.
+     * \value Contacts The collection can contain contact DAV resources.
+     * \value FreeBusy The collection can contain free/busy information.
+     * \value Journal The collection can contain journal DAV resources.
+     * \value Calendar The collection can contain anything calendar-related.
      */
     enum ContentType {
         Events = 1,
