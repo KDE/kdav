@@ -23,6 +23,7 @@ include(ECMAddTests)
 include(ECMInstallIcons)
 include(ECMQtDeclareLoggingCategory)
 include(ECMDeprecationSettings)
+include(ECMGenerateQDoc)
 
 
 set(REQUIRED_QT_VERSION 6.6.0)
