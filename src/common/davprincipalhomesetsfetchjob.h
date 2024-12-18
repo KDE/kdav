@@ -21,7 +21,7 @@ class DavPrincipalHomeSetsFetchJobPrivate;
 /*!
  * \class DavPrincipalHomeSetsFetchJob davprincipalhomesetsfetchjob.h <KDAV/DavPrincipalHomeSetsFetchJob>
  *
- * @short A job that fetches home sets for a principal.
+ * \brief A job that fetches home sets for a principal.
  */
 class KDAV_EXPORT DavPrincipalHomeSetsFetchJob : public DavJobBase
 {

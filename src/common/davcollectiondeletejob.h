@@ -17,9 +17,11 @@ namespace KDAV
 class DavCollectionDeleteJobPrivate;
 
 /*!
- * \class DavCollectionDeleteJob davcollectiondeletejob.h <KDAV/DavCollectionDeleteJob>
+ * \class KDAV::DavCollectionDeleteJob
+ * \inheaderfile KDAV/DavCollectionDeleteJob
+ * \inmodule KDAV
  *
- * @short A job that deletes a DAV collection.
+ * \brief A job that deletes a DAV collection.
  *
  * This job is used to delete a DAV collection at a certain URL.
  */
@@ -32,6 +34,7 @@ public:
      * Creates a new DAV collection delete job.
      *
      * \a url The DAV URL of the collection to delete
+     *
      * \a parent The parent object.
      */
     explicit DavCollectionDeleteJob(const DavUrl &url, QObject *parent = nullptr);

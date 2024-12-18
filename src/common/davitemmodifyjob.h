@@ -20,7 +20,7 @@ class DavItemModifyJobPrivate;
 /*!
  * \class DavItemModifyJob davitemmodifyjob.h <KDAV/DavItemModifyJob>
  *
- * @short A job that modifies a DAV item on the DAV server.
+ * \brief A job that modifies a DAV item on the DAV server.
  */
 class KDAV_EXPORT DavItemModifyJob : public DavJobBase
 {

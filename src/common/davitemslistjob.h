@@ -25,7 +25,7 @@ class DavItemsListJobPrivate;
 /*!
  * \class DavItemsListJob davitemslistjob.h <KDAV/DavItemsListJob>
  *
- * @short A job that lists all DAV items inside a DAV collection.
+ * \brief A job that lists all DAV items inside a DAV collection.
  */
 class KDAV_EXPORT DavItemsListJob : public DavJobBase
 {

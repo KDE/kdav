@@ -17,9 +17,11 @@ namespace KDAV
 class DavCollectionModifyJobPrivate;
 
 /*!
- * \class DavCollectionModifyJob davcollectionmodifyjob.h <KDAV/DavCollectionModifyJob>
+ * \class KDAV::DavCollectionModifyJob
+ * \inheaderfile KDAV/DavCollectionModifyJob
+ * \inmodule KDAV
  *
- * @short A job that modifies a DAV collection.
+ * \brief A job that modifies a DAV collection.
  *
  * This job is used to modify a property of a DAV collection
  * on the DAV server.
@@ -33,6 +35,7 @@ public:
      * Creates a new DAV collection modify job.
      *
      * \a url The DAV URL that identifies the collection.
+     *
      * \a parent The parent object.
      */
     explicit DavCollectionModifyJob(const DavUrl &url, QObject *parent = nullptr);
@@ -41,7 +44,9 @@ public:
      * Sets the property that shall be modified by the job.
      *
      * \a property The name of the property.
+     *
      * \a value The value of the property.
+     *
      * \a ns The XML namespace that shall be used for the property name.
      */
     void setProperty(const QString &property, const QString &value, const QString &ns = QString());
@@ -50,6 +55,7 @@ public:
      * Sets the property that shall be removed by the job.
      *
      * \a property The name of the property.
+     *
      * \a ns The XML namespace that shall be used for the property name.
      */
     void removeProperty(const QString &property, const QString &ns);

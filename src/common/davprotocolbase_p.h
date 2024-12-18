@@ -19,7 +19,7 @@
 namespace KDAV
 {
 /*!
- * @short Base class for XML query builders
+ * \brief Base class for XML query builders
  */
 class XMLQueryBuilder
 {
@@ -39,7 +39,7 @@ private:
 };
 
 /*!
- * @short Base class for various DAV groupware dialects.
+ * \brief Base class for various DAV groupware dialects.
  *
  * This class provides an interface to query the DAV dialect
  * specific features and abstract them.

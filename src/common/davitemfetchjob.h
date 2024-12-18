@@ -20,7 +20,7 @@ class DavItemFetchJobPrivate;
 /*!
  * \class DavItemFetchJob davitemfetchjob.h <KDAV/DavItemFetchJob>
  *
- * @short A job that fetches a DAV item from the DAV server.
+ * \brief A job that fetches a DAV item from the DAV server.
  */
 class KDAV_EXPORT DavItemFetchJob : public DavJobBase
 {

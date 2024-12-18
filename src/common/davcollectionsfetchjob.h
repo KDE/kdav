@@ -18,9 +18,11 @@ namespace KDAV
 class DavCollectionsFetchJobPrivate;
 
 /*!
- * \class DavCollectionsFetchJob davcollectionsfetchjob.h <KDAV/DavCollectionsFetchJob>
+ * \class KDAV::DavCollectionsFetchJob
+ * \inheaderfile KDAV/DavCollectionsFetchJob
+ * \inmodule KDAV
  *
- * @short A job that fetches all DAV collection.
+ * \brief A job that fetches all DAV collection.
  *
  * This job is used to fetch all DAV collection that are available
  * under a certain DAV URL.
@@ -34,6 +36,7 @@ public:
      * Creates a new DAV collections fetch job.
      *
      * \a url The DAV URL of the DAV collection whose sub collections shall be fetched.
+     *
      * \a parent The parent object.
      */
     explicit DavCollectionsFetchJob(const DavUrl &url, QObject *parent = nullptr);
@@ -58,6 +61,7 @@ Q_SIGNALS:
      * This signal is emitted every time a new collection has been discovered.
      *
      * \a collectionUrl The URL of the discovered collection
+     *
      * \a configuredUrl The URL given to the job
      */
     void collectionDiscovered(KDAV::Protocol protocol, const QString &collectionUrl, const QString &configuredUrl);

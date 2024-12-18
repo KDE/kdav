@@ -26,7 +26,7 @@ namespace KDAV
 class DavProtocolBase;
 
 /*!
- * @short A factory class for handling DAV jobs.
+ * \brief A factory class for handling DAV jobs.
  *
  * This class provides factory methods to create preconfigured
  * low-level DAV jobs and has access to the global DAV protocol dialect
