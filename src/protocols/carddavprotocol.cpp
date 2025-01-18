@@ -5,6 +5,7 @@
 */
 
 #include "carddavprotocol_p.h"
+#include "libkdav_debug.h"
 
 #include <QDomDocument>
 #include <QStringList>
@@ -89,6 +90,7 @@ public:
         for (const QString &url : urls) {
             QDomElement hrefElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("href"));
             const QUrl pathUrl = QUrl::fromUserInput(url);
+            qCDebug(KDAV_LOG) << pathUrl.toString() << "->" << pathUrl.path();
             const QDomText textNode = document.createTextNode(pathUrl.path());
             hrefElement.appendChild(textNode);
 
