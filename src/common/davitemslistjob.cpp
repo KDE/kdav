@@ -12,6 +12,7 @@
 #include "davprotocolbase_p.h"
 #include "davurl.h"
 #include "etagcache.h"
+#include "libkdav_debug.h"
 #include "utils_p.h"
 
 #include <KIO/DavJob>
@@ -232,6 +233,7 @@ void DavItemsListJobPrivate::davJobFinished(KJob *job)
                 continue;
             }
 
+            qCDebug(KDAV_LOG) << href << "->" << itemUrl;
             auto _url = url;
             _url.setUserInfo(mUrl.url().userInfo());
             item.setUrl(DavUrl(_url, mUrl.protocol()));
