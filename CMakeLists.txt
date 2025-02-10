@@ -37,7 +37,7 @@ add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt 
 
 ecm_set_disabled_deprecation_versions(
     QT 6.8.0
-    KF 6.10.0
+    KF 6.11.0
 )
 
 set(kdav_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kdav_version.h")
