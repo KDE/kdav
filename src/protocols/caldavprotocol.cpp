@@ -260,9 +260,7 @@ public:
 
         for (const QString &url : urls) {
             QDomElement hrefElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("href"));
-            const QUrl pathUrl = QUrl::fromUserInput(url);
-            qCDebug(KDAV_LOG) << pathUrl.toString() << "->" << pathUrl.path();
-            const QDomText textNode = document.createTextNode(pathUrl.path());
+            const QDomText textNode = document.createTextNode(url);
             hrefElement.appendChild(textNode);
 
             multigetElement.appendChild(hrefElement);
