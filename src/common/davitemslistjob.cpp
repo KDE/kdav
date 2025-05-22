@@ -216,15 +216,14 @@ void DavItemsListJobPrivate::davJobFinished(KJob *job)
             const QDomElement hrefElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("href"));
             const QString href = hrefElement.text();
 
-            QUrl url = QUrl::fromUserInput(href);
+            QUrl url = davJob->url();
             url.setUserInfo(QString());
             if (href.startsWith(QLatin1Char('/'))) {
-                // href is a relative URL (i.e. missing scheme, hostname and so on)
-                // QUrl would treat this as a file URL be default, avoid that by setting
-                // empty scheme.
-                // Note: We don't want to expand this into a full URL (including hostname)
-                // as some CalDav implementations don't seem to handle that correctly.
-                url.setScheme(QString());
+                // href is only a path, use request url to complete
+                url.setPath(href, QUrl::TolerantMode);
+            } else {
+                // href is a complete url
+                url = QUrl::fromUserInput(href);
             }
 
             const QString itemUrl = url.toDisplayString();
