@@ -30,3 +30,5 @@ qhp.KDAV.subprojects.classes.title = C++ Classes
 qhp.KDAV.subprojects.classes.indexTitle = KDAV C++ Classes
 qhp.KDAV.subprojects.classes.selectors = class fake:headerfile
 qhp.KDAV.subprojects.classes.sortPages = true
+
+tagfile = kdav.tags
