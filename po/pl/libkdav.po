@@ -3,7 +3,7 @@
 # mateusz stanisław włodarski <mateo.max@wp.pl>, 2010.
 # Mateusz Stanisław Włodarski <mateo.max@wp.pl>, 2010.
 # Marta Rybczyńska <kde-i18n@rybczynska.net>, 2010, 2012, 2013.
-# Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>, 2011, 2012, 2014, 2015, 2016, 2017, 2018, 2020, 2021.
+# SPDX-FileCopyrightText: 2011, 2012, 2014, 2015, 2016, 2017, 2018, 2020, 2021, 2024 Łukasz Wojniłowicz <lukasz.wojnilowicz@gmail.com>
 #
 msgid ""
 msgstr ""
