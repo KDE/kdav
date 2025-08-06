@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: kdepim-runtime\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2023-11-05 12:24+0000\n"
-"PO-Revision-Date: 2018-01-31 22:49+0300\n"
-"Last-Translator: Safa Alfulaij <safa1996alfulaij@gmail.com>\n"
+"PO-Revision-Date: 2025-05-10 17:56+0400\n"
+"Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: common/daverror.cpp:88
 #, kde-format
 msgid "Invalid username/password"
-msgstr "اسم المستخدم/كلمة السّرّ غير صالحة"
+msgstr "اسم المستخدم/كلمة السر غير صالحة"
 
 #: common/daverror.cpp:90
 #, kde-format
