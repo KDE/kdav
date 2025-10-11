@@ -1,9 +1,9 @@
-# Burkhard Lück <lueck@hube-lueck.de>, 2009, 2011, 2013, 2014, 2015, 2017, 2018, 2020, 2021.
-# Frederik Schwarzer <schwarzer@kde.org>, 2010, 2011, 2016, 2020.
-# Panagiotis Papadopoulos <pano_90@gmx.net>, 2010.
-# Peter Rüthemann <peter.ruethemann@gmx.ch>, 2010.
-# Torbjörn Klatt <opensource@torbjoern-klatt.de>, 2011.
-# Rolf Eike Beer <kde@opensource.sf-tec.de>, 2011.
+# SPDX-FileCopyrightText: 2009, 2011, 2013, 2014, 2015, 2017, 2018, 2020, 2021 Burkhard Lück <lueck@hube-lueck.de>
+# SPDX-FileCopyrightText: 2010, 2011, 2016, 2020 Frederik Schwarzer <schwarzer@kde.org>
+# SPDX-FileCopyrightText: 2010 Panagiotis Papadopoulos <pano_90@gmx.net>
+# SPDX-FileCopyrightText: 2010 Peter Rüthemann <peter.ruethemann@gmx.ch>
+# SPDX-FileCopyrightText: 2011 Torbjörn Klatt <opensource@torbjoern-klatt.de>
+# SPDX-FileCopyrightText: 2011 Rolf Eike Beer <kde@opensource.sf-tec.de>
 msgid ""
 msgstr ""
 "Project-Id-Version: libkdav6\n"
