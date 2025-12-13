@@ -91,18 +91,17 @@ void DavCollectionsFetchJobPrivate::principalFetchFinished(KJob *job)
     const DavPrincipalHomeSetsFetchJob *davJob = qobject_cast<DavPrincipalHomeSetsFetchJob *>(job);
 
     if (davJob->error()) {
-        if (davJob->canRetryLater()) {
-            // If we have a non-persistent HTTP error code then this may mean that
-            // the URL was not a principal URL. Retry as if it were a calendar URL.
-            qCDebug(KDAV_LOG) << job->errorText();
-            doCollectionsFetch(mUrl.url());
-        } else {
-            // Just give up here.
-            setDavError(davJob->davError());
-            setErrorTextFromDavError();
-            emitResult();
-        }
-
+        // Note: previously we were fetching the collections from that same URL
+        // to probe for collections assuming principals were in fact not supported
+        // this is a slippery slope.
+        // Indeed, it could be a misconfiguration or a temporary error, if we try
+        // to be too clever about it this leads to data losses (by wrongly claiming
+        // the job didn't fail and returning empty set of principals or collections).
+        //
+        // Just give up here.
+        setDavError(davJob->davError());
+        setErrorTextFromDavError();
+        emitResult();
         return;
     }
 
