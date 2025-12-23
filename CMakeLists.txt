@@ -33,7 +33,7 @@ find_package(KF6 ${KF_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
 # setup lib
 
 ecm_set_disabled_deprecation_versions(
-    QT 6.10.0
+    QT 6.11.0
     KF 6.21.0
 )
 
