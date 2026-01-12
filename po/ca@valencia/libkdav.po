@@ -84,7 +84,7 @@ msgstr "Respostes no vàlides del dorsal"
 #: common/daverror.cpp:111
 #, kde-format
 msgid "Error setting focus for XQuery"
-msgstr "S'ha produït un error en establir el focus a XQuery"
+msgstr "S'ha produït un error mentre s'establia el focus a XQuery"
 
 #: common/daverror.cpp:114
 #, kde-format
@@ -110,7 +110,7 @@ msgstr "No hi ha cap propietat que calga canviar o eliminar"
 #: common/daverror.cpp:127
 #, kde-format
 msgid "There was an error when modifying the properties"
-msgstr "S'ha produït un error en modificar les propietats"
+msgstr "S'ha produït un error mentre es modificaven les propietats"
 
 #: common/daverror.cpp:129
 #, kde-format
