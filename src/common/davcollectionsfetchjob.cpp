@@ -15,11 +15,11 @@
 
 #include "libkdav_debug.h"
 #include <KDAV/DavPushSupport>
-#include <KIO/DavJob>
-#include <KIO/Job>
 
 #include <QBuffer>
 #include <QColor>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 using namespace KDAV;
 
@@ -29,7 +29,7 @@ class DavCollectionsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
     void principalFetchFinished(KJob *job);
-    void collectionsFetchFinished(KJob *job);
+    void collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl);
     void doCollectionsFetch(const QUrl &url);
     void subjobFinished();
 
@@ -80,11 +80,10 @@ void DavCollectionsFetchJobPrivate::doCollectionsFetch(const QUrl &url)
 
     const QDomDocument collectionQuery = DavManager::davProtocol(mUrl.protocol())->collectionsQuery()->buildQuery();
 
-    KIO::DavJob *job = DavManager::self()->createPropFindJob(url, collectionQuery.toString());
-    QObject::connect(job, &KIO::DavJob::result, q_ptr, [this](KJob *job) {
-        collectionsFetchFinished(job);
+    QNetworkReply *reply = DavManager::self()->createPropFindJob(url, collectionQuery.toString());
+    QObject::connect(reply, &QNetworkReply::finished, q_ptr, [this, reply, url]() {
+        collectionsFetchFinished(reply, url);
     });
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
 }
 
 void DavCollectionsFetchJobPrivate::principalFetchFinished(KJob *job)
@@ -134,16 +133,14 @@ void DavCollectionsFetchJobPrivate::principalFetchFinished(KJob *job)
     }
 }
 
-void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
+void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl)
 {
     Q_Q(DavCollectionsFetchJob);
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
+    reply->deleteLater();
+    const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
-    // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
-    if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        if (davJob->url() != mUrl.url()) {
+    if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
+        if (requestUrl != mUrl.url()) {
             // Retry as if the initial URL was a calendar URL.
             // We can end up here when retrieving a homeset on
             // which a PROPFIND resulted in an error
@@ -154,8 +151,8 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
 
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
     } else {
         // For use in the collectionDiscovered() signal
@@ -164,8 +161,9 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
         const QString jobUrl = _jobUrl.toDisplayString();
 
         // Validate that we got a valid PROPFIND response
+        const QByteArray resp = reply->readAll();
         QDomDocument response;
-        response.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
+        response.setContent(resp, QDomDocument::ParseOption::UseNamespaceProcessing);
         QDomElement rootElement = response.documentElement();
         if (rootElement.tagName().compare(QLatin1String("multistatus"), Qt::CaseInsensitive) != 0) {
             setError(ERR_COLLECTIONFETCH);
@@ -174,7 +172,6 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
             return;
         }
 
-        QByteArray resp = davJob->responseData();
         QDomDocument document;
         if (!document.setContent(resp, QDomDocument::ParseOption::UseNamespaceProcessing)) {
             setError(ERR_COLLECTIONFETCH);
@@ -253,7 +250,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
                     href.append(QLatin1Char('/'));
                 }
 
-                QUrl url = davJob->url();
+                QUrl url = requestUrl;
                 url.setUserInfo(QString());
                 if (href.startsWith(QLatin1Char('/'))) {
                     // href is only a path, use request url to complete

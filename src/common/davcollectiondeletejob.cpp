@@ -8,9 +8,10 @@
 #include "davjobbase_p.h"
 
 #include "daverror.h"
+#include "davmanager_p.h"
 
-#include <KIO/DeleteJob>
-#include <KIO/Job>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 using namespace KDAV;
 
@@ -19,7 +20,7 @@ namespace KDAV
 class DavCollectionDeleteJobPrivate : public DavJobBasePrivate
 {
 public:
-    void davJobFinished(KJob *job);
+    void davJobFinished(QNetworkReply *reply);
 
     DavUrl mUrl;
 };
@@ -35,29 +36,26 @@ DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUrl &url, QObject *paren
 void DavCollectionDeleteJob::start()
 {
     Q_D(DavCollectionDeleteJob);
-    KIO::DeleteJob *job = KIO::del(d->mUrl.url(), KIO::HideProgressInfo | KIO::DefaultFlags);
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
+    QNetworkRequest request(d->mUrl.url());
+    request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
 
-    connect(job, &KIO::DeleteJob::result, this, [d](KJob *job) {
-        d->davJobFinished(job);
+    QNetworkReply *reply = DavManager::self()->networkAccessManager()->deleteResource(request);
+    connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+        d->davJobFinished(reply);
     });
 }
 
-void DavCollectionDeleteJobPrivate::davJobFinished(KJob *job)
+void DavCollectionDeleteJobPrivate::davJobFinished(QNetworkReply *reply)
 {
-    KIO::DeleteJob *deleteJob = qobject_cast<KIO::DeleteJob *>(job);
+    reply->deleteLater();
 
-    if (deleteJob->error() && deleteJob->error() != KIO::ERR_NO_CONTENT) {
-        const int responseCode = deleteJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() //
-            ? 0
-            : deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    if (reply->error() != QNetworkReply::NoError) {
+        const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
         setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONDELETE);
-        setJobErrorText(deleteJob->errorText());
-        setJobError(deleteJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
     }
 

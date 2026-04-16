@@ -13,8 +13,8 @@
 #include "protocolinfo.h"
 #include "utils_p.h"
 
-#include <KIO/DavJob>
-#include <KIO/Job>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 using namespace KDAV;
 
@@ -23,7 +23,7 @@ namespace KDAV
 class DavPrincipalHomeSetsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
-    void davJobFinished(KJob *job);
+    void davJobFinished(QNetworkReply *reply);
     /*
      * Start the fetch process.
      *
@@ -75,10 +75,9 @@ void DavPrincipalHomeSetsFetchJobPrivate::fetchHomeSets(bool homeSetsOnly)
         propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("principal-URL")));
     }
 
-    KIO::DavJob *job = DavManager::self()->createPropFindJob(mUrl.url(), document.toString(), QStringLiteral("0"));
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    QObject::connect(job, &KIO::DavJob::result, q_ptr, [this](KJob *job) {
-        davJobFinished(job);
+    QNetworkReply *reply = DavManager::self()->createPropFindJob(mUrl.url(), document.toString(), QStringLiteral("0"));
+    QObject::connect(reply, &QNetworkReply::finished, q_ptr, [this, reply]() {
+        davJobFinished(reply);
     });
 }
 
@@ -88,25 +87,16 @@ QStringList DavPrincipalHomeSetsFetchJob::homeSets() const
     return d->mHomeSets;
 }
 
-void DavPrincipalHomeSetsFetchJobPrivate::davJobFinished(KJob *job)
+void DavPrincipalHomeSetsFetchJobPrivate::davJobFinished(QNetworkReply *reply)
 {
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
+    reply->deleteLater();
+    const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
-    // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
-    if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
-        QString err;
-        if (davJob->error() && davJob->error() != KIO::ERR_WORKER_DEFINED) {
-            err = KIO::buildErrorString(davJob->error(), davJob->errorText());
-        } else {
-            err = davJob->errorText();
-        }
-
+    if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
 
         emitResult();
@@ -161,7 +151,7 @@ void DavPrincipalHomeSetsFetchJobPrivate::davJobFinished(KJob *job)
     // This is either given by current-user-principal or by principal-URL.
 
     QDomDocument document;
-    document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
+    document.setContent(reply->readAll(), QDomDocument::ParseOption::UseNamespaceProcessing);
     const QDomElement multistatusElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(multistatusElement, QStringLiteral("DAV:"), QStringLiteral("response"));
