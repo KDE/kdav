@@ -1,5 +1,7 @@
 # KDAV
 
+![](https://invent.kde.org/frameworks/kdav/badges/master/coverage.svg)
+
 ## Introduction
 
 This is an DAV protocol implementation with KJobs.
