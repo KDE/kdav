@@ -69,7 +69,7 @@ QNetworkReply *DavManager::sendDavRequest(const QByteArray &method, const QUrl &
         request.setRawHeader("Depth", depth.toUtf8());
     }
     request.setHeader(QNetworkRequest::UserAgentHeader, userAgent());
-    return mNam->sendCustomRequest(request, method, document.toUtf8());
+    return mNam->sendCustomRequest(request, method, QByteArray("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n") + document.toUtf8());
 }
 
 const DavProtocolBase *DavManager::davProtocol(Protocol protocol)
