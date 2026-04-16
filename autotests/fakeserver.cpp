@@ -230,6 +230,48 @@ void FakeServer::readClientPart(QTcpSocket *socket, int *scenarioNumber)
         }
     }
 
+    if (!scenario.isEmpty() && scenario.first().startsWith("B: ")) {
+        int contentLength = -1;
+        for (const auto &h : std::as_const(header)) {
+            const int idx = h.indexOf(':');
+            if (idx >= 0 && QByteArrayView(h).left(idx).compare("content-length", Qt::CaseInsensitive) == 0) {
+                contentLength = h.mid(idx + 1).trimmed().toInt();
+                break;
+            }
+        }
+
+        if (contentLength < 0) {
+            qWarning() << "B: lines present but no Content-Length header found in:" << header;
+            QFAIL("expected request body but no Content-Length header");
+            return;
+        }
+
+        QByteArray body;
+        while (body.size() < contentLength) {
+            if (socket->bytesAvailable() == 0 && !socket->waitForReadyRead(1000)) {
+                QFAIL("could not read all of request body");
+                return;
+            }
+            body += socket->read(contentLength - body.size());
+        }
+        body = body.sliced(QByteArray("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n").size()).trimmed();
+
+        QByteArray expectedBody;
+        while (!scenario.isEmpty() && scenario.first().startsWith("B: ")) {
+            expectedBody += scenario.takeFirst().mid(3);
+            expectedBody += '\n';
+        }
+
+        expectedBody = expectedBody.trimmed();
+
+        if (body != expectedBody) {
+            qWarning() << "Request body mismatch";
+            qWarning() << "Expected:" << expectedBody;
+            qWarning() << "Actual:  " << body;
+            QVERIFY(body == expectedBody);
+        }
+    }
+
     if (!scenario.isEmpty()) {
         QVERIFY(scenario.first().startsWith("S: "));
     }

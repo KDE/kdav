@@ -1,3 +1,13 @@
 C: PROPFIND /caldav HTTP/1.1
+B: <propfind xmlns="DAV:">
+B:  <prop xmlns="DAV:">
+B:   <displayname xmlns="DAV:"/>
+B:   <resourcetype xmlns="DAV:"/>
+B:   <calendar-color xmlns="http://apple.com/ns/ical/"/>
+B:   <supported-calendar-component-set xmlns="urn:ietf:params:xml:ns:caldav"/>
+B:   <current-user-privilege-set xmlns="DAV:"/>
+B:   <getctag xmlns="http://calendarserver.org/ns/"/>
+B:  </prop>
+B: </propfind>
 S: HTTP/1.1 404 Not Found
 X

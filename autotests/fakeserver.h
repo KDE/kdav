@@ -32,16 +32,23 @@
  * local machine.
  *
  * Scenarios are in the form of protocol messages, with a tag at the
- * start to indicate whether it is message that will be sent by the
- * client ("C: ") or a response that should be sent by the server
- * ("S: "). Or ("D: ") for the exchanged data. Content-length header is added
- * automatically with the current length and also the empty line between Header
- * and Content. For example:
+ * start to indicate the role of each line:
+ *   - "C: ": a request line or header sent by the client (checked against the actual request)
+ *   - "B: ": one line of the expected request body (checked in order, joined with '\\n')
+ *   - "S: ": a response header line sent by the server
+ *   - "D: ": a line of response body data sent by the server
+ *
+ * Content-Length is added automatically to server responses, together with the
+ * blank line separating headers from body. For example:
  * @code
- * C: GET /item HTTP/1.1
- * S: HTTP/1.0 200 OK
- * D: much data
- * D: more data
+ * C: PROPFIND /collection HTTP/1.1
+ * B: <propfind xmlns="DAV:">
+ * B:  <prop xmlns="DAV:">
+ * B:   <displayname xmlns="DAV:"/>
+ * B:  </prop>
+ * B: </propfind>
+ * S: HTTP/1.0 207 Multi-Status
+ * D: <multistatus xmlns="DAV:"/>
  * X
  * @endcode
  *

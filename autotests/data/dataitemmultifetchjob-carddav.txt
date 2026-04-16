@@ -1,5 +1,12 @@
 C: PROPFIND /carddav HTTP/1.1
-S: HTTP/1.1 207 Multi-Status
+B: <propfind xmlns="DAV:">
+B:  <prop xmlns="DAV:">
+B:   <addressbook-home-set xmlns="urn:ietf:params:xml:ns:carddav"/>
+B:   <current-user-principal xmlns="DAV:"/>
+B:   <principal-URL xmlns="DAV:"/>
+B:  </prop>
+B: </propfind>
+S: HTTP/1.0 207 Multi-Status
 S: Date: Wed, 04 Jan 2017 18:26:48 GMT
 S: Last-Modified: Wed, 04 Jan 2017 18:26:47 GMT
 S: DAV: 1, 3, extended-mkcol, access-control, calendarserver-principal-property-search, calendar-access, calendar-proxy, calendar-schedule, calendar-auto-schedule, addressbook, 2
