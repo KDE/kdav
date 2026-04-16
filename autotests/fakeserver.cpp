@@ -148,7 +148,8 @@ void FakeServer::writeServerPart(QTcpSocket *clientSocket, int scenarioNumber)
 
     if (!scenario.isEmpty() && scenario.first().startsWith("X")) {
         scenario.takeFirst();
-        clientSocket->close();
+        clientSocket->flush();
+        clientSocket->disconnectFromHost();
     }
 
     if (!scenario.isEmpty()) {
@@ -208,6 +209,9 @@ void FakeServer::readClientPart(QTcpSocket *socket, int *scenarioNumber)
         }
         line = socket->readLine();
     }
+
+    // read content
+    socket->readAll();
 
     while (!scenario.isEmpty() && scenario.first().startsWith("C: ")) {
         QByteArray expected = scenario.takeFirst().mid(3) + "\r\n";
