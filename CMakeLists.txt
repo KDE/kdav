@@ -26,9 +26,9 @@ include(ECMGenerateQDoc)
 
 
 set(REQUIRED_QT_VERSION 6.9.0)
-find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui Test)
+find_package(Qt6 ${REQUIRED_QT_VERSION} CONFIG REQUIRED Core Gui Network Test Xml)
 
-find_package(KF6 ${KF_DEP_VERSION} REQUIRED CoreAddons KIO I18n)
+find_package(KF6 ${KF_DEP_VERSION} REQUIRED CoreAddons I18n)
 
 # setup lib
 

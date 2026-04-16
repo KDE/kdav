@@ -149,7 +149,7 @@ PUBLIC
 PRIVATE
     Qt6::Xml
     Qt6::Gui
-    KF6::KIOCore
+    Qt6::Network
     KF6::I18n
     )
 

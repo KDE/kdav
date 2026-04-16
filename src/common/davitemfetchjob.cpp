@@ -8,9 +8,10 @@
 #include "davjobbase_p.h"
 
 #include "daverror.h"
+#include "davmanager_p.h"
 
-#include <KIO/DavJob>
-#include <KIO/StoredTransferJob>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 using namespace KDAV;
 namespace KDAV
@@ -18,25 +19,11 @@ namespace KDAV
 class DavItemFetchJobPrivate : public DavJobBasePrivate
 {
 public:
-    void davJobFinished(KJob *job);
+    void davJobFinished(QNetworkReply *reply);
 
     DavUrl mUrl;
     DavItem mItem;
 };
-}
-
-static QString etagFromHeaders(const QString &headers)
-{
-    const QStringList allHeaders = headers.split(QLatin1Char('\n'));
-
-    QString etag;
-    for (const QString &header : allHeaders) {
-        if (header.startsWith(QLatin1String("etag:"), Qt::CaseInsensitive)) {
-            etag = header.section(QLatin1Char(' '), 1);
-        }
-    }
-
-    return etag;
 }
 
 DavItemFetchJob::DavItemFetchJob(const DavItem &item, QObject *parent)
@@ -49,17 +36,12 @@ DavItemFetchJob::DavItemFetchJob(const DavItem &item, QObject *parent)
 void DavItemFetchJob::start()
 {
     Q_D(DavItemFetchJob);
-    KIO::StoredTransferJob *job = KIO::storedGet(d->mItem.url().url(), KIO::Reload, KIO::HideProgressInfo | KIO::DefaultFlags);
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    // Work around a strange bug in Zimbra (seen at least on CE 5.0.18) : if the user-agent
-    // contains "Mozilla", some strange debug data is displayed in the shared calendars.
-    // This kinda mess up the events parsing...
-    job->addMetaData(QStringLiteral("UserAgent"), QStringLiteral("KDE DAV groupware client"));
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
+    QNetworkRequest request(d->mItem.url().url());
+    request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
 
-    connect(job, &KIO::StoredTransferJob::result, this, [d](KJob *job) {
-        d->davJobFinished(job);
+    QNetworkReply *reply = DavManager::self()->networkAccessManager()->get(request);
+    connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+        d->davJobFinished(reply);
     });
 }
 
@@ -69,24 +51,25 @@ DavItem DavItemFetchJob::item() const
     return d->mItem;
 }
 
-void DavItemFetchJobPrivate::davJobFinished(KJob *job)
+void DavItemFetchJobPrivate::davJobFinished(QNetworkReply *reply)
 {
-    KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
-    const QString responseCodeStr = storedJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
+    reply->deleteLater();
+    const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
     setLatestResponseCode(responseCode);
 
-    if (storedJob->error()) {
-        setLatestResponseCode(responseCode);
+    if (reply->error() != QNetworkReply::NoError) {
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(storedJob->errorText());
-        setJobError(storedJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
     } else {
-        mItem.setData(storedJob->data());
-        mItem.setContentType(storedJob->queryMetaData(QStringLiteral("content-type")));
-        mItem.setEtag(etagFromHeaders(storedJob->queryMetaData(QStringLiteral("HTTP-Headers"))));
+        mItem.setData(reply->readAll());
+        // Strip optional parameters like "; charset=utf-8" from the content type
+        const QString contentType = reply->header(QNetworkRequest::ContentTypeHeader).toString().section(QLatin1Char(';'), 0, 0).trimmed();
+        mItem.setContentType(contentType);
+        // reply->header(QNetworkRequest::ETagHeader) returns invalid in the unit test
+        mItem.setEtag(QString::fromUtf8(reply->rawHeader("etag")));
     }
 
     emitResult();

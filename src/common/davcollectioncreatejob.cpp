@@ -9,10 +9,11 @@
 #include "daverror.h"
 #include "davmanager_p.h"
 
-#include <KIO/DavJob>
-#include <KJob>
 #include <QColor>
+#include <QNetworkReply>
 #include <QXmlStreamWriter>
+#include <qnetworkreply.h>
+#include <qnetworkrequest.h>
 
 using namespace KDAV;
 using namespace Qt::StringLiterals;
@@ -22,7 +23,7 @@ namespace KDAV
 class DavCollectionCreateJobPrivate : public DavJobBasePrivate
 {
 public:
-    void davJobFinished(KJob *job);
+    void davJobFinished(QNetworkReply *reply);
 
     DavCollection mCollection;
     int mRedirectCount = 0;
@@ -54,10 +55,12 @@ void DavCollectionCreateJob::start()
     QXmlStreamWriter writer(&output);
     writer.setAutoFormatting(true);
     protocol->writeMkCol(writer, d->mCollection);
+    Q_ASSERT(output.startsWith(QStringLiteral("<?xml version=\"1.0\"?>\n")));
+    output = output.mid(22);
 
-    auto job = DavManager::self()->createMkColJob(collectionUrl(), output);
-    connect(job, &KJob::result, this, [d](KJob *job) {
-        d->davJobFinished(job);
+    QNetworkReply *reply = DavManager::self()->createMkColJob(d->mCollection.url().url(), output);
+    connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+        d->davJobFinished(reply);
     });
 }
 
@@ -73,38 +76,31 @@ QUrl DavCollectionCreateJob::collectionUrl() const
     return d->mCollection.url().url();
 }
 
-void DavCollectionCreateJobPrivate::davJobFinished(KJob *job)
+void DavCollectionCreateJobPrivate::davJobFinished(QNetworkReply *reply)
 {
     Q_Q(DavCollectionCreateJob);
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
 
-    const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
+    reply->deleteLater();
+    const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
-    if (davJob->error() || responseCode >= 400) {
+    if (reply->error() != QNetworkReply::NoError || responseCode >= 400) {
         setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONCREATE);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
         emitResult();
         return;
     }
 
     // The 'Location:' HTTP header is used to indicate the new URL
-    const QStringList allHeaders = davJob->queryMetaData(QStringLiteral("HTTP-Headers")).split(QLatin1Char('\n'));
-    QString location;
-    for (const QString &header : allHeaders) {
-        if (header.startsWith(QLatin1String("location:"), Qt::CaseInsensitive)) {
-            location = header.section(QLatin1Char(' '), 1);
-        }
-    }
+    const auto location = reply->header(QNetworkRequest::LocationHeader).toString();
 
     QUrl url;
     if (location.isEmpty()) {
-        url = davJob->url();
+        url = reply->url();
     } else if (location.startsWith(QLatin1Char('/'))) {
-        url = davJob->url();
+        url = reply->url();
         url.setPath(location, QUrl::TolerantMode);
     } else {
         url = QUrl::fromUserInput(location);
