@@ -11,10 +11,6 @@
 
 #include <QTest>
 
-void DavItemFetchJobTest::initTestCase()
-{
-}
-
 void DavItemFetchJobTest::runSuccessfullTest()
 {
     FakeServer fakeServer(5989);
