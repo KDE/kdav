@@ -11,8 +11,8 @@
 #include "daverror.h"
 #include "utils_p.h"
 
-#include <KIO/DavJob>
-#include <KIO/Job>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 using namespace KDAV;
 
@@ -21,7 +21,7 @@ namespace KDAV
 class DavCollectionModifyJobPrivate : public DavJobBasePrivate
 {
 public:
-    void davJobFinished(KJob *job);
+    void davJobFinished(QNetworkReply *reply);
 
     DavUrl mUrl;
     QDomDocument mQuery;
@@ -107,32 +107,29 @@ void DavCollectionModifyJob::start()
         }
     }
 
-    KIO::DavJob *job = DavManager::self()->createPropPatchJob(d->mUrl.url(), mQuery.toString());
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
-        d->davJobFinished(job);
+    QNetworkReply *reply = DavManager::self()->createPropPatchJob(d->mUrl.url(), mQuery.toString());
+    connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+        d->davJobFinished(reply);
     });
 }
 
-void DavCollectionModifyJobPrivate::davJobFinished(KJob *job)
+void DavCollectionModifyJobPrivate::davJobFinished(QNetworkReply *reply)
 {
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
+    reply->deleteLater();
+    const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
-    // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
-    if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
+    if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONMODIFY);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
         emitResult();
         return;
     }
 
     QDomDocument response;
-    response.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
+    response.setContent(reply->readAll(), QDomDocument::ParseOption::UseNamespaceProcessing);
     QDomElement responseElement = Utils::firstChildElementNS(response.documentElement(), QStringLiteral("DAV:"), QStringLiteral("response"));
 
     bool hasError = false;

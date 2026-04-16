@@ -10,15 +10,29 @@
 #include "protocols/carddavprotocol_p.h"
 #include "protocols/groupdavprotocol_p.h"
 
-#include <KIO/DavJob>
-
 #include "libkdav_debug.h"
 
+#include <QAuthenticator>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QUrl>
 
 using namespace KDAV;
+using namespace Qt::StringLiterals;
 
-DavManager::DavManager() = default;
+DavManager::DavManager()
+    : mNam(std::make_unique<QNetworkAccessManager>())
+{
+    QObject::connect(mNam.get(), &QNetworkAccessManager::authenticationRequired, [](QNetworkReply *reply, QAuthenticator *auth) {
+        const QUrl url = reply->request().url();
+        if (!url.userName().isEmpty()) {
+            auth->setUser(url.userName());
+            auth->setPassword(url.password());
+        }
+    });
+}
+
 DavManager::~DavManager() = default;
 
 DavManager *DavManager::self()
@@ -27,36 +41,35 @@ DavManager *DavManager::self()
     return &sSelf;
 }
 
-KIO::DavJob *DavManager::createPropFindJob(const QUrl &url, const QString &document, const QString &depth) const
+QNetworkReply *DavManager::createPropFindJob(const QUrl &url, const QString &document, const QString &depth) const
 {
-    KIO::DavJob *job = KIO::davPropFind(url, document, depth, KIO::HideProgressInfo | KIO::DefaultFlags);
-
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-    job->setProperty("davDepth", QVariant::fromValue(depth));
-
-    return job;
+    return sendDavRequest("PROPFIND", url, document, depth);
 }
 
-KIO::DavJob *DavManager::createReportJob(const QUrl &url, const QString &document, const QString &depth) const
+QNetworkReply *DavManager::createReportJob(const QUrl &url, const QString &document, const QString &depth) const
 {
-    KIO::DavJob *job = KIO::davReport(url, document, depth, KIO::HideProgressInfo | KIO::DefaultFlags);
-
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-    job->setProperty("davDepth", QVariant::fromValue(depth));
-
-    return job;
+    return sendDavRequest("REPORT", url, document, depth);
 }
 
-KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QString &document) const
+QNetworkReply *DavManager::createPropPatchJob(const QUrl &url, const QString &document) const
 {
-    KIO::DavJob *job = KIO::davPropPatch(url, document, KIO::HideProgressInfo | KIO::DefaultFlags);
-    const QString header = QStringLiteral("Content-Type: text/xml");
-    job->addMetaData(QStringLiteral("customHTTPHeader"), header);
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-    return job;
+    return sendDavRequest("PROPPATCH", url, document);
+}
+
+QNetworkAccessManager *DavManager::networkAccessManager() const
+{
+    return mNam.get();
+}
+
+QNetworkReply *DavManager::sendDavRequest(const QByteArray &method, const QUrl &url, const QString &document, const QString &depth) const
+{
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, u"text/xml; charset=utf-8"_s);
+    if (!depth.isEmpty()) {
+        request.setRawHeader("Depth", depth.toUtf8());
+    }
+    request.setHeader(QNetworkRequest::UserAgentHeader, userAgent());
+    return mNam->sendCustomRequest(request, method, document.toUtf8());
 }
 
 const DavProtocolBase *DavManager::davProtocol(Protocol protocol)
@@ -80,4 +93,12 @@ const DavProtocolBase *DavManager::davProtocol(Protocol protocol)
     }
 
     return d->mProtocols[protocol].get();
+}
+
+QString DavManager::userAgent() const
+{
+    // Work around a strange bug in Zimbra (seen at least on CE 5.0.18) : if the user-agent
+    // contains "Mozilla", some strange debug data is displayed in the shared calendars.
+    // This kinda mess up the events parsing...
+    return u"KDE DAV groupware client"_s;
 }
