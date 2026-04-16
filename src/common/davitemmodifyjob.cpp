@@ -9,16 +9,19 @@
 
 #include "daverror.h"
 #include "davitemfetchjob.h"
+#include "davmanager_p.h"
 
-#include <KIO/StoredTransferJob>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 using namespace KDAV;
+
 namespace KDAV
 {
 class DavItemModifyJobPrivate : public DavJobBasePrivate
 {
 public:
-    void davJobFinished(KJob *job);
+    void davJobFinished(QNetworkReply *reply);
     void itemRefreshed(KJob *job);
     void conflictingItemFetched(KJob *job);
 
@@ -40,19 +43,14 @@ DavItemModifyJob::DavItemModifyJob(const DavItem &item, QObject *parent)
 void DavItemModifyJob::start()
 {
     Q_D(DavItemModifyJob);
-    QString headers = QStringLiteral("Content-Type: ");
-    headers += d->mItem.contentType();
-    headers += QLatin1String("\r\n");
-    headers += QLatin1String("If-Match: ") + d->mItem.etag();
+    QNetworkRequest request(itemUrl());
+    request.setHeader(QNetworkRequest::ContentTypeHeader, d->mItem.contentType());
+    request.setHeader(QNetworkRequest::IfMatchHeader, d->mItem.etag());
+    request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
 
-    KIO::StoredTransferJob *job = KIO::storedPut(d->mItem.data(), itemUrl(), -1, KIO::HideProgressInfo | KIO::DefaultFlags);
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), headers);
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
-
-    connect(job, &KIO::StoredTransferJob::result, this, [d](KJob *job) {
-        d->davJobFinished(job);
+    QNetworkReply *reply = DavManager::self()->networkAccessManager()->put(request, d->mItem.data());
+    connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+        d->davJobFinished(reply);
     });
 }
 
@@ -80,20 +78,18 @@ QUrl DavItemModifyJob::itemUrl() const
     return d->mItem.url().url();
 }
 
-void DavItemModifyJobPrivate::davJobFinished(KJob *job)
+void DavItemModifyJobPrivate::davJobFinished(QNetworkReply *reply)
 {
     Q_Q(DavItemModifyJob);
-    KIO::StoredTransferJob *storedJob = qobject_cast<KIO::StoredTransferJob *>(job);
+    reply->deleteLater();
 
-    if (storedJob->error()) {
-        const int responseCode = storedJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() //
-            ? 0
-            : storedJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    if (reply->error() != QNetworkReply::NoError) {
+        const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
         setLatestResponseCode(responseCode);
         setError(ERR_ITEMMODIFY);
-        setJobErrorText(storedJob->errorText());
-        setJobError(storedJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
 
         if (q->hasConflict()) {
@@ -110,19 +106,13 @@ void DavItemModifyJobPrivate::davJobFinished(KJob *job)
     }
 
     // The 'Location:' HTTP header is used to indicate the new URL
-    const QStringList allHeaders = storedJob->queryMetaData(QStringLiteral("HTTP-Headers")).split(QLatin1Char('\n'));
-    QString location;
-    for (const QString &header : allHeaders) {
-        if (header.startsWith(QLatin1String("location:"), Qt::CaseInsensitive)) {
-            location = header.section(QLatin1Char(' '), 1);
-        }
-    }
+    const QString location = reply->header(QNetworkRequest::LocationHeader).toString();
 
     QUrl url;
     if (location.isEmpty()) {
-        url = storedJob->url();
+        url = reply->url();
     } else if (location.startsWith(QLatin1Char('/'))) {
-        url = storedJob->url();
+        url = reply->url();
         url.setPath(location, QUrl::TolerantMode);
     } else {
         url = QUrl::fromUserInput(location);

@@ -15,9 +15,8 @@
 #include "libkdav_debug.h"
 #include "utils_p.h"
 
-#include <KIO/DavJob>
-#include <KIO/Job>
-
+#include <QNetworkReply>
+#include <QNetworkRequest>
 #include <set>
 
 using namespace KDAV;
@@ -27,7 +26,7 @@ namespace KDAV
 class DavItemsListJobPrivate : public DavJobBasePrivate
 {
 public:
-    void davJobFinished(KJob *job);
+    void davJobFinished(QNetworkReply *reply);
 
     DavUrl mUrl;
     std::shared_ptr<EtagCache> mEtagCache;
@@ -86,20 +85,18 @@ void DavItemsListJob::start()
         if (d->mMimeTypes.isEmpty() || d->mMimeTypes.contains(mimeType)) {
             ++d->mSubJobCount;
             if (protocol->useReport()) {
-                KIO::DavJob *job = DavManager::self()->createReportJob(d->mUrl.url(), props.toString());
-                job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-                job->setProperty("davType", QStringLiteral("report"));
-                job->setProperty("itemsMimeType", mimeType);
-                connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
-                    d->davJobFinished(job);
+                QNetworkReply *reply = DavManager::self()->createReportJob(d->mUrl.url(), props.toString());
+                reply->setProperty("davType", QStringLiteral("report"));
+                reply->setProperty("itemsMimeType", mimeType);
+                connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+                    d->davJobFinished(reply);
                 });
             } else {
-                KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), props.toString());
-                job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-                job->setProperty("davType", QStringLiteral("propFind"));
-                job->setProperty("itemsMimeType", mimeType);
-                connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
-                    d->davJobFinished(job);
+                QNetworkReply *reply = DavManager::self()->createPropFindJob(d->mUrl.url(), props.toString());
+                reply->setProperty("davType", QStringLiteral("propFind"));
+                reply->setProperty("itemsMimeType", mimeType);
+                connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+                    d->davJobFinished(reply);
                 });
             }
         }
@@ -130,19 +127,16 @@ QStringList DavItemsListJob::deletedItems() const
     return d->mDeletedItems;
 }
 
-void DavItemsListJobPrivate::davJobFinished(KJob *job)
+void DavItemsListJobPrivate::davJobFinished(QNetworkReply *reply)
 {
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() //
-        ? 0
-        : davJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    reply->deleteLater();
+    const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
-    // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
-    if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
+    if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
     } else {
         /*
@@ -170,9 +164,9 @@ void DavItemsListJobPrivate::davJobFinished(KJob *job)
          * </multistatus>
          */
 
-        const QString itemsMimeType = job->property("itemsMimeType").toString();
+        const QString itemsMimeType = reply->property("itemsMimeType").toString();
         QDomDocument document;
-        document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
+        document.setContent(reply->readAll(), QDomDocument::ParseOption::UseNamespaceProcessing);
         const QDomElement documentElement = document.documentElement();
 
         QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
@@ -216,7 +210,7 @@ void DavItemsListJobPrivate::davJobFinished(KJob *job)
             const QDomElement hrefElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("href"));
             const QString href = hrefElement.text();
 
-            QUrl url = davJob->url();
+            QUrl url = reply->url();
             url.setUserInfo(QString());
             if (href.startsWith(QLatin1Char('/'))) {
                 // href is only a path, use request url to complete

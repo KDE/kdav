@@ -13,11 +13,8 @@
 
 #include <memory>
 
-namespace KIO
-{
-class DavJob;
-}
-
+class QNetworkAccessManager;
+class QNetworkReply;
 class QUrl;
 
 namespace KDAV
@@ -29,7 +26,7 @@ class DavProtocolBase;
  * \brief A factory class for handling DAV jobs.
  *
  * This class provides factory methods to create preconfigured
- * low-level DAV jobs and has access to the global DAV protocol dialect
+ * low-level DAV network replies and has access to the global DAV protocol dialect
  * objects which abstract the access to the various DAV protocol dialects.
  */
 class DavManager
@@ -46,30 +43,40 @@ public:
     static DavManager *self();
 
     /*!
-     * Returns a preconfigured DAV PROPFIND job.
+     * Sends a DAV PROPFIND request and returns the network reply.
      *
-     * \a url The target URL of the job.
+     * \a url The target URL of the request.
      * \a document The query XML document.
      * \a depth The Depth: value to send in the HTTP request
      */
-    KIO::DavJob *createPropFindJob(const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
+    QNetworkReply *createPropFindJob(const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
 
     /*!
-     * Returns a preconfigured DAV REPORT job.
+     * Sends a DAV REPORT request and returns the network reply.
      *
-     * \a url The target URL of the job.
+     * \a url The target URL of the request.
      * \a document The query XML document.
      * \a depth The Depth: value to send in the HTTP request
      */
-    KIO::DavJob *createReportJob(const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
+    QNetworkReply *createReportJob(const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
 
     /*!
-     * Returns a preconfigured DAV PROPPATCH job.
+     * Sends a DAV PROPPATCH request and returns the network reply.
      *
-     * \a url The target URL of the job.
+     * \a url The target URL of the request.
      * \a document The query XML document.
      */
-    KIO::DavJob *createPropPatchJob(const QUrl &url, const QString &document) const;
+    QNetworkReply *createPropPatchJob(const QUrl &url, const QString &document) const;
+
+    /*!
+     * Returns the shared QNetworkAccessManager instance.
+     */
+    QNetworkAccessManager *networkAccessManager() const;
+
+    /*!
+     * Returns the user agent.
+     */
+    QString userAgent() const;
 
     /*!
      * Returns the DAV protocol dialect object for the given DAV @p protocol.
@@ -82,6 +89,9 @@ private:
      */
     DavManager();
 
+    QNetworkReply *sendDavRequest(const QByteArray &method, const QUrl &url, const QString &document, const QString &depth = {}) const;
+
+    mutable std::unique_ptr<QNetworkAccessManager> mNam;
     std::unique_ptr<DavProtocolBase> mProtocols[3];
 };
 }

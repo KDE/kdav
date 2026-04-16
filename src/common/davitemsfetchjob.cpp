@@ -15,8 +15,8 @@
 #include "davmultigetprotocol_p.h"
 #include "utils_p.h"
 
-#include <KIO/DavJob>
-#include <KIO/Job>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 using namespace KDAV;
 
@@ -25,7 +25,7 @@ namespace KDAV
 class DavItemsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
-    void davJobFinished(KJob *job);
+    void davJobFinished(QNetworkReply *reply);
 
     DavUrl mCollectionUrl;
     QStringList mUrls;
@@ -53,10 +53,9 @@ void DavItemsFetchJob::start()
     }
 
     const QDomDocument report = protocol->itemsReportQuery(d->mUrls)->buildQuery();
-    KIO::DavJob *job = DavManager::self()->createReportJob(d->mCollectionUrl.url(), report.toString(), QStringLiteral("0"));
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
-        d->davJobFinished(job);
+    QNetworkReply *reply = DavManager::self()->createReportJob(d->mCollectionUrl.url(), report.toString(), QStringLiteral("0"));
+    connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+        d->davJobFinished(reply);
     });
 }
 
@@ -77,18 +76,16 @@ DavItem DavItemsFetchJob::item(const QString &url) const
     return d->mItems.value(url);
 }
 
-void DavItemsFetchJobPrivate::davJobFinished(KJob *job)
+void DavItemsFetchJobPrivate::davJobFinished(QNetworkReply *reply)
 {
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
+    reply->deleteLater();
+    const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
-    // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
-    if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
+    if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
 
         emitResult();
@@ -98,7 +95,7 @@ void DavItemsFetchJobPrivate::davJobFinished(KJob *job)
     const DavMultigetProtocol *protocol = static_cast<const DavMultigetProtocol *>(DavManager::davProtocol(mCollectionUrl.protocol()));
 
     QDomDocument document;
-    document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
+    document.setContent(reply->readAll(), QDomDocument::ParseOption::UseNamespaceProcessing);
     const QDomElement documentElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
@@ -126,7 +123,7 @@ void DavItemsFetchJobPrivate::davJobFinished(KJob *job)
         const QDomElement hrefElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("href"));
         const QString href = hrefElement.text();
 
-        QUrl url = davJob->url();
+        QUrl url = reply->url();
         if (href.startsWith(QLatin1Char('/'))) {
             // href is only a path, use request url to complete
             url.setPath(href, QUrl::TolerantMode);
