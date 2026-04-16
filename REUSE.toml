@@ -1,0 +1,10 @@
+version = 1
+SPDX-PackageName = "KDav"
+SPDX-PackageSupplier = "KDE <kde-community@kde.org>"
+SPDX-PackageDownloadLocation = "https://invent.kde.org/framework/kdav"
+
+[[annotations]]
+path = ["autotests/data/*.txt"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "CC0-1.0"

@@ -1,0 +1,25 @@
+C: PROPFIND /caldav/dfaure%40example.com/ HTTP/1.1
+S: HTTP/1.0 207 Multi-Status
+S: Content-Type: application/xml; charset=utf-8
+D: <?xml version="1.0" encoding="utf-8" ?>
+D: <multistatus xmlns="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav" xmlns:ical="http://apple.com/ns/ical/">
+D:   <response xmlns="DAV:">
+D:    <href xmlns="DAV:">/caldav.php/test1.user/home/</href>
+D:    <propstat xmlns="DAV:">
+D:      <prop xmlns="DAV:">
+D:        <C:supported-calendar-component-set xmlns:C="urn:ietf:params:xml:ns:caldav">
+D:          <C:comp xmlns:C="urn:ietf:params:xml:ns:caldav" name="VEVENT"/>
+D:        </C:supported-calendar-component-set>
+D:        <resourcetype xmlns="DAV:">
+D:          <collection xmlns="DAV:"/>
+D:          <C:calendar xmlns:C="urn:ietf:params:xml:ns:caldav"/>
+D:        </resourcetype>
+D:        <displayname xmlns="DAV:">Color Calendar</displayname>
+D:        <ical:calendar-color xmlns:ical="http://apple.com/ns/ical/">#FF0000FF</ical:calendar-color>
+D:        <getctag xmlns="http://calendarserver.org/ns/">99999</getctag>
+D:      </prop>
+D:      <status xmlns="DAV:">HTTP/1.1 200 OK</status>
+D:    </propstat>
+D:   </response>
+D: </multistatus>
+X
