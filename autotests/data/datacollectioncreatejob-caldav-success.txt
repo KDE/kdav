@@ -1,0 +1,42 @@
+C: MKCOL /caldav/new-calendar/ HTTP/1.1
+C: User-Agent: KDE DAV groupware client
+B: <?xml version="1.0"?>
+B: <D:mkcol xmlns:D="DAV:" xmlns:I="http://apple.com/ns/ical/" xmlns:C="urn:ietf:params:xml:ns:caldav">
+B:     <D:set>
+B:         <D:prop>
+B:             <D:resourcetype>
+B:                 <D:collection/>
+B:                 <C:calendar/>
+B:             </D:resourcetype>
+B:             <D:displayname>Test 2</D:displayname>
+B:             <I:calendar-color>#ffb6469d</I:calendar-color>
+B:             <C:supported-calendar-component-set>
+B:                 <C:comp name="VEVENT"/>
+B:             </C:supported-calendar-component-set>
+B:             <C:calendar-timezone>BEGIN:VCALENDAR
+B: PRODID:-//IDN nextcloud.com//Calendar app 6.3.0-rc.1//EN
+B: CALSCALE:GREGORIAN
+B: VERSION:2.0
+B: BEGIN:VTIMEZONE
+B: TZID:Europe/Berlin
+B: BEGIN:DAYLIGHT
+B: TZNAME:CEST
+B: TZOFFSETFROM:+0100
+B: TZOFFSETTO:+0200
+B: DTSTART:19700329T020000
+B: RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+B: END:DAYLIGHT
+B: BEGIN:STANDARD
+B: TZNAME:CET
+B: TZOFFSETFROM:+0200
+B: TZOFFSETTO:+0100
+B: DTSTART:19701025T030000
+B: RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+B: END:STANDARD
+B: END:VTIMEZONE
+B: END:VCALENDAR</C:calendar-timezone>
+B:         </D:prop>
+B:     </D:set>
+B: </D:mkcol>
+S: HTTP/1.0 201 Created
+X

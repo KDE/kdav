@@ -16,6 +16,8 @@ target_sources(KF6DAV PRIVATE
     common/davcollectiondeletejob.cpp
     common/davcollectiondeletejob.h
     common/davcollection.h
+    common/davcollectioncreatejob.cpp
+    common/davcollectioncreatejob.h
     common/davcollectionmodifyjob.cpp
     common/davcollectionmodifyjob.h
     common/davcollectionsfetchjob.cpp
@@ -53,6 +55,8 @@ target_sources(KF6DAV PRIVATE
     common/davprotocolbase_p.h
     common/davurl.cpp
     common/davurl.h
+    common/davxml_p.h
+    common/davxml.cpp
     common/enums.h
     common/etagcache.cpp
     common/etagcache.h
@@ -78,6 +82,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     HEADER_NAMES
     DavJobBase
     DavCollection
+    DavCollectionCreateJob
     DavCollectionDeleteJob
     DavCollectionsFetchJob
     DavCollectionModifyJob

@@ -1,0 +1,19 @@
+C: MKCOL /caldav/new-calendar/ HTTP/1.1
+C: User-Agent: KDE DAV groupware client
+B: <?xml version="1.0"?>
+B: <D:mkcol xmlns:D="DAV:" xmlns:I="http://apple.com/ns/ical/" xmlns:C="urn:ietf:params:xml:ns:caldav">
+B:     <D:set>
+B:         <D:prop>
+B:             <D:resourcetype>
+B:                 <D:collection/>
+B:                 <C:calendar/>
+B:             </D:resourcetype>
+B:             <D:displayname>Test 2</D:displayname>
+B:             <C:supported-calendar-component-set>
+B:                 <C:comp name="VEVENT"/>
+B:             </C:supported-calendar-component-set>
+B:         </D:prop>
+B:     </D:set>
+B: </D:mkcol>
+S: HTTP/1.1 404 Not Found
+X

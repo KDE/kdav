@@ -1,5 +1,6 @@
 /*
     SPDX-FileCopyrightText: 2009 Grégory Oestreicher <greg@kamago.net>
+    SPDX-FileCopyrightText: 2026 Carl Schwan <carl@carlschwan.eu>
 
     SPDX-License-Identifier: LGPL-2.0-or-later
 */
@@ -21,6 +22,7 @@ public:
     QString mDisplayName;
     QColor mColor;
     Privileges mPrivileges;
+    QByteArray mTimeZone;
 };
 
 DavCollection::DavCollection()
@@ -101,4 +103,14 @@ void DavCollection::setPrivileges(Privileges privs)
 Privileges DavCollection::privileges() const
 {
     return d->mPrivileges;
+}
+
+void DavCollection::setTimeZone(const QByteArray &timeZone)
+{
+    d->mTimeZone = timeZone;
+}
+
+QByteArray DavCollection::timeZone() const
+{
+    return d->mTimeZone;
 }

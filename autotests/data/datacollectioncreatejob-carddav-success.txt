@@ -1,0 +1,16 @@
+C: MKCOL /carddav/new-addressbook/ HTTP/1.1
+C: User-Agent: KDE DAV groupware client
+B: <?xml version="1.0"?>
+B: <D:mkcol xmlns:D="DAV:" xmlns:C="urn:ietf:params:xml:ns:carddav">
+B:     <D:set>
+B:         <D:prop>
+B:             <D:resourcetype>
+B:                 <D:collection/>
+B:                 <C:addressbook/>
+B:             </D:resourcetype>
+B:             <D:displayname>My Address Book</D:displayname>
+B:         </D:prop>
+B:     </D:set>
+B: </D:mkcol>
+S: HTTP/1.0 201 Created
+X

@@ -153,6 +153,19 @@ public:
      */
     Q_REQUIRED_RESULT Privileges privileges() const;
 
+    /*!
+     * Sets the timezone on this calendar collection.
+     *
+     * This is a VCALENDAR object containing a VTIMEZONE. You can use
+     * KCalendarCore to build it.
+     */
+    void setTimeZone(const QByteArray &timeZone);
+
+    /*!
+     * Returns the timezone on this calendar collection.
+     */
+    [[nodiscard]] QByteArray timeZone() const;
+
 private:
     QSharedDataPointer<DavCollectionPrivate> d;
 };
