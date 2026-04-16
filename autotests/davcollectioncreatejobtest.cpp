@@ -52,7 +52,7 @@ void DavCollectionCreateJobTest::createCalDavCollection()
 
     fakeServer.addScenario({
         "C: MKCOL /caldav/new-calendar/ HTTP/1.1",
-        "B: <?xml version=\"1.0\"?>",
+        "B: <?xml version=\"1.0\" encoding=\"utf-8\"?>",
         "B: <D:mkcol xmlns:D=\"DAV:\" xmlns:I=\"http://apple.com/ns/ical/\" xmlns:C=\"urn:ietf:params:xml:ns:caldav\">",
         "B:     <D:set>",
         "B:         <D:prop>",
@@ -117,7 +117,7 @@ void DavCollectionCreateJobTest::createCardDavCollection()
 
     fakeServer.addScenario({
         "C: MKCOL /carddav/new-addressbook/ HTTP/1.1",
-        "B: <?xml version=\"1.0\"?>",
+        "B: <?xml version=\"1.0\" encoding=\"utf-8\"?>",
         "B: <D:mkcol xmlns:D=\"DAV:\" xmlns:C=\"urn:ietf:params:xml:ns:carddav\">",
         "B:     <D:set>",
         "B:         <D:prop>",
@@ -155,7 +155,7 @@ void DavCollectionCreateJobTest::createCollectionError()
 
     fakeServer.addScenario({
         "C: MKCOL /caldav/new-calendar/ HTTP/1.1",
-        "B: <?xml version=\"1.0\"?>",
+        "B: <?xml version=\"1.0\" encoding=\"utf-8\"?>",
         "B: <D:mkcol xmlns:D=\"DAV:\" xmlns:I=\"http://apple.com/ns/ical/\" xmlns:C=\"urn:ietf:params:xml:ns:caldav\">",
         "B:     <D:set>",
         "B:         <D:prop>",
