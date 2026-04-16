@@ -11,6 +11,8 @@
 #include <QSignalSpy>
 #include <QTest>
 
+using namespace Qt::StringLiterals;
+
 Q_DECLARE_METATYPE(KDAV::Protocol)
 
 void DavCollectionsFetchJobTest::initTestCase()
@@ -21,7 +23,7 @@ void DavCollectionsFetchJobTest::initTestCase()
 void DavCollectionsFetchJobTest::fetchCalDavCollections()
 {
     FakeServer fakeServer(5991);
-    QUrl url(QStringLiteral("http://localhost/caldav"));
+    QUrl url(u"http://localhost/caldav"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CalDav);
 
@@ -29,9 +31,9 @@ void DavCollectionsFetchJobTest::fetchCalDavCollections()
     QSignalSpy spy(job, &KDAV::DavCollectionsFetchJob::collectionDiscovered);
 
     // Round 1: DavPrincipalHomeSetsFetchJob fetches the principal home set
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-caldav.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav.txt"_s);
     // Round 2: fetch the actual collections from the home set URL
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-caldav-collections.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav-collections.txt"_s);
     fakeServer.startAndWait();
     job->exec();
 
@@ -43,9 +45,9 @@ void DavCollectionsFetchJobTest::fetchCalDavCollections()
     QCOMPARE(collections.count(), 1);
 
     const KDAV::DavCollection collection = collections.at(0);
-    QCOMPARE(collection.displayName(), QStringLiteral("Test1 User"));
-    QCOMPARE(collection.CTag(), QStringLiteral("12345"));
-    QCOMPARE(collection.url().url().path(), QStringLiteral("/caldav.php/test1.user/home/"));
+    QCOMPARE(collection.displayName(), u"Test1 User"_s);
+    QCOMPARE(collection.CTag(), u"12345"_s);
+    QCOMPARE(collection.url().url().path(), u"/caldav.php/test1.user/home/"_s);
     QCOMPARE(collection.contentTypes(),
              KDAV::DavCollection::Events | KDAV::DavCollection::Todos | KDAV::DavCollection::FreeBusy | KDAV::DavCollection::Journal);
     QCOMPARE(collection.privileges(), KDAV::Read);
@@ -60,15 +62,15 @@ void DavCollectionsFetchJobTest::fetchCalDavCollections()
 void DavCollectionsFetchJobTest::fetchCardDavCollections()
 {
     FakeServer fakeServer(5991);
-    QUrl url(QStringLiteral("http://localhost/carddav"));
+    QUrl url(u"http://localhost/carddav"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
     auto job = new KDAV::DavCollectionsFetchJob(davUrl);
     QSignalSpy spy(job, &KDAV::DavCollectionsFetchJob::collectionDiscovered);
 
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-carddav.txt"));
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-carddav-collections.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-carddav.txt"_s);
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-carddav-collections.txt"_s);
     fakeServer.startAndWait();
     job->exec();
 
@@ -79,9 +81,9 @@ void DavCollectionsFetchJobTest::fetchCardDavCollections()
     QCOMPARE(collections.count(), 1);
 
     const KDAV::DavCollection collection = collections.at(0);
-    QCOMPARE(collection.displayName(), QStringLiteral("My Address Book"));
-    QCOMPARE(collection.CTag(), QStringLiteral("3145"));
-    QCOMPARE(collection.url().url().path(), QStringLiteral("/carddav.php/test1.user/home/"));
+    QCOMPARE(collection.displayName(), u"My Address Book"_s);
+    QCOMPARE(collection.CTag(), u"3145"_s);
+    QCOMPARE(collection.url().url().path(), u"/carddav.php/test1.user/home/"_s);
     QCOMPARE(collection.contentTypes(), KDAV::DavCollection::Contacts);
     QCOMPARE(collection.privileges(), KDAV::All);
 
@@ -94,7 +96,7 @@ void DavCollectionsFetchJobTest::fetchCardDavCollections()
 void DavCollectionsFetchJobTest::fetchGroupDavCollections()
 {
     FakeServer fakeServer(5991);
-    QUrl url(QStringLiteral("http://localhost/groupdav"));
+    QUrl url(u"http://localhost/groupdav"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::GroupDav);
 
@@ -102,7 +104,7 @@ void DavCollectionsFetchJobTest::fetchGroupDavCollections()
     QSignalSpy spy(job, &KDAV::DavCollectionsFetchJob::collectionDiscovered);
 
     // GroupDAV does not support principals — goes straight to a PROPFIND
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/davcollectionsfetchjob-groupdav.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-groupdav.txt"_s);
     fakeServer.startAndWait();
     job->exec();
 
@@ -113,8 +115,8 @@ void DavCollectionsFetchJobTest::fetchGroupDavCollections()
     QCOMPARE(collections.count(), 1);
 
     const KDAV::DavCollection collection = collections.at(0);
-    QCOMPARE(collection.displayName(), QStringLiteral("My Events"));
-    QCOMPARE(collection.url().url().path(), QStringLiteral("/groupdav/calendars/"));
+    QCOMPARE(collection.displayName(), u"My Events"_s);
+    QCOMPARE(collection.url().url().path(), u"/groupdav/calendars/"_s);
     QCOMPARE(collection.contentTypes(), KDAV::DavCollection::Events);
 
     QCOMPARE(spy.count(), 1);
@@ -126,16 +128,16 @@ void DavCollectionsFetchJobTest::fetchGroupDavCollections()
 void DavCollectionsFetchJobTest::calendarWithColor()
 {
     FakeServer fakeServer(5991);
-    QUrl url(QStringLiteral("http://localhost/caldav"));
+    QUrl url(u"http://localhost/caldav"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CalDav);
 
     auto job = new KDAV::DavCollectionsFetchJob(davUrl);
 
     // Principal fetch (reuse existing scenario)
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-caldav.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav.txt"_s);
     // Collection fetch with #RRGGBBAA color
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/davcollectionsfetchjob-caldav-color-collections.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-caldav-color-collections.txt"_s);
     fakeServer.startAndWait();
     job->exec();
 
@@ -146,8 +148,8 @@ void DavCollectionsFetchJobTest::calendarWithColor()
     QCOMPARE(collections.count(), 1);
 
     const KDAV::DavCollection collection = collections.at(0);
-    QCOMPARE(collection.displayName(), QStringLiteral("Color Calendar"));
-    QCOMPARE(collection.CTag(), QStringLiteral("99999"));
+    QCOMPARE(collection.displayName(), u"Color Calendar"_s);
+    QCOMPARE(collection.CTag(), u"99999"_s);
 
     QVERIFY(collection.color().isValid());
     QCOMPARE(collection.color(), QColor(255, 0, 0));
@@ -156,13 +158,13 @@ void DavCollectionsFetchJobTest::calendarWithColor()
 void DavCollectionsFetchJobTest::principalFetchError()
 {
     FakeServer fakeServer(5991);
-    QUrl url(QStringLiteral("http://localhost/caldav"));
+    QUrl url(u"http://localhost/caldav"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CalDav);
 
     auto job = new KDAV::DavCollectionsFetchJob(davUrl);
 
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/davcollectionsfetchjob-principal-error.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-principal-error.txt"_s);
     fakeServer.startAndWait();
     job->exec();
 
@@ -174,18 +176,18 @@ void DavCollectionsFetchJobTest::principalFetchError()
 void DavCollectionsFetchJobTest::collectionFetchError()
 {
     FakeServer fakeServer(5991);
-    QUrl url(QStringLiteral("http://localhost/caldav"));
+    QUrl url(u"http://localhost/caldav"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CalDav);
 
     auto job = new KDAV::DavCollectionsFetchJob(davUrl);
 
     // Round 1: principal fetch succeeds and returns home set /caldav/dfaure%40example.com/
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemmultifetchjob-caldav.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav.txt"_s);
     // Round 2: collection fetch on the home set URL returns 404 → triggers fallback to original URL
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/davcollectionsfetchjob-collection-homeset-404.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-collection-homeset-404.txt"_s);
     // Round 3: fallback fetch on the original /caldav URL also returns 404 → job fails
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/davcollectionsfetchjob-fallback-404.txt"));
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-fallback-404.txt"_s);
     fakeServer.startAndWait();
     job->exec();
 
