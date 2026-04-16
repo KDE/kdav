@@ -2,7 +2,8 @@ Dependencies:
  - 'on': ['@all']
    'require':
     'frameworks/extra-cmake-modules': '@same'
-    'frameworks/kio': '@same'
+    'frameworks/ki18n': '@same'
+    'frameworks/kcoreaddons': '@same'
 
 Options:
  test-before-installing: True
