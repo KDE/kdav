@@ -1,7 +1,7 @@
 maintainer:
 fancyname: KDAV
 description: An DAV protocol implementation with KJobs
-tier: 3
+tier: 2
 type: functional
 platforms:
     - name: All
@@ -14,4 +14,4 @@ cmakename: KF6DAV
 
 public_lib: true
 group: Frameworks
-subgroup: Tier 3
+subgroup: Tier 2

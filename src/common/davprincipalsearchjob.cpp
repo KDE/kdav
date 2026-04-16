@@ -11,8 +11,8 @@
 #include "davmanager_p.h"
 #include "utils_p.h"
 
-#include <KIO/DavJob>
-#include <KIO/Job>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 #include <QUrl>
 
@@ -24,8 +24,8 @@ class DavPrincipalSearchJobPrivate : public DavJobBasePrivate
 {
 public:
     void buildReportQuery(QDomDocument &query) const;
-    void principalCollectionSetSearchFinished(KJob *job);
-    void principalPropertySearchFinished(KJob *job);
+    void principalCollectionSetSearchFinished(QNetworkReply *reply);
+    void principalPropertySearchFinished(QNetworkReply *reply);
 
     DavUrl mUrl;
     DavPrincipalSearchJob::FilterType mType;
@@ -86,34 +86,24 @@ void DavPrincipalSearchJob::start()
     QDomElement principalCollectionSet = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("principal-collection-set"));
     prop.appendChild(principalCollectionSet);
 
-    KIO::DavJob *job = DavManager::self()->createPropFindJob(d->mUrl.url(), query.toString());
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
-        d->principalCollectionSetSearchFinished(job);
+    QNetworkReply *reply = DavManager::self()->createPropFindJob(d->mUrl.url(), query.toString());
+    connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+        d->principalCollectionSetSearchFinished(reply);
     });
-    job->start();
 }
 
-void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(KJob *job)
+void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(QNetworkReply *reply)
 {
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-    const QString responseCodeStr = davJob->queryMetaData(QStringLiteral("responsecode"));
-    const int responseCode = responseCodeStr.isEmpty() ? 0 : responseCodeStr.toInt();
-    // KIO::DavJob does not set error() even if the HTTP status code is a 4xx or a 5xx
-    if (davJob->error() || (responseCode >= 400 && responseCode < 600)) {
+    reply->deleteLater();
+    const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+    if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
+        setJobErrorText(reply->errorString());
+        setJobError(reply->error());
         setErrorTextFromDavError();
 
-        emitResult();
-        return;
-    }
-
-    if (job->error()) {
-        setError(job->error());
-        setErrorText(job->errorText());
         emitResult();
         return;
     }
@@ -139,7 +129,7 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(KJob *jo
      */
 
     QDomDocument document;
-    document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
+    document.setContent(reply->readAll(), QDomDocument::ParseOption::UseNamespaceProcessing);
     QDomElement documentElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
@@ -197,51 +187,33 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(KJob *jo
 
         QDomDocument principalPropertySearchQuery;
         buildReportQuery(principalPropertySearchQuery);
-        KIO::DavJob *reportJob = DavManager::self()->createReportJob(url, principalPropertySearchQuery.toString());
-        reportJob->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-        QObject::connect(reportJob, &KIO::DavJob::result, q_ptr, [this](KJob *job) {
-            principalPropertySearchFinished(job);
+        QNetworkReply *reportReply = DavManager::self()->createReportJob(url, principalPropertySearchQuery.toString());
+        QObject::connect(reportReply, &QNetworkReply::finished, q_ptr, [this, reportReply]() {
+            principalPropertySearchFinished(reportReply);
         });
         ++mPrincipalPropertySearchSubJobCount;
-        reportJob->start();
     }
 }
 
-void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
+void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(QNetworkReply *reply)
 {
+    reply->deleteLater();
     --mPrincipalPropertySearchSubJobCount;
 
-    if (job->error() && !mPrincipalPropertySearchSubJobSuccessful) {
-        setError(job->error());
-        setErrorText(job->errorText());
-        if (mPrincipalPropertySearchSubJobCount == 0) {
-            emitResult();
+    const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+
+    if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
+        if (!mPrincipalPropertySearchSubJobSuccessful) {
+            setLatestResponseCode(responseCode);
+            if (responseCode >= 500) {
+                setError(ERR_SERVER_UNRECOVERABLE);
+            } else {
+                setError(ERR_PROBLEM_WITH_REQUEST);
+            }
+            setJobErrorText(reply->errorString());
+            setJobError(reply->error());
+            setErrorTextFromDavError();
         }
-        return;
-    }
-
-    KIO::DavJob *davJob = qobject_cast<KIO::DavJob *>(job);
-
-    const int responseCode = davJob->queryMetaData(QStringLiteral("responsecode")).toInt();
-
-    if (responseCode > 499 && responseCode < 600 && !mPrincipalPropertySearchSubJobSuccessful) {
-        // Server-side error, unrecoverable
-        setLatestResponseCode(responseCode);
-        setError(ERR_SERVER_UNRECOVERABLE);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
-        setErrorTextFromDavError();
-        if (mPrincipalPropertySearchSubJobCount == 0) {
-            emitResult();
-        }
-        return;
-    } else if (responseCode > 399 && responseCode < 500 && !mPrincipalPropertySearchSubJobSuccessful) {
-        setLatestResponseCode(responseCode);
-        setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(davJob->errorText());
-        setJobError(davJob->error());
-        setErrorTextFromDavError();
-
         if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
@@ -269,7 +241,7 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(KJob *job)
      */
 
     QDomDocument document;
-    document.setContent(davJob->responseData(), QDomDocument::ParseOption::UseNamespaceProcessing);
+    document.setContent(reply->readAll(), QDomDocument::ParseOption::UseNamespaceProcessing);
     const QDomElement documentElement = document.documentElement();
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));

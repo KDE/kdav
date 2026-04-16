@@ -11,8 +11,8 @@
 #include "davitemfetchjob.h"
 #include "davmanager_p.h"
 
-#include <KIO/DeleteJob>
-#include <KIO/Job>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 using namespace KDAV;
 
@@ -21,7 +21,7 @@ namespace KDAV
 class DavItemDeleteJobPrivate : public DavJobBasePrivate
 {
 public:
-    void davJobFinished(KJob *job);
+    void davJobFinished(QNetworkReply *reply);
     void conflictingItemFetched(KJob *job);
 
     DavItem mItem;
@@ -40,14 +40,13 @@ DavItemDeleteJob::DavItemDeleteJob(const DavItem &item, QObject *parent)
 void DavItemDeleteJob::start()
 {
     Q_D(DavItemDeleteJob);
-    KIO::DeleteJob *job = KIO::del(d->mItem.url().url(), KIO::HideProgressInfo | KIO::DefaultFlags);
-    job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), QStringLiteral("If-Match: ") + d->mItem.etag());
-    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
-    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
+    QNetworkRequest request(d->mItem.url().url());
+    request.setHeader(QNetworkRequest::IfMatchHeader, d->mItem.etag());
+    request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
 
-    connect(job, &KIO::DeleteJob::result, this, [d](KJob *job) {
-        d->davJobFinished(job);
+    QNetworkReply *reply = DavManager::self()->networkAccessManager()->deleteResource(request);
+    connect(reply, &QNetworkReply::finished, this, [d, reply]() {
+        d->davJobFinished(reply);
     });
 }
 
@@ -63,20 +62,19 @@ int DavItemDeleteJob::freshResponseCode() const
     return d->mFreshResponseCode;
 }
 
-void DavItemDeleteJobPrivate::davJobFinished(KJob *job)
+void DavItemDeleteJobPrivate::davJobFinished(QNetworkReply *reply)
 {
-    KIO::DeleteJob *deleteJob = qobject_cast<KIO::DeleteJob *>(job);
+    reply->deleteLater();
 
-    if (deleteJob->error() && deleteJob->error() != KIO::ERR_NO_CONTENT) {
-        const int responseCode = deleteJob->queryMetaData(QStringLiteral("responsecode")).isEmpty() //
-            ? 0
-            : deleteJob->queryMetaData(QStringLiteral("responsecode")).toInt();
+    if (reply->error() != QNetworkReply::NoError) {
+        const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
+        // 404 and 410 mean the item is already gone, treat as success
         if (responseCode != 404 && responseCode != 410) {
             setLatestResponseCode(responseCode);
             setError(ERR_ITEMDELETE);
-            setJobErrorText(deleteJob->errorText());
-            setJobError(deleteJob->error());
+            setJobErrorText(reply->errorString());
+            setJobError(reply->error());
             setErrorTextFromDavError();
         }
 
