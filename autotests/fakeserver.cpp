@@ -254,7 +254,7 @@ void FakeServer::readClientPart(QTcpSocket *socket, int *scenarioNumber)
             }
             body += socket->read(contentLength - body.size());
         }
-        body = body.sliced(QByteArray("<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n").size()).trimmed();
+        body = body.trimmed();
 
         QByteArray expectedBody;
         while (!scenario.isEmpty() && scenario.first().startsWith("B: ")) {

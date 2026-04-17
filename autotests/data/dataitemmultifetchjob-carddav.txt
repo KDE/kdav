@@ -1,4 +1,5 @@
 C: PROPFIND /carddav HTTP/1.1
+B: <?xml version="1.0" encoding="utf-8"?>
 B: <propfind xmlns="DAV:">
 B:  <prop xmlns="DAV:">
 B:   <addressbook-home-set xmlns="urn:ietf:params:xml:ns:carddav"/>
