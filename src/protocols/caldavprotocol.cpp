@@ -387,6 +387,7 @@ DavCollection::ContentTypes CaldavProtocol::collectionContentTypes(const QDomEle
         contentTypes |= DavCollection::Todos;
         contentTypes |= DavCollection::FreeBusy;
         contentTypes |= DavCollection::Journal;
+        contentTypes |= DavCollection::Timezone;
     }
 
     while (!compElement.isNull()) {
@@ -401,6 +402,8 @@ DavCollection::ContentTypes CaldavProtocol::collectionContentTypes(const QDomEle
             contentTypes |= DavCollection::FreeBusy;
         } else if (type == QLatin1String("vjournal")) {
             contentTypes |= DavCollection::Journal;
+        } else if (type == QLatin1String("vtimezone")) {
+            contentTypes |= DavCollection::Timezone;
         }
 
         compElement = Utils::nextSiblingElementNS(compElement, QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("comp"));

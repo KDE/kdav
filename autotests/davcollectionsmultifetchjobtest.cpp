@@ -57,7 +57,8 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
 
     const KDAV::DavCollection calendar = collections.at(calDavIdx);
     QCOMPARE(calendar.displayName(), QStringLiteral("Test1 User"));
-    QCOMPARE(calendar.contentTypes(), DavCollection::Events | DavCollection::Todos | DavCollection::FreeBusy | DavCollection::Journal);
+    QCOMPARE(calendar.contentTypes(),
+             DavCollection::Events | DavCollection::Todos | DavCollection::FreeBusy | DavCollection::Journal | DavCollection::Timezone);
     QCOMPARE(calendar.url().url().path(), QStringLiteral("/caldav.php/test1.user/home/"));
     QCOMPARE(calendar.CTag(), QStringLiteral("12345"));
     QCOMPARE(calendar.privileges(), KDAV::Read);

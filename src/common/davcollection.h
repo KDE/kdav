@@ -53,6 +53,7 @@ public:
      * \value FreeBusy The collection can contain free/busy information.
      * \value Journal The collection can contain journal DAV resources.
      * \value Calendar The collection can contain anything calendar-related.
+     * \value [since 6.26] Timezone The collection can contain timezone information.
      */
     enum ContentType {
         Events = 1,
@@ -61,6 +62,7 @@ public:
         FreeBusy = 8,
         Journal = 16,
         Calendar = 32,
+        Timezone = 64,
     };
     Q_DECLARE_FLAGS(ContentTypes, ContentType)
 

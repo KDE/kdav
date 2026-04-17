@@ -49,7 +49,8 @@ void DavCollectionsFetchJobTest::fetchCalDavCollections()
     QCOMPARE(collection.CTag(), u"12345"_s);
     QCOMPARE(collection.url().url().path(), u"/caldav.php/test1.user/home/"_s);
     QCOMPARE(collection.contentTypes(),
-             KDAV::DavCollection::Events | KDAV::DavCollection::Todos | KDAV::DavCollection::FreeBusy | KDAV::DavCollection::Journal);
+             KDAV::DavCollection::Events | KDAV::DavCollection::Todos | KDAV::DavCollection::FreeBusy | KDAV::DavCollection::Journal
+                 | KDAV::DavCollection::Timezone);
     QCOMPARE(collection.privileges(), KDAV::Read);
     QVERIFY(!collection.color().isValid());
 
