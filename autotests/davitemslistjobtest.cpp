@@ -25,7 +25,7 @@ void DavItemsListJobTest::initTestCase()
 
 void DavItemsListJobTest::noMatchingMimetype()
 {
-    std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
+    auto cache = std::make_shared<KDAV::EtagCache>();
 
     QUrl url(QStringLiteral("http://localhost/collection"));
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
@@ -46,7 +46,7 @@ void DavItemsListJobTest::cardDavListingWithEmptyCache()
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
-    std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
+    auto cache = std::make_shared<KDAV::EtagCache>();
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-items.txt"_s);
@@ -77,7 +77,7 @@ void DavItemsListJobTest::cardDavListingWithUnchangedEtags()
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
-    std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
+    auto cache = std::make_shared<KDAV::EtagCache>();
     // Pre-populate cache with current ETags — items have not changed
     cache->setEtag(QStringLiteral("http://localhost:%1/collection/item1.vcf").arg(fakeServer.port()), u"\"etag1\""_s);
     cache->setEtag(QStringLiteral("http://localhost:%1/collection/item2.vcf").arg(fakeServer.port()), u"\"etag2\""_s);
@@ -101,7 +101,7 @@ void DavItemsListJobTest::cardDavListingWithChangedEtag()
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
-    std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
+    auto cache = std::make_shared<KDAV::EtagCache>();
     // item1 has an outdated ETag; item2 is current
     cache->setEtag(QStringLiteral("http://localhost:%1/collection/item1.vcf").arg(fakeServer.port()), u"\"old-etag1\""_s);
     cache->setEtag(QStringLiteral("http://localhost:%1/collection/item2.vcf").arg(fakeServer.port()), u"\"etag2\""_s);
@@ -126,7 +126,7 @@ void DavItemsListJobTest::cardDavListingDeletedItems()
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
-    std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
+    auto cache = std::make_shared<KDAV::EtagCache>();
     // Cache knows about two items, but the server will only return item1
     cache->setEtag(QStringLiteral("http://localhost:%1/collection/item1.vcf").arg(fakeServer.port()), u"\"etag1\""_s);
     cache->setEtag(QStringLiteral("http://localhost:%1/collection/item2.vcf").arg(fakeServer.port()), u"\"etag2\""_s);
@@ -151,7 +151,7 @@ void DavItemsListJobTest::cardDavListingErrorResponse()
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
-    std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
+    auto cache = std::make_shared<KDAV::EtagCache>();
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-error.txt"_s);
@@ -170,7 +170,7 @@ void DavItemsListJobTest::cardDavListingCollectionsSkipped()
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
-    std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
+    auto cache = std::make_shared<KDAV::EtagCache>();
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-collection-and-item.txt"_s);
@@ -191,7 +191,7 @@ void DavItemsListJobTest::cardDavListingDuplicateUrls()
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
-    std::shared_ptr<KDAV::EtagCache> cache(new KDAV::EtagCache());
+    auto cache = std::make_shared<KDAV::EtagCache>();
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-duplicate.txt"_s);
