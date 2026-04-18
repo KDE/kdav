@@ -37,3 +37,8 @@ ecm_add_test(davitemslistjobtest.cpp fakeserver.cpp davitemslistjobtest.h fakese
     TEST_NAME davitemslistjob
     LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network
 )
+
+ecm_add_test(davprincipalsearchjobtest.cpp fakeserver.cpp davprincipalsearchjobtest.h fakeserver.h
+    TEST_NAME davprincipalsearchjobtest
+    LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network
+)

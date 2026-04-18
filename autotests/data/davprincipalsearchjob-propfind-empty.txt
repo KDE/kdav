@@ -1,0 +1,13 @@
+C: PROPFIND /dav/ HTTP/1.1
+B: <?xml version="1.0" encoding="utf-8"?>
+B: <propfind xmlns="DAV:">
+B:  <prop xmlns="DAV:">
+B:   <principal-collection-set xmlns="DAV:"/>
+B:  </prop>
+B: </propfind>
+S: HTTP/1.1 207 Multi-Status
+S: Content-Type: application/xml; charset=utf-8
+D: <?xml version="1.0" encoding="utf-8" ?>
+D: <multistatus xmlns="DAV:">
+D: </multistatus>
+X

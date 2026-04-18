@@ -1,0 +1,28 @@
+C: REPORT /principals/groups/ HTTP/1.1
+B: <?xml version="1.0" encoding="utf-8"?>
+B: <principal-property-search xmlns="DAV:">
+B:  <property-search xmlns="DAV:">
+B:   <prop xmlns="DAV:">
+B:    <displayname xmlns="DAV:"/>
+B:   </prop>
+B:   <match xmlns="DAV:">John</match>
+B:  </property-search>
+B:  <prop xmlns="DAV:">
+B:   <displayname xmlns="DAV:"/>
+B:  </prop>
+B: </principal-property-search>
+S: HTTP/1.1 207 Multi-Status
+S: Content-Type: application/xml; charset=utf-8
+D: <?xml version="1.0" encoding="utf-8" ?>
+D: <multistatus xmlns="DAV:">
+D:   <response>
+D:     <href>/principals/groups/engineering</href>
+D:     <propstat>
+D:       <prop>
+D:         <displayname>Engineering</displayname>
+D:       </prop>
+D:       <status>HTTP/1.1 200 OK</status>
+D:     </propstat>
+D:   </response>
+D: </multistatus>
+X
