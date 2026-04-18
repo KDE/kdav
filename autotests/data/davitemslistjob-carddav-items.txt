@@ -1,0 +1,33 @@
+C: PROPFIND /collection HTTP/1.1
+B: <?xml version="1.0" encoding="utf-8"?>
+B: <propfind xmlns="DAV:">
+B:  <prop xmlns="DAV:">
+B:   <displayname xmlns="DAV:"/>
+B:   <resourcetype xmlns="DAV:"/>
+B:   <getetag xmlns="DAV:"/>
+B:  </prop>
+B: </propfind>
+S: HTTP/1.0 207 Multi-Status
+S: Content-Type: application/xml; charset=utf-8
+D: <?xml version="1.0" encoding="utf-8" ?>
+D: <multistatus xmlns="DAV:">
+D:   <response>
+D:     <href>/collection/item1.vcf</href>
+D:     <propstat>
+D:       <prop>
+D:         <getetag>"etag1"</getetag>
+D:       </prop>
+D:       <status>HTTP/1.1 200 OK</status>
+D:     </propstat>
+D:   </response>
+D:   <response>
+D:     <href>/collection/item2.vcf</href>
+D:     <propstat>
+D:       <prop>
+D:         <getetag>"etag2"</getetag>
+D:       </prop>
+D:       <status>HTTP/1.1 200 OK</status>
+D:     </propstat>
+D:   </response>
+D: </multistatus>
+X
