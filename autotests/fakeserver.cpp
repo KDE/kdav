@@ -15,10 +15,9 @@
 #include <QFile>
 #include <QTest>
 
-FakeServer::FakeServer(int port, QObject *parent)
+FakeServer::FakeServer(QObject *parent)
     : QObject(parent)
     , m_thread(new QThread)
-    , m_port(port)
 {
     moveToThread(m_thread);
 }
@@ -65,9 +64,11 @@ void FakeServer::init()
 {
     m_tcpServer = new QTcpServer();
 
-    if (!m_tcpServer->listen(QHostAddress(QHostAddress::LocalHost), m_port)) {
+    if (!m_tcpServer->listen(QHostAddress(QHostAddress::LocalHost))) {
         qFatal("Unable to start the server");
     }
+
+    m_port = m_tcpServer->serverPort();
 
     connect(m_tcpServer, &QTcpServer::newConnection, this, &FakeServer::newConnection);
 }
@@ -96,17 +97,17 @@ void FakeServer::addScenario(const QList<QByteArray> &scenario)
 void FakeServer::addScenarioFromFile(const QString &fileName)
 {
     QFile file(fileName);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QList<QByteArray> scenario;
 
-    QList<QByteArray> scenario;
+        while (!file.atEnd()) {
+            scenario << file.readLine().trimmed();
+        }
 
-    while (!file.atEnd()) {
-        scenario << file.readLine().trimmed();
+        addScenario(scenario);
+    } else {
+        qFatal("Failed to add scenario.");
     }
-
-    file.close();
-
-    addScenario(scenario);
 }
 
 bool FakeServer::isScenarioDone(int scenarioNumber) const
@@ -283,6 +284,9 @@ void FakeServer::readClientPart(QTcpSocket *socket, int *scenarioNumber)
 
 int FakeServer::port() const
 {
+    // fail if we call that befor listen
+    Q_ASSERT(m_port > 0);
+
     return m_port;
 }
 

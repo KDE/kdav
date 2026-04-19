@@ -19,7 +19,10 @@ void DavItemFetchJobTest::initTestCase()
 
 void DavItemFetchJobTest::runSuccessfullTest()
 {
-    FakeServer fakeServer(5989);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemfetchjob.txt"));
+    fakeServer.startAndWait();
+
     QUrl url(QStringLiteral("http://localhost/item"));
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
@@ -28,8 +31,6 @@ void DavItemFetchJobTest::runSuccessfullTest()
 
     auto job = new KDAV::DavItemFetchJob(item);
 
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + QStringLiteral("/dataitemfetchjob.txt"));
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());

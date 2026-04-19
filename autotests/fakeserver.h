@@ -87,9 +87,9 @@ class FakeServer : public QObject
 
 public:
     /*
-     * Each unittest should use a different port so that they can be run in parallel
+     * Create fake server, will use some free port.
      */
-    FakeServer(int port = 5989, QObject *parent = nullptr);
+    FakeServer(QObject *parent = nullptr);
     ~FakeServer() override;
 
     /*
@@ -158,6 +158,7 @@ public:
 
     /*
      * Returns the port where the fake server is listening.
+     * Valid after init() did run.
      */
     int port() const;
 
@@ -176,7 +177,7 @@ private:
     mutable QMutex m_mutex;
     QList<QTcpSocket *> m_clientSockets;
     QThread *m_thread;
-    int m_port;
+    int m_port = 0;
 };
 
 #endif

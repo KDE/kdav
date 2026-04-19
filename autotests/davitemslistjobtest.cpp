@@ -30,7 +30,6 @@ void DavItemsListJobTest::noMatchingMimetype()
     QUrl url(QStringLiteral("http://localhost/collection"));
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
     KDAV::Error error(KDAV::ErrorNumber::ERR_ITEMLIST_NOMIMETYPE, 0, QString(), 0);
-
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
     job->setContentMimeTypes(QStringList() << QStringLiteral("mime/invalid1") << QStringLiteral("mime/invalid2"));
     job->exec();
@@ -41,16 +40,17 @@ void DavItemsListJobTest::noMatchingMimetype()
 
 void DavItemsListJobTest::cardDavListingWithEmptyCache()
 {
-    FakeServer fakeServer(5992);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-items.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/collection"_s);
     url.setPort(fakeServer.port());
-    KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
+    KDAV::DavUrl davUrl(url, KDAV::CardDav);
     auto cache = std::make_shared<KDAV::EtagCache>();
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-items.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -72,7 +72,10 @@ void DavItemsListJobTest::cardDavListingWithEmptyCache()
 
 void DavItemsListJobTest::cardDavListingWithUnchangedEtags()
 {
-    FakeServer fakeServer(5992);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-items.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/collection"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
@@ -83,8 +86,6 @@ void DavItemsListJobTest::cardDavListingWithUnchangedEtags()
     cache->setEtag(QStringLiteral("http://localhost:%1/collection/item2.vcf").arg(fakeServer.port()), u"\"etag2\""_s);
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-items.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -96,7 +97,10 @@ void DavItemsListJobTest::cardDavListingWithUnchangedEtags()
 
 void DavItemsListJobTest::cardDavListingWithChangedEtag()
 {
-    FakeServer fakeServer(5992);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-items.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/collection"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
@@ -107,8 +111,6 @@ void DavItemsListJobTest::cardDavListingWithChangedEtag()
     cache->setEtag(QStringLiteral("http://localhost:%1/collection/item2.vcf").arg(fakeServer.port()), u"\"etag2\""_s);
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-items.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -121,7 +123,10 @@ void DavItemsListJobTest::cardDavListingWithChangedEtag()
 
 void DavItemsListJobTest::cardDavListingDeletedItems()
 {
-    FakeServer fakeServer(5992);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-single-item.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/collection"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
@@ -132,8 +137,6 @@ void DavItemsListJobTest::cardDavListingDeletedItems()
     cache->setEtag(QStringLiteral("http://localhost:%1/collection/item2.vcf").arg(fakeServer.port()), u"\"etag2\""_s);
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-single-item.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -146,7 +149,10 @@ void DavItemsListJobTest::cardDavListingDeletedItems()
 
 void DavItemsListJobTest::cardDavListingErrorResponse()
 {
-    FakeServer fakeServer(5992);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-error.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/collection"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
@@ -154,8 +160,6 @@ void DavItemsListJobTest::cardDavListingErrorResponse()
     auto cache = std::make_shared<KDAV::EtagCache>();
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-error.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -165,7 +169,10 @@ void DavItemsListJobTest::cardDavListingErrorResponse()
 
 void DavItemsListJobTest::cardDavListingCollectionsSkipped()
 {
-    FakeServer fakeServer(5992);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-collection-and-item.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/collection"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
@@ -173,8 +180,6 @@ void DavItemsListJobTest::cardDavListingCollectionsSkipped()
     auto cache = std::make_shared<KDAV::EtagCache>();
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-collection-and-item.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -186,7 +191,10 @@ void DavItemsListJobTest::cardDavListingCollectionsSkipped()
 
 void DavItemsListJobTest::cardDavListingDuplicateUrls()
 {
-    FakeServer fakeServer(5992);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-duplicate.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/collection"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
@@ -194,8 +202,6 @@ void DavItemsListJobTest::cardDavListingDuplicateUrls()
     auto cache = std::make_shared<KDAV::EtagCache>();
 
     auto job = new KDAV::DavItemsListJob(davUrl, cache);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davitemslistjob-carddav-duplicate.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
