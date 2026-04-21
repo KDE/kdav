@@ -1,0 +1,5 @@
+C: PUT /item HTTP/1.1
+C: Content-Type: text/x-vcard
+C: If-Match: "original-etag"
+S: HTTP/1.0 412 Precondition Failed
+X

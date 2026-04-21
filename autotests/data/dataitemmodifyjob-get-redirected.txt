@@ -1,0 +1,9 @@
+C: GET /new-item HTTP/1.1
+C: User-Agent: KDE DAV groupware client
+S: HTTP/1.0 200 OK
+S: ETag: new-location-etag
+S: Content-Type: text/x-vcard
+D: BEGIN:VCARD
+D: VERSION:3.0
+D: END:VCARD
+X
