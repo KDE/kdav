@@ -20,17 +20,17 @@ void DavPrincipalSearchJobTest::initTestCase()
 
 void DavPrincipalSearchJobTest::searchByDisplayName()
 {
-    FakeServer fakeServer(5993);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-success.txt"_s);
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-displayname.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/dav/"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
     auto job = new KDAV::DavPrincipalSearchJob(davUrl, KDAV::DavPrincipalSearchJob::DisplayName, u"John"_s);
     job->fetchProperty(u"displayname"_s, u"DAV:"_s);
-
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-success.txt"_s);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-displayname.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -43,17 +43,17 @@ void DavPrincipalSearchJobTest::searchByDisplayName()
 
 void DavPrincipalSearchJobTest::searchByEmailAddress()
 {
-    FakeServer fakeServer(5993);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-success.txt"_s);
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-emailaddress.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/dav/"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
     auto job = new KDAV::DavPrincipalSearchJob(davUrl, KDAV::DavPrincipalSearchJob::EmailAddress, u"john@example.com"_s);
     job->fetchProperty(u"displayname"_s, u"DAV:"_s);
-
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-success.txt"_s);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-emailaddress.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -64,16 +64,16 @@ void DavPrincipalSearchJobTest::searchByEmailAddress()
 
 void DavPrincipalSearchJobTest::propfindHttpError()
 {
-    FakeServer fakeServer(5993);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-error.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/dav/"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
     auto job = new KDAV::DavPrincipalSearchJob(davUrl, KDAV::DavPrincipalSearchJob::DisplayName, u"John"_s);
     job->fetchProperty(u"displayname"_s, u"DAV:"_s);
-
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-error.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -82,16 +82,16 @@ void DavPrincipalSearchJobTest::propfindHttpError()
 
 void DavPrincipalSearchJobTest::propfindEmptyMultistatus()
 {
-    FakeServer fakeServer(5993);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-empty.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/dav/"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
     auto job = new KDAV::DavPrincipalSearchJob(davUrl, KDAV::DavPrincipalSearchJob::DisplayName, u"John"_s);
     job->fetchProperty(u"displayname"_s, u"DAV:"_s);
-
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-empty.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -101,16 +101,16 @@ void DavPrincipalSearchJobTest::propfindEmptyMultistatus()
 
 void DavPrincipalSearchJobTest::propfindNoPropstat200()
 {
-    FakeServer fakeServer(5993);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-no200.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/dav/"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
     auto job = new KDAV::DavPrincipalSearchJob(davUrl, KDAV::DavPrincipalSearchJob::DisplayName, u"John"_s);
     job->fetchProperty(u"displayname"_s, u"DAV:"_s);
-
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-no200.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -120,17 +120,17 @@ void DavPrincipalSearchJobTest::propfindNoPropstat200()
 
 void DavPrincipalSearchJobTest::reportHttpError()
 {
-    FakeServer fakeServer(5993);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-success.txt"_s);
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-error.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/dav/"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
     auto job = new KDAV::DavPrincipalSearchJob(davUrl, KDAV::DavPrincipalSearchJob::DisplayName, u"John"_s);
     job->fetchProperty(u"displayname"_s, u"DAV:"_s);
-
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-success.txt"_s);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-error.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
@@ -139,18 +139,18 @@ void DavPrincipalSearchJobTest::reportHttpError()
 
 void DavPrincipalSearchJobTest::multipleCollectionSets()
 {
-    FakeServer fakeServer(5993);
+    FakeServer fakeServer;
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-two-hrefs.txt"_s);
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-users.txt"_s);
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-groups.txt"_s);
+    fakeServer.startAndWait();
+
     QUrl url(u"http://localhost/dav/"_s);
     url.setPort(fakeServer.port());
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
     auto job = new KDAV::DavPrincipalSearchJob(davUrl, KDAV::DavPrincipalSearchJob::DisplayName, u"John"_s);
     job->fetchProperty(u"displayname"_s, u"DAV:"_s);
-
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-propfind-two-hrefs.txt"_s);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-users.txt"_s);
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davprincipalsearchjob-report-groups.txt"_s);
-    fakeServer.startAndWait();
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
