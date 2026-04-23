@@ -53,7 +53,13 @@ void DavItemsFetchJob::start()
     }
 
     const QDomDocument report = protocol->itemsReportQuery(d->mUrls)->buildQuery();
-    KIO::DavJob *job = DavManager::self()->createReportJob(d->mCollectionUrl.url(), report.toString(), QStringLiteral("0"));
+    // RFC 4791 §7.9 states the Depth header MUST be ignored by the server for
+    // calendar-multiget and SHOULD NOT be sent by the client. We send "1" as a
+    // safe fallback: it is a no-op for compliant servers, and it works around a
+    // bug in Zoho Calendar which violates the RFC by honouring Depth: 0
+    // returning the collection resource itself instead of the explicitly
+    // requested item hrefs.
+    KIO::DavJob *job = DavManager::self()->createReportJob(d->mCollectionUrl.url(), report.toString(), QStringLiteral("1"));
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
         d->davJobFinished(job);
