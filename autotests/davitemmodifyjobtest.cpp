@@ -12,12 +12,6 @@
 
 using namespace Qt::StringLiterals;
 
-void DavItemModifyJobTest::initTestCase()
-{
-    // To let ctest exit, we shouldn't start kio_http_cache_cleaner
-    qputenv("KIO_DISABLE_CACHE_CLEANER", "yes");
-}
-
 void DavItemModifyJobTest::runSuccessfulTest()
 {
     FakeServer fakeServer;

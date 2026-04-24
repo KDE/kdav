@@ -13,11 +13,6 @@ using namespace Qt::StringLiterals;
 
 QTEST_MAIN(DavPrincipalSearchJobTest)
 
-void DavPrincipalSearchJobTest::initTestCase()
-{
-    qputenv("KIO_DISABLE_CACHE_CLEANER", "yes");
-}
-
 void DavPrincipalSearchJobTest::searchByDisplayName()
 {
     FakeServer fakeServer;

@@ -10,7 +10,6 @@ class DavItemModifyJobTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
-    void initTestCase();
     void runSuccessfulTest();
     void runSuccessWithLocationRedirect();
     void runServerErrorTest();

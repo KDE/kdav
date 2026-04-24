@@ -15,7 +15,6 @@ class DavItemsListJobTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
-    void initTestCase();
     void noMatchingMimetype();
     void cardDavListingWithEmptyCache();
     void cardDavListingWithUnchangedEtags();

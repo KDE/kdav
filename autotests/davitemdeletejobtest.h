@@ -10,7 +10,6 @@ class DavItemDeleteJobTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
-    void initTestCase();
     void deleteSucceeds();
     void deleteServerError();
     void deleteIgnores404();

@@ -10,7 +10,6 @@ class DavPrincipalSearchJobTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
-    void initTestCase();
     void searchByDisplayName();
     void searchByEmailAddress();
     void propfindHttpError();
