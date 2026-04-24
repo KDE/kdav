@@ -106,7 +106,7 @@ void DavItemModifyJobPrivate::davJobFinished(QNetworkReply *reply)
     }
 
     // The 'Location:' HTTP header is used to indicate the new URL
-    const QString location = reply->header(QNetworkRequest::LocationHeader).toString();
+    const QString location = QString::fromUtf8(reply->rawHeader("location"));
 
     QUrl url;
     if (location.isEmpty()) {
