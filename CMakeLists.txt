@@ -49,7 +49,6 @@ ki18n_install(po)
 add_subdirectory(src)
 if(BUILD_TESTING)
     add_subdirectory(autotests)
-    add_subdirectory(test)
 endif()
 
 set(CMAKECONFIG_INSTALL_DIR "${KDE_INSTALL_CMAKEPACKAGEDIR}/KF6DAV")
