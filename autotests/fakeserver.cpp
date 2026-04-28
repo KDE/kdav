@@ -110,17 +110,6 @@ void FakeServer::addScenarioFromFile(const QString &fileName)
     }
 }
 
-bool FakeServer::isScenarioDone(int scenarioNumber) const
-{
-    QMutexLocker locker(&m_mutex);
-
-    if (scenarioNumber < m_scenarios.size()) {
-        return m_scenarios[scenarioNumber].isEmpty();
-    } else {
-        return true; // Non existent hence empty, right?
-    }
-}
-
 bool FakeServer::isAllScenarioDone() const
 {
     QMutexLocker locker(&m_mutex);

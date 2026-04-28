@@ -144,13 +144,6 @@ public:
     void addScenarioFromFile(const QString &fileName);
 
     /*
-     * Checks whether a particular scenario has completed
-     *
-     * \a scenarioNumber  the number of the scenario to check,
-     *                        in order of addition/client connection
-     */
-    bool isScenarioDone(int scenarioNumber) const;
-    /*
      * Whether all the scenarios that were added to the fake
      * server have been completed.
      */
