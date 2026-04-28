@@ -102,7 +102,7 @@ void DavCollectionModifyJob::start()
         QDomElement propElement = mQuery.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
         removeElement.appendChild(propElement);
 
-        for (const QDomElement &element : std::as_const(d->mSetProperties)) {
+        for (const QDomElement &element : std::as_const(d->mRemoveProperties)) {
             propElement.appendChild(element);
         }
     }
