@@ -23,7 +23,7 @@ namespace KDAV
  * \value CalDav The CalDav protocol as defined in https://devguide.calconnect.org/CalDAV
  * \value CardDav The CardDav protocol as defined in https://devguide.calconnect.org/CardDAV
  * \value GroupDav The GroupDav protocol as defined in http://www.groupdav.org
- *
+ * \deprecated [6.26] The GroupDav protocol is obsolete and was replaced with CalDav and CardDav.
  */
 enum Protocol {
     CalDav = 0,
