@@ -16,6 +16,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+#include <QStandardPaths>
 #include <QUrl>
 
 using namespace KDAV;
@@ -24,6 +25,10 @@ using namespace Qt::StringLiterals;
 DavManager::DavManager()
     : mNam(std::make_unique<QNetworkAccessManager>())
 {
+    mNam->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
+    mNam->enableStrictTransportSecurityStore(true, QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + u"/hsts/"_s);
+    mNam->setStrictTransportSecurityEnabled(true);
+
     QObject::connect(mNam.get(), &QNetworkAccessManager::authenticationRequired, [](QNetworkReply *reply, QAuthenticator *auth) {
         const QUrl url = reply->request().url();
         if (!url.userName().isEmpty()) {
