@@ -49,7 +49,9 @@ public:
      * Returns a preconfigured DAV PROPFIND job.
      *
      * \a url The target URL of the job.
+     *
      * \a document The query XML document.
+     *
      * \a depth The Depth: value to send in the HTTP request
      */
     KIO::DavJob *createPropFindJob(const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
@@ -70,6 +72,15 @@ public:
      * \a document The query XML document.
      */
     KIO::DavJob *createPropPatchJob(const QUrl &url, const QString &document) const;
+
+    /*!
+     * Returns a preconfigured DAV MKCOL job.
+     *
+     * \a url The target URL of the job.
+     *
+     * \a document The query XML document.
+     */
+    KIO::DavJob *createMkColJob(const QUrl &url, const QString &document) const;
 
     /*!
      * Returns the DAV protocol dialect object for the given DAV @p protocol.

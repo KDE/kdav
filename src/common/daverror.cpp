@@ -104,6 +104,9 @@ QString Error::errorText() const
     case ERR_COLLECTIONDELETE:
         result = i18n("There was a problem with the request. The collection has not been deleted from the server.\n%1 (%2).", err, d->mResponseCode);
         break;
+    case ERR_COLLECTIONCREATE:
+        result = i18n("There was a problem with the request. The collection has not been created on the server.\n%1 (%2).", err, d->mResponseCode);
+        break;
     case ERR_COLLECTIONFETCH:
         result = i18n("Invalid responses from backend");
         break;

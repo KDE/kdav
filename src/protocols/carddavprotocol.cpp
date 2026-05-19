@@ -5,13 +5,18 @@
 */
 
 #include "carddavprotocol_p.h"
+#include "common/davcollection.h"
 #include "libkdav_debug.h"
 
+#include <QColor>
 #include <QDomDocument>
 #include <QStringList>
 #include <QUrl>
+#include <QXmlStreamWriter>
 
 using namespace KDAV;
+using namespace KDAV::Xml;
+using namespace Qt::StringLiterals;
 
 class CarddavCollectionQueryBuilder : public XMLQueryBuilder
 {
@@ -172,4 +177,27 @@ QString CarddavProtocol::dataTagName() const
 DavCollection::ContentTypes CarddavProtocol::collectionContentTypes(const QDomElement &) const
 {
     return DavCollection::Contacts;
+}
+
+void CarddavProtocol::writeMkCol(QXmlStreamWriter &writer, KDAV::DavCollection &collection) const
+{
+    writer.writeStartDocument();
+
+    writer.writeNamespace(davNS, "D"_L1);
+    writer.writeNamespace(carddavNS, "C"_L1);
+    writer.writeStartElement(davNS, "mkcol"_L1);
+    writer.writeStartElement(davNS, "set"_L1);
+
+    writer.writeStartElement(davNS, "prop"_L1);
+
+    writer.writeStartElement(davNS, "resourcetype"_L1);
+    writer.writeEmptyElement(davNS, "collection"_L1);
+    writer.writeEmptyElement(carddavNS, "addressbook"_L1);
+    writer.writeEndElement(); // resourcetype
+
+    writer.writeTextElement(davNS, "displayname"_L1, collection.displayName());
+
+    writer.writeEndElement(); // prop
+    writer.writeEndElement(); // set
+    writer.writeEndElement(); // mkcol
 }

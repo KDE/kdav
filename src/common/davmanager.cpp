@@ -59,6 +59,16 @@ KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QString &docu
     return job;
 }
 
+KIO::DavJob *DavManager::createMkColJob(const QUrl &url, const QString &document) const
+{
+    KIO::DavJob *job = KIO::davMkCol(url, document, KIO::HideProgressInfo | KIO::DefaultFlags);
+    const QString header = QStringLiteral("Content-Type: text/xml");
+    job->addMetaData(QStringLiteral("customHTTPHeader"), header);
+    job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
+    job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
+    return job;
+}
+
 const DavProtocolBase *DavManager::davProtocol(Protocol protocol)
 {
     const auto d = DavManager::self();

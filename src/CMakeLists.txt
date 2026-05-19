@@ -13,9 +13,11 @@ set_target_properties(KF6DAV PROPERTIES
 
 target_sources(KF6DAV PRIVATE
     common/davcollection.cpp
+    common/davcollection.h
+    common/davcollectioncreatejob.cpp
+    common/davcollectioncreatejob.h
     common/davcollectiondeletejob.cpp
     common/davcollectiondeletejob.h
-    common/davcollection.h
     common/davcollectionmodifyjob.cpp
     common/davcollectionmodifyjob.h
     common/davcollectionsfetchjob.cpp
@@ -80,6 +82,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavCollection
     DavCollectionDeleteJob
     DavCollectionsFetchJob
+    DavCollectionCreateJob
     DavCollectionModifyJob
     DavCollectionsMultiFetchJob
     DavError

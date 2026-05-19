@@ -5,14 +5,19 @@
 */
 
 #include "caldavprotocol_p.h"
+#include "common/davcollection.h"
 #include "common/utils_p.h"
 #include "libkdav_debug.h"
 
+#include <QColor>
 #include <QDomDocument>
 #include <QStringList>
 #include <QUrl>
+#include <QXmlStreamWriter>
 
 using namespace KDAV;
+using namespace KDAV::Xml;
+using namespace Qt::StringLiterals;
 
 class CaldavCollectionQueryBuilder : public XMLQueryBuilder
 {
@@ -410,4 +415,59 @@ DavCollection::ContentTypes CaldavProtocol::collectionContentTypes(const QDomEle
     }
 
     return contentTypes;
+}
+
+void CaldavProtocol::writeMkCol(QXmlStreamWriter &writer, KDAV::DavCollection &collection) const
+{
+    writer.writeStartDocument();
+
+    writer.writeNamespace(davNS, "D"_L1);
+    writer.writeNamespace(icalNS, "I"_L1);
+    writer.writeNamespace(caldavNS, "C"_L1);
+    writer.writeStartElement(davNS, "mkcol"_L1);
+    writer.writeStartElement(davNS, "set"_L1);
+
+    writer.writeStartElement(davNS, "prop"_L1);
+
+    writer.writeStartElement(davNS, "resourcetype"_L1);
+    writer.writeEmptyElement(davNS, "collection"_L1);
+    writer.writeEmptyElement(caldavNS, "calendar"_L1);
+    writer.writeEndElement(); // resourcetype
+
+    writer.writeTextElement(davNS, "displayname"_L1, collection.displayName());
+
+    if (collection.color().isValid()) {
+        const QString color = collection.color().name(QColor::HexArgb);
+        writer.writeTextElement(icalNS, "calendar-color"_L1, color);
+    }
+
+    writer.writeStartElement(caldavNS, "supported-calendar-component-set"_L1);
+    if (collection.contentTypes() & DavCollection::Calendar) {
+        writer.writeEmptyElement(caldavNS, "comp"_L1);
+        writer.writeAttribute("name"_L1, "VCALENDAR"_L1);
+    }
+    if (collection.contentTypes() & DavCollection::Events) {
+        writer.writeEmptyElement(caldavNS, "comp"_L1);
+        writer.writeAttribute("name"_L1, "VEVENT"_L1);
+    }
+    if (collection.contentTypes() & DavCollection::Todos) {
+        writer.writeEmptyElement(caldavNS, "comp"_L1);
+        writer.writeAttribute("name"_L1, "VTODO"_L1);
+    }
+    if (collection.contentTypes() & DavCollection::FreeBusy) {
+        writer.writeEmptyElement(caldavNS, "comp"_L1);
+        writer.writeAttribute("name"_L1, "VFREEBUSY"_L1);
+    }
+    if (collection.contentTypes() & DavCollection::Journal) {
+        writer.writeEmptyElement(caldavNS, "comp"_L1);
+        writer.writeAttribute("name"_L1, "VJOURNAL"_L1);
+    }
+    writer.writeEndElement();
+
+    if (!collection.timeZone().isEmpty()) {
+        writer.writeTextElement(caldavNS, "calendar-timezone"_L1, QString::fromUtf8(collection.timeZone()));
+    }
+    writer.writeEndElement(); // prop
+    writer.writeEndElement(); // set
+    writer.writeEndElement(); // mkcol
 }

@@ -26,6 +26,8 @@ public:
     Q_REQUIRED_RESULT QString dataTagName() const override;
 
     Q_REQUIRED_RESULT KDAV::DavCollection::ContentTypes collectionContentTypes(const QDomElement &propstat) const override;
+
+    void writeMkCol(QXmlStreamWriter &writer, KDAV::DavCollection &collection) const override;
 };
 
 #endif

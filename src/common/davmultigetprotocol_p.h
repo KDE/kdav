@@ -11,8 +11,13 @@
 
 #include "davprotocolbase_p.h"
 
+class QXmlStreamWriter;
+
 namespace KDAV
 {
+
+class DavCollection;
+
 /*!
  * \internal
  * \brief Base class for protocols that implement MULTIGET capabilities
@@ -40,7 +45,21 @@ public:
      * Returns the tag name of data elements found in responses.
      */
     virtual QString dataTagName() const = 0;
+
+    virtual void writeMkCol(QXmlStreamWriter &writer, DavCollection &collection) const = 0;
 };
-}
+
+namespace Xml
+{
+
+using namespace Qt::StringLiterals;
+
+static constexpr QLatin1StringView davNS = QLatin1StringView("DAV:");
+static constexpr QLatin1StringView caldavNS = QLatin1StringView("urn:ietf:params:xml:ns:caldav");
+static constexpr QLatin1StringView carddavNS = QLatin1StringView("urn:ietf:params:xml:ns:carddav");
+static constexpr QLatin1StringView icalNS = QLatin1StringView("http://apple.com/ns/ical/");
+} // end namespace XML
+
+} // end namespace KDAV
 
 #endif
