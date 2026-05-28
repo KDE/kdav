@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_davgroupware_resource\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:49+0000\n"
+"POT-Creation-Date: 2026-05-28 00:39+0000\n"
 "PO-Revision-Date: 2023-01-05 08:57+0100\n"
 "Last-Translator: Xavier BESNARD <xavier.besnard]neuf.fr>\n"
 "Language-Team: French <kde-francophone@kde.org>\n"
@@ -82,21 +82,36 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:108
+#, fuzzy, kde-format
+#| msgid ""
+#| "There was a problem with the request. The collection has not been deleted "
+#| "from the server.\n"
+#| "%1 (%2)."
+msgid ""
+"There was a problem with the request. The collection has not been created on "
+"the server.\n"
+"%1 (%2)."
+msgstr ""
+"Il y a eu un problème avec la requête. La collection n'a pas été supprimée "
+"du serveur.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:111
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "Réponses non valables provenant du moteur"
 
-#: common/daverror.cpp:111
+#: common/daverror.cpp:114
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "Problème lors de la définition du focus pour « XQuery »"
 
-#: common/daverror.cpp:114
+#: common/daverror.cpp:117
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "« XQuery » non valable soumise par l'implémentation de « DAV »"
 
-#: common/daverror.cpp:118
+#: common/daverror.cpp:121
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been modified "
@@ -107,17 +122,17 @@ msgstr ""
 "le serveur.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:124
+#: common/daverror.cpp:127
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "Aucune propriété à modifier ou supprimer"
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:130
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "Une erreur est survenue lors de la modification des propriétés"
 
-#: common/daverror.cpp:129
+#: common/daverror.cpp:132
 #, kde-format
 msgid ""
 "\n"
@@ -128,7 +143,7 @@ msgstr ""
 "Le serveur a retourné plus d'informations :\n"
 "%1"
 
-#: common/daverror.cpp:133
+#: common/daverror.cpp:136
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -139,7 +154,7 @@ msgstr ""
 "serveur.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:139
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -150,7 +165,7 @@ msgstr ""
 "serveur.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:139
+#: common/daverror.cpp:142
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not modified on the "
@@ -161,12 +176,12 @@ msgstr ""
 "serveur.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:142
+#: common/daverror.cpp:145
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "Il y a eu un problème avec la requête."
 
-#: common/daverror.cpp:146
+#: common/daverror.cpp:149
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:49+0000\n"
+"POT-Creation-Date: 2026-05-28 00:39+0000\n"
 "PO-Revision-Date: 2020-09-13 16:21+0300\n"
 "Last-Translator: Stelios <sstavra@gmail.com>\n"
 "Language-Team: Greek <kde-i18n-el@kde.org>\n"
@@ -72,21 +72,36 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:108
+#, fuzzy, kde-format
+#| msgid ""
+#| "There was a problem with the request. The collection has not been deleted "
+#| "from the server.\n"
+#| "%1 (%2)."
+msgid ""
+"There was a problem with the request. The collection has not been created on "
+"the server.\n"
+"%1 (%2)."
+msgstr ""
+"Υπήρξε πρόβλημα με την αίτηση. Η συλλογή δεν έχει διαγραφεί από τον "
+"εξυπηρετητή.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:111
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "Μη έγκυρες αποκρίσεις από το σύστημα υποστήριξης"
 
-#: common/daverror.cpp:111
+#: common/daverror.cpp:114
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "Σφάλμα ρύθμισης της εστίασης για το XQuery"
 
-#: common/daverror.cpp:114
+#: common/daverror.cpp:117
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "Μη έγκυρο XQuery υποβλήθηκε από DAV υλοποίηση"
 
-#: common/daverror.cpp:118
+#: common/daverror.cpp:121
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been modified "
@@ -97,17 +112,17 @@ msgstr ""
 "εξυπηρετητή.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:124
+#: common/daverror.cpp:127
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "Δεν υπάρχουν ιδιότητες για αλλαγή ή διαγραφή"
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:130
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "Παρουσιάστηκε σφάλμα κατά την τροποποίηση των ιδιοτήτων"
 
-#: common/daverror.cpp:129
+#: common/daverror.cpp:132
 #, kde-format
 msgid ""
 "\n"
@@ -118,7 +133,7 @@ msgstr ""
 "Ο εξυπηρετητής επίστρεψε και άλλη πληροφορία:\n"
 "%1"
 
-#: common/daverror.cpp:133
+#: common/daverror.cpp:136
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -129,7 +144,7 @@ msgstr ""
 "εξυπηρετητή.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:139
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -140,7 +155,7 @@ msgstr ""
 "εξυπηρετητή.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:139
+#: common/daverror.cpp:142
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not modified on the "
@@ -151,12 +166,12 @@ msgstr ""
 "εξυπηρετητή.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:142
+#: common/daverror.cpp:145
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "Υπήρξε πρόβλημα με την αίτηση."
 
-#: common/daverror.cpp:146
+#: common/daverror.cpp:149
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "

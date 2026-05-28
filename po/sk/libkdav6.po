@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libkdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:49+0000\n"
+"POT-Creation-Date: 2026-05-28 00:39+0000\n"
 "PO-Revision-Date: 2022-02-14 19:47+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -69,21 +69,35 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:108
+#, fuzzy, kde-format
+#| msgid ""
+#| "There was a problem with the request. The collection has not been deleted "
+#| "from the server.\n"
+#| "%1 (%2)."
+msgid ""
+"There was a problem with the request. The collection has not been created on "
+"the server.\n"
+"%1 (%2)."
+msgstr ""
+"Nastala chyba s požiadavkou. Kolekcia nebola vymazaná zo servera.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:111
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "Neplatná odpoveď z backendu"
 
-#: common/daverror.cpp:111
+#: common/daverror.cpp:114
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "Chyba nastavenia zamerania na XQuery"
 
-#: common/daverror.cpp:114
+#: common/daverror.cpp:117
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "Neplatná XQuery poslaná implementáciou DAV"
 
-#: common/daverror.cpp:118
+#: common/daverror.cpp:121
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been modified "
@@ -93,17 +107,17 @@ msgstr ""
 "Nastala chyba s požiadavkou. Položka nebola zmenená na serveri.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:124
+#: common/daverror.cpp:127
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "Žiadne vlastnosti na zmenu alebo odstránenie"
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:130
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "Nastala chyba počas zmeny vlastností"
 
-#: common/daverror.cpp:129
+#: common/daverror.cpp:132
 #, kde-format
 msgid ""
 "\n"
@@ -114,7 +128,7 @@ msgstr ""
 "Server vrátil viac informácií:\n"
 "%1"
 
-#: common/daverror.cpp:133
+#: common/daverror.cpp:136
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -124,7 +138,7 @@ msgstr ""
 "Nastala chyba s požiadavkou. Položka nebola vytvorená na serveri.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:139
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -134,7 +148,7 @@ msgstr ""
 "Nastala chyba s požiadavkou. Položka nebola vymazaná zo servera.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:139
+#: common/daverror.cpp:142
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not modified on the "
@@ -144,12 +158,12 @@ msgstr ""
 "Nastala chyba s požiadavkou. Položka nebola zmenená na serveri.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:142
+#: common/daverror.cpp:145
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "Bol problém s požiadavkou."
 
-#: common/daverror.cpp:146
+#: common/daverror.cpp:149
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "

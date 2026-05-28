@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2025-11-17 11:49+0000\n"
+"POT-Creation-Date: 2026-05-28 00:39+0000\n"
 "PO-Revision-Date: 2024-12-13 20:22+0530\n"
 "Last-Translator: kali <skkalwar999@gmail.com>\n"
 "Language-Team: Sanskrit <kde-i18n-doc@kde.org>\n"
@@ -71,21 +71,35 @@ msgstr ""
 "%1 (%2) इति ।"
 
 #: common/daverror.cpp:108
+#, fuzzy, kde-format
+#| msgid ""
+#| "There was a problem with the request. The collection has not been deleted "
+#| "from the server.\n"
+#| "%1 (%2)."
+msgid ""
+"There was a problem with the request. The collection has not been created on "
+"the server.\n"
+"%1 (%2)."
+msgstr ""
+"अनुरोधस्य समस्या आसीत् । संग्रहः सर्वरात् न लोपितः।\n"
+"%1 (%2) इति ।"
+
+#: common/daverror.cpp:111
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "पृष्ठभागात् अमान्यप्रतिक्रियाः"
 
-#: common/daverror.cpp:111
+#: common/daverror.cpp:114
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "XQuery कृते फोकस सेटिंग् त्रुटिः"
 
-#: common/daverror.cpp:114
+#: common/daverror.cpp:117
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "DAV कार्यान्वयनेन अमान्यं XQuery प्रदत्तम्"
 
-#: common/daverror.cpp:118
+#: common/daverror.cpp:121
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been modified "
@@ -95,17 +109,17 @@ msgstr ""
 "अनुरोधस्य समस्या आसीत् । सर्वरे संग्रहः परिवर्तितः नास्ति ।\n"
 "%1 (%2) इति ।"
 
-#: common/daverror.cpp:124
+#: common/daverror.cpp:127
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "परिवर्तनं कर्तुं वा निष्कासयितुं वा गुणाः नास्ति"
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:130
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "गुणानाम् परिवर्तनं कुर्वन् दोषः आसीत्"
 
-#: common/daverror.cpp:129
+#: common/daverror.cpp:132
 #, kde-format
 msgid ""
 "\n"
@@ -116,7 +130,7 @@ msgstr ""
 "सर्वरः अधिकानि सूचनानि प्रत्यागच्छत्:\n"
 "%1"
 
-#: common/daverror.cpp:133
+#: common/daverror.cpp:136
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -126,7 +140,7 @@ msgstr ""
 "अनुरोधस्य समस्या आसीत् । सर्वरे द्रव्यं न निर्मितम् ।\n"
 "%1 (%2) इति ।"
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:139
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -136,7 +150,7 @@ msgstr ""
 "अनुरोधस्य समस्या आसीत् । सर्वरात् द्रव्यं न लोपितम्।\n"
 "%1 (%2) इति ।"
 
-#: common/daverror.cpp:139
+#: common/daverror.cpp:142
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not modified on the "
@@ -146,12 +160,12 @@ msgstr ""
 "अनुरोधस्य समस्या आसीत् । सर्वरे द्रव्यं परिवर्तितं नासीत् ।\n"
 "%1 (%2) इति ।"
 
-#: common/daverror.cpp:142
+#: common/daverror.cpp:145
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "अनुरोधस्य समस्या आसीत् ।"
 
-#: common/daverror.cpp:146
+#: common/daverror.cpp:149
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
