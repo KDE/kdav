@@ -1,13 +1,13 @@
 # Copyright (C) 2024 This file is copyright:
 # This file is distributed under the same license as the kdav package.
 #
-# SPDX-FileCopyrightText: 2024 Yaron Shahrabani <sh.yaron@gmail.com>
+# SPDX-FileCopyrightText: 2024, 2026 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-28 00:39+0000\n"
-"PO-Revision-Date: 2024-03-19 08:23+0200\n"
+"PO-Revision-Date: 2026-05-28 08:34+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 26.04.1\n"
 
 #: common/daverror.cpp:88
 #, kde-format
@@ -70,17 +70,13 @@ msgstr ""
 "%1 (%2)"
 
 #: common/daverror.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"הייתה בעיה עם הבקשה שלך. האוסף לא נמחק מהשרת.\n"
+"הייתה בעיה עם הבקשה שלך. האוסף לא נוצר בשרת.\n"
 "%1 (%2)"
 
 #: common/daverror.cpp:111

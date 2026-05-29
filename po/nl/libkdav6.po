@@ -1,21 +1,21 @@
 # Copyright (C) YEAR This_file_is_part_of_KDE
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Freek de Kruijf <freekdekruijf@kde.nl>, 2017.
+# SPDX-FileCopyrightText: 2017, 2026 Freek de Kruijf <freekdekruijf@kde.nl>
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-28 00:39+0000\n"
-"PO-Revision-Date: 2017-12-12 22:49+0100\n"
+"PO-Revision-Date: 2026-05-28 12:42+0200\n"
 "Last-Translator: Freek de Kruijf <freekdekruijf@kde.nl>\n"
-"Language-Team: Dutch <kde-i18n-nl@kde.org>\n"
+"Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 26.04.1\n"
 
 #: common/daverror.cpp:88
 #, kde-format
@@ -72,18 +72,14 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"Er was een probleem met het verzoek. De verzameling is niet van de server "
-"verwijderd.\n"
+"Er was een probleem met het verzoek. De verzameling is niet op de server "
+"aangemaakt.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:111

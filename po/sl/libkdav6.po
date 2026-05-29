@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-28 00:39+0000\n"
-"PO-Revision-Date: 2020-06-09 07:29+0200\n"
+"PO-Revision-Date: 2026-05-28 06:55+0200\n"
 "Last-Translator: Matjaž Jeran <matjaz.jeran@amis.net>\n"
 "Language-Team: Slovenian <lugos-slo@lugos.si>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 19.12.2\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
+"X-Generator: Poedit 3.9\n"
 
 #: common/daverror.cpp:88
 #, kde-format
@@ -72,17 +72,13 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"Pri zahtevku je prišlo do težave. Zbirka ni bila izbrisana s strežnika.\n"
+"Pri zahtevku je prišlo do težave. Zbirke ni bilo ustvarjene na strežniku.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:111
