@@ -1,6 +1,6 @@
 # translation of akonadi_davgroupware_resource.po to Italian
 #
-# Vincenzo Reale <smart2128vr@gmail.com>, 2009, 2010, 2023.
+# SPDX-FileCopyrightText: 2009-2010, 2023, 2026 Vincenzo Reale <smart2128vr@gmail.com>
 # Nicola Ruggero <nicola@nxnt.org>, 2010, 2011.
 # Luigi Toscano <luigi.toscano@tiscali.it>, 2012, 2013, 2014, 2015, 2016, 2017.
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: akonadi_davgroupware_resource\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-05-28 00:39+0000\n"
-"PO-Revision-Date: 2023-03-20 10:09+0100\n"
+"PO-Revision-Date: 2026-05-28 18:07+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
 "Language: it\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Lokalize 26.04.1\n"
 
 #: common/daverror.cpp:88
 #, kde-format
@@ -73,18 +73,14 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
 "Si è verificato un problema con la richiesta. La collezione non è stata "
-"eliminata dal server.\n"
+"creata sul server.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:111

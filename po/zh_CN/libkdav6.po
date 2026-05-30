@@ -67,17 +67,13 @@ msgstr ""
 "%1 (%2)。"
 
 #: common/daverror.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"请求出错。服务器上的项目未删除。\n"
+"请求出错。服务器上的项目未创建。\n"
 "%1 (%2)。"
 
 #: common/daverror.cpp:111

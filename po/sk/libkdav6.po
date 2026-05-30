@@ -69,17 +69,13 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:108
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"Nastala chyba s požiadavkou. Kolekcia nebola vymazaná zo servera.\n"
+"Nastala chyba s požiadavkou. Kolekcia nebola vytvorená na serveri.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:111
