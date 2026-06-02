@@ -1,0 +1,171 @@
+# Uyghur translation for libkdav6.
+# Copyright (C) YEAR This file is copyright:
+# This file is distributed under the same license as the kdav package.
+# Abduqadir Abliz <sahranbay@gmail.com>, 2026., YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: kdav\n"
+"Report-Msgid-Bugs-To: https://bugs.kde.org\n"
+"POT-Creation-Date: 2026-05-28 00:39+0000\n"
+"PO-Revision-Date: 2026-05-30 17:13-0400\n"
+"Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
+"Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
+"Language: ug\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.9\n"
+
+#: common/daverror.cpp:88
+#, kde-format
+msgid "Invalid username/password"
+msgstr "ئات ياكى ئىم ئىناۋەتسىز"
+
+#: common/daverror.cpp:90
+#, kde-format
+msgid "Access forbidden"
+msgstr "زىيارەت چەكلەنگەن"
+
+#: common/daverror.cpp:92
+#, kde-format
+msgid "Resource not found"
+msgstr "مەنبە تېپىلمىدى"
+
+#: common/daverror.cpp:94
+#, kde-format
+msgid "HTTP error"
+msgstr "HTTP خاتالىقى"
+
+#: common/daverror.cpp:96
+#, kde-format
+msgid ""
+"There was a problem with the request.\n"
+"%1 (%2)."
+msgstr ""
+"ئىلتىماس خاتالىقى كۆرۈلگەن.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:99
+#, kde-format
+msgid "Protocol for the collection does not support MULTIGET"
+msgstr "توپلامنىڭ كېلىشىمى MULTIGET نى قوللىمايدۇ"
+
+#: common/daverror.cpp:102
+#, kde-format
+msgid ""
+"The server encountered an error that prevented it from completing your "
+"request: %1 (%2)"
+msgstr "مۇلازىمېتىر خاتالىققا يولۇقتى، ئىلتىماسىڭىزنى تاماملىيالمايدۇ: %1 (%2)"
+
+#: common/daverror.cpp:105
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been deleted "
+"from the server.\n"
+"%1 (%2)."
+msgstr ""
+"ئىلتىماس خاتالىقى كۆرۈلدى. توپلام مۇلازىمېتىردىن ئۆچۈرۈلمىدى.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:108
+#, fuzzy, kde-format
+#| msgid ""
+#| "There was a problem with the request. The collection has not been deleted "
+#| "from the server.\n"
+#| "%1 (%2)."
+msgid ""
+"There was a problem with the request. The collection has not been created on "
+"the server.\n"
+"%1 (%2)."
+msgstr ""
+"ئىلتىماس خاتالىقى كۆرۈلدى. توپلام مۇلازىمېتىردىن ئۆچۈرۈلمىدى.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:111
+#, kde-format
+msgid "Invalid responses from backend"
+msgstr "ئارقا ئۇچتىن كەلگەن ئىناۋەتسىز ئىنكاس"
+
+#: common/daverror.cpp:114
+#, kde-format
+msgid "Error setting focus for XQuery"
+msgstr "XQuery فوكۇسىنى تەڭشەۋاتقاندا خاتالىق كۆرۈلدى"
+
+#: common/daverror.cpp:117
+#, kde-format
+msgid "Invalid XQuery submitted by DAV implementation"
+msgstr "DAV ئەمەلىيلەشتۈرۈش ئىناۋەتسىز XQuery  تاپشۇردى"
+
+#: common/daverror.cpp:121
+#, kde-format
+msgid ""
+"There was a problem with the request. The collection has not been modified "
+"on the server.\n"
+"%1 (%2)."
+msgstr ""
+"ئىلتىماس خاتالىقى كۆرۈلدى. مۇلازىمېتىردىكى توپلام ئۆزگەرتىلمىدى.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:127
+#, kde-format
+msgid "No properties to change or remove"
+msgstr "ئۆزگەرتىدىغان ياكى چىقىرىۋېتىدىغان خاسلىقلار يوق"
+
+#: common/daverror.cpp:130
+#, kde-format
+msgid "There was an error when modifying the properties"
+msgstr "خاسلىق ئۆزگەرتىۋاتقاندا خاتالىق كۆرۈلدى"
+
+#: common/daverror.cpp:132
+#, kde-format
+msgid ""
+"\n"
+"The server returned more information:\n"
+"%1"
+msgstr ""
+"\n"
+"مۇلازىمېتىر كۆپ ئۇچۇر قايتۇردى:\n"
+"%1"
+
+#: common/daverror.cpp:136
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been created on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"ئىلتىماس خاتالىقى كۆرۈلدى. مۇلازىمېتىردا تۈر قۇرۇلمىدى.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:139
+#, kde-format
+msgid ""
+"There was a problem with the request. The item has not been deleted from the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"ئىلتىماس خاتالىقى كۆرۈلدى. تۈر مۇلازىمېتىردىن ئۆچۈرۈلمىدى.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:142
+#, kde-format
+msgid ""
+"There was a problem with the request. The item was not modified on the "
+"server.\n"
+"%1 (%2)."
+msgstr ""
+"ئىلتىماس خاتالىقى كۆرۈلدى. مۇلازىمېتىردىكى تۈر ئۆزگەرتىلمىدى.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:145
+#, kde-format
+msgid "There was a problem with the request."
+msgstr "ئىلتىماس خاتالىقى كۆرۈلگەن."
+
+#: common/daverror.cpp:149
+#, kde-format
+msgid ""
+"There was a problem with the request. The requested MIME types are not "
+"supported."
+msgstr "ئىلتىماس خاتالىقى كۆرۈلگەن. ئىلتىماس قىلغان MIME تۈرىنى قوللىمايدۇ."
