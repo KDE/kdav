@@ -437,7 +437,14 @@ void CaldavProtocol::writeMkCol(QXmlStreamWriter &writer, KDAV::DavCollection &c
     writer.writeTextElement(davNS, "displayname"_L1, collection.displayName());
 
     if (collection.color().isValid()) {
-        const QString color = collection.color().name(QColor::HexArgb);
+        // If it's ARGB, we need to print it in RGBA format
+        const auto color = [&] -> QString {
+            if (collection.color().alpha() == 255) {
+                return collection.color().name(QColor::HexRgb);
+            }
+            const auto color = collection.color().name(QColor::HexArgb);
+            return QStringLiteral("#") + color.mid(3, 6) + color.mid(1, 2);
+        }();
         writer.writeTextElement(icalNS, "calendar-color"_L1, color);
     }
 

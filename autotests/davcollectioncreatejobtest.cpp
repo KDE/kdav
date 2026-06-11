@@ -61,7 +61,7 @@ void DavCollectionCreateJobTest::createCalDavCollection()
         "B:                 <C:calendar/>",
         "B:             </D:resourcetype>",
         "B:             <D:displayname>Test 2</D:displayname>",
-        "B:             <I:calendar-color>#ffb6469d</I:calendar-color>",
+        "B:             <I:calendar-color>#b6469d</I:calendar-color>",
         "B:             <C:supported-calendar-component-set>",
         "B:                 <C:comp name=\"VEVENT\"/>",
         "B:             </C:supported-calendar-component-set>",
