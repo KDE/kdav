@@ -21,6 +21,7 @@ class DavCollectionPrivate;
 
 namespace KDAV
 {
+class DavPushSupport;
 class DavUrl;
 }
 
@@ -169,6 +170,20 @@ public:
      * \since 6.27
      */
     [[nodiscard]] QByteArray timeZone() const;
+
+    /*!
+     * Sets the DavPushSupport on this calendar collection.
+     *
+     * \since 6.29
+     */
+    void setDavPushSupport(const DavPushSupport &pushSupport);
+
+    /*!
+     * Returns the DavPushSupport of this calendar collection, is Null if not set.
+     *
+     * \since 6.29
+     */
+    [[nodiscard]] DavPushSupport davPushSupport() const;
 
 private:
     QSharedDataPointer<DavCollectionPrivate> d;

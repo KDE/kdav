@@ -1,6 +1,6 @@
 C: PROPFIND /caldav HTTP/1.1
 B: <?xml version="1.0" encoding="utf-8"?>
-B: <propfind xmlns="DAV:">
+B: <propfind xmlns="DAV:" xmlns:P="https://bitfire.at/webdav-push">
 B:  <prop xmlns="DAV:">
 B:   <displayname xmlns="DAV:"/>
 B:   <resourcetype xmlns="DAV:"/>
@@ -8,6 +8,9 @@ B:   <calendar-color xmlns="http://apple.com/ns/ical/"/>
 B:   <supported-calendar-component-set xmlns="urn:ietf:params:xml:ns:caldav"/>
 B:   <current-user-privilege-set xmlns="DAV:"/>
 B:   <getctag xmlns="http://calendarserver.org/ns/"/>
+B:   <P:transports xmlns:P="https://bitfire.at/webdav-push"/>
+B:   <P:topic xmlns:P="https://bitfire.at/webdav-push"/>
+B:   <P:supported-triggers xmlns:P="https://bitfire.at/webdav-push"/>
 B:  </prop>
 B: </propfind>
 S: HTTP/1.1 404 Not Found

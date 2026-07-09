@@ -1,6 +1,6 @@
 C: PROPFIND /caldav/dfaure%40example.com/ HTTP/1.1
 B: <?xml version="1.0" encoding="utf-8"?>
-B: <propfind xmlns="DAV:">
+B: <propfind xmlns="DAV:" xmlns:P="https://bitfire.at/webdav-push">
 B:  <prop xmlns="DAV:">
 B:   <displayname xmlns="DAV:"/>
 B:   <resourcetype xmlns="DAV:"/>
@@ -8,12 +8,15 @@ B:   <calendar-color xmlns="http://apple.com/ns/ical/"/>
 B:   <supported-calendar-component-set xmlns="urn:ietf:params:xml:ns:caldav"/>
 B:   <current-user-privilege-set xmlns="DAV:"/>
 B:   <getctag xmlns="http://calendarserver.org/ns/"/>
+B:   <P:transports xmlns:P="https://bitfire.at/webdav-push"/>
+B:   <P:topic xmlns:P="https://bitfire.at/webdav-push"/>
+B:   <P:supported-triggers xmlns:P="https://bitfire.at/webdav-push"/>
 B:  </prop>
 B: </propfind>
 S: HTTP/1.0 207 Multi-Status
 S: Content-Type: application/xml; charset=utf-8
 D: <?xml version="1.0" encoding="utf-8" ?>
-D: <multistatus xmlns="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav" xmlns:ical="http://apple.com/ns/ical/">
+D: <multistatus xmlns="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav" xmlns:ical="http://apple.com/ns/ical/" xmlns:P="https://bitfire.at/webdav-push">
 D:   <response xmlns="DAV:">
 D:    <href xmlns="DAV:">/caldav.php/test1.user/home/</href>
 D:    <propstat xmlns="DAV:">
@@ -28,6 +31,20 @@ D:        </resourcetype>
 D:        <displayname xmlns="DAV:">Color Calendar</displayname>
 D:        <ical:calendar-color xmlns:ical="http://apple.com/ns/ical/">#FF0000FF</ical:calendar-color>
 D:        <getctag xmlns="http://calendarserver.org/ns/">99999</getctag>
+D:        <P:transports>
+D:          <P:web-push>
+D:            <P:vapid-public-key>MyVapidPublicKey</P:vapid-public-key>
+D:          </P:web-push>
+D:        </P:transports>
+D:        <P:topic>MyTopic-1</P:topic>
+D:        <P:supported-triggers>
+D:          <P:content-update>
+D:            <depth>1</depth>
+D:          </P:content-update>
+D:          <P:property-update>
+D:            <depth>0</depth>
+D:          </P:property-update>
+D:        </P:supported-triggers>
 D:      </prop>
 D:      <status xmlns="DAV:">HTTP/1.1 200 OK</status>
 D:    </propstat>

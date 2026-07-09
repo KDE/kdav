@@ -24,9 +24,12 @@ class CaldavCollectionQueryBuilder : public XMLQueryBuilder
 public:
     QDomDocument buildQuery() const override
     {
+        constexpr auto davPushNs = QLatin1StringView("https://bitfire.at/webdav-push");
+
         QDomDocument document;
 
         QDomElement propfindElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("propfind"));
+        propfindElement.setAttribute(QStringLiteral("xmlns:P"), davPushNs);
         document.appendChild(propfindElement);
 
         QDomElement propElement = document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("prop"));
@@ -38,6 +41,11 @@ public:
         propElement.appendChild(document.createElementNS(QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("supported-calendar-component-set")));
         propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("current-user-privilege-set")));
         propElement.appendChild(document.createElementNS(QStringLiteral("http://calendarserver.org/ns/"), QStringLiteral("getctag")));
+
+        // Add discovery of push notifications
+        propElement.appendChild(document.createElementNS(davPushNs, QStringLiteral("P:transports")));
+        propElement.appendChild(document.createElementNS(davPushNs, QStringLiteral("P:topic")));
+        propElement.appendChild(document.createElementNS(davPushNs, QStringLiteral("P:supported-triggers")));
 
         return document;
     }
@@ -438,7 +446,7 @@ void CaldavProtocol::writeMkCol(QXmlStreamWriter &writer, KDAV::DavCollection &c
 
     if (collection.color().isValid()) {
         // If it's ARGB, we need to print it in RGBA format
-        const auto color = [&] -> QString {
+        const auto color = [&]() -> QString {
             if (collection.color().alpha() == 255) {
                 return collection.color().name(QColor::HexRgb);
             }

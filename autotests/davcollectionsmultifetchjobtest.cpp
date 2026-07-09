@@ -8,6 +8,7 @@
 #include "fakeserver.h"
 
 #include <KDAV/DavCollectionsMultiFetchJob>
+#include <KDAV/DavPushSupport>
 
 #include <QSignalSpy>
 #include <QTest>
@@ -60,6 +61,10 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
     QCOMPARE(calendar.url().url().path(), QStringLiteral("/caldav.php/test1.user/home/"));
     QCOMPARE(calendar.CTag(), QStringLiteral("12345"));
     QCOMPARE(calendar.privileges(), KDAV::Read);
+    auto davPush = KDAV::DavPushSupport();
+    davPush.setTopic(QStringLiteral("MyTopic-1"));
+    davPush.setVapidPublicKey("TXlWYXBpZFB1YmxpY0tleQ");
+    QCOMPARE(calendar.davPushSupport(), davPush);
 
     const KDAV::DavCollection addressbook = collections.at(cardDavIdx);
     QCOMPARE(addressbook.displayName(), QStringLiteral("My Address Book"));

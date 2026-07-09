@@ -14,6 +14,7 @@
 #include "utils_p.h"
 
 #include "libkdav_debug.h"
+#include <KDAV/DavPushSupport>
 #include <KIO/DavJob>
 #include <KIO/Job>
 
@@ -333,6 +334,12 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(KJob *job)
                 } else {
                     Privileges privileges = Utils::extractPrivileges(currentPrivsElement);
                     collection.setPrivileges(privileges);
+                }
+
+                // Extract Dav Push notification information
+                auto pushSupport = Utils::extractDavPushSupport(propElement);
+                if (pushSupport) {
+                    collection.setDavPushSupport(*pushSupport);
                 }
 
                 qCDebug(KDAV_LOG) << url.toDisplayString() << "PRIVS: " << collection.privileges();

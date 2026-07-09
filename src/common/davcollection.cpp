@@ -7,6 +7,7 @@
 
 #include "davcollection.h"
 
+#include "davpushsupport.h"
 #include "davurl.h"
 
 #include <QColor>
@@ -23,6 +24,7 @@ public:
     QColor mColor;
     Privileges mPrivileges;
     QByteArray mTimeZone;
+    DavPushSupport mDavPushSupport;
 };
 
 DavCollection::DavCollection()
@@ -113,4 +115,14 @@ void DavCollection::setTimeZone(const QByteArray &timeZone)
 QByteArray DavCollection::timeZone() const
 {
     return d->mTimeZone;
+}
+
+void DavCollection::setDavPushSupport(const DavPushSupport &pushSupport)
+{
+    d->mDavPushSupport = pushSupport;
+}
+
+DavPushSupport DavCollection::davPushSupport() const
+{
+    return d->mDavPushSupport;
 }

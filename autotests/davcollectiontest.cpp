@@ -7,6 +7,7 @@
 #include "davcollectiontest.h"
 
 #include <KDAV/DavCollection>
+#include <KDAV/DavPushSupport>
 #include <KDAV/DavUrl>
 
 #include <QColor>
@@ -22,6 +23,7 @@ void DavCollectionTest::createEmpty()
     QCOMPARE(davCollection.color(), QColor());
     QCOMPARE(davCollection.contentTypes(), KDAV::DavCollection::ContentTypes());
     QCOMPARE(davCollection.privileges(), KDAV::Privileges());
+    QCOMPARE(davCollection.davPushSupport(), KDAV::DavPushSupport());
 }
 
 void DavCollectionTest::storeTest()
@@ -43,6 +45,11 @@ void DavCollectionTest::setTest()
 {
     QUrl url(QStringLiteral("test://me:pw@test"));
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
+
+    KDAV::DavPushSupport davPush{};
+    davPush.setVapidPublicKey("TXlWYXBpZFB1YmxpY0tleQ");
+    davPush.setTopic(QLatin1StringView("Topic"));
+
     KDAV::DavCollection davCollection;
 
     davCollection.setUrl(davUrl);
@@ -51,6 +58,7 @@ void DavCollectionTest::setTest()
     davCollection.setColor(QColor(1, 2, 3));
     davCollection.setContentTypes(KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
     davCollection.setPrivileges(KDAV::Read | KDAV::Write);
+    davCollection.setDavPushSupport(davPush);
 
     QCOMPARE(davCollection.url().protocol(), KDAV::CardDav);
     QCOMPARE(davCollection.url().url(), url);
@@ -59,6 +67,7 @@ void DavCollectionTest::setTest()
     QCOMPARE(davCollection.color(), QColor(1, 2, 3));
     QCOMPARE(davCollection.contentTypes(), KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
     QCOMPARE(davCollection.privileges(), KDAV::Read | KDAV::Write);
+    QCOMPARE(davCollection.davPushSupport(), davPush);
 }
 
 void DavCollectionTest::copyTest()
@@ -68,12 +77,17 @@ void DavCollectionTest::copyTest()
     QUrl url(QStringLiteral("test://me:pw@test"));
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
+    KDAV::DavPushSupport davPush{};
+    davPush.setVapidPublicKey("TXlWYXBpZFB1YmxpY0tleQ");
+    davPush.setTopic(QLatin1StringView("Topic"));
+
     davCollection.setUrl(davUrl);
     davCollection.setCTag(QStringLiteral("ctag"));
     davCollection.setDisplayName(QStringLiteral("myname"));
     davCollection.setColor(QColor(1, 2, 3));
     davCollection.setContentTypes(KDAV::DavCollection::Events | KDAV::DavCollection::Todos);
     davCollection.setPrivileges(KDAV::Read | KDAV::Write);
+    davCollection.setDavPushSupport(davPush);
 
     KDAV::DavCollection copy1(davCollection);
     QCOMPARE(copy1.url().protocol(), davCollection.url().protocol());
@@ -83,6 +97,7 @@ void DavCollectionTest::copyTest()
     QCOMPARE(copy1.color(), davCollection.color());
     QCOMPARE(copy1.contentTypes(), davCollection.contentTypes());
     QCOMPARE(copy1.privileges(), davCollection.privileges());
+    QCOMPARE(copy1.davPushSupport(), davPush);
 
     KDAV::DavCollection copy2;
     copy2 = davCollection;
@@ -94,6 +109,7 @@ void DavCollectionTest::copyTest()
     QCOMPARE(copy2.color(), davCollection.color());
     QCOMPARE(copy2.contentTypes(), davCollection.contentTypes());
     QCOMPARE(copy2.privileges(), davCollection.privileges());
+    QCOMPARE(copy2.davPushSupport(), davPush);
 }
 
 QTEST_MAIN(DavCollectionTest)

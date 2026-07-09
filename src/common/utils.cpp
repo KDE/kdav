@@ -6,6 +6,7 @@
 
 #include "utils_p.h"
 
+#include "davpushsupport.h"
 #include "enums.h"
 
 #include <QString>
@@ -100,4 +101,30 @@ Privileges Utils::parsePrivilege(const QDomElement &element)
     }
 
     return final;
+}
+
+std::optional<DavPushSupport> Utils::extractDavPushSupport(const QDomElement &element)
+{
+    constexpr auto davPushNS = QLatin1StringView("https://bitfire.at/webdav-push");
+    const auto topicElt = firstChildElementNS(element, davPushNS, QStringLiteral("topic"));
+    const auto transportsElt = firstChildElementNS(element, davPushNS, QStringLiteral("transports"));
+    // TODO: supported-triggers is missing from the nextcloud reference implementation, let's ignore it for now
+
+    if (topicElt.isNull() || transportsElt.isNull()) {
+        return {};
+    }
+
+    const auto webPushElt = firstChildElementNS(transportsElt, davPushNS, QStringLiteral("web-push"));
+    if (webPushElt.isNull()) {
+        return {};
+    }
+    const auto vapidPubKeyElt = firstChildElementNS(webPushElt, davPushNS, QStringLiteral("vapid-public-key"));
+    if (vapidPubKeyElt.isNull()) {
+        return {};
+    }
+
+    auto res = DavPushSupport();
+    res.setTopic(topicElt.text());
+    res.setVapidPublicKey(vapidPubKeyElt.text().toUtf8());
+    return res;
 }

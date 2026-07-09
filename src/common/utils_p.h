@@ -13,6 +13,11 @@
 
 namespace KDAV
 {
+class DavPushSupport;
+}
+
+namespace KDAV
+{
 namespace Utils
 {
 /*!
@@ -39,6 +44,13 @@ Q_REQUIRED_RESULT Privileges extractPrivileges(const QDomElement &element);
  */
 Q_REQUIRED_RESULT Privileges parsePrivilege(const QDomElement &element);
 
+/*!
+ * \internal
+ * Extracts DavPushSupport from @p element, element being a <prop> tag.
+ *
+ * \since 6.29
+ */
+[[nodiscard]] std::optional<DavPushSupport> extractDavPushSupport(const QDomElement &element);
 }
 }
 
