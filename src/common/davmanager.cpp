@@ -61,22 +61,22 @@ DavManager *DavManager::self()
 
 QNetworkReply *DavManager::createPropFindJob(DavJobBase *job, const QUrl &url, const QString &document, const QString &depth) const
 {
-    return sendDavRequest(job, "PROPFIND", url, document, depth);
+    return sendDavRequest(job, "PROPFIND", url, document, {}, depth);
 }
 
 QNetworkReply *DavManager::createReportJob(DavJobBase *job, const QUrl &url, const QString &document, const QString &depth) const
 {
-    return sendDavRequest(job, "REPORT", url, document, depth);
+    return sendDavRequest(job, "REPORT", url, document, {}, depth);
 }
 
-QNetworkReply *DavManager::createPropPatchJob(DavJobBase *job, const QUrl &url, const QString &document) const
+QNetworkReply *DavManager::createPropPatchJob(DavJobBase *job, const QUrl &url, const QString &document, const QHttpHeaders &headers) const
 {
-    return sendDavRequest(job, "PROPPATCH", url, document);
+    return sendDavRequest(job, "PROPPATCH", url, document, headers);
 }
 
-QNetworkReply *DavManager::createMkColJob(DavJobBase *job, const QUrl &url, const QString &document) const
+QNetworkReply *DavManager::createMkColJob(DavJobBase *job, const QUrl &url, const QString &document, const QHttpHeaders &headers) const
 {
-    return sendDavRequest(job, "MKCOL", url, document);
+    return sendDavRequest(job, "MKCOL", url, document, headers);
 }
 
 QNetworkAccessManager *DavManager::networkAccessManager() const
@@ -89,9 +89,10 @@ void DavManager::setSslUiProxy(std::unique_ptr<DavSslUiProxy> &&proxy)
     mSslUiProxy = std::move(proxy);
 }
 
-QNetworkReply *DavManager::sendDavRequest(DavJobBase *job, const QByteArray &method, const QUrl &url, const QString &document, const QString &depth) const
+QNetworkReply *DavManager::sendDavRequest(DavJobBase *job, const QByteArray &method, const QUrl &url, const QString &document, const QHttpHeaders &headers, const QString &depth) const
 {
     QNetworkRequest request(url);
+    request.setHeaders(headers);
     request.setHeader(QNetworkRequest::ContentTypeHeader, u"text/xml; charset=utf-8"_s);
     if (!depth.isEmpty()) {
         request.setRawHeader("Depth", depth.toUtf8());
