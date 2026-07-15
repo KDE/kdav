@@ -10,6 +10,7 @@
 #include "daverror.h"
 #include "davitemfetchjob.h"
 #include "davmanager_p.h"
+#include "davpushdontnotify.h"
 
 #include <QNetworkReply>
 #include <QNetworkRequest>
@@ -27,6 +28,8 @@ public:
     DavItem mItem;
     DavItem mFreshItem;
     int mFreshResponseCode = -1;
+
+    DavPushDontNotify mPushDontNotify;
 };
 }
 
@@ -37,12 +40,27 @@ DavItemDeleteJob::DavItemDeleteJob(const DavItem &item, QObject *parent)
     d->mItem = item;
 }
 
+void DavItemDeleteJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavItemDeleteJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavItemDeleteJob::pushDontNotify() const
+{
+    Q_D(const DavItemDeleteJob);
+    return d->mPushDontNotify;
+}
+
 void DavItemDeleteJob::start()
 {
     Q_D(DavItemDeleteJob);
     QNetworkRequest request(d->mItem.url().url());
     request.setHeader(QNetworkRequest::IfMatchHeader, d->mItem.etag());
     request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
+    if (!d->mPushDontNotify.isNull()) {
+        request.setRawHeader(d->mPushDontNotify.davHeaderName().toUtf8(), d->mPushDontNotify.davHeaderValue().toUtf8());
+    }
 
     QNetworkReply *reply = DavManager::self()->networkAccessManager()->deleteResource(request);
     reply->setParent(this);

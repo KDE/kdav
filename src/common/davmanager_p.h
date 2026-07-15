@@ -12,6 +12,7 @@
 #include <QString>
 
 #include <memory>
+#include <qhttpheaders.h>
 
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -69,17 +70,18 @@ public:
      *
      * \a url The target URL of the request.
      * \a document The query XML document.
+     * \a headers additional headers to send
      */
-    QNetworkReply *createPropPatchJob(DavJobBase *job, const QUrl &url, const QString &document) const;
+    QNetworkReply *createPropPatchJob(DavJobBase *job, const QUrl &url, const QString &document, const QHttpHeaders& headers = {}) const;
 
     /*!
      * Returns a preconfigured DAV MKCOL reply.
      *
      * \a url The target URL of the request.
-     *
      * \a document The query XML document.
+     * \a headers additional headers to send
      */
-    QNetworkReply *createMkColJob(DavJobBase *job, const QUrl &url, const QString &document) const;
+    QNetworkReply *createMkColJob(DavJobBase *job, const QUrl &url, const QString &document, const QHttpHeaders& headers = {}) const;
 
     /*!
      * Returns the shared QNetworkAccessManager instance.
@@ -107,7 +109,7 @@ private:
      */
     DavManager();
 
-    QNetworkReply *sendDavRequest(DavJobBase *job, const QByteArray &method, const QUrl &url, const QString &document, const QString &depth = {}) const;
+    QNetworkReply *sendDavRequest(DavJobBase *job, const QByteArray &method, const QUrl &url, const QString &document, const QHttpHeaders &headers = {}, const QString &depth = {}) const;
 
     mutable std::unique_ptr<QNetworkAccessManager> mNam;
     std::unique_ptr<DavSslUiProxy> mSslUiProxy;

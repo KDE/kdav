@@ -16,6 +16,8 @@ target_sources(KF6DAV PRIVATE
     common/davcollection.h
     common/davpushsupport.cpp
     common/davpushsupport.h
+    common/davpushdontnotify.h
+    common/davpushdontnotify.cpp
     common/davcollectioncreatejob.cpp
     common/davcollectioncreatejob.h
     common/davcollectiondeletejob.cpp
@@ -85,6 +87,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavJobBase
     DavCollection
     DavPushSupport
+    DavPushDontNotify
     DavCollectionDeleteJob
     DavCollectionsFetchJob
     DavCollectionCreateJob

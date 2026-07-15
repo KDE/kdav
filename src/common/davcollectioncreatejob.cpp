@@ -8,6 +8,7 @@
 
 #include "daverror.h"
 #include "davmanager_p.h"
+#include "davpushdontnotify.h"
 
 #include <QColor>
 #include <QNetworkReply>
@@ -27,6 +28,7 @@ public:
 
     DavCollection mCollection;
     int mRedirectCount = 0;
+    DavPushDontNotify mPushDontNotify;
 
     Q_DECLARE_PUBLIC(DavCollectionCreateJob)
 };
@@ -37,6 +39,18 @@ DavCollectionCreateJob::DavCollectionCreateJob(const DavCollection &collection, 
 {
     Q_D(DavCollectionCreateJob);
     d->mCollection = collection;
+}
+
+void DavCollectionCreateJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavCollectionCreateJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavCollectionCreateJob::pushDontNotify() const
+{
+    Q_D(const DavCollectionCreateJob);
+    return d->mPushDontNotify;
 }
 
 void DavCollectionCreateJob::start()
@@ -58,7 +72,11 @@ void DavCollectionCreateJob::start()
     Q_ASSERT(output.startsWith(QStringLiteral("<?xml version=\"1.0\"?>\n")));
     output = output.mid(22);
 
-    QNetworkReply *reply = DavManager::self()->createMkColJob(this, d->mCollection.url().url(), output);
+    auto headers = QHttpHeaders();
+    if (!d->mPushDontNotify.isNull()) {
+        headers.append(d->mPushDontNotify.davHeaderName().toUtf8(), d->mPushDontNotify.davHeaderValue().toUtf8());
+    }
+    QNetworkReply *reply = DavManager::self()->createMkColJob(this, d->mCollection.url().url(), output, headers);
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->davJobFinished(reply);
     });

@@ -12,6 +12,7 @@
 
 namespace KDAV
 {
+class DavPushDontNotify;
 class DavCollectionCreateJobPrivate;
 
 /*!
@@ -35,6 +36,18 @@ public:
      * \a parent The parent object.
      */
     explicit DavCollectionCreateJob(const DavCollection &collection, QObject *parent = nullptr);
+
+    /*!
+     * Sets Push-Dont-Notify URLs that should be notified.
+     * \since 6.29
+     */
+    void setPushDontNotify(const DavPushDontNotify &dontNotify);
+
+    /*!
+     * Gets Push-Dont-Notify Urls.
+     * \since 6.29
+     */
+    [[nodiscard]] DavPushDontNotify pushDontNotify() const;
 
     /*!
      * Starts the job.
