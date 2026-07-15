@@ -9,6 +9,7 @@
 
 #include "daverror.h"
 #include "davmanager_p.h"
+#include "davpushdontnotify.h"
 
 #include <QNetworkReply>
 #include <QNetworkRequest>
@@ -23,6 +24,8 @@ public:
     void davJobFinished(QNetworkReply *reply);
 
     DavUrl mUrl;
+
+    DavPushDontNotify mPushDontNotify;
 };
 }
 
@@ -33,11 +36,26 @@ DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUrl &url, QObject *paren
     d->mUrl = url;
 }
 
+void DavCollectionDeleteJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavCollectionDeleteJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavCollectionDeleteJob::pushDontNotify() const
+{
+    Q_D(const DavCollectionDeleteJob);
+    return d->mPushDontNotify;
+}
+
 void DavCollectionDeleteJob::start()
 {
     Q_D(DavCollectionDeleteJob);
     QNetworkRequest request(d->mUrl.url());
     request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
+    if (!d->mPushDontNotify.isNull()) {
+        request.setRawHeader(KDAV::DavPushDontNotify::davHeaderName().toUtf8(), d->mPushDontNotify.davHeaderValue().toUtf8());
+    }
 
     QNetworkReply *reply = DavManager::self()->networkAccessManager()->deleteResource(request);
     reply->setParent(this);

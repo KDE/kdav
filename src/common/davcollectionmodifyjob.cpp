@@ -9,6 +9,7 @@
 #include "davmanager_p.h"
 
 #include "daverror.h"
+#include "davpushdontnotify.h"
 #include "utils_p.h"
 
 #include <QNetworkReply>
@@ -28,6 +29,8 @@ public:
 
     QList<QDomElement> mSetProperties;
     QList<QDomElement> mRemoveProperties;
+
+    DavPushDontNotify mPushDontNotify;
 };
 }
 
@@ -69,6 +72,18 @@ void DavCollectionModifyJob::removeProperty(const QString &prop, const QString &
     d->mRemoveProperties << propElement;
 }
 
+void DavCollectionModifyJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavCollectionModifyJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavCollectionModifyJob::pushDontNotify() const
+{
+    Q_D(const DavCollectionModifyJob);
+    return d->mPushDontNotify;
+}
+
 void DavCollectionModifyJob::start()
 {
     Q_D(DavCollectionModifyJob);
@@ -107,7 +122,12 @@ void DavCollectionModifyJob::start()
         }
     }
 
-    QNetworkReply *reply = DavManager::self()->createPropPatchJob(this, d->mUrl.url(), mQuery.toString());
+    auto headers = QHttpHeaders();
+    if (!d->mPushDontNotify.isNull()) {
+        headers.append(d->mPushDontNotify.davHeaderName().toUtf8(), d->mPushDontNotify.davHeaderValue().toUtf8());
+    }
+
+    QNetworkReply *reply = DavManager::self()->createPropPatchJob(this, d->mUrl.url(), mQuery.toString(), headers);
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->davJobFinished(reply);
     });

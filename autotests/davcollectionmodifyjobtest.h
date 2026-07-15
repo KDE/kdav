@@ -10,6 +10,7 @@ class DavCollectionModifyJobTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+    void modifySucceeds_data();
     void modifySucceeds();
     void modifyServerError();
     void modifyResponseError();
