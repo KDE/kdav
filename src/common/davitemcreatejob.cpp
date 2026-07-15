@@ -9,6 +9,7 @@
 
 #include "daverror.h"
 #include "davitemfetchjob.h"
+#include "davpushdontnotify.h"
 
 #include <KIO/DavJob>
 #include <KIO/StoredTransferJob>
@@ -26,6 +27,8 @@ public:
     DavItem mItem;
     int mRedirectCount = 0;
 
+    DavPushDontNotify mPushDontNotify;
+
     Q_DECLARE_PUBLIC(DavItemCreateJob)
 };
 }
@@ -37,13 +40,28 @@ DavItemCreateJob::DavItemCreateJob(const DavItem &item, QObject *parent)
     d->mItem = item;
 }
 
+void DavItemCreateJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavItemCreateJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavItemCreateJob::pushDontNotify() const
+{
+    Q_D(const DavItemCreateJob);
+    return d->mPushDontNotify;
+}
+
 void DavItemCreateJob::start()
 {
     Q_D(DavItemCreateJob);
-    QString headers = QStringLiteral("Content-Type: ");
-    headers += d->mItem.contentType();
+    QString headers = QStringLiteral("Content-Type: ") + d->mItem.contentType();
     headers += QLatin1String("\r\n");
     headers += QLatin1String("If-None-Match: *");
+    if (!d->mPushDontNotify.isNull()) {
+        headers += QLatin1String("\r\n");
+        headers += d->mPushDontNotify.davHeader();
+    }
 
     KIO::StoredTransferJob *job = KIO::storedPut(d->mItem.data(), itemUrl(), -1, KIO::HideProgressInfo | KIO::DefaultFlags);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));

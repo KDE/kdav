@@ -8,6 +8,7 @@
 #include "davjobbase_p.h"
 
 #include "daverror.h"
+#include "davpushdontnotify.h"
 
 #include <KIO/DeleteJob>
 #include <KIO/Job>
@@ -22,6 +23,8 @@ public:
     void davJobFinished(KJob *job);
 
     DavUrl mUrl;
+
+    DavPushDontNotify mPushDontNotify;
 };
 }
 
@@ -32,6 +35,18 @@ DavCollectionDeleteJob::DavCollectionDeleteJob(const DavUrl &url, QObject *paren
     d->mUrl = url;
 }
 
+void DavCollectionDeleteJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavCollectionDeleteJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavCollectionDeleteJob::pushDontNotify() const
+{
+    Q_D(const DavCollectionDeleteJob);
+    return d->mPushDontNotify;
+}
+
 void DavCollectionDeleteJob::start()
 {
     Q_D(DavCollectionDeleteJob);
@@ -39,6 +54,9 @@ void DavCollectionDeleteJob::start()
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
+    if (!d->mPushDontNotify.isNull()) {
+        job->addMetaData(QStringLiteral("customHTTPHeader"), d->mPushDontNotify.davHeader());
+    }
 
     connect(job, &KIO::DeleteJob::result, this, [d](KJob *job) {
         d->davJobFinished(job);

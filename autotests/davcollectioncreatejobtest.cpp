@@ -6,6 +6,7 @@
 
 #include <KDAV/DavCollection>
 #include <KDAV/DavCollectionCreateJob>
+#include <KDAV/DavPushDontNotify>
 
 #include <QColor>
 #include <QTest>
@@ -36,8 +37,20 @@ static const QByteArray s_berlinTimezone =
     "END:VTIMEZONE\n"
     "END:VCALENDAR";
 
+void DavCollectionCreateJobTest::createCalDavCollection_data()
+{
+    QTest::addColumn<std::optional<KDAV::DavPushDontNotify>>("davPushDontNotify");
+
+    QTest::newRow("all-notification") << std::optional<KDAV::DavPushDontNotify>();
+    QTest::newRow("no-notification") << std::optional(KDAV::DavPushDontNotify::ignoreAll());
+    QTest::newRow("some-notification") << std::optional(
+        KDAV::DavPushDontNotify::ignoreUrls({u"https://example.com/webdav/subscriptions/TOKEN1"_s, u"https://example.com/webdav/subscriptions/TOKEN2"_s}));
+}
+
 void DavCollectionCreateJobTest::createCalDavCollection()
 {
+    QFETCH(std::optional<KDAV::DavPushDontNotify>, davPushDontNotify);
+
     FakeServer fakeServer;
     fakeServer.startAndWait();
     QUrl url(u"http://localhost/caldav/new-calendar/"_s);
@@ -48,51 +61,56 @@ void DavCollectionCreateJobTest::createCalDavCollection()
     collection.setColor(QColor(u"#B6469D"_s));
     collection.setTimeZone(s_berlinTimezone);
 
-    auto job = new KDAV::DavCollectionCreateJob(collection);
+    auto scenario = QByteArrayList() << "C: MKCOL /caldav/new-calendar/ HTTP/1.1";
+    if (davPushDontNotify) {
+        scenario << (u"C: "_s + davPushDontNotify->davHeader()).toUtf8();
+    }
+    scenario << "B: <?xml version=\"1.0\"?>"
+             << "B: <D:mkcol xmlns:D=\"DAV:\" xmlns:I=\"http://apple.com/ns/ical/\" xmlns:C=\"urn:ietf:params:xml:ns:caldav\">"
+             << "B:     <D:set>"
+             << "B:         <D:prop>"
+             << "B:             <D:resourcetype>"
+             << "B:                 <D:collection/>"
+             << "B:                 <C:calendar/>"
+             << "B:             </D:resourcetype>"
+             << "B:             <D:displayname>Test 2</D:displayname>"
+             << "B:             <I:calendar-color>#b6469d</I:calendar-color>"
+             << "B:             <C:supported-calendar-component-set>"
+             << "B:                 <C:comp name=\"VEVENT\"/>"
+             << "B:             </C:supported-calendar-component-set>"
+             << "B:             <C:calendar-timezone>BEGIN:VCALENDAR"
+             << "B: PRODID:-//IDN nextcloud.com//Calendar app 6.3.0-rc.1//EN"
+             << "B: CALSCALE:GREGORIAN"
+             << "B: VERSION:2.0"
+             << "B: BEGIN:VTIMEZONE"
+             << "B: TZID:Europe/Berlin"
+             << "B: BEGIN:DAYLIGHT"
+             << "B: TZNAME:CEST"
+             << "B: TZOFFSETFROM:+0100"
+             << "B: TZOFFSETTO:+0200"
+             << "B: DTSTART:19700329T020000"
+             << "B: RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU"
+             << "B: END:DAYLIGHT"
+             << "B: BEGIN:STANDARD"
+             << "B: TZNAME:CET"
+             << "B: TZOFFSETFROM:+0200"
+             << "B: TZOFFSETTO:+0100"
+             << "B: DTSTART:19701025T030000"
+             << "B: RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU"
+             << "B: END:STANDARD"
+             << "B: END:VTIMEZONE"
+             << "B: END:VCALENDAR</C:calendar-timezone>"
+             << "B:         </D:prop>"
+             << "B:     </D:set>"
+             << "B: </D:mkcol>"
+             << "S: HTTP/1.0 201 Created"
+             << "X";
+    fakeServer.addScenario(scenario);
 
-    fakeServer.addScenario({
-        "C: MKCOL /caldav/new-calendar/ HTTP/1.1",
-        "B: <?xml version=\"1.0\"?>",
-        "B: <D:mkcol xmlns:D=\"DAV:\" xmlns:I=\"http://apple.com/ns/ical/\" xmlns:C=\"urn:ietf:params:xml:ns:caldav\">",
-        "B:     <D:set>",
-        "B:         <D:prop>",
-        "B:             <D:resourcetype>",
-        "B:                 <D:collection/>",
-        "B:                 <C:calendar/>",
-        "B:             </D:resourcetype>",
-        "B:             <D:displayname>Test 2</D:displayname>",
-        "B:             <I:calendar-color>#b6469d</I:calendar-color>",
-        "B:             <C:supported-calendar-component-set>",
-        "B:                 <C:comp name=\"VEVENT\"/>",
-        "B:             </C:supported-calendar-component-set>",
-        "B:             <C:calendar-timezone>BEGIN:VCALENDAR",
-        "B: PRODID:-//IDN nextcloud.com//Calendar app 6.3.0-rc.1//EN",
-        "B: CALSCALE:GREGORIAN",
-        "B: VERSION:2.0",
-        "B: BEGIN:VTIMEZONE",
-        "B: TZID:Europe/Berlin",
-        "B: BEGIN:DAYLIGHT",
-        "B: TZNAME:CEST",
-        "B: TZOFFSETFROM:+0100",
-        "B: TZOFFSETTO:+0200",
-        "B: DTSTART:19700329T020000",
-        "B: RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU",
-        "B: END:DAYLIGHT",
-        "B: BEGIN:STANDARD",
-        "B: TZNAME:CET",
-        "B: TZOFFSETFROM:+0200",
-        "B: TZOFFSETTO:+0100",
-        "B: DTSTART:19701025T030000",
-        "B: RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU",
-        "B: END:STANDARD",
-        "B: END:VTIMEZONE",
-        "B: END:VCALENDAR</C:calendar-timezone>",
-        "B:         </D:prop>",
-        "B:     </D:set>",
-        "B: </D:mkcol>",
-        "S: HTTP/1.0 201 Created",
-        "X",
-    });
+    auto job = new KDAV::DavCollectionCreateJob(collection);
+    if (davPushDontNotify) {
+        job->setPushDontNotify(*davPushDontNotify);
+    }
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());

@@ -18,6 +18,11 @@ ecm_add_test(davurltest.cpp davurltest.h
     LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core
 )
 
+ecm_add_test(davpushdontnotifytest.cpp davpushdontnotifytest.h
+        TEST_NAME davpushdontnotifytest
+        LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core
+)
+
 ecm_add_test(davcollectionsmultifetchjobtest.cpp fakeserver.cpp davcollectionsmultifetchjobtest.h fakeserver.h
     TEST_NAME davcollectionsmultifetchjobtest
     LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network

@@ -6,39 +6,55 @@
 
 #include <KDAV/DavCollectionModifyJob>
 #include <KDAV/DavError>
+#include <KDAV/DavPushDontNotify>
 #include <KDAV/DavUrl>
 
 #include <QTest>
 
 using namespace Qt::StringLiterals;
 
+void DavCollectionModifyJobTest::modifySucceeds_data()
+{
+    QTest::addColumn<std::optional<KDAV::DavPushDontNotify>>("davPushDontNotify");
+
+    QTest::newRow("all-notification") << std::optional<KDAV::DavPushDontNotify>();
+    QTest::newRow("no-notification") << std::optional(KDAV::DavPushDontNotify::ignoreAll());
+    QTest::newRow("some-notification") << std::optional(
+        KDAV::DavPushDontNotify::ignoreUrls({u"https://example.com/webdav/subscriptions/TOKEN1"_s, u"https://example.com/webdav/subscriptions/TOKEN2"_s}));
+}
+
 void DavCollectionModifyJobTest::modifySucceeds()
 {
+    QFETCH(std::optional<KDAV::DavPushDontNotify>, davPushDontNotify);
+
     FakeServer fakeServer;
-    fakeServer.addScenario({
-        "C: PROPPATCH /collection HTTP/1.1",
-        "B: <?xml version=\"1.0\" encoding=\"utf-8\"?>",
-        "B: <propertyupdate xmlns=\"DAV:\">",
-        "B:  <set xmlns=\"DAV:\">",
-        "B:   <prop xmlns=\"DAV:\">",
-        "B:    <displayname>My Calendar</displayname>",
-        "B:   </prop>",
-        "B:  </set>",
-        "B: </propertyupdate>",
-        "S: HTTP/1.1 207 Multi-Status",
-        "S: Content-Type: application/xml; charset=utf-8",
-        "D: <?xml version=\"1.0\" encoding=\"utf-8\"?>",
-        "D: <D:multistatus xmlns:D=\"DAV:\">",
-        "D:  <D:response>",
-        "D:   <D:href>/collection</D:href>",
-        "D:   <D:propstat>",
-        "D:    <D:prop><D:displayname/></D:prop>",
-        "D:    <D:status>HTTP/1.1 200 OK</D:status>",
-        "D:   </D:propstat>",
-        "D:  </D:response>",
-        "D: </D:multistatus>",
-        "X",
-    });
+    auto scenario = QByteArrayList() << "C: PROPPATCH /collection HTTP/1.1";
+    if (davPushDontNotify) {
+        scenario << (u"C: "_s + davPushDontNotify->davHeader()).toUtf8();
+    }
+    scenario << "B: <?xml version=\"1.0\" encoding=\"utf-8\"?>"
+             << "B: <propertyupdate xmlns=\"DAV:\">"
+             << "B:  <set xmlns=\"DAV:\">"
+             << "B:   <prop xmlns=\"DAV:\">"
+             << "B:    <displayname>My Calendar</displayname>"
+             << "B:   </prop>"
+             << "B:  </set>"
+             << "B: </propertyupdate>"
+             << "S: HTTP/1.1 207 Multi-Status"
+             << "S: Content-Type: application/xml; charset=utf-8"
+             << "D: <?xml version=\"1.0\" encoding=\"utf-8\"?>"
+             << "D: <D:multistatus xmlns:D=\"DAV:\">"
+             << "D:  <D:response>"
+             << "D:   <D:href>/collection</D:href>"
+             << "D:   <D:propstat>"
+             << "D:    <D:prop><D:displayname/></D:prop>"
+             << "D:    <D:status>HTTP/1.1 200 OK</D:status>"
+             << "D:   </D:propstat>"
+             << "D:  </D:response>"
+             << "D: </D:multistatus>"
+             << "X";
+
+    fakeServer.addScenario(scenario);
     fakeServer.startAndWait();
 
     QUrl url(u"http://localhost/collection"_s);
@@ -47,6 +63,9 @@ void DavCollectionModifyJobTest::modifySucceeds()
 
     auto job = new KDAV::DavCollectionModifyJob(davUrl);
     job->setProperty(u"displayname"_s, u"My Calendar"_s);
+    if (davPushDontNotify) {
+        job->setPushDontNotify(*davPushDontNotify);
+    }
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());

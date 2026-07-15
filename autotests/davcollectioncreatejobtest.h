@@ -11,6 +11,7 @@ class DavCollectionCreateJobTest : public QObject
 
 private Q_SLOTS:
     // Success cases
+    void createCalDavCollection_data();
     void createCalDavCollection();
     void createCardDavCollection();
 

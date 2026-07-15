@@ -9,6 +9,7 @@
 
 #include "enums.h"
 
+#include <QList>
 #include <QString>
 
 #include <memory>
@@ -71,7 +72,7 @@ public:
      * \a url The target URL of the job.
      * \a document The query XML document.
      */
-    KIO::DavJob *createPropPatchJob(const QUrl &url, const QString &document) const;
+    KIO::DavJob *createPropPatchJob(const QUrl &url, const QString &document, const QStringList &headers = {}) const;
 
     /*!
      * Returns a preconfigured DAV MKCOL job.
@@ -80,7 +81,7 @@ public:
      *
      * \a document The query XML document.
      */
-    KIO::DavJob *createMkColJob(const QUrl &url, const QString &document) const;
+    KIO::DavJob *createMkColJob(const QUrl &url, const QString &document, const QStringList &headers = {}) const;
 
     /*!
      * Returns the DAV protocol dialect object for the given DAV @p protocol.

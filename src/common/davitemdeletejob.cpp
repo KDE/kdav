@@ -10,6 +10,7 @@
 #include "daverror.h"
 #include "davitemfetchjob.h"
 #include "davmanager_p.h"
+#include "davpushdontnotify.h"
 
 #include <KIO/DeleteJob>
 #include <KIO/Job>
@@ -27,6 +28,8 @@ public:
     DavItem mItem;
     DavItem mFreshItem;
     int mFreshResponseCode = -1;
+
+    DavPushDontNotify mPushDontNotify;
 };
 }
 
@@ -37,12 +40,31 @@ DavItemDeleteJob::DavItemDeleteJob(const DavItem &item, QObject *parent)
     d->mItem = item;
 }
 
+void DavItemDeleteJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavItemDeleteJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavItemDeleteJob::pushDontNotify() const
+{
+    Q_D(const DavItemDeleteJob);
+    return d->mPushDontNotify;
+}
+
 void DavItemDeleteJob::start()
 {
     Q_D(DavItemDeleteJob);
+
+    QString headers = QStringLiteral("If-Match: ") + d->mItem.etag();
+    if (!d->mPushDontNotify.isNull()) {
+        headers += QLatin1String("\r\n");
+        headers += d->mPushDontNotify.davHeader();
+    }
+
     KIO::DeleteJob *job = KIO::del(d->mItem.url().url(), KIO::HideProgressInfo | KIO::DefaultFlags);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
-    job->addMetaData(QStringLiteral("customHTTPHeader"), QStringLiteral("If-Match: ") + d->mItem.etag());
+    job->addMetaData(QStringLiteral("customHTTPHeader"), headers);
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
 

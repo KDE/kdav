@@ -49,20 +49,26 @@ KIO::DavJob *DavManager::createReportJob(const QUrl &url, const QString &documen
     return job;
 }
 
-KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QString &document) const
+KIO::DavJob *DavManager::createPropPatchJob(const QUrl &url, const QString &document, const QStringList &headers) const
 {
     KIO::DavJob *job = KIO::davPropPatch(url, document, KIO::HideProgressInfo | KIO::DefaultFlags);
-    const QString header = QStringLiteral("Content-Type: text/xml");
+    auto header = QStringLiteral("Content-Type: text/xml");
+    if (!headers.isEmpty()) {
+        header += QStringLiteral("\r\n") + headers.join(QStringLiteral("\r\n"));
+    }
     job->addMetaData(QStringLiteral("customHTTPHeader"), header);
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));
     return job;
 }
 
-KIO::DavJob *DavManager::createMkColJob(const QUrl &url, const QString &document) const
+KIO::DavJob *DavManager::createMkColJob(const QUrl &url, const QString &document, const QStringList &headers) const
 {
     KIO::DavJob *job = KIO::davMkCol(url, document, KIO::HideProgressInfo | KIO::DefaultFlags);
-    const QString header = QStringLiteral("Content-Type: text/xml");
+    auto header = QStringLiteral("Content-Type: text/xml");
+    if (!headers.isEmpty()) {
+        header += QStringLiteral("\r\n") + headers.join(QStringLiteral("\r\n"));
+    }
     job->addMetaData(QStringLiteral("customHTTPHeader"), header);
     job->addMetaData(QStringLiteral("cookies"), QStringLiteral("none"));
     job->addMetaData(QStringLiteral("no-auth-prompt"), QStringLiteral("true"));

@@ -6,21 +6,36 @@
 
 #include <KDAV/DavCollectionDeleteJob>
 #include <KDAV/DavError>
+#include <KDAV/DavPushDontNotify>
 #include <KDAV/DavUrl>
 
 #include <QTest>
 
 using namespace Qt::StringLiterals;
 
+void DavCollectionDeleteJobTest::deleteSucceeds_data()
+{
+    QTest::addColumn<std::optional<KDAV::DavPushDontNotify>>("davPushDontNotify");
+
+    QTest::newRow("all-notification") << std::optional<KDAV::DavPushDontNotify>();
+    QTest::newRow("no-notification") << std::optional(KDAV::DavPushDontNotify::ignoreAll());
+    QTest::newRow("some-notification") << std::optional(
+        KDAV::DavPushDontNotify::ignoreUrls({u"https://example.com/webdav/subscriptions/TOKEN1"_s, u"https://example.com/webdav/subscriptions/TOKEN2"_s}));
+}
+
 void DavCollectionDeleteJobTest::deleteSucceeds()
 {
+    QFETCH(std::optional<KDAV::DavPushDontNotify>, davPushDontNotify);
+
     FakeServer fakeServer;
-    fakeServer.addScenario({
-        "C: DELETE /collection HTTP/1.1",
-        "S: HTTP/1.1 200 OK",
-        "S: Date: Mon, 21 Apr 2026 15:00:00 GMT",
-        "X",
-    });
+    auto scenario = QByteArrayList() << "C: DELETE /collection HTTP/1.1";
+    if (davPushDontNotify) {
+        scenario << (u"C: "_s + davPushDontNotify->davHeader()).toUtf8();
+    }
+    scenario << "S: HTTP/1.1 200 OK"
+             << "S: Date: Mon, 21 Apr 2026 15:00:00 GMT"
+             << "X";
+    fakeServer.addScenario(scenario);
     fakeServer.startAndWait();
 
     QUrl url(u"http://localhost/collection"_s);
@@ -28,6 +43,9 @@ void DavCollectionDeleteJobTest::deleteSucceeds()
     KDAV::DavUrl davUrl(url, KDAV::CardDav);
 
     auto job = new KDAV::DavCollectionDeleteJob(davUrl);
+    if (davPushDontNotify) {
+        job->setPushDontNotify(*davPushDontNotify);
+    }
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());

@@ -8,6 +8,7 @@
 
 #include "daverror.h"
 #include "davmanager_p.h"
+#include "davpushdontnotify.h"
 
 #include <KIO/DavJob>
 #include <KJob>
@@ -26,6 +27,7 @@ public:
 
     DavCollection mCollection;
     int mRedirectCount = 0;
+    DavPushDontNotify mPushDontNotify;
 
     Q_DECLARE_PUBLIC(DavCollectionCreateJob)
 };
@@ -36,6 +38,18 @@ DavCollectionCreateJob::DavCollectionCreateJob(const DavCollection &collection, 
 {
     Q_D(DavCollectionCreateJob);
     d->mCollection = collection;
+}
+
+void DavCollectionCreateJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavCollectionCreateJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavCollectionCreateJob::pushDontNotify() const
+{
+    Q_D(const DavCollectionCreateJob);
+    return d->mPushDontNotify;
 }
 
 void DavCollectionCreateJob::start()
@@ -55,7 +69,9 @@ void DavCollectionCreateJob::start()
     writer.setAutoFormatting(true);
     protocol->writeMkCol(writer, d->mCollection);
 
-    auto job = DavManager::self()->createMkColJob(collectionUrl(), output);
+    const auto headers = d->mPushDontNotify.isNull() ? QStringList{} : QStringList{d->mPushDontNotify.davHeader()};
+    auto job = DavManager::self()->createMkColJob(collectionUrl(), output, headers);
+
     connect(job, &KJob::result, this, [d](KJob *job) {
         d->davJobFinished(job);
     });

@@ -10,6 +10,7 @@ class DavCollectionDeleteJobTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+    void deleteSucceeds_data();
     void deleteSucceeds();
     void deleteServerError();
 };

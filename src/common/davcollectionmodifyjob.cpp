@@ -9,6 +9,7 @@
 #include "davmanager_p.h"
 
 #include "daverror.h"
+#include "davpushdontnotify.h"
 #include "utils_p.h"
 
 #include <KIO/DavJob>
@@ -28,6 +29,8 @@ public:
 
     QList<QDomElement> mSetProperties;
     QList<QDomElement> mRemoveProperties;
+
+    DavPushDontNotify mPushDontNotify;
 };
 }
 
@@ -69,6 +72,18 @@ void DavCollectionModifyJob::removeProperty(const QString &prop, const QString &
     d->mRemoveProperties << propElement;
 }
 
+void DavCollectionModifyJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavCollectionModifyJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavCollectionModifyJob::pushDontNotify() const
+{
+    Q_D(const DavCollectionModifyJob);
+    return d->mPushDontNotify;
+}
+
 void DavCollectionModifyJob::start()
 {
     Q_D(DavCollectionModifyJob);
@@ -107,7 +122,8 @@ void DavCollectionModifyJob::start()
         }
     }
 
-    KIO::DavJob *job = DavManager::self()->createPropPatchJob(d->mUrl.url(), mQuery.toString());
+    const auto headers = d->mPushDontNotify.isNull() ? QStringList{} : QStringList{d->mPushDontNotify.davHeader()};
+    KIO::DavJob *job = DavManager::self()->createPropPatchJob(d->mUrl.url(), mQuery.toString(), headers);
     job->addMetaData(QStringLiteral("PropagateHttpHeader"), QStringLiteral("true"));
     connect(job, &KIO::DavJob::result, this, [d](KJob *job) {
         d->davJobFinished(job);
