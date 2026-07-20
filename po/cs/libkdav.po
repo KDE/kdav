@@ -2,21 +2,22 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Vít Pelčák <vit@pelcak.org>, 2010, 2011, 2013, 2016, 2017, 2018, 2023.
 # Tomáš Chvátal <tomas.chvatal@gmail.com>, 2012.
+# SPDX-FileCopyrightText: 2026 Libor Filípek <libor.filipek@gmail.com>
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2025-11-17 09:00+0000\n"
-"PO-Revision-Date: 2023-03-09 14:57+0100\n"
-"Last-Translator: Vit Pelcak <vit@pelcak.org>\n"
+"PO-Revision-Date: 2026-07-19 11:47+0200\n"
+"Last-Translator: Libor Filípek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Lokalize 22.12.3\n"
+"X-Generator: Poedit 3.9\n"
 
 #: common/daverror.cpp:88
 #, kde-format
@@ -50,7 +51,7 @@ msgstr ""
 #: common/daverror.cpp:99
 #, kde-format
 msgid "Protocol for the collection does not support MULTIGET"
-msgstr ""
+msgstr "Protokol pro sběr nepodporuje MULTIGET"
 
 #: common/daverror.cpp:102
 #, kde-format
@@ -58,6 +59,8 @@ msgid ""
 "The server encountered an error that prevented it from completing your "
 "request: %1 (%2)"
 msgstr ""
+"Na serveru došlo k chybě, která znemožnila dokončení vašeho požadavku: %1 "
+"(%2)"
 
 #: common/daverror.cpp:105
 #, kde-format
@@ -66,21 +69,23 @@ msgid ""
 "from the server.\n"
 "%1 (%2)."
 msgstr ""
+"Došlo k problému s požadavkem. Sbírka nebyla odstraněna ze serveru.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid responses from backend"
-msgstr ""
+msgstr "Neplatné odpovědi z podpůrné vrstvy"
 
 #: common/daverror.cpp:111
 #, kde-format
 msgid "Error setting focus for XQuery"
-msgstr ""
+msgstr "Chyba při nastavení fokusu pro XQuery"
 
 #: common/daverror.cpp:114
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
-msgstr ""
+msgstr "Neplatný dotaz XQuery odeslaný implementací DAV"
 
 #: common/daverror.cpp:118
 #, kde-format
@@ -89,16 +94,18 @@ msgid ""
 "on the server.\n"
 "%1 (%2)."
 msgstr ""
+"Došlo k problému s požadavkem. Sbírka nebyla na serveru změněna .\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:124
 #, kde-format
 msgid "No properties to change or remove"
-msgstr ""
+msgstr "Žádné vlastnosti ke změně nebo odstranění"
 
 #: common/daverror.cpp:127
 #, kde-format
 msgid "There was an error when modifying the properties"
-msgstr ""
+msgstr "Při úpravě vlastností došlo k chybě"
 
 #: common/daverror.cpp:129
 #, kde-format
@@ -118,6 +125,8 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"Došlo k problému s požadavkem. Položka nebyla na serveru vytvořena.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:136
 #, kde-format
@@ -126,6 +135,8 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"Došlo k problému s požadavkem. Položka nebyla odstraněna ze serveru.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:139
 #, kde-format
@@ -134,6 +145,8 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
+"Došlo k problému s požadavkem. Položka nebyla na serveru změněna.\n"
+"%1 (%2)."
 
 #: common/daverror.cpp:142
 #, kde-format
@@ -146,3 +159,4 @@ msgid ""
 "There was a problem with the request. The requested MIME types are not "
 "supported."
 msgstr ""
+"Došlo k problému s požadavkem. Požadované MIME typy nejsou podporovány."
