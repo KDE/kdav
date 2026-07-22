@@ -55,6 +55,8 @@ target_sources(KF6DAV PRIVATE
     common/davprincipalsearchjob.h
     common/davprotocolbase.cpp
     common/davprotocolbase_p.h
+    common/davssluiproxy.cpp
+    common/davssluiproxy.h
     common/davurl.cpp
     common/davurl.h
     common/enums.h
@@ -98,6 +100,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavItemsListJob
     DavPrincipalHomesetsFetchJob
     DavPrincipalSearchJob
+    DavSslUiProxy
     DavUrl
     Enums
     EtagCache

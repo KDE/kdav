@@ -20,6 +20,7 @@ class QUrl;
 namespace KDAV
 {
 class DavProtocolBase;
+class DavSslUiProxy;
 
 /*!
  * \internal
@@ -85,6 +86,11 @@ public:
     QNetworkAccessManager *networkAccessManager() const;
 
     /*!
+     * Sets the DavSslUiProxy used to handle SSL errors coming from the QNetworkAccessManager.
+     */
+    void setSslUiProxy(std::unique_ptr<DavSslUiProxy> &&proxy);
+
+    /*!
      * Returns the user agent.
      */
     QString userAgent() const;
@@ -103,6 +109,7 @@ private:
     QNetworkReply *sendDavRequest(const QByteArray &method, const QUrl &url, const QString &document, const QString &depth = {}) const;
 
     mutable std::unique_ptr<QNetworkAccessManager> mNam;
+    std::unique_ptr<DavSslUiProxy> mSslUiProxy;
     std::unique_ptr<DavProtocolBase> mProtocols[3];
 };
 }

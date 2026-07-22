@@ -6,6 +6,7 @@
 
 #include "davmanager_p.h"
 
+#include "davssluiproxy.h"
 #include "protocols/caldavprotocol_p.h"
 #include "protocols/carddavprotocol_p.h"
 #include "protocols/groupdavprotocol_p.h"
@@ -35,6 +36,16 @@ DavManager::DavManager()
         if (!url.userName().isEmpty()) {
             auth->setUser(url.userName());
             auth->setPassword(url.password());
+        }
+    });
+
+    QObject::connect(mNam.get(), &QNetworkAccessManager::sslErrors, [this](QNetworkReply *reply, const QList<QSslError> &sslErrors) {
+        if (!mSslUiProxy) {
+            return;
+        }
+
+        if (mSslUiProxy->ignoreSslErrors(reply, sslErrors)) {
+            reply->ignoreSslErrors();
         }
     });
 }
@@ -70,6 +81,11 @@ QNetworkReply *DavManager::createMkColJob(const QUrl &url, const QString &docume
 QNetworkAccessManager *DavManager::networkAccessManager() const
 {
     return mNam.get();
+}
+
+void DavManager::setSslUiProxy(std::unique_ptr<DavSslUiProxy> &&proxy)
+{
+    mSslUiProxy = std::move(proxy);
 }
 
 QNetworkReply *DavManager::sendDavRequest(const QByteArray &method, const QUrl &url, const QString &document, const QString &depth) const
