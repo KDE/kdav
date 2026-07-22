@@ -58,6 +58,7 @@ static constexpr QLatin1StringView davNS = QLatin1StringView("DAV:");
 static constexpr QLatin1StringView caldavNS = QLatin1StringView("urn:ietf:params:xml:ns:caldav");
 static constexpr QLatin1StringView carddavNS = QLatin1StringView("urn:ietf:params:xml:ns:carddav");
 static constexpr QLatin1StringView icalNS = QLatin1StringView("http://apple.com/ns/ical/");
+static constexpr QLatin1StringView webdavpushNS = QLatin1StringView("https://bitfire.at/webdav-push");
 } // end namespace XML
 
 } // end namespace KDAV

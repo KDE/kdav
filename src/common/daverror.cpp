@@ -132,12 +132,14 @@ QString Error::errorText() const
     case ERR_ITEMMODIFY:
         result = i18n("There was a problem with the request. The item was not modified on the server.\n%1 (%2).", err, d->mResponseCode);
         break;
-    case ERR_ITEMLIST: {
+    case ERR_ITEMLIST:
         result = i18n("There was a problem with the request.");
         break;
-    };
     case ERR_ITEMLIST_NOMIMETYPE:
         result = i18n("There was a problem with the request. The requested MIME types are not supported.");
+        break;
+    case ERR_DAVPUSH_REGISTER:
+        result = i18n("There was a problem with the request.");
         break;
     case NO_ERR:
         break;
