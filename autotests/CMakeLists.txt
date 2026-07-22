@@ -87,3 +87,8 @@ ecm_add_test(davitemssyncjobtest.cpp fakeserver.cpp davitemssyncjobtest.h fakese
         TEST_NAME davitemssyncjob
         LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network
 )
+
+ecm_add_test(davpushregistrationjobtest.cpp fakeserver.cpp davpushregistrationjobtest.h fakeserver.h
+        TEST_NAME davpushregistrationjobtest
+        LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network Qt6::Gui
+)
