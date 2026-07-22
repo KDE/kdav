@@ -66,6 +66,10 @@ target_sources(KF6DAV PRIVATE
     common/protocolinfo.h
     common/utils.cpp
     common/utils_p.h
+    common/davpushregistrationjob.cpp
+    common/davpushregistrationjob.h
+    common/davpushregistration.cpp
+    common/davpushregistration.h
 
     protocols/groupdavprotocol.cpp
     protocols/groupdavprotocol_p.h
@@ -84,6 +88,8 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     HEADER_NAMES
     DavJobBase
     DavCollection
+    DavPushRegistration
+    DavPushRegistrationJob
     DavPushSupport
     DavCollectionDeleteJob
     DavCollectionsFetchJob
