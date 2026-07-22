@@ -151,7 +151,8 @@ PRIVATE
     Qt6::Gui
     Qt6::Network
     KF6::I18n
-    )
+    KF6::KIOCore
+)
 
 
 install(TARGETS
