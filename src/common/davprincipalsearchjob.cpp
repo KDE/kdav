@@ -9,6 +9,7 @@
 
 #include "daverror.h"
 #include "davmanager_p.h"
+#include "libkdav_debug.h"
 #include "utils_p.h"
 
 #include <QNetworkReply>
@@ -86,6 +87,7 @@ void DavPrincipalSearchJob::start()
     QDomElement principalCollectionSet = query.createElementNS(QStringLiteral("DAV:"), QStringLiteral("principal-collection-set"));
     prop.appendChild(principalCollectionSet);
 
+    qCDebug(KDAV_LOG) << "PROPFIND:" << d->mUrl.url().toDisplayString() << "query: " << query.toString();
     QNetworkReply *reply = DavManager::self()->createPropFindJob(d->mUrl.url(), query.toString());
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->principalCollectionSetSearchFinished(reply);
@@ -104,6 +106,7 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(QNetwork
         setJobError(reply->error());
         setErrorTextFromDavError();
 
+        qCWarning(KDAV_LOG) << "Error during principal search:" << responseCode << reply->error() << reply->errorString();
         emitResult();
         return;
     }
@@ -134,6 +137,7 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(QNetwork
 
     QDomElement responseElement = Utils::firstChildElementNS(documentElement, QStringLiteral("DAV:"), QStringLiteral("response"));
     if (responseElement.isNull()) {
+        qCDebug(KDAV_LOG) << "Got a null response";
         emitResult();
         return;
     }
@@ -152,18 +156,21 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(QNetwork
     }
 
     if (propstatElement.isNull()) {
+        qCDebug(KDAV_LOG) << "Got no propstat in the response";
         emitResult();
         return;
     }
 
     QDomElement propElement = Utils::firstChildElementNS(propstatElement, QStringLiteral("DAV:"), QStringLiteral("prop"));
     if (propElement.isNull()) {
+        qCDebug(KDAV_LOG) << "Got no prop in the response";
         emitResult();
         return;
     }
 
     QDomElement principalCollectionSetElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("principal-collection-set"));
     if (principalCollectionSetElement.isNull()) {
+        qCDebug(KDAV_LOG) << "Got no principal-collection-set in the response";
         emitResult();
         return;
     }
@@ -187,6 +194,7 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(QNetwork
 
         QDomDocument principalPropertySearchQuery;
         buildReportQuery(principalPropertySearchQuery);
+        qCDebug(KDAV_LOG) << "REPORT:" << url.toDisplayString() << "query:" << principalPropertySearchQuery.toString();
         QNetworkReply *reportReply = DavManager::self()->createReportJob(url, principalPropertySearchQuery.toString());
         QObject::connect(reportReply, &QNetworkReply::finished, q_ptr, [this, reportReply]() {
             principalPropertySearchFinished(reportReply);
@@ -214,6 +222,9 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(QNetworkReply
             setJobError(reply->error());
             setErrorTextFromDavError();
         }
+
+        qCWarning(KDAV_LOG) << "Error during principal property search:" << responseCode << reply->error() << reply->errorString();
+
         if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();
         }
