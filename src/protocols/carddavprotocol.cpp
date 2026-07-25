@@ -89,7 +89,7 @@ public:
 
         propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("getetag")));
         QDomElement addressDataElement = document.createElementNS(QStringLiteral("urn:ietf:params:xml:ns:carddav"), QStringLiteral("address-data"));
-        addressDataElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("allprop")));
+        addressDataElement.appendChild(document.createElementNS(QStringLiteral("urn:ietf:params:xml:ns:carddav"), QStringLiteral("allprop")));
         propElement.appendChild(addressDataElement);
 
         for (const QString &url : urls) {
