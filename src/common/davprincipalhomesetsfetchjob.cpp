@@ -75,7 +75,7 @@ void DavPrincipalHomeSetsFetchJobPrivate::fetchHomeSets(bool homeSetsOnly)
         propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("principal-URL")));
     }
 
-    QNetworkReply *reply = DavManager::self()->createPropFindJob(mUrl.url(), document.toString(), QStringLiteral("0"));
+    QNetworkReply *reply = DavManager::self()->createPropFindJob(q_ptr, mUrl.url(), document.toString(), QStringLiteral("0"));
     QObject::connect(reply, &QNetworkReply::finished, q_ptr, [this, reply]() {
         davJobFinished(reply);
     });

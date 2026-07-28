@@ -40,6 +40,7 @@ void DavItemFetchJob::start()
     request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
 
     QNetworkReply *reply = DavManager::self()->networkAccessManager()->get(request);
+    reply->setParent(this);
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->davJobFinished(reply);
     });

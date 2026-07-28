@@ -58,7 +58,7 @@ void DavCollectionCreateJob::start()
     Q_ASSERT(output.startsWith(QStringLiteral("<?xml version=\"1.0\"?>\n")));
     output = output.mid(22);
 
-    QNetworkReply *reply = DavManager::self()->createMkColJob(d->mCollection.url().url(), output);
+    QNetworkReply *reply = DavManager::self()->createMkColJob(this, d->mCollection.url().url(), output);
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->davJobFinished(reply);
     });

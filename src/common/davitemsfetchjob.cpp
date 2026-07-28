@@ -59,7 +59,7 @@ void DavItemsFetchJob::start()
     // bug in Zoho Calendar which violates the RFC by honouring Depth: 0
     // returning the collection resource itself instead of the explicitly
     // requested item hrefs.
-    QNetworkReply *reply = DavManager::self()->createReportJob(d->mCollectionUrl.url(), report.toString(), QStringLiteral("1"));
+    QNetworkReply *reply = DavManager::self()->createReportJob(this, d->mCollectionUrl.url(), report.toString(), QStringLiteral("1"));
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->davJobFinished(reply);
     });

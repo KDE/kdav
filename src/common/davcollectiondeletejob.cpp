@@ -40,6 +40,7 @@ void DavCollectionDeleteJob::start()
     request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
 
     QNetworkReply *reply = DavManager::self()->networkAccessManager()->deleteResource(request);
+    reply->setParent(this);
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->davJobFinished(reply);
     });

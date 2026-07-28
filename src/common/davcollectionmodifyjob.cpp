@@ -107,7 +107,7 @@ void DavCollectionModifyJob::start()
         }
     }
 
-    QNetworkReply *reply = DavManager::self()->createPropPatchJob(d->mUrl.url(), mQuery.toString());
+    QNetworkReply *reply = DavManager::self()->createPropPatchJob(this, d->mUrl.url(), mQuery.toString());
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->davJobFinished(reply);
     });

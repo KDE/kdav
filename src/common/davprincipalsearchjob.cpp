@@ -88,7 +88,7 @@ void DavPrincipalSearchJob::start()
     prop.appendChild(principalCollectionSet);
 
     qCDebug(KDAV_LOG) << "PROPFIND:" << d->mUrl.url().toDisplayString() << "query: " << query.toString();
-    QNetworkReply *reply = DavManager::self()->createPropFindJob(d->mUrl.url(), query.toString());
+    QNetworkReply *reply = DavManager::self()->createPropFindJob(this, d->mUrl.url(), query.toString());
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->principalCollectionSetSearchFinished(reply);
     });
@@ -195,7 +195,7 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(QNetwork
         QDomDocument principalPropertySearchQuery;
         buildReportQuery(principalPropertySearchQuery);
         qCDebug(KDAV_LOG) << "REPORT:" << url.toDisplayString() << "query:" << principalPropertySearchQuery.toString();
-        QNetworkReply *reportReply = DavManager::self()->createReportJob(url, principalPropertySearchQuery.toString());
+        QNetworkReply *reportReply = DavManager::self()->createReportJob(q_ptr, url, principalPropertySearchQuery.toString());
         QObject::connect(reportReply, &QNetworkReply::finished, q_ptr, [this, reportReply]() {
             principalPropertySearchFinished(reportReply);
         });

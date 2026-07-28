@@ -19,6 +19,7 @@ class QUrl;
 
 namespace KDAV
 {
+class DavJobBase;
 class DavProtocolBase;
 class DavSslUiProxy;
 
@@ -52,7 +53,7 @@ public:
      *
      * \a depth The Depth: value to send in the HTTP request
      */
-    QNetworkReply *createPropFindJob(const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
+    QNetworkReply *createPropFindJob(DavJobBase *job, const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
 
     /*!
      * Sends a DAV REPORT request and returns the network reply.
@@ -61,7 +62,7 @@ public:
      * \a document The query XML document.
      * \a depth The Depth: value to send in the HTTP request
      */
-    QNetworkReply *createReportJob(const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
+    QNetworkReply *createReportJob(DavJobBase *job, const QUrl &url, const QString &document, const QString &depth = QStringLiteral("1")) const;
 
     /*!
      * Sends a DAV PROPPATCH request and returns the network reply.
@@ -69,7 +70,7 @@ public:
      * \a url The target URL of the request.
      * \a document The query XML document.
      */
-    QNetworkReply *createPropPatchJob(const QUrl &url, const QString &document) const;
+    QNetworkReply *createPropPatchJob(DavJobBase *job, const QUrl &url, const QString &document) const;
 
     /*!
      * Returns a preconfigured DAV MKCOL reply.
@@ -78,7 +79,7 @@ public:
      *
      * \a document The query XML document.
      */
-    QNetworkReply *createMkColJob(const QUrl &url, const QString &document) const;
+    QNetworkReply *createMkColJob(DavJobBase *job, const QUrl &url, const QString &document) const;
 
     /*!
      * Returns the shared QNetworkAccessManager instance.
@@ -106,7 +107,7 @@ private:
      */
     DavManager();
 
-    QNetworkReply *sendDavRequest(const QByteArray &method, const QUrl &url, const QString &document, const QString &depth = {}) const;
+    QNetworkReply *sendDavRequest(DavJobBase *job, const QByteArray &method, const QUrl &url, const QString &document, const QString &depth = {}) const;
 
     mutable std::unique_ptr<QNetworkAccessManager> mNam;
     std::unique_ptr<DavSslUiProxy> mSslUiProxy;

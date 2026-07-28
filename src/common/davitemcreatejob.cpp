@@ -49,6 +49,7 @@ void DavItemCreateJob::start()
     request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::ManualRedirectPolicy);
 
     QNetworkReply *reply = DavManager::self()->networkAccessManager()->put(request, d->mItem.data());
+    reply->setParent(this);
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->davJobFinished(reply);
     });

@@ -49,6 +49,7 @@ void DavItemModifyJob::start()
     request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
 
     QNetworkReply *reply = DavManager::self()->networkAccessManager()->put(request, d->mItem.data());
+    reply->setParent(this);
     connect(reply, &QNetworkReply::finished, this, [d, reply]() {
         d->davJobFinished(reply);
     });

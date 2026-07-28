@@ -85,14 +85,14 @@ void DavItemsListJob::start()
         if (d->mMimeTypes.isEmpty() || d->mMimeTypes.contains(mimeType)) {
             ++d->mSubJobCount;
             if (protocol->useReport()) {
-                QNetworkReply *reply = DavManager::self()->createReportJob(d->mUrl.url(), props.toString());
+                QNetworkReply *reply = DavManager::self()->createReportJob(this, d->mUrl.url(), props.toString());
                 reply->setProperty("davType", QStringLiteral("report"));
                 reply->setProperty("itemsMimeType", mimeType);
                 connect(reply, &QNetworkReply::finished, this, [d, reply]() {
                     d->davJobFinished(reply);
                 });
             } else {
-                QNetworkReply *reply = DavManager::self()->createPropFindJob(d->mUrl.url(), props.toString());
+                QNetworkReply *reply = DavManager::self()->createPropFindJob(this, d->mUrl.url(), props.toString());
                 reply->setProperty("davType", QStringLiteral("propFind"));
                 reply->setProperty("itemsMimeType", mimeType);
                 connect(reply, &QNetworkReply::finished, this, [d, reply]() {

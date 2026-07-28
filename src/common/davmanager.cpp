@@ -6,6 +6,7 @@
 
 #include "davmanager_p.h"
 
+#include "davjobbase.h"
 #include "davssluiproxy.h"
 #include "protocols/caldavprotocol_p.h"
 #include "protocols/carddavprotocol_p.h"
@@ -58,24 +59,24 @@ DavManager *DavManager::self()
     return &sSelf;
 }
 
-QNetworkReply *DavManager::createPropFindJob(const QUrl &url, const QString &document, const QString &depth) const
+QNetworkReply *DavManager::createPropFindJob(DavJobBase *job, const QUrl &url, const QString &document, const QString &depth) const
 {
-    return sendDavRequest("PROPFIND", url, document, depth);
+    return sendDavRequest(job, "PROPFIND", url, document, depth);
 }
 
-QNetworkReply *DavManager::createReportJob(const QUrl &url, const QString &document, const QString &depth) const
+QNetworkReply *DavManager::createReportJob(DavJobBase *job, const QUrl &url, const QString &document, const QString &depth) const
 {
-    return sendDavRequest("REPORT", url, document, depth);
+    return sendDavRequest(job, "REPORT", url, document, depth);
 }
 
-QNetworkReply *DavManager::createPropPatchJob(const QUrl &url, const QString &document) const
+QNetworkReply *DavManager::createPropPatchJob(DavJobBase *job, const QUrl &url, const QString &document) const
 {
-    return sendDavRequest("PROPPATCH", url, document);
+    return sendDavRequest(job, "PROPPATCH", url, document);
 }
 
-QNetworkReply *DavManager::createMkColJob(const QUrl &url, const QString &document) const
+QNetworkReply *DavManager::createMkColJob(DavJobBase *job, const QUrl &url, const QString &document) const
 {
-    return sendDavRequest("MKCOL", url, document);
+    return sendDavRequest(job, "MKCOL", url, document);
 }
 
 QNetworkAccessManager *DavManager::networkAccessManager() const
@@ -88,7 +89,7 @@ void DavManager::setSslUiProxy(std::unique_ptr<DavSslUiProxy> &&proxy)
     mSslUiProxy = std::move(proxy);
 }
 
-QNetworkReply *DavManager::sendDavRequest(const QByteArray &method, const QUrl &url, const QString &document, const QString &depth) const
+QNetworkReply *DavManager::sendDavRequest(DavJobBase *job, const QByteArray &method, const QUrl &url, const QString &document, const QString &depth) const
 {
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, u"text/xml; charset=utf-8"_s);
@@ -96,7 +97,9 @@ QNetworkReply *DavManager::sendDavRequest(const QByteArray &method, const QUrl &
         request.setRawHeader("Depth", depth.toUtf8());
     }
     request.setHeader(QNetworkRequest::UserAgentHeader, userAgent());
-    return mNam->sendCustomRequest(request, method, QByteArray("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n") + document.toUtf8());
+    auto reply = mNam->sendCustomRequest(request, method, QByteArray("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n") + document.toUtf8());
+    reply->setParent(job);
+    return reply;
 }
 
 const DavProtocolBase *DavManager::davProtocol(Protocol protocol)
