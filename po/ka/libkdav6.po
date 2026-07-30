@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-28 00:39+0000\n"
+"POT-Creation-Date: 2026-07-30 00:40+0000\n"
 "PO-Revision-Date: 2026-05-28 04:24+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -18,27 +18,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.9\n"
 
-#: common/daverror.cpp:88
+#: common/daverror.cpp:79
 #, kde-format
 msgid "Invalid username/password"
 msgstr "მომხმარებელი ან პაროლი არასწორია"
 
-#: common/daverror.cpp:90
+#: common/daverror.cpp:81
 #, kde-format
 msgid "Access forbidden"
 msgstr "წვდომა აკრძალულია"
 
-#: common/daverror.cpp:92
+#: common/daverror.cpp:83
 #, kde-format
 msgid "Resource not found"
 msgstr "რესურსი ნაპოვნი არაა"
 
-#: common/daverror.cpp:94
+#: common/daverror.cpp:85
 #, kde-format
 msgid "HTTP error"
 msgstr "HTTP შეცდომა"
 
-#: common/daverror.cpp:96
+#: common/daverror.cpp:87
 #, kde-format
 msgid ""
 "There was a problem with the request.\n"
@@ -47,19 +47,19 @@ msgstr ""
 "მოთხოვნის პრობლემა.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:99
+#: common/daverror.cpp:90
 #, kde-format
 msgid "Protocol for the collection does not support MULTIGET"
 msgstr "კოლექციის პროტოკოლს MULTIGET-ს მხარდაჭერა არ გააჩნია"
 
-#: common/daverror.cpp:102
+#: common/daverror.cpp:93
 #, kde-format
 msgid ""
 "The server encountered an error that prevented it from completing your "
 "request: %1 (%2)"
 msgstr "სერვერის შეცდომა. შედეგად მოთხოვნა არ შესრულებულა: %1 (%2)"
 
-#: common/daverror.cpp:105
+#: common/daverror.cpp:96
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been deleted "
@@ -69,7 +69,7 @@ msgstr ""
 "მოთხოვნის პრობლემა. კოლექცია სერვერიდან არ წაშლილა.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:108
+#: common/daverror.cpp:99
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
@@ -79,22 +79,22 @@ msgstr ""
 "მოთხოვნის პრობლემა. კოლექცია სერვერზე ჯერ არ შექმნილა.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:111
+#: common/daverror.cpp:102
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "უკანაბოლოს არასწორი პასუხი"
 
-#: common/daverror.cpp:114
+#: common/daverror.cpp:105
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "XQuery-ის ფოკუსის დაყენების შეცდომა"
 
-#: common/daverror.cpp:117
+#: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "DAV-ის იმპლემენტაციის მიერ გადმოცემული XQuery არასწორია"
 
-#: common/daverror.cpp:121
+#: common/daverror.cpp:112
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been modified "
@@ -104,17 +104,17 @@ msgstr ""
 "მოთხოვნის პრობლემა. კოლექცია სერვერზე არ შეცვლილა.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:118
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "შესაცვლელი ან წასაშლელი თვსებები ნაპოვნი არაა"
 
-#: common/daverror.cpp:130
+#: common/daverror.cpp:121
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "შეცდომა თვისებების შეცვლისას"
 
-#: common/daverror.cpp:132
+#: common/daverror.cpp:123
 #, kde-format
 msgid ""
 "\n"
@@ -125,7 +125,7 @@ msgstr ""
 "მეტი ინფორმაციისთვის იხილეთ:\n"
 "%1"
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:127
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -135,7 +135,7 @@ msgstr ""
 "მოთხოვნის პრობლემა. სერვერზე ჩანაწერი არ გაკეთებულა.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:139
+#: common/daverror.cpp:130
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -145,7 +145,7 @@ msgstr ""
 "მოთხოვნის პრობლემა. ჩანაწერი სერვერიდან არ წაშლილა.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:142
+#: common/daverror.cpp:133
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not modified on the "
@@ -155,12 +155,12 @@ msgstr ""
 "მოთხოვნის პრობლემა. სერვერზე ჩანაწერი არ შეცვლილა.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:145
+#: common/daverror.cpp:136
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "მოთხოვნის პრობლემა."
 
-#: common/daverror.cpp:149
+#: common/daverror.cpp:140
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "

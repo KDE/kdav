@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-28 00:39+0000\n"
+"POT-Creation-Date: 2026-07-30 00:40+0000\n"
 "PO-Revision-Date: 2021-06-27 10:10+0530\n"
 "Last-Translator: Raghavendra Kamath <raghu@raghukamath.com>\n"
 "Language-Team: kde-hindi\n"
@@ -18,27 +18,27 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Generator: Lokalize 21.04.2\n"
 
-#: common/daverror.cpp:88
+#: common/daverror.cpp:79
 #, kde-format
 msgid "Invalid username/password"
 msgstr "अवैध उपयोक्ता नाम/कूटशब्द"
 
-#: common/daverror.cpp:90
+#: common/daverror.cpp:81
 #, kde-format
 msgid "Access forbidden"
 msgstr "प्रवेश निषेध"
 
-#: common/daverror.cpp:92
+#: common/daverror.cpp:83
 #, kde-format
 msgid "Resource not found"
 msgstr "कोई संसाधन नहीं मिला"
 
-#: common/daverror.cpp:94
+#: common/daverror.cpp:85
 #, kde-format
 msgid "HTTP error"
 msgstr "एचटीटीपी त्रुटि"
 
-#: common/daverror.cpp:96
+#: common/daverror.cpp:87
 #, kde-format
 msgid ""
 "There was a problem with the request.\n"
@@ -47,19 +47,19 @@ msgstr ""
 "याचिका में कोई समस्या थी।\n"
 "%1 (%2) ।"
 
-#: common/daverror.cpp:99
+#: common/daverror.cpp:90
 #, kde-format
 msgid "Protocol for the collection does not support MULTIGET"
 msgstr "संग्रह का प्रोटोकॉल मल्टीगेट का समर्थन नहीं करता है।"
 
-#: common/daverror.cpp:102
+#: common/daverror.cpp:93
 #, kde-format
 msgid ""
 "The server encountered an error that prevented it from completing your "
 "request: %1 (%2)"
 msgstr "सर्वर किसी समस्या के कारण आपकी याचिका को पूरा नहीं कर सका: %1 (%2)"
 
-#: common/daverror.cpp:105
+#: common/daverror.cpp:96
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been deleted "
@@ -69,7 +69,7 @@ msgstr ""
 "याचिका में कोई समस्या थी। संग्रह को सर्वर से हटा दिया गया है।\n"
 "%1 (%2)।"
 
-#: common/daverror.cpp:108
+#: common/daverror.cpp:99
 #, fuzzy, kde-format
 #| msgid ""
 #| "There was a problem with the request. The collection has not been deleted "
@@ -83,22 +83,22 @@ msgstr ""
 "याचिका में कोई समस्या थी। संग्रह को सर्वर से हटा दिया गया है।\n"
 "%1 (%2)।"
 
-#: common/daverror.cpp:111
+#: common/daverror.cpp:102
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "पृष्ठभाग से अवैध उत्तर"
 
-#: common/daverror.cpp:114
+#: common/daverror.cpp:105
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "एक्सक्वैरी में फ़ोकस सेट करने में त्रुटि"
 
-#: common/daverror.cpp:117
+#: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "डीएवी कार्यान्वयन ने अवैध एक्सक्वैरी प्रस्तुत की"
 
-#: common/daverror.cpp:121
+#: common/daverror.cpp:112
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been modified "
@@ -108,17 +108,17 @@ msgstr ""
 "याचिका में कोई समस्या थी। सर्वर में संग्रह का परिवर्तिन नहीं किया गया है।\n"
 "%1 (%2)।"
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:118
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "कोई गुण परिवर्तिन या हटाने के लिए नहीं है"
 
-#: common/daverror.cpp:130
+#: common/daverror.cpp:121
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "गुणों को परिवर्तित करते समय त्रुटि हुई"
 
-#: common/daverror.cpp:132
+#: common/daverror.cpp:123
 #, kde-format
 msgid ""
 "\n"
@@ -129,7 +129,7 @@ msgstr ""
 "सर्वर नें अतिरिक्त जानकारी प्रदान की है:\n"
 "%1"
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:127
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -139,7 +139,7 @@ msgstr ""
 "याचिका में कोई समस्या थी। वस्तु सर्वर में सृजित नहीं की गई।\n"
 "%1 (%2)।"
 
-#: common/daverror.cpp:139
+#: common/daverror.cpp:130
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -149,7 +149,7 @@ msgstr ""
 "याचिका में कोई समस्या थी। वस्तु सर्वर से हटाई नहीं गई।\n"
 "%1 (%2)।"
 
-#: common/daverror.cpp:142
+#: common/daverror.cpp:133
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not modified on the "
@@ -159,12 +159,12 @@ msgstr ""
 "याचिका में कोई समस्या थी। वस्तु सर्वर में परिवर्तित नहीं हुई।\n"
 "%1 (%2)।"
 
-#: common/daverror.cpp:145
+#: common/daverror.cpp:136
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "याचिका में कोई समस्या थी।"
 
-#: common/daverror.cpp:149
+#: common/daverror.cpp:140
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "

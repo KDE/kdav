@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdeorg\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-28 00:39+0000\n"
+"POT-Creation-Date: 2026-07-30 00:40+0000\n"
 "PO-Revision-Date: 2024-04-22 15:58\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
@@ -17,46 +17,46 @@ msgstr ""
 "X-Crowdin-File: /kf6-trunk/messages/kdav/libkdav6.pot\n"
 "X-Crowdin-File-ID: 43197\n"
 
-#: common/daverror.cpp:88
+#: common/daverror.cpp:79
 #, kde-format
 msgid "Invalid username/password"
 msgstr "无效的用户名或密码"
 
-#: common/daverror.cpp:90
+#: common/daverror.cpp:81
 #, kde-format
 msgid "Access forbidden"
 msgstr "禁止访问"
 
-#: common/daverror.cpp:92
+#: common/daverror.cpp:83
 #, kde-format
 msgid "Resource not found"
 msgstr "找不到资源"
 
-#: common/daverror.cpp:94
+#: common/daverror.cpp:85
 #, kde-format
 msgid "HTTP error"
 msgstr "HTTP 错误"
 
-#: common/daverror.cpp:96
+#: common/daverror.cpp:87
 #, kde-format
 msgid ""
 "There was a problem with the request.\n"
 "%1 (%2)."
 msgstr "请求出错。\\n%1 (%2)。"
 
-#: common/daverror.cpp:99
+#: common/daverror.cpp:90
 #, kde-format
 msgid "Protocol for the collection does not support MULTIGET"
 msgstr "集合的协议不支持 MULTIGET"
 
-#: common/daverror.cpp:102
+#: common/daverror.cpp:93
 #, kde-format
 msgid ""
 "The server encountered an error that prevented it from completing your "
 "request: %1 (%2)"
 msgstr "服务器出现错误，无法完成您的请求：%1 (%2)"
 
-#: common/daverror.cpp:105
+#: common/daverror.cpp:96
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been deleted "
@@ -66,7 +66,7 @@ msgstr ""
 "请求出错。服务器上的项目未删除。\n"
 "%1 (%2)。"
 
-#: common/daverror.cpp:108
+#: common/daverror.cpp:99
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
@@ -76,22 +76,22 @@ msgstr ""
 "请求出错。服务器上的项目未创建。\n"
 "%1 (%2)。"
 
-#: common/daverror.cpp:111
+#: common/daverror.cpp:102
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "无效的后端应答"
 
-#: common/daverror.cpp:114
+#: common/daverror.cpp:105
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "设置 XQuery 焦点时发生错误"
 
-#: common/daverror.cpp:117
+#: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "DAV 实现提交了无效的 XQuery"
 
-#: common/daverror.cpp:121
+#: common/daverror.cpp:112
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been modified "
@@ -101,17 +101,17 @@ msgstr ""
 "请求出错。服务器上的项目未修改。\n"
 "%1 (%2)。"
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:118
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "没有要更改或删除的属性"
 
-#: common/daverror.cpp:130
+#: common/daverror.cpp:121
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "修改属性时出错"
 
-#: common/daverror.cpp:132
+#: common/daverror.cpp:123
 #, kde-format
 msgid ""
 "\n"
@@ -122,7 +122,7 @@ msgstr ""
 "服务器返回更多信息：\n"
 "%1"
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:127
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -132,7 +132,7 @@ msgstr ""
 "请求出错。服务器上的项目未创建。\n"
 "%1 (%2)。"
 
-#: common/daverror.cpp:139
+#: common/daverror.cpp:130
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -142,7 +142,7 @@ msgstr ""
 "请求出错。服务器上的项目未删除。\n"
 "%1 (%2)。"
 
-#: common/daverror.cpp:142
+#: common/daverror.cpp:133
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not modified on the "
@@ -152,12 +152,12 @@ msgstr ""
 "请求出错。服务器上的项目未修改。\n"
 "%1 (%2)。"
 
-#: common/daverror.cpp:145
+#: common/daverror.cpp:136
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "请求出错。"
 
-#: common/daverror.cpp:149
+#: common/daverror.cpp:140
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "

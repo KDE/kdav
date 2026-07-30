@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdepim-runtime\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-28 00:39+0000\n"
+"POT-Creation-Date: 2026-07-30 00:40+0000\n"
 "PO-Revision-Date: 2026-06-22 18:48+0200\n"
 "Last-Translator: Karl Ove Hufthammer <karl@huftis.org>\n"
 "Language-Team: Norwegian Nynorsk <l10n-no@nuug.no>\n"
@@ -18,27 +18,27 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 "X-Text-Markup: kde4\n"
 
-#: common/daverror.cpp:88
+#: common/daverror.cpp:79
 #, kde-format
 msgid "Invalid username/password"
 msgstr "Ugyldig brukarnamn/passord"
 
-#: common/daverror.cpp:90
+#: common/daverror.cpp:81
 #, kde-format
 msgid "Access forbidden"
 msgstr "Nekta tilgang"
 
-#: common/daverror.cpp:92
+#: common/daverror.cpp:83
 #, kde-format
 msgid "Resource not found"
 msgstr "Fann ikkje ressursen"
 
-#: common/daverror.cpp:94
+#: common/daverror.cpp:85
 #, kde-format
 msgid "HTTP error"
 msgstr "HTTP-feil"
 
-#: common/daverror.cpp:96
+#: common/daverror.cpp:87
 #, kde-format
 msgid ""
 "There was a problem with the request.\n"
@@ -47,12 +47,12 @@ msgstr ""
 "Det var problem med førespurnaden.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:99
+#: common/daverror.cpp:90
 #, kde-format
 msgid "Protocol for the collection does not support MULTIGET"
 msgstr "Protokoll for samlinga støttar ikkje MULTIGET"
 
-#: common/daverror.cpp:102
+#: common/daverror.cpp:93
 #, kde-format
 msgid ""
 "The server encountered an error that prevented it from completing your "
@@ -61,7 +61,7 @@ msgstr ""
 "Tenaren støytte på ein feil som hindra han i å fullføra førespurnaden: %1 "
 "(%2)"
 
-#: common/daverror.cpp:105
+#: common/daverror.cpp:96
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been deleted "
@@ -71,7 +71,7 @@ msgstr ""
 "Det var problem med førespurnaden. Samlinga er ikkje sletta frå tenaren.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:108
+#: common/daverror.cpp:99
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
@@ -81,22 +81,22 @@ msgstr ""
 "Det var problem med førespurnaden. Samlinga er ikkje oppretta på tenaren.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:111
+#: common/daverror.cpp:102
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "Ugyldig svar frå bakgrunnsmotoren"
 
-#: common/daverror.cpp:114
+#: common/daverror.cpp:105
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "Feil ved fokusval for XQuery"
 
-#: common/daverror.cpp:117
+#: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "Ugyldig XQuery send av DAV-implementasjon"
 
-#: common/daverror.cpp:121
+#: common/daverror.cpp:112
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been modified "
@@ -106,17 +106,17 @@ msgstr ""
 "Det var problem med førespurnaden. Samlinga er ikkje endra på tenaren.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:118
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "Ingen eigenskapar å endra eller fjerna"
 
-#: common/daverror.cpp:130
+#: common/daverror.cpp:121
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "Det oppstod ein feil ved endring av eigenskapar"
 
-#: common/daverror.cpp:132
+#: common/daverror.cpp:123
 #, kde-format
 msgid ""
 "\n"
@@ -127,7 +127,7 @@ msgstr ""
 "Tenaren returnerte meir informasjon:\n"
 "%1"
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:127
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -137,7 +137,7 @@ msgstr ""
 "Det var problem med førespurnaden. Elementet er ikkje oppretta på tenaren.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:139
+#: common/daverror.cpp:130
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -147,7 +147,7 @@ msgstr ""
 "Det var problem med førespurnaden. Elementet er ikkje sletta frå tenaren.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:142
+#: common/daverror.cpp:133
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not modified on the "
@@ -157,12 +157,12 @@ msgstr ""
 "Det var problem med førespurnaden. Elementet er ikkje endra på tenaren.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:145
+#: common/daverror.cpp:136
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "Det var problem med førespurnaden."
 
-#: common/daverror.cpp:149
+#: common/daverror.cpp:140
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "

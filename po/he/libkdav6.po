@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-05-28 00:39+0000\n"
+"POT-Creation-Date: 2026-07-30 00:40+0000\n"
 "PO-Revision-Date: 2026-05-28 08:34+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -18,27 +18,27 @@ msgstr ""
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Lokalize 26.04.1\n"
 
-#: common/daverror.cpp:88
+#: common/daverror.cpp:79
 #, kde-format
 msgid "Invalid username/password"
 msgstr "שם משתמש/סיסמה שגויים"
 
-#: common/daverror.cpp:90
+#: common/daverror.cpp:81
 #, kde-format
 msgid "Access forbidden"
 msgstr "הגישה נדחתה"
 
-#: common/daverror.cpp:92
+#: common/daverror.cpp:83
 #, kde-format
 msgid "Resource not found"
 msgstr "המשאב לא נמצא"
 
-#: common/daverror.cpp:94
+#: common/daverror.cpp:85
 #, kde-format
 msgid "HTTP error"
 msgstr "שגיאת HTTP"
 
-#: common/daverror.cpp:96
+#: common/daverror.cpp:87
 #, kde-format
 msgid ""
 "There was a problem with the request.\n"
@@ -47,19 +47,19 @@ msgstr ""
 "הייתה בעיה עם הבקשה.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:99
+#: common/daverror.cpp:90
 #, kde-format
 msgid "Protocol for the collection does not support MULTIGET"
 msgstr "הפרוטוקול לאוסף לא תומך ב־MULTIGET"
 
-#: common/daverror.cpp:102
+#: common/daverror.cpp:93
 #, kde-format
 msgid ""
 "The server encountered an error that prevented it from completing your "
 "request: %1 (%2)"
 msgstr "השרת נתקל בשגיאה שמנעה ממנו להשלים את הבקשה שלך: %1 (%2)"
 
-#: common/daverror.cpp:105
+#: common/daverror.cpp:96
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been deleted "
@@ -69,7 +69,7 @@ msgstr ""
 "הייתה בעיה עם הבקשה שלך. האוסף לא נמחק מהשרת.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:108
+#: common/daverror.cpp:99
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
@@ -79,22 +79,22 @@ msgstr ""
 "הייתה בעיה עם הבקשה שלך. האוסף לא נוצר בשרת.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:111
+#: common/daverror.cpp:102
 #, kde-format
 msgid "Invalid responses from backend"
 msgstr "תגובות שגויות מהמנגנון"
 
-#: common/daverror.cpp:114
+#: common/daverror.cpp:105
 #, kde-format
 msgid "Error setting focus for XQuery"
 msgstr "שגיאה בהעברת המיקוד ל־XQuery"
 
-#: common/daverror.cpp:117
+#: common/daverror.cpp:108
 #, kde-format
 msgid "Invalid XQuery submitted by DAV implementation"
 msgstr "הוגש XQuery שגוי על ידי מימוש ה־DAV"
 
-#: common/daverror.cpp:121
+#: common/daverror.cpp:112
 #, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been modified "
@@ -104,17 +104,17 @@ msgstr ""
 "הייתה בעיה עם הבקשה. האוסף לא השתנה בשרת.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:127
+#: common/daverror.cpp:118
 #, kde-format
 msgid "No properties to change or remove"
 msgstr "אין מאפיינים לשינוי או הסרה"
 
-#: common/daverror.cpp:130
+#: common/daverror.cpp:121
 #, kde-format
 msgid "There was an error when modifying the properties"
 msgstr "אירעה שגיאה בשינוי המאפיינים"
 
-#: common/daverror.cpp:132
+#: common/daverror.cpp:123
 #, kde-format
 msgid ""
 "\n"
@@ -125,7 +125,7 @@ msgstr ""
 "השרת החזיר פירוט נוסף:\n"
 "%1"
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:127
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been created on the "
@@ -135,7 +135,7 @@ msgstr ""
 "הייתה בעיה עם הבקשה. הפריט לא נוצר בשרת.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:139
+#: common/daverror.cpp:130
 #, kde-format
 msgid ""
 "There was a problem with the request. The item has not been deleted from the "
@@ -145,7 +145,7 @@ msgstr ""
 "הייתה בעיה עם הבקשה שלך. הפריט לא נמחק מהשרת.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:142
+#: common/daverror.cpp:133
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not modified on the "
@@ -155,12 +155,12 @@ msgstr ""
 "הייתה בעיה עם הבקשה. הפריט לא השתנה בשרת.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:145
+#: common/daverror.cpp:136
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "הייתה בעיה עם הבקשה."
 
-#: common/daverror.cpp:149
+#: common/daverror.cpp:140
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
