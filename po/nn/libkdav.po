@@ -1,5 +1,6 @@
 # Translation of libkdav6 to Norwegian Nynorsk
 #
+# Karl Ove Hufthammer <karl@huftis.org>, 2020, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: kdepim-runtime\n"
