@@ -42,6 +42,8 @@ target_sources(KF6DAV PRIVATE
     common/davitemsfetchjob.h
     common/davitemslistjob.cpp
     common/davitemslistjob.h
+    common/davitemmovejob.cpp
+    common/davitemmovejob.h
     common/davjobbase.cpp
     common/davjobbase.h
     common/davjobbase_p.h
@@ -94,6 +96,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavItem
     DavItemCreateJob
     DavItemDeleteJob
+    DavItemMoveJob
     DavItemFetchJob
     DavItemModifyJob
     DavItemsFetchJob

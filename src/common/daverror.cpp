@@ -136,6 +136,10 @@ QString Error::errorText() const
         result = i18n("There was a problem with the request.");
         break;
     };
+    case ERR_ITEMMOVE: {
+        result = i18n("There was a problem with the request. The item was not moved.\n%1 (%2).", err, d->mResponseCode);
+        break;
+    };
     case ERR_ITEMLIST_NOMIMETYPE:
         result = i18n("There was a problem with the request. The requested MIME types are not supported.");
         break;

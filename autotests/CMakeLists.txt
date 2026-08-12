@@ -72,3 +72,8 @@ ecm_add_test(davcollectioncreatejobtest.cpp fakeserver.cpp davcollectioncreatejo
     TEST_NAME davcollectioncreatejobtest
     LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network Qt6::Gui
 )
+
+ecm_add_test(davitemmovejobtest.cpp fakeserver.cpp davitemmovejobtest.h fakeserver.h
+        TEST_NAME davitemmovejobtest
+        LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network
+)
