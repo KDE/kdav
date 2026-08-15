@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-30 00:40+0000\n"
+"POT-Creation-Date: 2026-08-15 00:41+0000\n"
 "PO-Revision-Date: 2026-07-01 21:34+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -165,6 +165,19 @@ msgid "There was a problem with the request."
 msgstr "Eskaerarekin arazo bat egon da."
 
 #: common/daverror.cpp:140
+#, fuzzy, kde-format
+#| msgid ""
+#| "There was a problem with the request. The item was not modified on the "
+#| "server.\n"
+#| "%1 (%2)."
+msgid ""
+"There was a problem with the request. The item was not moved.\n"
+"%1 (%2)."
+msgstr ""
+"Eskaerarekin arazo bat egon da. Elementua ez da aldatu zerbitzarian.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:144
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_davgroupware_resource\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-30 00:40+0000\n"
+"POT-Creation-Date: 2026-08-15 00:41+0000\n"
 "PO-Revision-Date: 2017-12-25 20:33+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -169,6 +169,19 @@ msgid "There was a problem with the request."
 msgstr "Pyynnössä oli ongelmia."
 
 #: common/daverror.cpp:140
+#, fuzzy, kde-format
+#| msgid ""
+#| "There was a problem with the request. The item was not modified on the "
+#| "server.\n"
+#| "%1 (%2)."
+msgid ""
+"There was a problem with the request. The item was not moved.\n"
+"%1 (%2)."
+msgstr ""
+"Pyynnössä oli ongelmia eikä merkintää muutettu palvelimella.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:144
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "

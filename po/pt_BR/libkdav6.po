@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libkdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-07-30 00:40+0000\n"
+"POT-Creation-Date: 2026-08-15 00:41+0000\n"
 "PO-Revision-Date: 2026-05-28 06:13-0300\n"
 "Last-Translator: Marcus Gama <marcus.gama@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <kde-i18n-pt_BR@kde.org>\n"
@@ -169,6 +169,20 @@ msgid "There was a problem with the request."
 msgstr "Ocorreu um problema com a solicitação."
 
 #: common/daverror.cpp:140
+#, fuzzy, kde-format
+#| msgid ""
+#| "There was a problem with the request. The item was not modified on the "
+#| "server.\n"
+#| "%1 (%2)."
+msgid ""
+"There was a problem with the request. The item was not moved.\n"
+"%1 (%2)."
+msgstr ""
+"Ocorreu um problema com a solicitação. O item não foi modificado no "
+"servidor.\n"
+"%1 (%2)."
+
+#: common/daverror.cpp:144
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
