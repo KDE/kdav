@@ -160,16 +160,12 @@ msgid "There was a problem with the request."
 msgstr "Bol problém s požiadavkou."
 
 #: common/daverror.cpp:140
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"Nastala chyba s požiadavkou. Položka nebola zmenená na serveri.\n"
+"Nastala chyba s požiadavkou. Položka nebola presunutá.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:144
