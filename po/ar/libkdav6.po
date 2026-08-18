@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kdepim-runtime\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:41+0000\n"
-"PO-Revision-Date: 2026-06-05 14:06+0400\n"
+"PO-Revision-Date: 2026-08-17 20:11+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Lokalize 23.08.5\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #: common/daverror.cpp:79
 #, kde-format
@@ -161,16 +161,12 @@ msgid "There was a problem with the request."
 msgstr "حدثت مشكلة بالطّلب."
 
 #: common/daverror.cpp:140
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"حدثت مشكلة بالطّلب. لم يُعدّل العنصر في الخادم.\n"
+"حدثت مشكلة بالطّلب. لم يُنقل العنصر.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:144

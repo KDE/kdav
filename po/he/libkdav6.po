@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:41+0000\n"
-"PO-Revision-Date: 2026-05-28 08:34+0300\n"
+"PO-Revision-Date: 2026-08-15 06:23+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Lokalize 26.04.1\n"
+"X-Generator: Lokalize 26.04.3\n"
 
 #: common/daverror.cpp:79
 #, kde-format
@@ -161,16 +161,12 @@ msgid "There was a problem with the request."
 msgstr "הייתה בעיה עם הבקשה."
 
 #: common/daverror.cpp:140
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"הייתה בעיה עם הבקשה. הפריט לא השתנה בשרת.\n"
+"הייתה בעיה עם הבקשה. הפריט לא הועבר.\n"
 "%1 (%2)"
 
 #: common/daverror.cpp:144
