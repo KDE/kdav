@@ -158,17 +158,11 @@ msgid "There was a problem with the request."
 msgstr "请求出错。"
 
 #: common/daverror.cpp:140
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"请求出错。服务器上的项目未修改。\n"
-"%1 (%2)。"
 
 #: common/daverror.cpp:144
 #, kde-format
