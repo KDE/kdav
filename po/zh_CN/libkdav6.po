@@ -163,6 +163,8 @@ msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
+"请求出现问题。项目未被移动。\n"
+"%1 (%2)。"
 
 #: common/daverror.cpp:144
 #, kde-format
