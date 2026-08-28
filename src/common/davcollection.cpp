@@ -25,6 +25,7 @@ public:
     Privileges mPrivileges;
     QByteArray mTimeZone;
     DavPushSupport mDavPushSupport;
+    QString mSyncToken;
 };
 
 DavCollection::DavCollection()
@@ -125,4 +126,14 @@ void DavCollection::setDavPushSupport(const DavPushSupport &pushSupport)
 DavPushSupport DavCollection::davPushSupport() const
 {
     return d->mDavPushSupport;
+}
+
+void DavCollection::setSyncToken(const QString &syncToken)
+{
+    d->mSyncToken = syncToken;
+}
+
+QString DavCollection::syncToken() const
+{
+    return d->mSyncToken;
 }
