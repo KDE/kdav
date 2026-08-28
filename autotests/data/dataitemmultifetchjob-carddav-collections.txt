@@ -5,6 +5,7 @@ B:  <prop xmlns="DAV:">
 B:   <displayname xmlns="DAV:"/>
 B:   <resourcetype xmlns="DAV:"/>
 B:   <getctag xmlns="http://calendarserver.org/ns/"/>
+B:   <sync-token xmlns="DAV:"/>
 B:  </prop>
 B: </propfind>
 S: HTTP/1.0 207 Multi-Status
@@ -24,6 +25,7 @@ D:          <C:addressbook xmlns:C="urn:ietf:params:xml:ns:carddav"/>
 D:        </resourcetype>
 D:        <displayname xmlns="DAV:">My Address Book</displayname>
 D:        <getctag xmlns="http://calendarserver.org/ns/">3145</getctag>
+D:        <sync-token xmlns="DAV:">3143</sync-token>
 D:      </prop>
 D:      <status xmlns="DAV:">HTTP/1.1 200 OK</status>
 D:    </propstat>
