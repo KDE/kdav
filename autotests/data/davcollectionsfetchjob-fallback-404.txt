@@ -8,6 +8,7 @@ B:   <calendar-color xmlns="http://apple.com/ns/ical/"/>
 B:   <supported-calendar-component-set xmlns="urn:ietf:params:xml:ns:caldav"/>
 B:   <current-user-privilege-set xmlns="DAV:"/>
 B:   <getctag xmlns="http://calendarserver.org/ns/"/>
+B:   <sync-token xmlns="DAV:"/>
 B:   <P:transports xmlns:P="https://bitfire.at/webdav-push"/>
 B:   <P:topic xmlns:P="https://bitfire.at/webdav-push"/>
 B:   <P:supported-triggers xmlns:P="https://bitfire.at/webdav-push"/>

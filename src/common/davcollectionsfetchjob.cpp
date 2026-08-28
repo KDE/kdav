@@ -289,6 +289,14 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *repl
                 if (!CTagElement.isNull()) {
                     CTag = CTagElement.text();
                 }
+                // Extract sync-token
+                const QDomElement syncTokenElement = Utils::firstChildElementNS(propElement, //
+                                                                                QStringLiteral("DAV:"),
+                                                                                QStringLiteral("sync-token"));
+                QString syncToken;
+                if (!syncTokenElement.isNull()) {
+                    syncToken = syncTokenElement.text();
+                }
 
                 // extract calendar color if provided
                 const QDomElement colorElement = Utils::firstChildElementNS(propElement, //
@@ -317,6 +325,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *repl
                 DavCollection collection(DavUrl(_url, mUrl.protocol()), displayName, contentTypes);
 
                 collection.setCTag(CTag);
+                collection.setSyncToken(syncToken);
                 if (color.isValid()) {
                     collection.setColor(color);
                 }

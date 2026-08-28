@@ -185,6 +185,20 @@ public:
      */
     [[nodiscard]] DavPushSupport davPushSupport() const;
 
+    /*!
+     * Sets the sync-token on this calendar collection.
+     *
+     * \since 6.30
+     */
+    void setSyncToken(const QString &syncToken);
+
+    /*!
+     * Returns the sync-token on this calendar collection.
+     *
+     * \since 6.30
+     */
+    [[nodiscard]] QString syncToken() const;
+
 private:
     QSharedDataPointer<DavCollectionPrivate> d;
 };

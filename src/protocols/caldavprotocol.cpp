@@ -41,6 +41,7 @@ public:
         propElement.appendChild(document.createElementNS(QStringLiteral("urn:ietf:params:xml:ns:caldav"), QStringLiteral("supported-calendar-component-set")));
         propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("current-user-privilege-set")));
         propElement.appendChild(document.createElementNS(QStringLiteral("http://calendarserver.org/ns/"), QStringLiteral("getctag")));
+        propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("sync-token")));
 
         // Add discovery of push notifications
         propElement.appendChild(document.createElementNS(davPushNs, QStringLiteral("P:transports")));

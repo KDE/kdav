@@ -60,6 +60,7 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
              DavCollection::Events | DavCollection::Todos | DavCollection::FreeBusy | DavCollection::Journal | DavCollection::Timezone);
     QCOMPARE(calendar.url().url().path(), QStringLiteral("/caldav.php/test1.user/home/"));
     QCOMPARE(calendar.CTag(), QStringLiteral("12345"));
+    QCOMPARE(calendar.syncToken(), QStringLiteral("3142"));
     QCOMPARE(calendar.privileges(), KDAV::Read);
     auto davPush = KDAV::DavPushSupport();
     davPush.setTopic(QStringLiteral("MyTopic-1"));
@@ -71,6 +72,7 @@ void DavCollectionsMultiFetchJobTest::runSuccessfullTest()
     QCOMPARE(addressbook.contentTypes(), DavCollection::Contacts);
     QCOMPARE(addressbook.url().url().path(), QStringLiteral("/carddav.php/test1.user/home/"));
     QCOMPARE(addressbook.CTag(), QStringLiteral("3145"));
+    QCOMPARE(addressbook.syncToken(), QStringLiteral("3143"));
     QCOMPARE(addressbook.privileges(), KDAV::All);
 
     QCOMPARE(spy.count(), 2);

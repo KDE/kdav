@@ -8,6 +8,7 @@ B:   <calendar-color xmlns="http://apple.com/ns/ical/"/>
 B:   <supported-calendar-component-set xmlns="urn:ietf:params:xml:ns:caldav"/>
 B:   <current-user-privilege-set xmlns="DAV:"/>
 B:   <getctag xmlns="http://calendarserver.org/ns/"/>
+B:   <sync-token xmlns="DAV:"/>
 B:   <P:transports xmlns:P="https://bitfire.at/webdav-push"/>
 B:   <P:topic xmlns:P="https://bitfire.at/webdav-push"/>
 B:   <P:supported-triggers xmlns:P="https://bitfire.at/webdav-push"/>
@@ -31,6 +32,7 @@ D:        </resourcetype>
 D:        <displayname xmlns="DAV:">Color Calendar</displayname>
 D:        <ical:calendar-color xmlns:ical="http://apple.com/ns/ical/">#FF0000FF</ical:calendar-color>
 D:        <getctag xmlns="http://calendarserver.org/ns/">99999</getctag>
+D:        <sync-token xmlns="DAV:">3140</sync-token>
 D:        <P:transports>
 D:          <P:web-push>
 D:            <P:vapid-public-key>MyVapidPublicKey</P:vapid-public-key>

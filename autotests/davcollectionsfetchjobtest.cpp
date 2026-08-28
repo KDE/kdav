@@ -48,6 +48,7 @@ void DavCollectionsFetchJobTest::fetchCalDavCollections()
     const KDAV::DavCollection collection = collections.at(0);
     QCOMPARE(collection.displayName(), u"Test1 User"_s);
     QCOMPARE(collection.CTag(), u"12345"_s);
+    QCOMPARE(collection.syncToken(), u"3142"_s);
     QCOMPARE(collection.url().url().path(), u"/caldav.php/test1.user/home/"_s);
     QCOMPARE(collection.contentTypes(),
              KDAV::DavCollection::Events | KDAV::DavCollection::Todos | KDAV::DavCollection::FreeBusy | KDAV::DavCollection::Journal
@@ -86,6 +87,7 @@ void DavCollectionsFetchJobTest::fetchCardDavCollections()
     const KDAV::DavCollection collection = collections.at(0);
     QCOMPARE(collection.displayName(), u"My Address Book"_s);
     QCOMPARE(collection.CTag(), u"3145"_s);
+    QCOMPARE(collection.syncToken(), u"3143"_s);
     QCOMPARE(collection.url().url().path(), u"/carddav.php/test1.user/home/"_s);
     QCOMPARE(collection.contentTypes(), KDAV::DavCollection::Contacts);
     QCOMPARE(collection.privileges(), KDAV::All);
@@ -155,6 +157,7 @@ void DavCollectionsFetchJobTest::calendarWithColor()
     const KDAV::DavCollection collection = collections.at(0);
     QCOMPARE(collection.displayName(), u"Color Calendar"_s);
     QCOMPARE(collection.CTag(), u"99999"_s);
+    QCOMPARE(collection.syncToken(), u"3140"_s);
 
     QVERIFY(collection.color().isValid());
     QCOMPARE(collection.color(), QColor(255, 0, 0));

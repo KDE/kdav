@@ -34,6 +34,7 @@ public:
         propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("displayname")));
         propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("resourcetype")));
         propElement.appendChild(document.createElementNS(QStringLiteral("http://calendarserver.org/ns/"), QStringLiteral("getctag")));
+        propElement.appendChild(document.createElementNS(QStringLiteral("DAV:"), QStringLiteral("sync-token")));
 
         return document;
     }

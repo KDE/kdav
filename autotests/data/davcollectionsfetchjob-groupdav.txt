@@ -4,6 +4,7 @@ B: <propfind xmlns="DAV:">
 B:  <prop xmlns="DAV:">
 B:   <displayname xmlns="DAV:"/>
 B:   <resourcetype xmlns="DAV:"/>
+B:   <sync-token xmlns="DAV:"/>
 B:  </prop>
 B: </propfind>
 S: HTTP/1.0 207 Multi-Status
@@ -19,6 +20,7 @@ D:         <resourcetype>
 D:           <collection/>
 D:           <G:vevent-collection/>
 D:         </resourcetype>
+D:         <sync-token xmlns="DAV:">3139</sync-token>
 D:       </prop>
 D:       <status>HTTP/1.1 200 OK</status>
 D:     </propstat>
