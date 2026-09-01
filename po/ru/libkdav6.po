@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:41+0000\n"
-"PO-Revision-Date: 2026-06-22 09:56+0300\n"
+"PO-Revision-Date: 2026-08-31 13:23+0300\n"
 "Last-Translator: Olesya Gerasimenko <goa@altlinux.org>\n"
 "Language-Team: Basealt Translation Team\n"
 "Language: ru\n"
@@ -168,16 +168,12 @@ msgid "There was a problem with the request."
 msgstr "При выполнении запроса произошла ошибка."
 
 #: common/daverror.cpp:140
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"При выполнении запроса произошла ошибка. Объект не был изменён на сервере.\n"
+"При выполнении запроса произошла ошибка. Объект не был перемещён.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:144

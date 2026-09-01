@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:41+0000\n"
-"PO-Revision-Date: 2026-07-16 16:45+0200\n"
+"PO-Revision-Date: 2026-08-31 16:47+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -168,17 +168,12 @@ msgid "There was a problem with the request."
 msgstr "Il habeva un problema con le requesta."
 
 #: common/daverror.cpp:140
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"Il habeva un problema con le requesta. Le elemento non esseva modificate sur "
-"le servitor.\n"
+"Il habeva un problema con le requesta. Le elemento non esseva movite \n"
 "%1 (%2)."
 
 #: common/daverror.cpp:144
