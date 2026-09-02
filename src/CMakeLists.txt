@@ -42,6 +42,8 @@ target_sources(KF6DAV PRIVATE
     common/davitemsfetchjob.h
     common/davitemslistjob.cpp
     common/davitemslistjob.h
+    common/davitemssyncjob.cpp
+    common/davitemssyncjob.h
     common/davitemmovejob.cpp
     common/davitemmovejob.h
     common/davjobbase.cpp
@@ -101,6 +103,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavItemModifyJob
     DavItemsFetchJob
     DavItemsListJob
+    DavItemsSyncJob
     DavPrincipalHomesetsFetchJob
     DavPrincipalSearchJob
     DavSslUiProxy
