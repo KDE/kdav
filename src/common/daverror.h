@@ -36,6 +36,7 @@ namespace KDAV
  * \value ERR_ITEMLIST
  * \value ERR_ITEMMOVE \since 6.30
  * \value ERR_ITEMLIST_NOMIMETYPE
+ * \value ERR_MALFORMED_RESPONSE \since 6.31
  */
 enum ErrorNumber {
     NO_ERR = 0,
@@ -56,6 +57,7 @@ enum ErrorNumber {
     ERR_ITEMLIST = ERR_PROBLEM_WITH_REQUEST + 130,
     ERR_ITEMMOVE = ERR_PROBLEM_WITH_REQUEST + 140,
     ERR_ITEMLIST_NOMIMETYPE,
+    ERR_MALFORMED_RESPONSE = ERR_PROBLEM_WITH_REQUEST + 200,
 };
 
 class ErrorPrivate;

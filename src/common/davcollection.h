@@ -188,14 +188,14 @@ public:
     /*!
      * Sets the sync-token on this calendar collection.
      *
-     * \since 6.30
+     * \since 6.31
      */
     void setSyncToken(const QString &syncToken);
 
     /*!
      * Returns the sync-token on this calendar collection.
      *
-     * \since 6.30
+     * \since 6.31
      */
     [[nodiscard]] QString syncToken() const;
 
