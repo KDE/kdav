@@ -143,6 +143,9 @@ QString Error::errorText() const
     case ERR_ITEMLIST_NOMIMETYPE:
         result = i18n("There was a problem with the request. The requested MIME types are not supported.");
         break;
+    case ERR_MALFORMED_RESPONSE:
+        result = i18n("The server returned a malformed response payload.");
+        break;
     case NO_ERR:
         break;
     }

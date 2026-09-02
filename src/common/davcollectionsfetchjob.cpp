@@ -290,9 +290,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *repl
                     CTag = CTagElement.text();
                 }
                 // Extract sync-token
-                const QDomElement syncTokenElement = Utils::firstChildElementNS(propElement, //
-                                                                                QStringLiteral("DAV:"),
-                                                                                QStringLiteral("sync-token"));
+                const QDomElement syncTokenElement = Utils::firstChildElementNS(propElement, QStringLiteral("DAV:"), QStringLiteral("sync-token"));
                 QString syncToken;
                 if (!syncTokenElement.isNull()) {
                     syncToken = syncTokenElement.text();
