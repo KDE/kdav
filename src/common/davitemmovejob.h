@@ -27,7 +27,7 @@ class DavItemMoveJobPrivate;
  *
  * \brief A job to move a DAV item from one location to another.
  *
- * \since 6.29
+ * \since 6.30
  */
 class KDAV_EXPORT DavItemMoveJob : public DavJobBase
 {
