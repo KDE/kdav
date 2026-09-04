@@ -34,7 +34,7 @@ namespace KDAV
  * \value ERR_ITEMDELETE
  * \value ERR_ITEMMODIFY
  * \value ERR_ITEMLIST
- * \value ERR_ITEMMOVE \since 6.29
+ * \value ERR_ITEMMOVE \since 6.30
  * \value ERR_ITEMLIST_NOMIMETYPE
  */
 enum ErrorNumber {
