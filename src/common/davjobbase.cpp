@@ -34,6 +34,10 @@ int DavJobBase::latestResponseCode() const
 
 bool DavJobBase::canRetryLater() const
 {
+    if (d_ptr->mForceRetryLater) {
+        return true;
+    }
+
     bool ret = false;
 
     // Be explicit and readable by splitting the if/else if clauses

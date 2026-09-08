@@ -20,5 +20,9 @@ private Q_SLOTS:
 
     // Error cases
     void principalFetchError();
-    void collectionFetchError();
+    void homeSetFetchError_data();
+    void homeSetFetchError();
+    void homeSetAnswersGarbage();
+    void oneOfTwoHomeSetsFails();
+    void homeSetIsConfiguredUrl();
 };

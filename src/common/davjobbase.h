@@ -47,7 +47,7 @@ public:
      *
      * This will return true for transient errors, i.e. if the response code
      * is either zero and error() is set or if the HTTP response code hints
-     * at a temporary error.
+     * at a temporary error, or if the job itself treats the error as temporary.
      *
      * The HTTP response codes considered retryable are:
      * \list

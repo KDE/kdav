@@ -1,4 +1,3 @@
-C: PROPFIND /caldav/dfaure%40example.com/ HTTP/1.1
 B: <?xml version="1.0" encoding="utf-8"?>
 B: <propfind xmlns="DAV:" xmlns:P="https://bitfire.at/webdav-push">
 B:  <prop xmlns="DAV:">
@@ -14,5 +13,3 @@ B:   <P:topic xmlns:P="https://bitfire.at/webdav-push"/>
 B:   <P:supported-triggers xmlns:P="https://bitfire.at/webdav-push"/>
 B:  </prop>
 B: </propfind>
-S: HTTP/1.1 404 Not Found
-X

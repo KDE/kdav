@@ -6,8 +6,10 @@
 
 #include <KDAV/DavCollection>
 #include <KDAV/DavCollectionsFetchJob>
+#include <KDAV/DavError>
 
 #include <QColor>
+#include <QFile>
 #include <QSignalSpy>
 #include <QTest>
 
@@ -181,27 +183,119 @@ void DavCollectionsFetchJobTest::principalFetchError()
     QCOMPARE(job->collections().count(), 0);
 }
 
-void DavCollectionsFetchJobTest::collectionFetchError()
+// A PROPFIND on a collection, answered with the given HTTP status and response body
+static QList<QByteArray> failingCollectionFetchScenario(const QByteArray &path, const QByteArray &status, const QByteArray &responseBody = {})
+{
+    QList<QByteArray> scenario{"C: PROPFIND " + path + " HTTP/1.1"};
+    QFile bodyFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-collection-propfind-body.txt"_s);
+    if (!bodyFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qFatal("Failed to read the PROPFIND body");
+    }
+    while (!bodyFile.atEnd()) {
+        scenario << bodyFile.readLine().trimmed();
+    }
+    scenario << "S: HTTP/1.1 " + status;
+    if (!responseBody.isEmpty()) {
+        scenario << "D: " + responseBody;
+    }
+    scenario << "X";
+    return scenario;
+}
+
+static KDAV::DavCollectionsFetchJob *runCalDavFetchJob(const FakeServer &fakeServer)
+{
+    QUrl url(u"http://localhost/caldav"_s);
+    url.setPort(fakeServer.port());
+    auto job = new KDAV::DavCollectionsFetchJob(KDAV::DavUrl(url, KDAV::CalDav));
+    job->exec();
+    return job;
+}
+
+void DavCollectionsFetchJobTest::homeSetFetchError_data()
+{
+    QTest::addColumn<QByteArray>("status");
+
+    // The server just advertised the home set, so any failure to read it is a server inconsistency: the job fails and can be retried later
+    QTest::newRow("403") << QByteArray("403 Forbidden");
+    QTest::newRow("404") << QByteArray("404 Not Found");
+    QTest::newRow("500") << QByteArray("500 Internal Server Error");
+    QTest::newRow("503") << QByteArray("503 Service Unavailable");
+}
+
+void DavCollectionsFetchJobTest::homeSetFetchError()
+{
+    QFETCH(QByteArray, status);
+    FakeServer fakeServer;
+
+    // Round 1: principal fetch succeeds and returns home set /caldav/dfaure%40example.com/
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav.txt"_s);
+    // Round 2: collection fetch on the home set URL fails → job fails, no fetch on the original URL
+    fakeServer.addScenario(failingCollectionFetchScenario("/caldav/dfaure%40example.com/", status));
+    fakeServer.startAndWait();
+
+    auto job = runCalDavFetchJob(fakeServer);
+
+    QVERIFY(fakeServer.isAllScenarioDone());
+    QCOMPARE(job->error(), int(KDAV::ERR_PROBLEM_WITH_REQUEST));
+    QCOMPARE(job->latestResponseCode(), status.left(3).toInt());
+    QVERIFY(job->canRetryLater());
+    QCOMPARE(job->collections().count(), 0);
+}
+
+void DavCollectionsFetchJobTest::homeSetAnswersGarbage()
 {
     FakeServer fakeServer;
 
     // Round 1: principal fetch succeeds and returns home set /caldav/dfaure%40example.com/
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav.txt"_s);
-    // Round 2: collection fetch on the home set URL returns 404 → triggers fallback to original URL
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-collection-homeset-404.txt"_s);
-    // Round 3: fallback fetch on the original /caldav URL also returns 404 → job fails
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-fallback-404.txt"_s);
+    // Round 2: collection fetch on the home set URL gets an HTML page instead of a multistatus → job fails, retryable
+    fakeServer.addScenario(failingCollectionFetchScenario("/caldav/dfaure%40example.com/", "200 OK", "<html><body>Maintenance</body></html>"));
     fakeServer.startAndWait();
 
-    QUrl url(u"http://localhost/caldav"_s);
-    url.setPort(fakeServer.port());
-    KDAV::DavUrl davUrl(url, KDAV::CalDav);
-
-    auto job = new KDAV::DavCollectionsFetchJob(davUrl);
-    job->exec();
+    auto job = runCalDavFetchJob(fakeServer);
 
     QVERIFY(fakeServer.isAllScenarioDone());
-    QVERIFY(job->error() != 0);
+    QCOMPARE(job->error(), int(KDAV::ERR_COLLECTIONFETCH));
+    QVERIFY(job->canRetryLater());
+    QCOMPARE(job->collections().count(), 0);
+}
+
+void DavCollectionsFetchJobTest::oneOfTwoHomeSetsFails()
+{
+    FakeServer fakeServer;
+
+    // Round 1: principal fetch succeeds and returns two home sets
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-principal-two-homesets.txt"_s);
+    // Round 2: the first home set has collections, the second one fails → the list would be incomplete, so the job fails
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav-collections.txt"_s);
+    fakeServer.addScenario(failingCollectionFetchScenario("/caldav/shared/", "404 Not Found"));
+    fakeServer.startAndWait();
+
+    auto job = runCalDavFetchJob(fakeServer);
+
+    QVERIFY(fakeServer.isAllScenarioDone());
+    QCOMPARE(job->error(), int(KDAV::ERR_PROBLEM_WITH_REQUEST));
+    QCOMPARE(job->latestResponseCode(), 404);
+    QVERIFY(job->canRetryLater());
+    QCOMPARE(job->collections().count(), 0);
+}
+
+void DavCollectionsFetchJobTest::homeSetIsConfiguredUrl()
+{
+    FakeServer fakeServer;
+
+    // Round 1: principal fetch succeeds and returns the configured URL as home set
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-principal-homeset-is-configured-url.txt"_s);
+    // Round 2: the home set fetch returns 404 → job fails
+    fakeServer.addScenario(failingCollectionFetchScenario("/caldav", "404 Not Found"));
+    fakeServer.startAndWait();
+
+    auto job = runCalDavFetchJob(fakeServer);
+
+    QVERIFY(fakeServer.isAllScenarioDone());
+    QCOMPARE(job->error(), int(KDAV::ERR_PROBLEM_WITH_REQUEST));
+    QCOMPARE(job->latestResponseCode(), 404);
+    QVERIFY(job->canRetryLater());
     QCOMPARE(job->collections().count(), 0);
 }
 

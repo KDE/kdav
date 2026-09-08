@@ -43,6 +43,8 @@ public:
     DavJobBase *q_ptr = nullptr;
     int mLatestResponseCode = 0;
     int mJobErrorCode = 0;
+    // Set by jobs that know the failure is temporary, whatever the response code
+    bool mForceRetryLater = false;
     QString mInternalErrorText;
 };
 

@@ -29,8 +29,8 @@ class DavCollectionsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
     void principalFetchFinished(KJob *job);
-    void collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl);
-    void doCollectionsFetch(const QUrl &url);
+    void collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl, bool isHomeSet);
+    void doCollectionsFetch(const QUrl &url, bool isHomeSet);
     void subjobFinished();
 
     DavUrl mUrl;
@@ -58,7 +58,7 @@ void DavCollectionsFetchJob::start()
         });
         job->start();
     } else {
-        d->doCollectionsFetch(d->mUrl.url());
+        d->doCollectionsFetch(d->mUrl.url(), false);
     }
 }
 
@@ -74,15 +74,15 @@ DavUrl DavCollectionsFetchJob::davUrl() const
     return d->mUrl;
 }
 
-void DavCollectionsFetchJobPrivate::doCollectionsFetch(const QUrl &url)
+void DavCollectionsFetchJobPrivate::doCollectionsFetch(const QUrl &url, bool isHomeSet)
 {
     ++mSubJobCount;
 
     const QDomDocument collectionQuery = DavManager::davProtocol(mUrl.protocol())->collectionsQuery()->buildQuery();
 
     QNetworkReply *reply = DavManager::self()->createPropFindJob(q_ptr, url, collectionQuery.toString());
-    QObject::connect(reply, &QNetworkReply::finished, q_ptr, [this, reply, url]() {
-        collectionsFetchFinished(reply, url);
+    QObject::connect(reply, &QNetworkReply::finished, q_ptr, [this, reply, url, isHomeSet]() {
+        collectionsFetchFinished(reply, url, isHomeSet);
     });
 }
 
@@ -111,7 +111,7 @@ void DavCollectionsFetchJobPrivate::principalFetchFinished(KJob *job)
 
     if (homeSets.isEmpty()) {
         // Same as above, retry as if it were a calendar URL.
-        doCollectionsFetch(mUrl.url());
+        doCollectionsFetch(mUrl.url(), false);
         return;
     }
 
@@ -129,31 +129,30 @@ void DavCollectionsFetchJobPrivate::principalFetchFinished(KJob *job)
             url = tmpUrl;
         }
 
-        doCollectionsFetch(url);
+        doCollectionsFetch(url, true);
     }
 }
 
-void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl)
+void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl, bool isHomeSet)
 {
     Q_Q(DavCollectionsFetchJob);
     reply->deleteLater();
     const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
     if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
-        if (requestUrl != mUrl.url()) {
-            // Retry as if the initial URL was a calendar URL.
-            // We can end up here when retrieving a homeset on
-            // which a PROPFIND resulted in an error
-            doCollectionsFetch(mUrl.url());
-            --mSubJobCount;
-            return;
+        // Not logging reply->errorString(), it contains the URL with the credentials
+        qCWarning(KDAV_LOG) << "PROPFIND on" << requestUrl.toDisplayString(QUrl::RemoveUserInfo) << "failed:" << responseCode << reply->error();
+        // The first error wins. A home set that can't be read fails the whole job: the list would be
+        // incomplete, and the caller would take it as the complete one. The server just advertised
+        // that home set, so this is a server inconsistency, probably temporary, whatever the response.
+        mForceRetryLater = isHomeSet || mForceRetryLater;
+        if (!q->error()) {
+            setLatestResponseCode(responseCode);
+            setError(ERR_PROBLEM_WITH_REQUEST);
+            setJobErrorText(reply->errorString());
+            setJobError(reply->error());
+            setErrorTextFromDavError();
         }
-
-        setLatestResponseCode(responseCode);
-        setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(reply->errorString());
-        setJobError(reply->error());
-        setErrorTextFromDavError();
     } else {
         // For use in the collectionDiscovered() signal
         QUrl _jobUrl = mUrl.url();
@@ -166,16 +165,22 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *repl
         response.setContent(resp, QDomDocument::ParseOption::UseNamespaceProcessing);
         QDomElement rootElement = response.documentElement();
         if (rootElement.tagName().compare(QLatin1String("multistatus"), Qt::CaseInsensitive) != 0) {
-            setError(ERR_COLLECTIONFETCH);
-            setErrorTextFromDavError();
+            mForceRetryLater = isHomeSet || mForceRetryLater;
+            if (!q->error()) {
+                setError(ERR_COLLECTIONFETCH);
+                setErrorTextFromDavError();
+            }
             subjobFinished();
             return;
         }
 
         QDomDocument document;
         if (!document.setContent(resp, QDomDocument::ParseOption::UseNamespaceProcessing)) {
-            setError(ERR_COLLECTIONFETCH);
-            setErrorTextFromDavError();
+            mForceRetryLater = isHomeSet || mForceRetryLater;
+            if (!q->error()) {
+                setError(ERR_COLLECTIONFETCH);
+                setErrorTextFromDavError();
+            }
             subjobFinished();
             return;
         }
@@ -361,6 +366,9 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *repl
 void DavCollectionsFetchJobPrivate::subjobFinished()
 {
     if (--mSubJobCount == 0) {
+        if (q_ptr->error()) {
+            mCollections.clear();
+        }
         emitResult();
     }
 }
