@@ -6,6 +6,7 @@
 
 #include <KDAV/DavCollection>
 #include <KDAV/DavCollectionsFetchJob>
+#include <KDAV/DavError>
 
 #include <QColor>
 #include <QSignalSpy>
@@ -184,10 +185,8 @@ void DavCollectionsFetchJobTest::collectionFetchError()
 
     // Round 1: principal fetch succeeds and returns home set /caldav/dfaure%40example.com/
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav.txt"_s);
-    // Round 2: collection fetch on the home set URL returns 404 → triggers fallback to original URL
+    // Round 2: collection fetch on the home set URL returns 404 → job fails, no fetch on the original URL
     fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-collection-homeset-404.txt"_s);
-    // Round 3: fallback fetch on the original /caldav URL also returns 404 → job fails
-    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-fallback-404.txt"_s);
     fakeServer.startAndWait();
 
     QUrl url(u"http://localhost/caldav"_s);
@@ -198,7 +197,79 @@ void DavCollectionsFetchJobTest::collectionFetchError()
     job->exec();
 
     QVERIFY(fakeServer.isAllScenarioDone());
-    QVERIFY(job->error() != 0);
+    QCOMPARE(job->error(), int(KDAV::ERR_PROBLEM_WITH_REQUEST));
+    QCOMPARE(job->latestResponseCode(), 404);
+    QCOMPARE(job->collections().count(), 0);
+}
+
+void DavCollectionsFetchJobTest::collectionFetchTemporaryError()
+{
+    FakeServer fakeServer;
+
+    // Round 1: principal fetch succeeds and returns home set /caldav/dfaure%40example.com/
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav.txt"_s);
+    // Round 2: collection fetch on the home set URL returns 503 → job fails and can be retried later
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-collection-homeset-503.txt"_s);
+    fakeServer.startAndWait();
+
+    QUrl url(u"http://localhost/caldav"_s);
+    url.setPort(fakeServer.port());
+    KDAV::DavUrl davUrl(url, KDAV::CalDav);
+
+    auto job = new KDAV::DavCollectionsFetchJob(davUrl);
+    job->exec();
+
+    QVERIFY(fakeServer.isAllScenarioDone());
+    QCOMPARE(job->error(), int(KDAV::ERR_PROBLEM_WITH_REQUEST));
+    QCOMPARE(job->latestResponseCode(), 503);
+    QVERIFY(job->canRetryLater());
+    QCOMPARE(job->collections().count(), 0);
+}
+
+void DavCollectionsFetchJobTest::oneOfTwoHomeSetsFails()
+{
+    FakeServer fakeServer;
+
+    // Round 1: principal fetch succeeds and returns two home sets
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-principal-two-homesets.txt"_s);
+    // Round 2: the first home set has collections, the second one returns 404 → the list would be incomplete, so the job fails
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/dataitemmultifetchjob-caldav-collections.txt"_s);
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-collection-homeset2-404.txt"_s);
+    fakeServer.startAndWait();
+
+    QUrl url(u"http://localhost/caldav"_s);
+    url.setPort(fakeServer.port());
+    KDAV::DavUrl davUrl(url, KDAV::CalDav);
+
+    auto job = new KDAV::DavCollectionsFetchJob(davUrl);
+    job->exec();
+
+    QVERIFY(fakeServer.isAllScenarioDone());
+    QCOMPARE(job->error(), int(KDAV::ERR_PROBLEM_WITH_REQUEST));
+    QCOMPARE(job->latestResponseCode(), 404);
+    QCOMPARE(job->collections().count(), 0);
+}
+
+void DavCollectionsFetchJobTest::homeSetIsConfiguredUrl()
+{
+    FakeServer fakeServer;
+
+    // Round 1: principal fetch succeeds and returns the configured URL as home set
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-principal-homeset-is-configured-url.txt"_s);
+    // Round 2: the home set fetch returns 404 → job fails
+    fakeServer.addScenarioFromFile(QLatin1String(AUTOTEST_DATA_DIR) + u"/davcollectionsfetchjob-collection-configured-url-404.txt"_s);
+    fakeServer.startAndWait();
+
+    QUrl url(u"http://localhost/caldav"_s);
+    url.setPort(fakeServer.port());
+    KDAV::DavUrl davUrl(url, KDAV::CalDav);
+
+    auto job = new KDAV::DavCollectionsFetchJob(davUrl);
+    job->exec();
+
+    QVERIFY(fakeServer.isAllScenarioDone());
+    QCOMPARE(job->error(), int(KDAV::ERR_PROBLEM_WITH_REQUEST));
+    QCOMPARE(job->latestResponseCode(), 404);
     QCOMPARE(job->collections().count(), 0);
 }
 

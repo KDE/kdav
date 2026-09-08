@@ -21,4 +21,7 @@ private Q_SLOTS:
     // Error cases
     void principalFetchError();
     void collectionFetchError();
+    void collectionFetchTemporaryError();
+    void oneOfTwoHomeSetsFails();
+    void homeSetIsConfiguredUrl();
 };
