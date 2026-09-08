@@ -21,4 +21,11 @@ private Q_SLOTS:
     // Error cases
     void principalFetchError();
     void collectionFetchError();
+    void homeSetErrorWithEmptyFallback();
+    void homeSetErrorWithFallbackCollection();
+    void twoHomeSetErrorsWithFallbackCollection();
+    void oneHomeSetError();
+    void homeSetTemporaryError();
+    void goneAndTemporaryHomeSetErrors();
+    void homeSetIsConfiguredUrl();
 };

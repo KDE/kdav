@@ -21,7 +21,15 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 
+#include <optional>
+
 using namespace KDAV;
+
+// Whether the HTTP response code means that the requested URL doesn't exist
+static bool isGoneResponse(int responseCode)
+{
+    return responseCode == 404 || responseCode == 410;
+}
 
 namespace KDAV
 {
@@ -29,13 +37,18 @@ class DavCollectionsFetchJobPrivate : public DavJobBasePrivate
 {
 public:
     void principalFetchFinished(KJob *job);
-    void collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl);
-    void doCollectionsFetch(const QUrl &url);
+    void collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl, bool isHomeSet);
+    void doCollectionsFetch(const QUrl &url, bool isHomeSet);
     void subjobFinished();
+    void reportHomeSetError();
 
     DavUrl mUrl;
     DavCollection::List mCollections;
     uint mSubJobCount = 0;
+    // Error of a home set that could not be read, preferring one that doesn't mean "gone"
+    std::optional<Error> mHomeSetError;
+    bool mAnyHomeSetSucceeded = false;
+    bool mConfiguredUrlFetched = false;
 
     Q_DECLARE_PUBLIC(DavCollectionsFetchJob)
 };
@@ -58,7 +71,7 @@ void DavCollectionsFetchJob::start()
         });
         job->start();
     } else {
-        d->doCollectionsFetch(d->mUrl.url());
+        d->doCollectionsFetch(d->mUrl.url(), false);
     }
 }
 
@@ -74,15 +87,19 @@ DavUrl DavCollectionsFetchJob::davUrl() const
     return d->mUrl;
 }
 
-void DavCollectionsFetchJobPrivate::doCollectionsFetch(const QUrl &url)
+void DavCollectionsFetchJobPrivate::doCollectionsFetch(const QUrl &url, bool isHomeSet)
 {
     ++mSubJobCount;
+    // Compared by URL rather than by isHomeSet: a home set can be the configured URL itself
+    if (url == mUrl.url()) {
+        mConfiguredUrlFetched = true;
+    }
 
     const QDomDocument collectionQuery = DavManager::davProtocol(mUrl.protocol())->collectionsQuery()->buildQuery();
 
     QNetworkReply *reply = DavManager::self()->createPropFindJob(q_ptr, url, collectionQuery.toString());
-    QObject::connect(reply, &QNetworkReply::finished, q_ptr, [this, reply, url]() {
-        collectionsFetchFinished(reply, url);
+    QObject::connect(reply, &QNetworkReply::finished, q_ptr, [this, reply, url, isHomeSet]() {
+        collectionsFetchFinished(reply, url, isHomeSet);
     });
 }
 
@@ -111,7 +128,7 @@ void DavCollectionsFetchJobPrivate::principalFetchFinished(KJob *job)
 
     if (homeSets.isEmpty()) {
         // Same as above, retry as if it were a calendar URL.
-        doCollectionsFetch(mUrl.url());
+        doCollectionsFetch(mUrl.url(), false);
         return;
     }
 
@@ -129,23 +146,25 @@ void DavCollectionsFetchJobPrivate::principalFetchFinished(KJob *job)
             url = tmpUrl;
         }
 
-        doCollectionsFetch(url);
+        doCollectionsFetch(url, true);
     }
 }
 
-void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl)
+void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *reply, const QUrl &requestUrl, bool isHomeSet)
 {
     Q_Q(DavCollectionsFetchJob);
     reply->deleteLater();
     const int responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
 
     if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
-        if (requestUrl != mUrl.url()) {
-            // Retry as if the initial URL was a calendar URL.
-            // We can end up here when retrieving a homeset on
-            // which a PROPFIND resulted in an error
-            doCollectionsFetch(mUrl.url());
-            --mSubJobCount;
+        // Not logging reply->errorString(), it contains the URL with the credentials
+        qCWarning(KDAV_LOG) << "PROPFIND on" << requestUrl.toDisplayString(QUrl::RemoveUserInfo) << "failed:" << responseCode << reply->error();
+        if (isHomeSet) {
+            // subjobFinished() decides whether to retry with the configured URL or to report this error
+            if (!mHomeSetError || (!isGoneResponse(responseCode) && isGoneResponse(mHomeSetError->responseCode()))) {
+                mHomeSetError.emplace(ERR_PROBLEM_WITH_REQUEST, responseCode, reply->errorString(), reply->error());
+            }
+            subjobFinished();
             return;
         }
 
@@ -346,16 +365,47 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *repl
                 responseElement = Utils::nextSiblingElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("response"));
             }
         }
+
+        if (isHomeSet) {
+            mAnyHomeSetSucceeded = true;
+        }
     }
 
     subjobFinished();
 }
 
+// Called once per fetch. When the last one finished, this may start one more fetch (the fallback) and be called again.
 void DavCollectionsFetchJobPrivate::subjobFinished()
 {
+    Q_Q(DavCollectionsFetchJob);
     if (--mSubJobCount == 0) {
+        if (mHomeSetError && !q->error()) {
+            if (mAnyHomeSetSucceeded) {
+                // The list is incomplete. Succeeding with it would make the caller delete the collections missing from it.
+                reportHomeSetError();
+            } else if (!isGoneResponse(mHomeSetError->responseCode())) {
+                // Any other failure may be temporary, and the home sets are probably fine
+                reportHomeSetError();
+            } else if (!mConfiguredUrlFetched) {
+                // All home sets are gone, retry as if the configured URL was the collection itself
+                qCWarning(KDAV_LOG) << "Retrying with the configured URL" << mUrl.url().toDisplayString(QUrl::RemoveUserInfo);
+                doCollectionsFetch(mUrl.url(), false);
+                return;
+            } else if (mCollections.isEmpty()) {
+                reportHomeSetError();
+            }
+        }
+        if (q->error()) {
+            mCollections.clear();
+        }
         emitResult();
     }
+}
+
+void DavCollectionsFetchJobPrivate::reportHomeSetError()
+{
+    setDavError(*mHomeSetError);
+    setErrorTextFromDavError();
 }
 
 #include "moc_davcollectionsfetchjob.cpp"

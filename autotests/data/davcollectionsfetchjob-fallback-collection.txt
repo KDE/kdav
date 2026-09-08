@@ -1,0 +1,38 @@
+C: PROPFIND /caldav HTTP/1.1
+B: <?xml version="1.0" encoding="utf-8"?>
+B: <propfind xmlns="DAV:" xmlns:P="https://bitfire.at/webdav-push">
+B:  <prop xmlns="DAV:">
+B:   <displayname xmlns="DAV:"/>
+B:   <resourcetype xmlns="DAV:"/>
+B:   <calendar-color xmlns="http://apple.com/ns/ical/"/>
+B:   <supported-calendar-component-set xmlns="urn:ietf:params:xml:ns:caldav"/>
+B:   <current-user-privilege-set xmlns="DAV:"/>
+B:   <getctag xmlns="http://calendarserver.org/ns/"/>
+B:   <P:transports xmlns:P="https://bitfire.at/webdav-push"/>
+B:   <P:topic xmlns:P="https://bitfire.at/webdav-push"/>
+B:   <P:supported-triggers xmlns:P="https://bitfire.at/webdav-push"/>
+B:  </prop>
+B: </propfind>
+S: HTTP/1.0 207 Multi-Status
+S: Content-Type: application/xml; charset=utf-8
+D: <?xml version="1.0" encoding="utf-8" ?>
+D: <multistatus xmlns="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav">
+D:   <response xmlns="DAV:">
+D:    <href xmlns="DAV:">/caldav/fallback/</href>
+D:    <propstat xmlns="DAV:">
+D:      <prop xmlns="DAV:">
+D:        <C:supported-calendar-component-set xmlns:C="urn:ietf:params:xml:ns:caldav">
+D:          <C:comp xmlns:C="urn:ietf:params:xml:ns:caldav" name="VEVENT"/>
+D:        </C:supported-calendar-component-set>
+D:        <resourcetype xmlns="DAV:">
+D:          <collection xmlns="DAV:"/>
+D:          <C:calendar xmlns:C="urn:ietf:params:xml:ns:caldav"/>
+D:        </resourcetype>
+D:        <displayname xmlns="DAV:">Fallback Calendar</displayname>
+D:        <getctag xmlns="http://calendarserver.org/ns/">12345</getctag>
+D:      </prop>
+D:      <status xmlns="DAV:">HTTP/1.1 200 OK</status>
+D:    </propstat>
+D:   </response>
+D: </multistatus>
+X

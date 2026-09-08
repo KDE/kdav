@@ -47,7 +47,7 @@ public:
     void start() override;
 
     /*!
-     * Returns the list of fetched DAV collections.
+     * Returns the list of fetched DAV collections. Empty if the job failed.
      */
     Q_REQUIRED_RESULT DavCollection::List collections() const;
 
