@@ -143,10 +143,16 @@ void FakeServer::writeServerPart(QTcpSocket *clientSocket, int scenarioNumber)
         data.append(payload + "\r\n");
     }
 
+    // Fakeserver does not reuse sockets: we notify the client we close the connection
+    const bool closeConnection = !scenario.isEmpty() && scenario.first().startsWith("X");
+    if (closeConnection) {
+        clientSocket->write("Connection: close\r\n");
+    }
+
     clientSocket->write(QStringLiteral("Content-Length: %1\r\n\r\n").arg(data.length()).toLatin1());
     clientSocket->write(data);
 
-    if (!scenario.isEmpty() && scenario.first().startsWith("X")) {
+    if (closeConnection) {
         scenario.takeFirst();
         clientSocket->flush();
         clientSocket->disconnectFromHost();
