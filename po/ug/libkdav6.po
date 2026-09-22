@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-08-15 00:41+0000\n"
-"PO-Revision-Date: 2026-05-30 17:13-0400\n"
+"PO-Revision-Date: 2026-09-22 18:03+0900\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Uyghur <kde-i18n-doc@kde.org>\n"
 "Language: ug\n"
@@ -66,21 +66,19 @@ msgid ""
 "from the server.\n"
 "%1 (%2)."
 msgstr ""
-"ئىلتىماس خاتالىقى كۆرۈلدى. توپلام مۇلازىمېتىردىن ئۆچۈرۈلمىدى.\n"
+"ئىلتىماس خاتالىقى كۆرۈلگەن. The collection has not been deleted from the "
+"server.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:99
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"ئىلتىماس خاتالىقى كۆرۈلدى. توپلام مۇلازىمېتىردىن ئۆچۈرۈلمىدى.\n"
+"ئىلتىماس خاتالىقى كۆرۈلگەن. The collection has not been created on the "
+"server.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:102
@@ -105,7 +103,8 @@ msgid ""
 "on the server.\n"
 "%1 (%2)."
 msgstr ""
-"ئىلتىماس خاتالىقى كۆرۈلدى. مۇلازىمېتىردىكى توپلام ئۆزگەرتىلمىدى.\n"
+"ئىلتىماس خاتالىقى كۆرۈلگەن. The collection has not been modified on the "
+"server.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:118
@@ -136,7 +135,7 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
-"ئىلتىماس خاتالىقى كۆرۈلدى. مۇلازىمېتىردا تۈر قۇرۇلمىدى.\n"
+"ئىلتىماس خاتالىقى كۆرۈلگەن. The item has not been created on the server.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:130
@@ -146,7 +145,7 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
-"ئىلتىماس خاتالىقى كۆرۈلدى. تۈر مۇلازىمېتىردىن ئۆچۈرۈلمىدى.\n"
+"ئىلتىماس خاتالىقى كۆرۈلگەن. The item has not been deleted from the server.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:133
@@ -156,7 +155,7 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
-"ئىلتىماس خاتالىقى كۆرۈلدى. مۇلازىمېتىردىكى تۈر ئۆزگەرتىلمىدى.\n"
+"ئىلتىماس خاتالىقى كۆرۈلگەن. The item was not modified on the server.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:136
@@ -165,16 +164,12 @@ msgid "There was a problem with the request."
 msgstr "ئىلتىماس خاتالىقى كۆرۈلگەن."
 
 #: common/daverror.cpp:140
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"ئىلتىماس خاتالىقى كۆرۈلدى. مۇلازىمېتىردىكى تۈر ئۆزگەرتىلمىدى.\n"
+"ئىلتىماس خاتالىقى كۆرۈلگەن. The item was not moved.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:144
@@ -182,4 +177,5 @@ msgstr ""
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
 "supported."
-msgstr "ئىلتىماس خاتالىقى كۆرۈلگەن. ئىلتىماس قىلغان MIME تۈرىنى قوللىمايدۇ."
+msgstr ""
+"ئىلتىماس خاتالىقى كۆرۈلگەن. The requested MIME types are not supported."
