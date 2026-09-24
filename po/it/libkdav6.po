@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_davgroupware_resource\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:41+0000\n"
+"POT-Creation-Date: 2026-09-24 00:41+0000\n"
 "PO-Revision-Date: 2026-08-18 14:40+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -163,12 +163,12 @@ msgstr ""
 "modificato sul server.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:136 common/daverror.cpp:148
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "Su è verificato un problema con la richiesta."
 
-#: common/daverror.cpp:140
+#: common/daverror.cpp:139
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
@@ -178,7 +178,7 @@ msgstr ""
 "spostato.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:144
+#: common/daverror.cpp:142
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
@@ -186,3 +186,25 @@ msgid ""
 msgstr ""
 "Su è verificato un problema con la richiesta. I tipi MIME richiesti non sono "
 "supportati."
+
+#: common/daverror.cpp:145
+#, fuzzy, kde-format
+#| msgid ""
+#| "\n"
+#| "The server returned more information:\n"
+#| "%1"
+msgid "The server returned a malformed response payload."
+msgstr ""
+"\n"
+"Il server ha fornito ulteriori informazioni:\n"
+"%1"
+
+#: common/davitemssyncjob.cpp:210
+#, kde-format
+msgid "Invalid server response payload, response item missing HREF element"
+msgstr ""
+
+#: common/davitemssyncjob.cpp:240
+#, kde-format
+msgid "Invalid server response payload, response item missing PROPSTAT element"
+msgstr ""

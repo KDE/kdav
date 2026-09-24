@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libkdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-08-15 00:41+0000\n"
+"POT-Creation-Date: 2026-09-24 00:41+0000\n"
 "PO-Revision-Date: 2022-02-14 19:47+0100\n"
 "Last-Translator: Matej Mrenica <matejm98mthw@gmail.com>\n"
 "Language-Team: Slovak <kde-i18n-doc@kde.org>\n"
@@ -154,12 +154,12 @@ msgstr ""
 "Nastala chyba s požiadavkou. Položka nebola zmenená na serveri.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:136
+#: common/daverror.cpp:136 common/daverror.cpp:148
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "Bol problém s požiadavkou."
 
-#: common/daverror.cpp:140
+#: common/daverror.cpp:139
 #, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
@@ -168,10 +168,32 @@ msgstr ""
 "Nastala chyba s požiadavkou. Položka nebola presunutá.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:144
+#: common/daverror.cpp:142
 #, kde-format
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
 "supported."
 msgstr ""
 "Vyskytol sa problém so žiadosťou. Požadované typy MIME nie sú podporované."
+
+#: common/daverror.cpp:145
+#, fuzzy, kde-format
+#| msgid ""
+#| "\n"
+#| "The server returned more information:\n"
+#| "%1"
+msgid "The server returned a malformed response payload."
+msgstr ""
+"\n"
+"Server vrátil viac informácií:\n"
+"%1"
+
+#: common/davitemssyncjob.cpp:210
+#, kde-format
+msgid "Invalid server response payload, response item missing HREF element"
+msgstr ""
+
+#: common/davitemssyncjob.cpp:240
+#, kde-format
+msgid "Invalid server response payload, response item missing PROPSTAT element"
+msgstr ""
