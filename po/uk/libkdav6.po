@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: libkdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-24 00:41+0000\n"
-"PO-Revision-Date: 2026-08-15 12:32+0300\n"
+"PO-Revision-Date: 2026-09-24 09:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -189,23 +189,19 @@ msgstr ""
 "MIME не передбачено."
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"Сервером було повернуто додаткову інформацію:\n"
-"%1"
+msgstr "Сервер повернув помилковий або нерозпізнаний вміст відповіді."
 
 #: common/davitemssyncjob.cpp:210
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr ""
+"Некоректний вміст відповіді сервера — у відповіді не міститься елемента HREF"
 
 #: common/davitemssyncjob.cpp:240
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""
+"Некоректний вміст відповіді сервера — у відповіді не міститься елемента "
+"DROPSTAT"

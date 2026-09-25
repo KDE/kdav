@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-24 00:41+0000\n"
-"PO-Revision-Date: 2026-08-15 04:54+0200\n"
+"PO-Revision-Date: 2026-09-24 03:59+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
 "Language: ka\n"
@@ -177,23 +177,16 @@ msgid ""
 msgstr "მოთხოვნის პრობლემა. მითითებული MIME ტიპები მხარდაჭერილი არაა."
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"მეტი ინფორმაციისთვის იხილეთ:\n"
-"%1"
+msgstr "სერვერმა არასწორი პასუხი დააბრუნა."
 
 #: common/davitemssyncjob.cpp:210
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
-msgstr ""
+msgstr "არასწორი სერვერის პასუხი. პასუხს HREF ელემენტი აკლია"
 
 #: common/davitemssyncjob.cpp:240
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
-msgstr ""
+msgstr "არასწორი სერვერის პასუხი. პასუხს PROPSTAT ელემენტი აკლია"
