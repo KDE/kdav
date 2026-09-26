@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-24 00:41+0000\n"
-"PO-Revision-Date: 2026-08-17 13:03+0300\n"
+"PO-Revision-Date: 2026-09-25 22:27+0300\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: lt\n"
 "Language: lt\n"
@@ -180,23 +180,20 @@ msgid ""
 msgstr "Buvo problemų su užklausa. Užklausti MIME tipai yra nepalaikomi."
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"Serveris grąžino daugiau informacijos:\n"
-"%1"
+msgstr "Serveris grąžino netaisyklingą atsakymo naudingąją apkrovą."
 
 #: common/davitemssyncjob.cpp:210
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr ""
+"Neteisinga serverio atsakymo naudingoji apkrova, atsakymo elemente nėra HREF "
+"elemento"
 
 #: common/davitemssyncjob.cpp:240
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""
+"Neteisinga serverio atsakymo naudingoji apkrova, atsakymo elemente nėra "
+"PROPSTAT elemento"

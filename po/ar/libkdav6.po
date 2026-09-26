@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kdepim-runtime\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-24 00:41+0000\n"
-"PO-Revision-Date: 2026-08-17 20:11+0400\n"
+"PO-Revision-Date: 2026-09-25 16:51+0400\n"
 "Last-Translator: Zayed Al-Saidi <zayed.alsaidi@gmail.com>\n"
 "Language-Team: ar\n"
 "Language: ar\n"
@@ -177,23 +177,16 @@ msgid ""
 msgstr "حدثت مشكلة بالطّلب. أنواع MIME المطلوبة غير مدعومة."
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"أعاد الخادم معلومات أكثر:\n"
-"%1"
+msgstr "أرجع الخادم حمولة استجابة غير صحيحة."
 
 #: common/davitemssyncjob.cpp:210
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
-msgstr ""
+msgstr "حمولة استجابة الخادم غير صالحة، عنصر HREF مفقود في عنصر الاستجابة"
 
 #: common/davitemssyncjob.cpp:240
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
-msgstr ""
+msgstr "حمولة استجابة الخادم غير صالحة، عنصر PROPSTAT مفقود في عنصر الاستجابة"
