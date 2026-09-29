@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-09-24 00:41+0000\n"
-"PO-Revision-Date: 2026-09-21 22:58+0200\n"
-"Last-Translator: Shinjo Park <peremen@gmail.com>\n"
-"Language-Team: Korean\n"
+"PO-Revision-Date: 2026-09-29 00:46+0200\n"
+"Last-Translator: Shinjo Park <kde@peremen.name>\n"
+"Language-Team: Korean <kde-kr@kde.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 26.08.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #: common/daverror.cpp:79
 #, kde-format
@@ -176,23 +176,16 @@ msgid ""
 msgstr "요청에 문제가 있습니다. 지정한 MIME 형식을 지원하지 않습니다."
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"서버에서 부가 정보를 돌려 줌:\n"
-"%1"
+msgstr "서버에서 잘못된 응답 페이로드를 반환했습니다."
 
 #: common/davitemssyncjob.cpp:210
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
-msgstr ""
+msgstr "잘못된 서버 응답 페이로드, 응답 항목에 HREF 원소가 없음"
 
 #: common/davitemssyncjob.cpp:240
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
-msgstr ""
+msgstr "잘못된 서버 응답 페이로드, 응답 항목에 PROPSTAT 원소가 없음"
