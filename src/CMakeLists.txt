@@ -74,6 +74,8 @@ target_sources(KF6DAV PRIVATE
     common/utils_p.h
     common/davpushregistrationjob.cpp
     common/davpushregistrationjob.h
+    common/davpushunregistrationjob.cpp
+    common/davpushunregistrationjob.h
     common/davpushregistration.cpp
     common/davpushregistration.h
 
@@ -96,6 +98,7 @@ ecm_generate_headers(KDAV_Camelcase_HEADERS
     DavCollection
     DavPushRegistration
     DavPushRegistrationJob
+    DavPushUnregistrationJob
     DavPushSupport
     DavPushDontNotify
     DavCollectionDeleteJob

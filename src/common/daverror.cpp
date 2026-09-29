@@ -147,6 +147,9 @@ QString Error::errorText() const
     case ERR_DAVPUSH_REGISTER:
         result = i18n("There was a problem with the request.");
         break;
+    case ERR_DAVPUSH_UNREGISTER:
+        result = i18n("There was a problem with the request.");
+        break;
     case NO_ERR:
         break;
     }
