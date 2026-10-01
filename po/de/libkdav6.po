@@ -4,19 +4,21 @@
 # SPDX-FileCopyrightText: 2010-2011, 2016, 2020 Frederik Schwarzer <schwarzer@kde.org>
 # SPDX-FileCopyrightText: 2011 Rolf Eike Beer <kde@opensource.sf-tec.de>
 # SPDX-FileCopyrightText: 2011 Torbjörn Klatt <opensource@torbjoern-klatt.de>
+# SPDX-FileCopyrightText: 2026 Alois Spitzbart <spitz234@hotmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: libkdav6\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-24 00:41+0000\n"
-"PO-Revision-Date: 2021-05-31 15:13+0200\n"
-"Last-Translator: Burkhard Lück <lueck@hube-lueck.de>\n"
+"POT-Creation-Date: 2026-10-01 17:36+0000\n"
+"PO-Revision-Date: 2026-09-29 22:37+0200\n"
+"Last-Translator: Alois Spitzbart <spitz234@hotmail.com>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 26.08.0\n"
 
 #: common/daverror.cpp:79
 #, kde-format
@@ -73,18 +75,14 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:99
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"Bei der Abfrage ist ein Problem aufgetreten. Die Sammlung wurde nicht vom "
-"Server gelöscht.\n"
+"Bei der Abfrage ist ein Problem aufgetreten. Die Sammlung wurde auf dem "
+"Server nicht erstellt.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:102
@@ -168,23 +166,19 @@ msgstr ""
 "Server nicht verändert\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:136 common/daverror.cpp:148
+#: common/daverror.cpp:136 common/daverror.cpp:148 common/daverror.cpp:151
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "Bei der Abfrage ist ein Problem aufgetreten"
 
 #: common/daverror.cpp:139
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"Bei der Abfrage ist ein Problem aufgetreten. Der Eintrag wurde auf dem "
-"Server nicht verändert\n"
+"Bei der Abfrage ist ein Problem aufgetreten. Der Eintrag wurde nicht "
+"verschoben.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:142
@@ -197,23 +191,16 @@ msgstr ""
 "werden nicht unterstützt."
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"Der Server hat weitere Informationen zurückgegeben:\n"
-"%1"
+msgstr "Die Antwort des Servers enthält fehlerhafte Nutzdaten."
 
 #: common/davitemssyncjob.cpp:210
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
-msgstr ""
+msgstr "Ungültige Serverantwort, in den Nutzdaten fehlt der „HREF“-Eintrag"
 
 #: common/davitemssyncjob.cpp:240
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
-msgstr ""
+msgstr "Ungültige Serverantwort, in den Nutzdaten fehlt der „PROPSTAT“-Eintrag"

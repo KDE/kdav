@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_davgroupware_resource\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-24 00:41+0000\n"
+"POT-Creation-Date: 2026-10-01 17:36+0000\n"
 "PO-Revision-Date: 2017-12-25 20:33+0200\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -163,7 +163,7 @@ msgstr ""
 "Pyynnössä oli ongelmia eikä merkintää muutettu palvelimella.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:136 common/daverror.cpp:148
+#: common/daverror.cpp:136 common/daverror.cpp:148 common/daverror.cpp:151
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "Pyynnössä oli ongelmia."

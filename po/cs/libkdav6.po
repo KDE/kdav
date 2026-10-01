@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-24 00:41+0000\n"
+"POT-Creation-Date: 2026-10-01 17:36+0000\n"
 "PO-Revision-Date: 2026-09-24 12:33+0200\n"
 "Last-Translator: Libor Filipek <libor.filipek@gmail.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
@@ -158,7 +158,7 @@ msgstr ""
 "Došlo k problému s požadavkem. Položka nebyla na serveru změněna.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:136 common/daverror.cpp:148
+#: common/daverror.cpp:136 common/daverror.cpp:148 common/daverror.cpp:151
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "V požadavku nastal problém."

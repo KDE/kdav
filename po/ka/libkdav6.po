@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-24 00:41+0000\n"
+"POT-Creation-Date: 2026-10-01 17:36+0000\n"
 "PO-Revision-Date: 2026-09-24 03:59+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <kde-i18n-doc@kde.org>\n"
@@ -155,7 +155,7 @@ msgstr ""
 "მოთხოვნის პრობლემა. სერვერზე ჩანაწერი არ შეცვლილა.\n"
 "%1 (%2)."
 
-#: common/daverror.cpp:136 common/daverror.cpp:148
+#: common/daverror.cpp:136 common/daverror.cpp:148 common/daverror.cpp:151
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "მოთხოვნის პრობლემა."

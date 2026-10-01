@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-09-24 00:41+0000\n"
+"POT-Creation-Date: 2026-10-01 17:36+0000\n"
 "PO-Revision-Date: 2026-09-27 09:17+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -155,7 +155,7 @@ msgstr ""
 "הייתה בעיה עם הבקשה. הפריט לא השתנה בשרת.\n"
 "%1 (%2)"
 
-#: common/daverror.cpp:136 common/daverror.cpp:148
+#: common/daverror.cpp:136 common/daverror.cpp:148 common/daverror.cpp:151
 #, kde-format
 msgid "There was a problem with the request."
 msgstr "הייתה בעיה עם הבקשה."
