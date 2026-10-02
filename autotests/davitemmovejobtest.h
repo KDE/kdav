@@ -10,5 +10,6 @@ class DavItemMoveJobTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
+    void moveSucceeds_data();
     void moveSucceeds();
 };
