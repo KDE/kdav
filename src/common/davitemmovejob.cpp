@@ -10,6 +10,7 @@
 #include "daverror.h"
 #include "davitemfetchjob.h"
 #include "davmanager_p.h"
+#include "davpushdontnotify.h"
 
 #include <QNetworkReply>
 #include <QNetworkRequest>
@@ -28,6 +29,7 @@ public:
 
     DavItem mFreshItem;
     int mFreshResponseCode = -1;
+    DavPushDontNotify mPushDontNotify;
 };
 }
 
@@ -39,6 +41,18 @@ DavItemMoveJob::DavItemMoveJob(const DavItem &item, const QUrl &destination, QOb
     d->mDestination = destination;
 }
 
+void DavItemMoveJob::setPushDontNotify(const DavPushDontNotify &dontNotify)
+{
+    Q_D(DavItemMoveJob);
+    d->mPushDontNotify = dontNotify;
+}
+
+DavPushDontNotify DavItemMoveJob::pushDontNotify() const
+{
+    Q_D(const DavItemMoveJob);
+    return d->mPushDontNotify;
+}
+
 void DavItemMoveJob::start()
 {
     Q_D(DavItemMoveJob);
@@ -46,6 +60,9 @@ void DavItemMoveJob::start()
     request.setHeader(QNetworkRequest::UserAgentHeader, DavManager::self()->userAgent());
     request.setRawHeader("Destination", d->mDestination.url().toUtf8());
     request.setRawHeader("Overwrite", "T");
+    if (!d->mPushDontNotify.isNull()) {
+        request.setRawHeader(d->mPushDontNotify.davHeaderName().toUtf8(), d->mPushDontNotify.davHeaderValue().toUtf8());
+    }
 
     auto reply = DavManager::self()->networkAccessManager()->sendCustomRequest(request, "MOVE");
     reply->setParent(this);

@@ -18,6 +18,7 @@ class DavItem;
 
 namespace KDAV
 {
+class DavPushDontNotify;
 class DavItemMoveJobPrivate;
 
 /*!
@@ -42,6 +43,18 @@ public:
      * \a parent The parent object.
      */
     explicit DavItemMoveJob(const DavItem &item, const QUrl &destination, QObject *parent = nullptr);
+
+    /*!
+     * Sets Push-Dont-Notify URLs that should not be notified.
+     * \since 6.31
+     */
+    void setPushDontNotify(const DavPushDontNotify &dontNotify);
+
+    /*!
+     * Gets Push-Dont-Notify Urls.
+     * \since 6.31
+     */
+    [[nodiscard]] DavPushDontNotify pushDontNotify() const;
 
     /*!
      * Starts the job.
