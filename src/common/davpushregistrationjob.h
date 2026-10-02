@@ -35,7 +35,9 @@ public:
      * Creates a new DavPush registration job.
      *
      * \a url The DAV URL of the collection to register a DavPush subscription to.
+     *
      * \a davPushRegistration The data for the subscription.
+     *
      * \a parent The parent object.
      */
     explicit DavPushRegistrationJob(const DavUrl &url, const DavPushRegistration &davPushRegistration, QObject *parent = nullptr);
@@ -47,12 +49,14 @@ public:
 
     /*!
      * Returns the server's response registration Url.
+     *
      * Is empty if no registration url was retrieved.
      */
     [[nodiscard]] QUrl registrationUrl() const;
 
     /*!
      * Returns the server's response registration expiration.
+     *
      * Is null if no registration expiration was retrieved.
      */
     [[nodiscard]] QDateTime expirationDate() const;
