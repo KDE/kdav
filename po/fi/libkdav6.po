@@ -1,6 +1,6 @@
 # Copyright © 2011, 2012 This_file_is_part_of_KDE
 # This file is distributed under the same license as the kdepim-runtime package.
-# Tommi Nieminen <translator@legisign.org>, 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2020, 2021.
+# SPDX-FileCopyrightText: 2011, 2012, 2013, 2015, 2016, 2017, 2018, 2020, 2021, 2026 Tommi Nieminen <translator@legisign.org>
 # Lasse Liehu <lasse.liehu@gmail.com>, 2012, 2013, 2014, 2015.
 # Jiri Grönroos <jiri.gronroos+kde@iki.fi>, 2012.
 #
@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: akonadi_davgroupware_resource\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-01 17:36+0000\n"
-"PO-Revision-Date: 2017-12-25 20:33+0200\n"
+"PO-Revision-Date: 2026-08-25 20:08+0300\n"
 "Last-Translator: Tommi Nieminen <translator@legisign.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
 "Language: fi\n"
@@ -20,6 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 25.04.0\n"
 
 #: common/daverror.cpp:79
 #, kde-format
@@ -74,17 +75,13 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:99
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"Pyynnössä oli ongelmia eikä kokoelmaa poistettu palvelimelta.\n"
+"Pyynnössä oli ongelmia eikä kokoelmaa luotu palvelimelle.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:102
@@ -169,16 +166,12 @@ msgid "There was a problem with the request."
 msgstr "Pyynnössä oli ongelmia."
 
 #: common/daverror.cpp:139
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"Pyynnössä oli ongelmia eikä merkintää muutettu palvelimella.\n"
+"Pyynnössä oli ongelmia eikä merkintää siirretty.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:142
