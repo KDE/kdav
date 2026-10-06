@@ -9,8 +9,6 @@
 
 #include <QString>
 
-#include <memory>
-
 namespace KDAV
 {
 class DavJobBase;
