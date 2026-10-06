@@ -95,7 +95,7 @@ void DavItemCreateJobPrivate::davJobFinished(QNetworkReply *reply)
     if (reply->error() != QNetworkReply::NoError) {
         setLatestResponseCode(responseCode);
         setError(ERR_ITEMCREATE);
-        setJobErrorText(reply->errorString());
+        setJobErrorText(replyErrorString(reply));
         setJobError(reply->error());
         setErrorTextFromDavError();
 

@@ -61,7 +61,7 @@ void DavItemFetchJobPrivate::davJobFinished(QNetworkReply *reply)
 
     if (reply->error() != QNetworkReply::NoError) {
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(reply->errorString());
+        setJobErrorText(replyErrorString(reply));
         setJobError(reply->error());
         setErrorTextFromDavError();
     } else {

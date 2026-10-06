@@ -149,7 +149,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *repl
         if (!q->error()) {
             setLatestResponseCode(responseCode);
             setError(ERR_PROBLEM_WITH_REQUEST);
-            setJobErrorText(reply->errorString());
+            setJobErrorText(replyErrorString(reply));
             setJobError(reply->error());
             setErrorTextFromDavError();
         }

@@ -99,7 +99,7 @@ void DavPushRegistrationJobPrivate::onRegistrationDone(QNetworkReply *reply)
     if (reply->error() != QNetworkReply::NoError) {
         setLatestResponseCode(responseCode);
         setError(ERR_DAVPUSH_REGISTER);
-        setJobErrorText(reply->errorString());
+        setJobErrorText(replyErrorString(reply));
         setJobError(reply->error());
         setErrorTextFromDavError();
         emitResult();

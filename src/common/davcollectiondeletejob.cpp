@@ -73,7 +73,7 @@ void DavCollectionDeleteJobPrivate::davJobFinished(QNetworkReply *reply)
 
         setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONDELETE);
-        setJobErrorText(reply->errorString());
+        setJobErrorText(replyErrorString(reply));
         setJobError(reply->error());
         setErrorTextFromDavError();
     }
