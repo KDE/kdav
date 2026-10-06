@@ -11,6 +11,8 @@
 
 #include "daverror.h"
 
+class QNetworkReply;
+
 namespace KDAV
 {
 class DavJobBase;
@@ -18,6 +20,8 @@ class DavJobBase;
 class DavJobBasePrivate
 {
 public:
+    QString replyErrorString(QNetworkReply *reply);
+
     virtual ~DavJobBasePrivate() = default;
 
     /*
