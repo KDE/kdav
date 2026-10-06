@@ -7,9 +7,14 @@
 #include "davjobbase.h"
 #include "davjobbase_p.h"
 
-#include "daverror.h"
+#include <QNetworkReply>
 
 using namespace KDAV;
+
+QString DavJobBasePrivate::replyErrorString(QNetworkReply *reply)
+{
+    return reply->errorString();
+}
 
 DavJobBase::DavJobBase(QObject *parent)
     : KJob(parent)
