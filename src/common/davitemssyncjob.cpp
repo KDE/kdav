@@ -156,7 +156,7 @@ void DavItemsSyncJobPrivate::davJobFinished(QNetworkReply *reply)
     if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(reply->errorString());
+        setJobErrorText(replyErrorString(reply));
         setJobError(reply->error());
         setErrorTextFromDavError();
         emitResult();

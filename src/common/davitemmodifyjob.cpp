@@ -107,7 +107,7 @@ void DavItemModifyJobPrivate::davJobFinished(QNetworkReply *reply)
 
         setLatestResponseCode(responseCode);
         setError(ERR_ITEMMODIFY);
-        setJobErrorText(reply->errorString());
+        setJobErrorText(replyErrorString(reply));
         setJobError(reply->error());
         setErrorTextFromDavError();
 

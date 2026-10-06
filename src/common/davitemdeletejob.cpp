@@ -92,7 +92,7 @@ void DavItemDeleteJobPrivate::davJobFinished(QNetworkReply *reply)
         if (responseCode != 404 && responseCode != 410) {
             setLatestResponseCode(responseCode);
             setError(ERR_ITEMDELETE);
-            setJobErrorText(reply->errorString());
+            setJobErrorText(replyErrorString(reply));
             setJobError(reply->error());
             setErrorTextFromDavError();
         }

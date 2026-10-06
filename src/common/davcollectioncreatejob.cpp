@@ -104,7 +104,7 @@ void DavCollectionCreateJobPrivate::davJobFinished(QNetworkReply *reply)
     if (reply->error() != QNetworkReply::NoError || responseCode >= 400) {
         setLatestResponseCode(responseCode);
         setError(ERR_COLLECTIONCREATE);
-        setJobErrorText(reply->errorString());
+        setJobErrorText(replyErrorString(reply));
         setJobError(reply->error());
         setErrorTextFromDavError();
         emitResult();

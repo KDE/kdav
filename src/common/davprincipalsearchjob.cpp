@@ -102,11 +102,11 @@ void DavPrincipalSearchJobPrivate::principalCollectionSetSearchFinished(QNetwork
     if (reply->error() != QNetworkReply::NoError || (responseCode >= 400 && responseCode < 600)) {
         setLatestResponseCode(responseCode);
         setError(ERR_PROBLEM_WITH_REQUEST);
-        setJobErrorText(reply->errorString());
+        setJobErrorText(replyErrorString(reply));
         setJobError(reply->error());
         setErrorTextFromDavError();
 
-        qCWarning(KDAV_LOG) << "Error during principal search:" << responseCode << reply->error() << reply->errorString();
+        qCWarning(KDAV_LOG) << "Error during principal search:" << responseCode << reply->error() << replyErrorString(reply);
         emitResult();
         return;
     }
@@ -218,12 +218,12 @@ void DavPrincipalSearchJobPrivate::principalPropertySearchFinished(QNetworkReply
             } else {
                 setError(ERR_PROBLEM_WITH_REQUEST);
             }
-            setJobErrorText(reply->errorString());
+            setJobErrorText(replyErrorString(reply));
             setJobError(reply->error());
             setErrorTextFromDavError();
         }
 
-        qCWarning(KDAV_LOG) << "Error during principal property search:" << responseCode << reply->error() << reply->errorString();
+        qCWarning(KDAV_LOG) << "Error during principal property search:" << responseCode << reply->error() << replyErrorString(reply);
 
         if (mPrincipalPropertySearchSubJobCount == 0) {
             emitResult();

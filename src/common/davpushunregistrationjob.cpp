@@ -40,7 +40,7 @@ void DavPushUnregistrationJobPrivate::onUnregistrationDone(QNetworkReply *reply)
     if (!isNotFound && reply->error() != QNetworkReply::NoError) {
         setLatestResponseCode(responseCode);
         setError(ERR_DAVPUSH_UNREGISTER);
-        setJobErrorText(reply->errorString());
+        setJobErrorText(replyErrorString(reply));
         setJobError(reply->error());
         setErrorTextFromDavError();
         emitResult();
