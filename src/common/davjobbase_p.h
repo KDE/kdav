@@ -9,6 +9,8 @@
 
 #include <QString>
 
+#include "daverror.h"
+
 namespace KDAV
 {
 class DavJobBase;
