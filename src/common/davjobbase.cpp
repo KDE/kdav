@@ -13,7 +13,19 @@ using namespace KDAV;
 
 QString DavJobBasePrivate::replyErrorString(QNetworkReply *reply)
 {
-    return reply->errorString();
+    const auto url = reply->url().toDisplayString(QUrl::RemoveUserInfo);
+    const auto responseCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toString();
+    const auto reasonPhrase = reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
+
+    if (!reasonPhrase.isEmpty()) {
+        return DavJobBase::tr("Error transferring %1 - server replied: %2").arg(url, reasonPhrase);
+    } else if (!responseCode.isEmpty()) {
+        return DavJobBase::tr("Error transferring %1 - server replied with status code: %2").arg(url, responseCode);
+    } else {
+        return DavJobBase::tr("Error transferring %1 - no reason received").arg(url);
+    }
+
+    Q_UNREACHABLE();
 }
 
 DavJobBase::DavJobBase(QObject *parent)
