@@ -1,12 +1,13 @@
 # Translation of libkdav.po into Serbian.
 # Chusslove Illich <caslav.ilic@gmx.net>, 2011, 2013, 2014, 2015, 2016, 2017.
+# Nemanja Hiršl <nemhirsl@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: libkdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-01 17:36+0000\n"
-"PO-Revision-Date: 2017-12-17 18:01+0100\n"
-"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"PO-Revision-Date: 2026-10-06 08:03+0200\n"
+"Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr@latin\n"
 "MIME-Version: 1.0\n"
@@ -71,17 +72,13 @@ msgstr ""
 "%1 (%2)."
 
 #: common/daverror.cpp:99
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom. Zbirka nije obrisana sa servera.\n"
+"Došlo je do problema sa zahtevom. Zbirka nije stvorena na serveru.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:102
@@ -166,16 +163,12 @@ msgid "There was a problem with the request."
 msgstr "Došlo je do problema sa zahtevom."
 
 #: common/daverror.cpp:139
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom, stavka nije izmenjena na serveru.\n"
+"Došlo je do problema sa zahtevom. Stavka nije premeštena.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:142
@@ -186,23 +179,17 @@ msgid ""
 msgstr "Došlo je do problema sa zahtevom. Traženi MIME tipovi nisu podržani."
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"Server je vratio još podataka:\n"
-"%1"
+msgstr "Server je vratio loše oblikovan tovar odgovora."
 
 #: common/davitemssyncjob.cpp:210
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
-msgstr ""
+msgstr "Loš tovar serverskog odgovora, stavci odgovora nedostaje element HREF"
 
 #: common/davitemssyncjob.cpp:240
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""
+"Loš tovar serverskog odgovora, stavci odgovora nedostaje element PROPSTAT"

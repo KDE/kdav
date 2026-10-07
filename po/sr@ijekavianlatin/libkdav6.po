@@ -1,12 +1,13 @@
 # Translation of libkdav.po into Serbian.
 # Chusslove Illich <caslav.ilic@gmx.net>, 2011, 2013, 2014, 2015, 2016, 2017.
+# Nemanja Hiršl <nemhirsl@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: libkdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-01 17:36+0000\n"
-"PO-Revision-Date: 2017-12-17 18:01+0100\n"
-"Last-Translator: Chusslove Illich <caslav.ilic@gmx.net>\n"
+"PO-Revision-Date: 2026-10-06 08:03+0200\n"
+"Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
 "Language: sr@ijekavianlatin\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +45,7 @@ msgid ""
 "There was a problem with the request.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom.\n"
+"Došlo je do problema sa zahtjevom.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:90
@@ -58,7 +59,8 @@ msgid ""
 "The server encountered an error that prevented it from completing your "
 "request: %1 (%2)"
 msgstr ""
-"Server je naišao na grešku koja ga je sprečila da dovrši vaš zahtev: %1 (%2)"
+"Server je naišao na grešku koja ga je spriječila da dovrši vaš zahtjev: %1 "
+"(%2)"
 
 #: common/daverror.cpp:96
 #, kde-format
@@ -67,21 +69,17 @@ msgid ""
 "from the server.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom. Zbirka nije obrisana sa servera.\n"
+"Došlo je do problema sa zahtjevom. Zbirka nije obrisana sa servera.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:99
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The collection has not been deleted "
-#| "from the server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The collection has not been created on "
 "the server.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom. Zbirka nije obrisana sa servera.\n"
+"Došlo je do problema sa zahtjevom. Zbirka nije stvorena na serveru.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:102
@@ -106,18 +104,18 @@ msgid ""
 "on the server.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom. Zbirka nije izmenjena na serveru.\n"
+"Došlo je do problema sa zahtjevom. Zbirka nije izmijenjena na serveru.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:118
 #, kde-format
 msgid "No properties to change or remove"
-msgstr "Nema svojstava za menjanje ili uklanjanje."
+msgstr "Nema svojstava za mijenjanje ili uklanjanje."
 
 #: common/daverror.cpp:121
 #, kde-format
 msgid "There was an error when modifying the properties"
-msgstr "Greška pri menjanju svojstava."
+msgstr "Greška pri mijenjanju svojstava."
 
 #: common/daverror.cpp:123
 #, kde-format
@@ -137,7 +135,7 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom. Stavka nije stvorena na serveru.\n"
+"Došlo je do problema sa zahtjevom. Stavka nije stvorena na serveru.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:130
@@ -147,7 +145,7 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom. Stavka nije obrisana sa servera.\n"
+"Došlo je do problema sa zahtjevom. Stavka nije obrisana sa servera.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:133
@@ -157,25 +155,21 @@ msgid ""
 "server.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom, stavka nije izmenjena na serveru.\n"
+"Došlo je do problema sa zahtjevom, stavka nije izmijenjena na serveru.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:136 common/daverror.cpp:148 common/daverror.cpp:151
 #, kde-format
 msgid "There was a problem with the request."
-msgstr "Došlo je do problema sa zahtevom."
+msgstr "Došlo je do problema sa zahtjevom."
 
 #: common/daverror.cpp:139
-#, fuzzy, kde-format
-#| msgid ""
-#| "There was a problem with the request. The item was not modified on the "
-#| "server.\n"
-#| "%1 (%2)."
+#, kde-format
 msgid ""
 "There was a problem with the request. The item was not moved.\n"
 "%1 (%2)."
 msgstr ""
-"Došlo je do problema sa zahtevom, stavka nije izmenjena na serveru.\n"
+"Došlo je do problema sa zahtjevom. Stavka nije premještena.\n"
 "%1 (%2)."
 
 #: common/daverror.cpp:142
@@ -183,26 +177,20 @@ msgstr ""
 msgid ""
 "There was a problem with the request. The requested MIME types are not "
 "supported."
-msgstr "Došlo je do problema sa zahtevom. Traženi MIME tipovi nisu podržani."
+msgstr "Došlo je do problema sa zahtjevom. Traženi MIME tipovi nisu podržani."
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"Server je vratio još podataka:\n"
-"%1"
+msgstr "Server je vratio loše oblikovan tovar odgovora."
 
 #: common/davitemssyncjob.cpp:210
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
-msgstr ""
+msgstr "Loš tovar serverskog odgovora, stavci odgovora nedostaje element HREF"
 
 #: common/davitemssyncjob.cpp:240
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""
+"Loš tovar serverskog odgovora, stavci odgovora nedostaje element PROPSTAT"
