@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-10-01 17:36+0000\n"
-"PO-Revision-Date: 2026-08-31 16:47+0200\n"
+"PO-Revision-Date: 2026-10-09 12:25+0200\n"
 "Last-Translator: giovanni <g.sora@tiscali.it>\n"
 "Language-Team: Interlingua <kde-i18n-doc@kde.org>\n"
 "Language: ia\n"
@@ -186,23 +186,20 @@ msgstr ""
 "supportate."
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"Le servitor retornava plure de information:\n"
-"%1"
+msgstr "Servitor retornava un carga utile de responsa malformate."
 
 #: common/davitemssyncjob.cpp:210
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr ""
+"Carga utile de responsa de servitor invalide, elemento de respons manda del "
+"elemento  HREF"
 
 #: common/davitemssyncjob.cpp:240
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""
+"Carga utile de responsa de servitor invalide, elemento de respons manda del "
+"elemento 'PROPSTAT'"
