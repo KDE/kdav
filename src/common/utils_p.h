@@ -10,6 +10,9 @@
 #include "enums.h"
 
 #include <QDomElement>
+#include <QUrl>
+
+class QNetworkReply;
 
 namespace KDAV
 {
@@ -51,6 +54,13 @@ Q_REQUIRED_RESULT Privileges parsePrivilege(const QDomElement &element);
  * \since 6.29
  */
 [[nodiscard]] std::optional<DavPushSupport> extractDavPushSupport(const QDomElement &element);
+
+/*!
+ * \internal
+ * Returns the URL given by the Location header of @p reply, resolved against the request URL,
+ * or the request URL if there is no Location header.
+ */
+[[nodiscard]] QUrl locationUrl(const QNetworkReply *reply);
 }
 }
 

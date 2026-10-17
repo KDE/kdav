@@ -14,6 +14,7 @@ private Q_SLOTS:
     void createCalDavCollection_data();
     void createCalDavCollection();
     void createCardDavCollection();
+    void createCollectionWithLocation();
 
     // Error cases
     void createCollectionError();

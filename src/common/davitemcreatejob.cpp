@@ -6,6 +6,7 @@
 
 #include "davitemcreatejob.h"
 #include "davjobbase_p.h"
+#include "utils_p.h"
 
 #include "daverror.h"
 #include "davitemfetchjob.h"
@@ -104,17 +105,7 @@ void DavItemCreateJobPrivate::davJobFinished(QNetworkReply *reply)
     }
 
     // The 'Location:' HTTP header is used to indicate the new URL
-    const QString location = reply->header(QNetworkRequest::LocationHeader).toString();
-
-    QUrl url;
-    if (location.isEmpty()) {
-        url = reply->url();
-    } else if (location.startsWith(QLatin1Char('/'))) {
-        url = reply->url();
-        url.setPath(location, QUrl::TolerantMode);
-    } else {
-        url = QUrl::fromUserInput(location);
-    }
+    QUrl url = Utils::locationUrl(reply);
 
     if (responseCode == 301 || responseCode == 302 || responseCode == 307 || responseCode == 308) {
         if (mRedirectCount > 4) {

@@ -6,6 +6,7 @@
 
 #include "davitemmodifyjob.h"
 #include "davjobbase_p.h"
+#include "utils_p.h"
 
 #include "daverror.h"
 #include "davitemfetchjob.h"
@@ -125,17 +126,7 @@ void DavItemModifyJobPrivate::davJobFinished(QNetworkReply *reply)
     }
 
     // The 'Location:' HTTP header is used to indicate the new URL
-    const QString location = QString::fromUtf8(reply->rawHeader("location"));
-
-    QUrl url;
-    if (location.isEmpty()) {
-        url = reply->url();
-    } else if (location.startsWith(QLatin1Char('/'))) {
-        url = reply->url();
-        url.setPath(location, QUrl::TolerantMode);
-    } else {
-        url = QUrl::fromUserInput(location);
-    }
+    QUrl url = Utils::locationUrl(reply);
 
     url.setUserInfo(q->itemUrl().userInfo());
     mItem.setUrl(DavUrl(url, mItem.url().protocol()));

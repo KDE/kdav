@@ -53,6 +53,11 @@ ecm_add_test(davitemmodifyjobtest.cpp fakeserver.cpp davitemmodifyjobtest.h fake
     LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network
 )
 
+ecm_add_test(davitemcreatejobtest.cpp fakeserver.cpp davitemcreatejobtest.h fakeserver.h
+    TEST_NAME davitemcreatejobtest
+    LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network
+)
+
 ecm_add_test(davitemdeletejobtest.cpp fakeserver.cpp davitemdeletejobtest.h fakeserver.h
     TEST_NAME davitemdeletejobtest
     LINK_LIBRARIES KF6::DAV Qt6::Test Qt6::Core Qt6::Network
