@@ -8,7 +8,9 @@
 
 #include "davpushsupport.h"
 #include "enums.h"
+#include "libkdav_debug.h"
 
+#include <QNetworkReply>
 #include <QString>
 
 using namespace KDAV;
@@ -127,4 +129,19 @@ std::optional<DavPushSupport> Utils::extractDavPushSupport(const QDomElement &el
     res.setTopic(topicElt.text());
     res.setVapidPublicKey(vapidPubKeyElt.text().toUtf8());
     return res;
+}
+
+QUrl Utils::locationUrl(const QNetworkReply *reply)
+{
+    // QNetworkReply::header(LocationHeader) drops a Location without a scheme
+    const QByteArray location = reply->rawHeader("location");
+    if (location.isEmpty()) {
+        return reply->url();
+    }
+    const QUrl url = QUrl::fromEncoded(location);
+    if (!url.isValid()) {
+        qCWarning(KDAV_LOG) << "Invalid Location header" << location;
+        return reply->url();
+    }
+    return reply->url().resolved(url);
 }

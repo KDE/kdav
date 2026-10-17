@@ -159,6 +159,33 @@ void DavCollectionCreateJobTest::createCardDavCollection()
     QCOMPARE(job->collectionUrl().path(), u"/carddav/new-addressbook/"_s);
 }
 
+void DavCollectionCreateJobTest::createCollectionWithLocation()
+{
+    FakeServer fakeServer;
+    fakeServer.startAndWait();
+    QUrl url(u"http://localhost/carddav/new-addressbook/"_s);
+    url.setPort(fakeServer.port());
+    KDAV::DavUrl davUrl(url, KDAV::CardDav);
+
+    KDAV::DavCollection collection(davUrl, u"My Address Book"_s, KDAV::DavCollection::Contacts);
+
+    auto job = new KDAV::DavCollectionCreateJob(collection);
+
+    fakeServer.addScenario({
+        "C: MKCOL /carddav/new-addressbook/ HTTP/1.1",
+        "S: HTTP/1.0 201 Created",
+        "S: Location: /carddav/dfaure%40kdab.com/renamed/",
+        "X",
+    });
+    job->exec();
+
+    QVERIFY(fakeServer.isAllScenarioDone());
+    QCOMPARE(job->error(), 0);
+    QUrl expectedUrl(url);
+    expectedUrl.setPath(u"/carddav/dfaure%40kdab.com/renamed/"_s, QUrl::TolerantMode);
+    QCOMPARE(job->collectionUrl(), expectedUrl);
+}
+
 void DavCollectionCreateJobTest::createCollectionError()
 {
     FakeServer fakeServer;

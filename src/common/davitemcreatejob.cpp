@@ -6,11 +6,13 @@
 
 #include "davitemcreatejob.h"
 #include "davjobbase_p.h"
+#include "utils_p.h"
 
 #include "daverror.h"
 #include "davitemfetchjob.h"
 #include "davmanager_p.h"
 #include "davpushdontnotify.h"
+#include "libkdav_debug.h"
 
 #include <QNetworkReply>
 #include <QNetworkRequest>
@@ -104,17 +106,7 @@ void DavItemCreateJobPrivate::davJobFinished(QNetworkReply *reply)
     }
 
     // The 'Location:' HTTP header is used to indicate the new URL
-    const QString location = reply->header(QNetworkRequest::LocationHeader).toString();
-
-    QUrl url;
-    if (location.isEmpty()) {
-        url = reply->url();
-    } else if (location.startsWith(QLatin1Char('/'))) {
-        url = reply->url();
-        url.setPath(location, QUrl::TolerantMode);
-    } else {
-        url = QUrl::fromUserInput(location);
-    }
+    QUrl url = Utils::locationUrl(reply);
 
     if (responseCode == 301 || responseCode == 302 || responseCode == 307 || responseCode == 308) {
         if (mRedirectCount > 4) {
@@ -131,6 +123,17 @@ void DavItemCreateJobPrivate::davJobFinished(QNetworkReply *reply)
         }
 
         return;
+    }
+
+    // A server not living at the root can get its Location wrong.
+    // Compare decoded paths, the server may percent-encode differently (e.g. "%40" for "@")
+    const auto collectionPath = [](const QUrl &itemUrl) {
+        return itemUrl.adjusted(QUrl::RemoveFilename).path(QUrl::FullyDecoded);
+    };
+    if (!url.matches(reply->url(), QUrl::RemovePath | QUrl::RemoveUserInfo | QUrl::RemoveQuery | QUrl::RemoveFragment)
+        || collectionPath(url) != collectionPath(reply->url())) {
+        qCWarning(KDAV_LOG) << "Item" << reply->url().toDisplayString(QUrl::RemoveUserInfo) << "was stored outside its collection, as"
+                            << url.toDisplayString(QUrl::RemoveUserInfo);
     }
 
     url.setUserInfo(q->itemUrl().userInfo());
