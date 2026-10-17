@@ -12,6 +12,7 @@
 #include "davmultigetprotocol_p.h"
 #include "davurl.h"
 #include "libkdav_debug.h"
+#include "utils_p.h"
 
 #include <QNetworkReply>
 #include <QXmlStreamWriter>
@@ -212,13 +213,7 @@ void DavItemsSyncJobPrivate::davJobFinished(QNetworkReply *reply)
                 return;
             }
 
-            QUrl url = reply->url();
-            url.setUserInfo(QString());
-            if (href.startsWith(QLatin1Char('/'))) {
-                url.setPath(href, QUrl::TolerantMode);
-            } else {
-                url = QUrl::fromUserInput(href);
-            }
+            const QUrl url = Utils::urlFromHref(reply->url().adjusted(QUrl::RemoveUserInfo), href);
 
             // Check for deleted or unsupported items (resp. 404 and 403)
             if (!status.isEmpty()) {

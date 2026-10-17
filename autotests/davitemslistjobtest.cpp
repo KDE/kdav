@@ -204,6 +204,44 @@ void DavItemsListJobTest::cardDavListingDuplicateUrls()
     QCOMPARE(job->items().count(), 1);
 }
 
+void DavItemsListJobTest::cardDavListingHrefForms()
+{
+    FakeServer fakeServer;
+    fakeServer.startAndWait();
+    const QByteArray absoluteHref = "http://localhost:" + QByteArray::number(fakeServer.port()) + "/collection/item3.vcf";
+    QList<QByteArray> scenario{
+        "C: PROPFIND /collection/ HTTP/1.1",
+        "S: HTTP/1.0 207 Multi-Status",
+        "S: Content-Type: application/xml; charset=utf-8",
+        "D: <?xml version=\"1.0\" encoding=\"utf-8\" ?>",
+        "D: <multistatus xmlns=\"DAV:\">",
+    };
+    const QList<QByteArray> hrefs{"/collection/dfaure%40kdab.com.vcf", absoluteHref};
+    for (const QByteArray &href : hrefs) {
+        scenario << "D: <response><href>" + href + "</href>"
+                 << "D: <propstat><prop><getetag>\"etag\"</getetag></prop><status>HTTP/1.1 200 OK</status></propstat></response>";
+    }
+    scenario << "D: </multistatus>"
+             << "X";
+    fakeServer.addScenario(scenario);
+
+    QUrl url(u"http://localhost/collection/"_s);
+    url.setPort(fakeServer.port());
+    KDAV::DavUrl davUrl(url, KDAV::CardDav);
+
+    auto job = new KDAV::DavItemsListJob(davUrl, std::make_shared<KDAV::EtagCache>());
+    job->exec();
+
+    QVERIFY(fakeServer.isAllScenarioDone());
+    QCOMPARE(job->error(), 0);
+    QStringList urls;
+    for (const KDAV::DavItem &item : job->items()) {
+        urls << item.url().url().toString(QUrl::FullyEncoded);
+    }
+    const QString base = u"http://localhost:%1/collection/"_s.arg(fakeServer.port());
+    QCOMPARE(urls, (QStringList{base + u"dfaure%40kdab.com.vcf"_s, base + u"item3.vcf"_s}));
+}
+
 QTEST_MAIN(DavItemsListJobTest)
 
 #include "moc_davitemslistjobtest.cpp"

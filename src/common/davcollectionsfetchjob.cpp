@@ -255,15 +255,7 @@ void DavCollectionsFetchJobPrivate::collectionsFetchFinished(QNetworkReply *repl
                     href.append(QLatin1Char('/'));
                 }
 
-                QUrl url = requestUrl;
-                url.setUserInfo(QString());
-                if (href.startsWith(QLatin1Char('/'))) {
-                    // href is only a path, use request url to complete
-                    url.setPath(href, QUrl::TolerantMode);
-                } else {
-                    // href is a complete url
-                    url = QUrl::fromUserInput(href);
-                }
+                const QUrl url = Utils::urlFromHref(requestUrl.adjusted(QUrl::RemoveUserInfo), href);
 
                 // don't add this resource if it has already been detected
                 bool alreadySeen = false;

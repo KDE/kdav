@@ -10,6 +10,7 @@
 #include "davmultigetprotocol_p.h"
 #include "davpushregistration.h"
 #include "davurl.h"
+#include "utils_p.h"
 
 #include <QNetworkReply>
 #include <QUrl>
@@ -108,12 +109,7 @@ void DavPushRegistrationJobPrivate::onRegistrationDone(QNetworkReply *reply)
 
     for (const auto &[headerName, headerValue] : reply->headers().toListOfPairs()) {
         if (headerName.compare("location"_L1, Qt::CaseInsensitive) == 0) {
-            if (headerValue.startsWith('/')) {
-                mResponseRegistrationUrl = reply->url();
-                mResponseRegistrationUrl.setPath(QString::fromUtf8(headerValue), QUrl::TolerantMode);
-            } else {
-                mResponseRegistrationUrl = QUrl::fromUserInput(QString::fromUtf8(headerValue));
-            }
+            mResponseRegistrationUrl = Utils::urlFromHref(reply->url(), QString::fromUtf8(headerValue));
         } else if (headerName.compare("expires"_L1, Qt::CaseInsensitive) == 0) {
             mResponseRegistrationExpiration = fromImfFixdate(QString::fromUtf8(headerValue));
         }

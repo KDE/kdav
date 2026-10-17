@@ -23,6 +23,7 @@ private Q_SLOTS:
     void cardDavListingErrorResponse();
     void cardDavListingCollectionsSkipped();
     void cardDavListingDuplicateUrls();
+    void cardDavListingHrefForms();
 };
 
 #endif

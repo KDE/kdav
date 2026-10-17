@@ -210,15 +210,7 @@ void DavItemsListJobPrivate::davJobFinished(QNetworkReply *reply)
             const QDomElement hrefElement = Utils::firstChildElementNS(responseElement, QStringLiteral("DAV:"), QStringLiteral("href"));
             const QString href = hrefElement.text();
 
-            QUrl url = reply->url();
-            url.setUserInfo(QString());
-            if (href.startsWith(QLatin1Char('/'))) {
-                // href is only a path, use request url to complete
-                url.setPath(href, QUrl::TolerantMode);
-            } else {
-                // href is a complete url
-                url = QUrl::fromUserInput(href);
-            }
+            const QUrl url = Utils::urlFromHref(reply->url().adjusted(QUrl::RemoveUserInfo), href);
 
             const QString itemUrl = url.toDisplayString();
             const auto [it, isInserted] = mSeenUrls.insert(itemUrl);

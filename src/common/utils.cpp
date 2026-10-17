@@ -131,6 +131,16 @@ std::optional<DavPushSupport> Utils::extractDavPushSupport(const QDomElement &el
     return res;
 }
 
+QUrl Utils::urlFromHref(const QUrl &baseUrl, const QString &href)
+{
+    if (href.startsWith(QLatin1Char('/'))) {
+        QUrl url = baseUrl;
+        url.setPath(href, QUrl::TolerantMode);
+        return url;
+    }
+    return QUrl::fromUserInput(href);
+}
+
 QUrl Utils::locationUrl(const QNetworkReply *reply)
 {
     // QNetworkReply::header(LocationHeader) drops a Location without a scheme

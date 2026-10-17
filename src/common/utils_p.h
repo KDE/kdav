@@ -57,6 +57,13 @@ Q_REQUIRED_RESULT Privileges parsePrivilege(const QDomElement &element);
 
 /*!
  * \internal
+ * Returns the URL for @p href, from a DAV:href element or a header:
+ * a path is set on @p baseUrl, anything else is taken as a complete URL.
+ */
+[[nodiscard]] QUrl urlFromHref(const QUrl &baseUrl, const QString &href);
+
+/*!
+ * \internal
  * Returns the URL given by the Location header of @p reply, resolved against the request URL,
  * or the request URL if there is no Location header.
  */
