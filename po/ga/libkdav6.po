@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_davcalendar_resource\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:36+0000\n"
+"POT-Creation-Date: 2026-10-21 00:47+0000\n"
 "PO-Revision-Date: 2009-12-24 06:59-0500\n"
 "Last-Translator: Kevin Scannell <kscanne@gmail.com>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
@@ -161,12 +161,12 @@ msgstr ""
 msgid "The server returned a malformed response payload."
 msgstr ""
 
-#: common/davitemssyncjob.cpp:210
+#: common/davitemssyncjob.cpp:211
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr ""
 
-#: common/davitemssyncjob.cpp:240
+#: common/davitemssyncjob.cpp:235
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libkdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:36+0000\n"
+"POT-Creation-Date: 2026-10-21 00:47+0000\n"
 "PO-Revision-Date: 2026-10-06 08:03+0200\n"
 "Last-Translator: Nemanja Hiršl <nemhirsl@gmail.com>\n"
 "Language-Team: Serbian <kde-i18n-sr@kde.org>\n"
@@ -183,12 +183,12 @@ msgstr "Дошло је до проблема са захтевом. Траже�
 msgid "The server returned a malformed response payload."
 msgstr "Сервер је вратио лоше обликован товар одговора."
 
-#: common/davitemssyncjob.cpp:210
+#: common/davitemssyncjob.cpp:211
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr "Лош товар серверског одговора, ставци одговора недостаје елемент HREF"
 
-#: common/davitemssyncjob.cpp:240
+#: common/davitemssyncjob.cpp:235
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""

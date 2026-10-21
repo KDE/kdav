@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: akonadi_davgroupware_resource\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:36+0000\n"
+"POT-Creation-Date: 2026-10-21 00:47+0000\n"
 "PO-Revision-Date: 2026-09-25 09:22+0200\n"
 "Last-Translator: Vincenzo Reale <smart2128vr@gmail.com>\n"
 "Language-Team: Italian <kde-i18n-it@kde.org>\n"
@@ -192,14 +192,14 @@ msgstr ""
 msgid "The server returned a malformed response payload."
 msgstr "Il server ha restituito un payload di risposta malformato."
 
-#: common/davitemssyncjob.cpp:210
+#: common/davitemssyncjob.cpp:211
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr ""
 "Payload della risposta del server non valido: elemento della risposta privo "
 "dell'attributo HREF."
 
-#: common/davitemssyncjob.cpp:240
+#: common/davitemssyncjob.cpp:235
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:36+0000\n"
+"POT-Creation-Date: 2026-10-21 00:47+0000\n"
 "PO-Revision-Date: 2026-09-26 23:04+0200\n"
 "Last-Translator: Iñigo Salvador Azurmendi <xalba@ni.eus>\n"
 "Language-Team: Basque <kde-i18n-eu@kde.org>\n"
@@ -186,14 +186,14 @@ msgstr ""
 msgid "The server returned a malformed response payload."
 msgstr "Zerbitzariak gaizki eratutako erantzun-edukia itzuli du."
 
-#: common/davitemssyncjob.cpp:210
+#: common/davitemssyncjob.cpp:211
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr ""
 "Zerbitzariaren erantzun-edukia baliogabea da; erantzun-elementuari HREF "
 "elementua falta zaio"
 
-#: common/davitemssyncjob.cpp:240
+#: common/davitemssyncjob.cpp:235
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""

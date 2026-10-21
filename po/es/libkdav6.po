@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libkdav6\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:36+0000\n"
+"POT-Creation-Date: 2026-10-21 00:47+0000\n"
 "PO-Revision-Date: 2026-09-24 23:57+0100\n"
 "Last-Translator: Eloy Cuadra <ecuadra@eloihr.net>\n"
 "Language-Team: Spanish <kde-l10n-es@kde.org>\n"
@@ -192,14 +192,14 @@ msgstr ""
 msgid "The server returned a malformed response payload."
 msgstr "El servidor ha devuelto una carga útil de respuesta mal formada."
 
-#: common/davitemssyncjob.cpp:210
+#: common/davitemssyncjob.cpp:211
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr ""
 "Carga útil de respuesta del servidor no válida: el elemento de respuesta "
 "carece del elemento HREF."
 
-#: common/davitemssyncjob.cpp:240
+#: common/davitemssyncjob.cpp:235
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr ""

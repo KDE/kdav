@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:36+0000\n"
+"POT-Creation-Date: 2026-10-21 00:47+0000\n"
 "PO-Revision-Date: 2026-09-29 00:46+0200\n"
 "Last-Translator: Shinjo Park <kde@peremen.name>\n"
 "Language-Team: Korean <kde-kr@kde.org>\n"
@@ -180,12 +180,12 @@ msgstr "요청에 문제가 있습니다. 지정한 MIME 형식을 지원하지 
 msgid "The server returned a malformed response payload."
 msgstr "서버에서 잘못된 응답 페이로드를 반환했습니다."
 
-#: common/davitemssyncjob.cpp:210
+#: common/davitemssyncjob.cpp:211
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr "잘못된 서버 응답 페이로드, 응답 항목에 HREF 원소가 없음"
 
-#: common/davitemssyncjob.cpp:240
+#: common/davitemssyncjob.cpp:235
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr "잘못된 서버 응답 페이로드, 응답 항목에 PROPSTAT 원소가 없음"

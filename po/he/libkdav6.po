@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: kdav\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
-"POT-Creation-Date: 2026-10-01 17:36+0000\n"
+"POT-Creation-Date: 2026-10-21 00:47+0000\n"
 "PO-Revision-Date: 2026-09-27 09:17+0300\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: צוות התרגום של KDE ישראל\n"
@@ -181,12 +181,12 @@ msgstr "הייתה בעיה עם הבקשה. סוגי התוכן/MIME לא נת�
 msgid "The server returned a malformed response payload."
 msgstr "השרת החזיר מטען תגובה במבנה שגוי."
 
-#: common/davitemssyncjob.cpp:210
+#: common/davitemssyncjob.cpp:211
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
 msgstr "מטען תגובת השרת שגוי, לפריט התגובה חסר רכיב HREF"
 
-#: common/davitemssyncjob.cpp:240
+#: common/davitemssyncjob.cpp:235
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
 msgstr "מטען תגובת השרת שגוי, לפריט התגובה חסר רכיב PROPSTAT"
