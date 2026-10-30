@@ -9,7 +9,6 @@
 
 #include "daverror.h"
 #include "davmanager_p.h"
-#include "davprotocolbase_p.h"
 #include "protocolinfo.h"
 #include "utils_p.h"
 
