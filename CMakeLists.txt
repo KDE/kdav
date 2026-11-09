@@ -34,7 +34,7 @@ find_package(KF6 ${KF_DEP_VERSION} REQUIRED CoreAddons I18n)
 
 ecm_set_disabled_deprecation_versions(
     QT 6.11.0
-    KF 6.27.0
+    KF 6.32.0
 )
 
 set(kdav_version_header "${CMAKE_CURRENT_BINARY_DIR}/src/kdav_version.h")
