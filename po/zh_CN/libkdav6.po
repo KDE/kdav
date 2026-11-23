@@ -174,23 +174,16 @@ msgid ""
 msgstr "请求出错。服务器上的项目未创建。"
 
 #: common/daverror.cpp:145
-#, fuzzy, kde-format
-#| msgid ""
-#| "\n"
-#| "The server returned more information:\n"
-#| "%1"
+#, kde-format
 msgid "The server returned a malformed response payload."
-msgstr ""
-"\n"
-"服务器返回更多信息：\n"
-"%1"
+msgstr "服务器返回了一个格式错误的响应载荷。"
 
 #: common/davitemssyncjob.cpp:211
 #, kde-format
 msgid "Invalid server response payload, response item missing HREF element"
-msgstr ""
+msgstr "无效的服务器响应载荷，响应项目缺少 HREF 元素"
 
 #: common/davitemssyncjob.cpp:235
 #, kde-format
 msgid "Invalid server response payload, response item missing PROPSTAT element"
-msgstr ""
+msgstr "无效的服务器响应载荷，响应项目缺少 PROPSTAT 元素"
